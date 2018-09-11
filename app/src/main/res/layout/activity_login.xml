@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <View
+        android:id="@+id/v_login_bg"
+        android:layout_width="match_parent"
+        android:layout_height="294dp"
+        android:background="@mipmap/ic_login_bg_top_water"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo"
+        app:layout_constraintBottom_toBottomOf="@id/v_login_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_login_bg"
+        app:layout_constraintStart_toStartOf="@id/v_login_bg"
+        app:layout_constraintTop_toTopOf="@id/v_login_bg"/>
+
+
+    <ImageView
+        android:id="@+id/iv_login_phone_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="56dp"
+        android:src="@mipmap/ic_login_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_login_bg"/>
+
+    <EditText
+        android:id="@+id/et_login_phone"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:background="@null"
+        android:hint="请输入手机号"
+        android:inputType="number"
+        android:textColor="@color/login_edit_tv"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_login_phone_start"
+        app:layout_constraintStart_toEndOf="@+id/iv_login_phone_start"
+        app:layout_constraintTop_toTopOf="@+id/iv_login_phone_start"/>
+
+    <View
+        android:id="@+id/v_login_phone"
+        android:layout_width="230dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/line_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_phone_start"
+    />
+
+
+    <ImageView
+        android:id="@+id/iv_login_code_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/ic_login_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_login_phone"/>
+
+    <EditText
+        android:id="@+id/et_login_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:background="@null"
+        android:hint="请输入验证码"
+        android:inputType="number"
+        android:textColor="@color/login_edit_tv"
+        android:textSize="@dimen/login_edit_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_login_code_start"
+        app:layout_constraintStart_toEndOf="@+id/iv_login_code_start"
+        app:layout_constraintTop_toTopOf="@+id/iv_login_code_start"/>
+
+    <View
+        android:id="@+id/v_login_code_v"
+        android:layout_width="1dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="50dp"
+        android:background="@color/login_line_blue"
+        app:layout_constraintBottom_toBottomOf="@id/et_login_code"
+        app:layout_constraintStart_toEndOf="@id/et_login_code"
+        app:layout_constraintTop_toTopOf="@+id/et_login_code"
+    />
+
+    <TextView
+        android:id="@+id/tv_login_get_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/et_login_code"
+        android:text="获取验证码"
+        android:textColor="#ff5159a2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_login_code_v"
+        app:layout_constraintStart_toEndOf="@id/v_login_code_v"
+        app:layout_constraintTop_toTopOf="@+id/v_login_code_v"
+    />
+
+
+    <View
+        android:id="@+id/v_login_code"
+        android:layout_width="230dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/line_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_login_code"
+    />
+
+
+    <TextView
+        android:id="@+id/tv_login_login"
+        android:layout_width="137dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="57dp"
+        android:background="@mipmap/ic_login_bg_tv"
+        android:gravity="center"
+        android:text="立即体验"
+        android:textColor="@color/white"
+        android:textSize="@dimen/login_edit_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_login_code"/>
+
+
+</android.support.constraint.ConstraintLayout>

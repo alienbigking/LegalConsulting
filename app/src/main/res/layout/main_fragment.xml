@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+
+    <View
+        android:id="@+id/v_home_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/main_blue"
+    />
+
+
+    <TextView
+        android:id="@+id/tv_main_top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="首页"
+        android:textColor="#ffffffff"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_home_title_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_home_title_bg"
+        app:layout_constraintStart_toStartOf="@id/v_home_title_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_home_title_bg"
+
+    />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:src="@mipmap/ic_message"
+        app:layout_constraintBottom_toBottomOf="@+id/v_home_title_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_home_title_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_home_title_bg"
+
+    />
+
+
+    <!--顶部的背景-->
+    <View
+        android:id="@+id/v_home_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="14dp"
+        android:background="@mipmap/ic_bg_ls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_home_title_bg"
+    />
+
+
+    <ImageView
+        android:id="@+id/iv_main_icon"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_user_icon"
+        app:layout_constraintBottom_toBottomOf="@id/v_home_top_bg"
+        app:layout_constraintStart_toStartOf="@+id/v_home_top_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_home_top_bg"
+    />
+
+    <TextView
+        android:id="@+id/tv_main_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="李好"
+        android:textColor="#ff333333"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/iv_main_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="执业律所：红黄蓝律师事务所"
+        android:textColor="#ff999999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_main_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_main_name"/>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:src="@mipmap/ic_rezen"
+        app:layout_constraintBottom_toBottomOf="@id/tv_main_top_end"
+        app:layout_constraintEnd_toStartOf="@id/tv_main_top_end"
+        app:layout_constraintTop_toTopOf="@id/tv_main_top_end"
+    />
+
+    <TextView
+        android:id="@+id/tv_main_top_end"
+        android:layout_width="30dp"
+        android:layout_height="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="已认证"
+        android:textColor="#ff5159a2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_main_name"
+        app:layout_constraintEnd_toEndOf="@id/v_home_top_bg"
+        app:layout_constraintTop_toTopOf="@id/tv_main_name"
+    />
+
+
+    <View
+        android:id="@+id/v_home_line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/view_line_user"
+        app:layout_constraintTop_toBottomOf="@+id/v_home_top_bg"/>
+
+
+    <TextView
+        android:id="@+id/tv_home_get_order"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="待接单"
+        android:textColor="@color/main_top_blue"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_home_edit_order"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_home_line1"/>
+    <TextView
+        android:id="@+id/tv_home_edit_order"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="待处理"
+        android:textColor="@color/main_top_gary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_home_get_order"
+        app:layout_constraintTop_toBottomOf="@+id/v_home_line1"/>
+
+    <View
+        android:id="@+id/v_home_select_line1"
+        android:layout_width="118dp"
+        android:layout_height="1dp"
+        android:background="@color/main_blue"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/v_home_line2"
+        app:layout_constraintEnd_toStartOf="@+id/v_home_select_line2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/v_home_select_line2"
+        android:layout_width="118dp"
+        android:layout_height="1dp"
+        android:background="@color/main_blue"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/v_home_line2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/v_home_select_line1"/>
+
+    <View
+        android:id="@+id/v_home_line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view_line_user"
+        app:layout_constraintTop_toBottomOf="@+id/tv_home_edit_order"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/v_home_line2"
+    >
+
+    </android.support.v4.view.ViewPager>
+
+</android.support.constraint.ConstraintLayout>

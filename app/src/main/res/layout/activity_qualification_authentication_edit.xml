@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffeae8f1"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/default_top"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFF6E9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未认证，请填写资料申请认证"
+                android:textColor="#ffb67234"
+                android:textSize="11sp"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="此认证信息仅用于平台审核，我们将对你填写对内容严格保密"
+                android:textColor="#ffb67234"
+                android:textSize="10sp"
+            />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center_vertical"
+        android:text="律师信息填写"
+        android:textColor="#ff5159a2"
+        android:textSize="11sp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center_vertical"
+        android:text="执业信息填写"
+        android:textColor="#ff5159a2"
+        android:textSize="11sp"
+    />
+
+    <TextView
+        android:layout_width="330dp"
+        android:id="@+id/tv_qualification_authentication_edit_send"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+        android:gravity="center"
+        android:text="提交申请"
+        android:textColor="#ffffffff"
+        android:textSize="14sp"
+    />
+
+</LinearLayout>

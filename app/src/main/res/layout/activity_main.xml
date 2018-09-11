@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <com.gkzxhn.legalconsulting.customview.NoScrollViewPager
+        android:id="@+id/vp_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </com.gkzxhn.legalconsulting.customview.NoScrollViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="parent"
+    >
+
+        <com.gkzxhn.legalconsulting.customview.DrawableTextView
+            android:id="@+id/tv_main_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="首页"
+            android:onClick="onClickGoHome"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="13sp"
+            app:drawableHeight="20dp"
+            app:drawablePosition="top"
+            app:drawableSrc="@mipmap/ic_home_purple"
+            app:drawableWidth="20dp"
+        />
+        <com.gkzxhn.legalconsulting.customview.DrawableTextView
+            android:id="@+id/tv_main_conversation"
+            android:layout_width="0dp"
+            android:onClick="onClickConversation"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="会话"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:drawableHeight="20dp"
+            app:drawablePosition="top"
+            app:drawableSrc="@mipmap/ic_conversation_black"
+            app:drawableWidth="20dp"
+
+        />
+        <com.gkzxhn.legalconsulting.customview.DrawableTextView
+            android:id="@+id/tv_main_my"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onClickGoUser"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="我的"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:drawableHeight="20dp"
+            app:drawablePosition="top"
+            app:drawableSrc="@mipmap/ic_my_black"
+            app:drawableWidth="20dp"
+
+        />
+
+    </LinearLayout>
+
+</LinearLayout>

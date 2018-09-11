@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_order_item_bg"
+>
+
+
+    <ImageView
+        android:id="@+id/iv_item_order_receiving"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/ic_user_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+        android:id="@+id/tv_item_order_receiving_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="李好"
+        android:textColor="#ff333333"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/iv_item_order_receiving"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_order_receiving"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="2018-08-10 11:15"
+        android:textColor="#ff999999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/iv_item_order_receiving"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_order_receiving_name"/>
+
+
+    <TextView
+        android:id="@+id/tv_main_top_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="¥39.90"
+        android:textColor="#FFF34800"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_item_order_receiving_name"
+    />
+
+
+    <View
+        android:id="@+id/v_item_order_receiving"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="#FFD9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_order_receiving"
+    />
+
+    <TextView
+        android:id="@+id/tv_item_order_receiving_context"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="我想咨询个人隐私问题，我对象通过他在派出所的朋友关系私自调出我的微信消费记录聊天记录，侵犯我的权利..."
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_item_order_receiving"
+    />
+
+    <TextView
+        android:id="@+id/tv_order_dispose_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="12dp"
+        android:gravity="end"
+        android:text="展开"
+
+        android:textColor="#ff5159a2"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_order_receiving_context"/>
+
+    <View
+        android:id="@+id/v_item_order_receiving_context"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFD9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_dispose_open"
+    />
+
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/shape_order_bg"
+        android:gravity="center"
+        android:text="抢单"
+        android:textColor="#ffffffff"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_item_order_receiving_context"
+    />
+
+</android.support.constraint.ConstraintLayout>
+

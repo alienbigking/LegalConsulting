@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
+        android:id="@+id/loading_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    >
+
+        <com.gkzxhn.legalconsulting.customview.LoadMoreWrapper
+            android:id="@+id/loading_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_conversation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.gkzxhn.legalconsulting.customview.LoadMoreWrapper>
+
+    </com.gkzxhn.legalconsulting.customview.PullToRefreshLayout>
+
+
+</LinearLayout>

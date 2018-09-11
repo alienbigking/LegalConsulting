@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/default_top"/>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:src="@mipmap/qualification_authentication_image"/>
+
+    <TextView
+        android:id="@+id/tv_qualification_authentication_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="您还未进行资格认证"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+    />
+
+    <TextView
+        android:id="@+id/tv_qualification_authentication_go"
+        android:layout_width="89dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_bg_text"
+        android:gravity="center"
+        android:text="马上认证"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+    />
+
+</LinearLayout>
