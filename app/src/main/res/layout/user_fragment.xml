@@ -73,6 +73,7 @@
     <View
         android:id="@+id/v_user_get_order_bg"
         android:layout_width="0dp"
+        android:background="@drawable/selector_item_white_to_gary"
         android:layout_height="43dp"
         app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
         app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
@@ -133,6 +134,7 @@
 
     <View
         android:id="@+id/v_user_my_money_bg"
+        android:background="@drawable/selector_item_white_to_gary"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:gravity="center_vertical"
@@ -199,6 +201,7 @@
     <View
         android:id="@+id/v_user_rz_bg"
         android:layout_width="0dp"
+        android:background="@drawable/selector_item_white_to_gary"
         android:layout_height="43dp"
         app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
         app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
@@ -246,6 +249,7 @@
         android:id="@+id/v_user_all_order_bg"
         android:layout_width="0dp"
         android:layout_height="43dp"
+        android:background="@drawable/selector_item_white_to_gary"
         app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
         app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
         app:layout_constraintTop_toBottomOf="@+id/v_user_rz"/>
@@ -295,6 +299,7 @@
     <View
         android:id="@+id/v_user_set_bg"
         android:layout_width="0dp"
+        android:background="@drawable/selector_item_white_to_gary"
         android:layout_height="43dp"
         app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
         app:layout_constraintStart_toStartOf="@id/v_user_list_bg"

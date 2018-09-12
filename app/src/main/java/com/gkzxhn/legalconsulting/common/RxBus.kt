@@ -5,7 +5,6 @@ import rx.subjects.PublishSubject
 import rx.subjects.SerializedSubject
 import rx.subjects.Subject
 
-
 /**
  * Explanation:
  * @author LSX
@@ -28,7 +27,6 @@ class RxBus {
     fun post(`object`: Any) {
 
         bus.onNext(`object`)
-
     }
 
     /**

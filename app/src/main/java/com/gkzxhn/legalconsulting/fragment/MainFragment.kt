@@ -67,9 +67,7 @@ class MainFragment : BaseFragment() {
 
     }
 
-
     private fun selectTwoItem() {
-        context?.let { ContextCompat.getColor(it, R.color.main_top_blue) }
         resources.getColor(R.color.main_top_gary).let { it1 -> tvGetOrder.setTextColor(it1) }
         resources.getColor(R.color.main_top_blue).let { it1 -> tvEditOrder.setTextColor(it1) }
         vSelectLine1.visibility = View.INVISIBLE

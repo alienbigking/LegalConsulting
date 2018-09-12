@@ -41,7 +41,7 @@ class ConversationAdapter(private val mContext: Context, private val data: List<
      */
     fun updateItems(mDatas: List<String>?) {
         this.mDatas.clear()
-        if (mDatas != null && mDatas.size > 0) {
+        if (mDatas != null && mDatas.isNotEmpty()) {
             this.mDatas.addAll(mDatas)
         }
         notifyDataSetChanged()
@@ -60,7 +60,7 @@ class ConversationAdapter(private val mContext: Context, private val data: List<
         with(holder.itemView) {
             val entity = mDatas[position]
             tv_conversation_item_name.text = entity+position
-            holder.itemView.setOnClickListener(android.view.View.OnClickListener {
+            holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this,holder,position)
             })

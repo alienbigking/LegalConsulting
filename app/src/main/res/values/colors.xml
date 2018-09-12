@@ -34,4 +34,7 @@
     <color name="contact_view">#d9d9d9</color>
     <color name="catalog_background">#EBEBEB</color>
     <color name="transparent">#00000000</color>
+
+    <color name="item_gary">#fff9f8fe</color>
+
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.OrderReceivingAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
 import com.gkzxhn.legalconsulting.utils.showToast
@@ -42,16 +43,23 @@ class OrderReceivingFragment : BaseFragment() {
 
     override fun initListener() {
         //加载更多
-        loading_more?.setOnLoadMoreListener {
-            cont++
-            getData()
-        }
+        loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
+            override fun onLoadMore() {
+                cont++
+                getData()
+            }
+
+        })
+
         //下啦刷新
-        loading_refresh?.setOnRefreshListener({
-            list?.clear()
-            cont = 0
-            getData()
-            loading_refresh?.finishRefreshing()
+        loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                list?.clear()
+                cont = 0
+                getData()
+                loading_refresh?.finishRefreshing()
+            }
+
         }, 1)
 
         mAdapter?.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {

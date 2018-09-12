@@ -60,10 +60,22 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
         with(holder.itemView) {
             val entity = mDatas[position]
             tv_item_order_receiving_name.text = "接单" + position
-            holder.itemView.setOnClickListener(android.view.View.OnClickListener {
+            holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
             })
+            tv_item_order_receiving_context.setLines(2)
+            tv_order_dispose_open.text = "展开"
+            tv_order_dispose_open.setOnClickListener {
+                if (tv_item_order_receiving_context.maxLines != 5) {
+                    tv_item_order_receiving_context.setLines(5)
+                    tv_order_dispose_open.text = "收起"
+                } else {
+                    tv_item_order_receiving_context.setLines(2)
+                    tv_order_dispose_open.text = "展开"
+
+                }
+            }
         }
     }
 

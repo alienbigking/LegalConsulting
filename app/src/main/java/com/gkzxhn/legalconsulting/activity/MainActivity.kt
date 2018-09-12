@@ -13,14 +13,12 @@ import kotlinx.android.synthetic.main.activity_main.tv_main_home as mainHome
 import kotlinx.android.synthetic.main.activity_main.tv_main_my as mainMy
 import kotlinx.android.synthetic.main.activity_main.vp_main as vpMain
 
-
 /**
  * Explanation: 主页面
  * @author LSX
  *    -----2018/9/11
  */
 class MainActivity : BaseActivity() {
-
 
     var tbList: MutableList<BaseFragment>? = null
     private var mainAdapter: MainAdapter? = null
@@ -50,9 +48,9 @@ class MainActivity : BaseActivity() {
      */
     fun onClickGoHome(view: View) {
         vpMain.currentItem = 0
-        mainHome.setDrawable(resources?.getDrawable(R.mipmap.ic_home_purple))
-        mainConversation.setDrawable(resources?.getDrawable(R.mipmap.ic_conversation_black))
-        mainMy.setDrawable(resources?.getDrawable(R.mipmap.ic_my_black))
+        mainHome.setDrawable(resources.getDrawable(R.mipmap.ic_home_purple))
+        mainConversation.setDrawable(resources.getDrawable(R.mipmap.ic_conversation_black))
+        mainMy.setDrawable(resources.getDrawable(R.mipmap.ic_my_black))
         resources?.getColor(R.color.main_bottom_purple)?.let { it1 -> mainHome.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainConversation.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainMy.setTextColor(it1) }
@@ -66,9 +64,9 @@ class MainActivity : BaseActivity() {
      */
     fun onClickConversation(view: View) {
         vpMain.currentItem = 1
-        mainHome.setDrawable(resources?.getDrawable(R.mipmap.ic_home_black))
-        mainConversation.setDrawable(resources?.getDrawable(R.mipmap.ic_conversation_purple))
-        mainMy.setDrawable(resources?.getDrawable(R.mipmap.ic_my_black))
+        mainHome.setDrawable(resources.getDrawable(R.mipmap.ic_home_black))
+        mainConversation.setDrawable(resources.getDrawable(R.mipmap.ic_conversation_purple))
+        mainMy.setDrawable(resources.getDrawable(R.mipmap.ic_my_black))
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainHome.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_purple)?.let { it1 -> mainConversation.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainMy.setTextColor(it1) }
@@ -82,14 +80,13 @@ class MainActivity : BaseActivity() {
      */
     fun onClickGoUser(view: View) {
         vpMain.currentItem = 2
-        mainHome.setDrawable(resources?.getDrawable(R.mipmap.ic_home_black))
-        mainConversation.setDrawable(resources?.getDrawable(R.mipmap.ic_conversation_black))
-        mainMy.setDrawable(resources?.getDrawable(R.mipmap.ic_my_purple))
+        mainHome.setDrawable(resources.getDrawable(R.mipmap.ic_home_black))
+        mainConversation.setDrawable(resources.getDrawable(R.mipmap.ic_conversation_black))
+        mainMy.setDrawable(resources.getDrawable(R.mipmap.ic_my_purple))
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainHome.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainConversation.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_purple)?.let { it1 -> mainMy.setTextColor(it1) }
 
     }
-
 
 }

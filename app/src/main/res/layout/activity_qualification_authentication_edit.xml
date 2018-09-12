@@ -12,59 +12,188 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFF6E9">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
 
-        <LinearLayout
+        <View
+            android:id="@+id/v_qualification_authentication_top_bg"
             android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#fffff6e9"
+        />
+
+
+        <TextView
+            android:id="@+id/tv_qualification_authentication_top"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="15dp"
+            android:text="未认证，请填写资料申请认证"
+            android:textColor="#ffb67234"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="未认证，请填写资料申请认证"
-                android:textColor="#ffb67234"
-                android:textSize="11sp"
-            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="此认证信息仅用于平台审核，我们将对你填写对内容严格保密"
+            android:textColor="#ffb67234"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_top"
+        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="此认证信息仅用于平台审核，我们将对你填写对内容严格保密"
-                android:textColor="#ffb67234"
-                android:textSize="10sp"
-            />
-        </LinearLayout>
+        <View
+            android:id="@+id/v_qualification_authentication_title_bg1"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:background="#ffeae8f1"
+            app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_top_bg"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="律师信息填写"
+            android:textColor="#ff5159a2"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/v_qualification_authentication_title_bg1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_title_bg1"
+        />
+
+
+        <TextView
+            android:id="@+id/tv_qualification_authentication_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="17dp"
+            android:text="真实姓名"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_title_bg1"
+        />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@null"
+            android:hint="请输入真实姓名"
+            android:textColor="#ff999999"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_name"
+        />
+
+        <View
+            android:id="@+id/v_qualification_authentication_name"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:background="#ffd9d9d9"
+            app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_name"
+        />
+
+        <TextView
+            android:id="@+id/tv_qualification_authentication_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="17dp"
+            android:text="性别"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_name"
+        />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="26dp"
+            android:text="男"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_qualification_authentication_sex"
+            app:layout_constraintEnd_toStartOf="@id/checkBox2"
+            app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex"
+        />
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="女"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_qualification_authentication_sex"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex"
+        />
+        <View
+            android:id="@+id/v_qualification_authentication_sex"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:background="#ffd9d9d9"
+            app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_sex"
+        />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="17dp"
+            android:text="地域"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_sex"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="请选择"
+            android:textColor="#ff999999"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+        />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:srcCompat="@mipmap/ic_arrow_left"/>
+
+
     </android.support.constraint.ConstraintLayout>
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginStart="15dp"
-        android:gravity="center_vertical"
-        android:text="律师信息填写"
-        android:textColor="#ff5159a2"
-        android:textSize="11sp"
-    />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginStart="15dp"
-        android:gravity="center_vertical"
-        android:text="执业信息填写"
-        android:textColor="#ff5159a2"
-        android:textSize="11sp"
-    />
-
-    <TextView
-        android:layout_width="330dp"
         android:id="@+id/tv_qualification_authentication_edit_send"
+        android:layout_width="330dp"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"

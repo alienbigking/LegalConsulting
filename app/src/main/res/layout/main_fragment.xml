@@ -127,6 +127,7 @@
         android:id="@+id/tv_home_get_order"
         android:layout_width="0dp"
         android:layout_height="35dp"
+        android:background="@drawable/selector_item_white_to_gary"
         android:gravity="center"
         android:text="待接单"
         android:textColor="@color/main_top_blue"
@@ -139,6 +140,7 @@
         android:id="@+id/tv_home_edit_order"
         android:layout_width="0dp"
         android:layout_height="35dp"
+        android:background="@drawable/selector_item_white_to_gary"
         android:gravity="center"
         android:text="待处理"
         android:textColor="@color/main_top_gary"
@@ -182,7 +184,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_home_line2"
     >
 

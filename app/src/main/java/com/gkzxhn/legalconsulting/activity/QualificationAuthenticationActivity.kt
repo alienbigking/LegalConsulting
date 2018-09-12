@@ -32,7 +32,6 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
         back.setOnClickListener {
             finish()
         }
-
     }
 
     override fun changeMessage(message: String) {

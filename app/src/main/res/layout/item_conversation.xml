@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/selector_item_white_to_gary"
 >
 
     <ImageView
@@ -32,6 +32,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_item_conversation_name"/>
 
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
