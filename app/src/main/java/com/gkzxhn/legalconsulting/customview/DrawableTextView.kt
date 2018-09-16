@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import android.util.Log
 import com.gkzxhn.legalconsulting.R
 
-
 /**
  * @classname：DrawableTextView
  * @author：PrivateXiaoWu

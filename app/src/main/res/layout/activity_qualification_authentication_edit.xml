@@ -7,7 +7,6 @@
     android:background="#ffeae8f1"
     android:orientation="vertical">
 
-
     <include layout="@layout/default_top"/>
 
     <android.support.constraint.ConstraintLayout
@@ -22,7 +21,6 @@
             android:layout_height="60dp"
             android:background="#fffff6e9"
         />
-
 
         <TextView
             android:id="@+id/tv_qualification_authentication_top"
@@ -70,7 +68,6 @@
             app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_title_bg1"
         />
 
-
         <TextView
             android:id="@+id/tv_qualification_authentication_name"
             android:layout_width="wrap_content"
@@ -99,12 +96,7 @@
 
         <View
             android:id="@+id/v_qualification_authentication_name"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            android:background="#ffd9d9d9"
+            style="@style/view_qualification_authentication_line"
             app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_name"
         />
 
@@ -132,6 +124,7 @@
             app:layout_constraintEnd_toStartOf="@id/checkBox2"
             app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex"
         />
+
         <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
@@ -145,16 +138,11 @@
         />
         <View
             android:id="@+id/v_qualification_authentication_sex"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            android:background="#ffd9d9d9"
+            style="@style/view_qualification_authentication_line"
             app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_sex"
         />
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_qualification_authentication_territory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -172,24 +160,63 @@
             android:text="请选择"
             android:textColor="#ff999999"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="@id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_territory"
+            app:layout_constraintEnd_toStartOf="@id/iv_qualification_authentication_territory"
+            app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_territory"
         />
+
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_qualification_authentication_territory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_territory"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_territory"
             app:srcCompat="@mipmap/ic_arrow_left"/>
 
+        <View
+            android:id="@+id/v_qualification_authentication_territory"
+            style="@style/view_qualification_authentication_line"
+            app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_territory"
+        />
+
+        <TextView
+            android:id="@+id/tv_qualification_authentication_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:text="律所地址"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_qualification_authentication_territory"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="请填写"
+            android:textColor="#ff999999"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_address"
+            app:layout_constraintEnd_toStartOf="@id/iv_qualification_authentication_address"
+            app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_address"
+        />
+
+        <ImageView
+            android:id="@+id/iv_qualification_authentication_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_address"
+            app:srcCompat="@mipmap/ic_arrow_left"/>
 
     </android.support.constraint.ConstraintLayout>
-
 
     <TextView
         android:id="@+id/tv_qualification_authentication_edit_send"

@@ -141,15 +141,15 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
     }
 
     fun canChildScrollUp(): Boolean {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
+        return if (android.os.Build.VERSION.SDK_INT < 14) {
             if (mTarget is AbsListView) {
                 val absListView = mTarget as AbsListView?
-                return absListView!!.childCount > 0 && (absListView.firstVisiblePosition > 0 || absListView.getChildAt(0).top < absListView.paddingTop)
+                absListView!!.childCount > 0 && (absListView.firstVisiblePosition > 0 || absListView.getChildAt(0).top < absListView.paddingTop)
             } else {
-                return ViewCompat.canScrollVertically(mTarget!!, -1) || mTarget!!.scrollY > 0
+                ViewCompat.canScrollVertically(mTarget!!, -1) || mTarget!!.scrollY > 0
             }
         } else {
-            return ViewCompat.canScrollVertically(mTarget!!, -1)
+            ViewCompat.canScrollVertically(mTarget!!, -1)
         }
     }
 
