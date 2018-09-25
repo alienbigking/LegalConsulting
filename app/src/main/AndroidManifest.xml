@@ -22,6 +22,8 @@
         <activity android:name=".activity.QualificationAuthenticationActivity"
         />
         <activity android:name=".activity.QualificationAuthenticationEditActivity"/>
+        <activity android:name=".activity.QualificationAuthenticationShowActivity"/>
+        <activity android:name=".activity.OderActivity"/>
         <activity android:name=".activity.MainActivity"/>
     </application>
 

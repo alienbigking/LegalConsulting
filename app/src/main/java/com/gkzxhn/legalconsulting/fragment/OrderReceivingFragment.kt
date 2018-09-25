@@ -1,15 +1,16 @@
 package com.gkzxhn.legalconsulting.fragment
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.OderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderReceivingAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
-import com.gkzxhn.legalconsulting.utils.showToast
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.conversation_fragment.*
 
@@ -68,7 +69,7 @@ class OrderReceivingFragment : BaseFragment() {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                context?.showToast("点击了接单条目：" + position.toString())
+                startActivity(Intent(context, OderActivity::class.java))
             }
 
         })

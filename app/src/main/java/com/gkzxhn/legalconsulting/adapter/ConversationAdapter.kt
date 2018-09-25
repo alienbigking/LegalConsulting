@@ -20,7 +20,6 @@ import java.util.*
 
 class ConversationAdapter(private val mContext: Context, private val data: List<String>?) : RecyclerView.Adapter<ConversationAdapter.ViewHolder>() {
 
-
     private var mDatas: ArrayList<String> = ArrayList()
     private var onItemClickListener: MultiItemTypeAdapter.OnItemClickListener? = null
     private var mCurrentIndex = -1
@@ -70,6 +69,5 @@ class ConversationAdapter(private val mContext: Context, private val data: List<
     override fun getItemCount(): Int {
         return mDatas.size
     }
-
 
 }

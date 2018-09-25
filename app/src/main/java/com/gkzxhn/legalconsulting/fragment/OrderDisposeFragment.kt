@@ -1,9 +1,11 @@
 package com.gkzxhn.legalconsulting.fragment
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.OderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderDisposeAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
@@ -32,7 +34,7 @@ class OrderDisposeFragment : BaseFragment() {
         mAdapter = context?.let { OrderDisposeAdapter(it, list) }
         rcl_conversation.layoutManager = LinearLayoutManager(activity, 1, false)
         rcl_conversation.adapter = mAdapter
-        rcl_conversation.addItemDecoration(App.mContext?.let { DisplayUtils.dp2px(it, 15f) }?.let { ItemDecorationHelper(it,it,it,0,it) })
+        rcl_conversation.addItemDecoration(App.mContext?.let { DisplayUtils.dp2px(it, 15f) }?.let { ItemDecorationHelper(it, it, it, 0, it) })
         getData()
     }
 
@@ -63,7 +65,7 @@ class OrderDisposeFragment : BaseFragment() {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                context?.showToast("点击了处理条目：" + position.toString())
+                startActivity(Intent(context, OderActivity::class.java))
             }
 
         })

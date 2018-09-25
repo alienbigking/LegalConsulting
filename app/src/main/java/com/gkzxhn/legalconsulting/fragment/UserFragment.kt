@@ -1,7 +1,9 @@
 package com.gkzxhn.legalconsulting.fragment
 
+import android.content.Intent
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationShowActivity
 import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.user_fragment.*
 
@@ -22,7 +24,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                 context?.showToast("我的赏金")
             }
             R.id.v_user_rz_bg -> {
-                context?.showToast("资格认证")
+                context?.startActivity(Intent(context, QualificationAuthenticationShowActivity::class.java))
             }
             R.id.v_user_all_order_bg -> {
                 context?.showToast("所有订单")
