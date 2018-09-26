@@ -44,6 +44,7 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
 
     override fun changeQualificationAuthenticationVisibility(visibility: Int) {
         qualificationAuthentication.visibility = visibility
+
     }
 
 }
