@@ -25,6 +25,7 @@
         <activity android:name=".activity.QualificationAuthenticationShowActivity"/>
         <activity android:name=".activity.OderActivity"/>
         <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.OrderGetSettingActivity"/>
     </application>
 
     <supports-screens

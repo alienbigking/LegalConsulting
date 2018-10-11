@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcl_order_receiving"
+                android:id="@+id/rcl_order_disposer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">

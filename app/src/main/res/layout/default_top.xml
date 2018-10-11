@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="资格认证"
+        android:text="- - - -"
         android:textColor="#ffffffff"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

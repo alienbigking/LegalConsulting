@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.activity.OderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderReceivingAdapter
 import com.gkzxhn.legalconsulting.common.App
@@ -12,7 +13,7 @@ import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
-import kotlinx.android.synthetic.main.conversation_fragment.*
+import kotlinx.android.synthetic.main.order_receiving_fragment.*
 
 
 /**
@@ -36,9 +37,9 @@ class OrderReceivingFragment : BaseFragment() {
     override fun init() {
         list = ArrayList()
         mAdapter = context?.let { OrderReceivingAdapter(it, list) }
-        rcl_conversation.layoutManager = LinearLayoutManager(activity, 1, false)
-        rcl_conversation.adapter = mAdapter
-        rcl_conversation.addItemDecoration(App.mContext?.let { DisplayUtils.dp2px(it, 15f) }?.let { ItemDecorationHelper(it, it, it, 0, it) })
+        rcl_order_receiving.layoutManager = LinearLayoutManager(activity, 1, false)
+        rcl_order_receiving.adapter = mAdapter
+        rcl_order_receiving.addItemDecoration(App.mContext?.let { DisplayUtils.dp2px(it, 15f) }?.let { ItemDecorationHelper(it, it, it, 0, it) })
         getData()
     }
 
@@ -78,21 +79,26 @@ class OrderReceivingFragment : BaseFragment() {
 
 
     private fun getData() {
+        var activity =activity as MainActivity
         Thread(Runnable //	开启一个线程处理逻辑，然后在线程中在开启一个UI线程，当子线程中的逻辑完成之后，
         //	就会执行UI线程中的操作，将结果反馈到UI界面。
         {
             // 模拟耗时的操作，在子线程中进行。
             try {
                 for (i in 0..10) {
+
                     list?.add("会话：")
                 }
-                Thread.sleep(1000)
+//                activity.setIdleNow(true)
+//                Thread.sleep(0)
+//                activity.setIdleNow(false)
+
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
 
             // 更新主线程ＵＩ，跑在主线程。
-            activity?.runOnUiThread(java.lang.Runnable {
+            activity.runOnUiThread(java.lang.Runnable {
                 //加载更多取消
                 if (loading_more!!.isLoading) {
                     loading_more?.finishLoading()

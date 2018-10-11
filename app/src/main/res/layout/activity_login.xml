@@ -29,9 +29,9 @@
     <ImageView
         android:id="@+id/iv_login_phone_start"
         android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="packed"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="17dp"
-        android:layout_marginStart="46dp"
+        app:layout_constraintEnd_toStartOf="@id/et_login_phone"
         android:layout_marginTop="56dp"
         android:src="@mipmap/ic_login_phone"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +47,7 @@
         android:inputType="number"
         android:textColor="@color/login_edit_tv"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/iv_login_phone_start"
         app:layout_constraintStart_toEndOf="@+id/iv_login_phone_start"
         app:layout_constraintTop_toTopOf="@+id/iv_login_phone_start"/>
@@ -55,10 +56,11 @@
         android:id="@+id/v_login_phone"
         android:layout_width="230dp"
         android:layout_height="1dp"
-        android:layout_marginStart="82dp"
+        android:layout_marginStart="17dp"
         android:layout_marginTop="11dp"
+
         android:background="@color/line_login"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_login_phone_start"
         app:layout_constraintTop_toBottomOf="@+id/iv_login_phone_start"
     />
 
@@ -68,10 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="17dp"
-        android:layout_marginStart="46dp"
         android:layout_marginTop="30dp"
         android:src="@mipmap/ic_login_password"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_login_phone_start"
         app:layout_constraintTop_toBottomOf="@+id/v_login_phone"/>
 
     <EditText
@@ -118,10 +119,10 @@
         android:id="@+id/v_login_code"
         android:layout_width="230dp"
         android:layout_height="1dp"
-        android:layout_marginStart="82dp"
+        android:layout_marginStart="17dp"
         android:layout_marginTop="11dp"
         android:background="@color/line_login"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_login_code_start"
         app:layout_constraintTop_toBottomOf="@+id/et_login_code"
     />
 

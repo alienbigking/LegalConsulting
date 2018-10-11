@@ -104,6 +104,7 @@
     />
 
     <TextView
+        android:id="@+id/tv_user_fragment_get_order_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"

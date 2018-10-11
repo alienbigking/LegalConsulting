@@ -1,11 +1,13 @@
 package com.gkzxhn.legalconsulting.fragment
 
-import android.support.v4.content.ContextCompat
+import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationEditActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import java.util.*
+import kotlinx.android.synthetic.main.main_fragment.iv_main_message_top as ivMessageTop
 import kotlinx.android.synthetic.main.main_fragment.tv_home_edit_order as tvEditOrder
 import kotlinx.android.synthetic.main.main_fragment.tv_home_get_order as tvGetOrder
 import kotlinx.android.synthetic.main.main_fragment.tv_main_top_title as tvTopTitle
@@ -47,6 +49,10 @@ class MainFragment : BaseFragment() {
         tvEditOrder.setOnClickListener {
             VpHome.currentItem = 1
             selectTwoItem()
+        }
+        ivMessageTop.setOnClickListener {
+
+            startActivity(Intent(context,QualificationAuthenticationEditActivity::class.java))
         }
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {

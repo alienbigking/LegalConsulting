@@ -3,7 +3,11 @@ package com.gkzxhn.legalconsulting.fragment
 import android.content.Intent
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.OrderGetSettingActivity
 import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationShowActivity
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.Constants.ORDER_GET_STATE
+import com.gkzxhn.legalconsulting.common.Constants.SP_ORDER_GET_STATE
 import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.user_fragment.*
 
@@ -18,7 +22,10 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.v_user_get_order_bg -> {
-                context?.showToast("接单设置")
+                val intent = Intent(context, OrderGetSettingActivity::class.java)
+                val state = if (tv_user_fragment_get_order_state.text == "忙碌") "1" else "2"
+                intent.putExtra(ORDER_GET_STATE, state)
+                context?.startActivity(intent)
             }
             R.id.v_user_my_money_bg -> {
                 context?.showToast("我的赏金")
@@ -36,6 +43,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun init() {
+        tv_user_fragment_get_order_state.text = if (App.SP?.getString(SP_ORDER_GET_STATE, "") == "1") "忙碌" else "接单"
     }
 
     override fun initListener() {
@@ -49,6 +57,11 @@ class UserFragment : BaseFragment(), View.OnClickListener {
 
     override fun provideContentViewId(): Int {
         return R.layout.user_fragment
+    }
+
+    override fun onResume() {
+        init()
+        super.onResume()
     }
 
 }
