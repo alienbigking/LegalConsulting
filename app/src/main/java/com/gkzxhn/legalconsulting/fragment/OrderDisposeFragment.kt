@@ -84,9 +84,7 @@ class OrderDisposeFragment : BaseFragment() {
                 for (i in 0..10) {
                     list?.add("会话：")
                 }
-//                activity.setIdleNow(true)
-//                Thread.sleep(1000)
-//                activity.setIdleNow(false)
+                Thread.sleep(1000)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }

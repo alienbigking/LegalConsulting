@@ -26,6 +26,8 @@
         <activity android:name=".activity.OderActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.OrderGetSettingActivity"/>
+        <activity android:name=".activity.BountyActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
     </application>
 
     <supports-screens

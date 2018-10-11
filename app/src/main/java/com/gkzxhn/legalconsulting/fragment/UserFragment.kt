@@ -3,8 +3,10 @@ package com.gkzxhn.legalconsulting.fragment
 import android.content.Intent
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.BountyActivity
 import com.gkzxhn.legalconsulting.activity.OrderGetSettingActivity
 import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationShowActivity
+import com.gkzxhn.legalconsulting.activity.SettingActivity
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants.ORDER_GET_STATE
 import com.gkzxhn.legalconsulting.common.Constants.SP_ORDER_GET_STATE
@@ -28,7 +30,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                 context?.startActivity(intent)
             }
             R.id.v_user_my_money_bg -> {
-                context?.showToast("我的赏金")
+                context?.startActivity(Intent(context, BountyActivity::class.java))
             }
             R.id.v_user_rz_bg -> {
                 context?.startActivity(Intent(context, QualificationAuthenticationShowActivity::class.java))
@@ -37,7 +39,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                 context?.showToast("所有订单")
             }
             R.id.v_user_set_bg -> {
-                context?.showToast("设置")
+                context?.startActivity(Intent(context, SettingActivity::class.java))
             }
         }
     }

@@ -89,9 +89,7 @@ class OrderReceivingFragment : BaseFragment() {
 
                     list?.add("会话：")
                 }
-//                activity.setIdleNow(true)
-//                Thread.sleep(0)
-//                activity.setIdleNow(false)
+                Thread.sleep(1000)
 
             } catch (e: InterruptedException) {
                 e.printStackTrace()
