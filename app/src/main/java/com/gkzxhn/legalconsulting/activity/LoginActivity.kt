@@ -3,6 +3,7 @@ package com.gkzxhn.legalconsulting.activity
 import android.view.WindowManager
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.LoginPresenter
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.view.LoginView
 import kotlinx.android.synthetic.main.activity_login.et_login_code as code
 import kotlinx.android.synthetic.main.activity_login.et_login_phone as loginPhone
@@ -44,6 +45,8 @@ class LoginActivity : BaseActivity(), LoginView {
 
             mPresenter?.sendCode()
         }
+
+        ProjectUtils.addViewTouchChange(login)
     }
 
 

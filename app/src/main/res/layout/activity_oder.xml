@@ -6,8 +6,9 @@
 
     <ImageView
         android:id="@+id/iv_oder_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:padding="5dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:src="@mipmap/ic_back_gary"

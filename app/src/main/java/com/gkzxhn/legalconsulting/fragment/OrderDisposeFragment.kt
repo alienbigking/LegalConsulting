@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
-import com.gkzxhn.legalconsulting.activity.OderActivity
+import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderDisposeAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
@@ -65,7 +65,7 @@ class OrderDisposeFragment : BaseFragment() {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                startActivity(Intent(context, OderActivity::class.java))
+                startActivity(Intent(context, OrderActivity::class.java))
             }
 
         })

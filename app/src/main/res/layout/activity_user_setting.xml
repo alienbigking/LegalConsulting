@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EAE8F1">
+
+    <include android:id="@+id/in_top"
+             layout="@layout/default_top"/>
+    <!--白色背景-->
+    <View android:id="@+id/v_setting_all_bg"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginTop="11dp"
+          android:background="@color/white"
+          app:layout_constraintBottom_toBottomOf="@+id/v_user_setting_phone_bg"
+          app:layout_constraintTop_toBottomOf="@+id/in_top"
+    />
+
+
+    <!--姓名-->
+    <View android:id="@+id/v_user_setting_name_bg"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:background="@drawable/selector_item_white_to_gary"
+          android:onClick="onClickUserSetting"
+          app:layout_constraintTop_toTopOf="@+id/v_setting_all_bg"
+    />
+
+    <ImageView
+        android:id="@+id/iv_user_setting_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_user_setting_name"
+        app:layout_constraintBottom_toBottomOf="@id/v_user_setting_name_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_setting_name_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_setting_name_bg"
+
+    />
+    <TextView
+        android:id="@+id/tv_text1"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="姓名"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_name"
+        app:layout_constraintStart_toEndOf="@id/iv_user_setting_name"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_setting_name"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="张三"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_name"
+        app:layout_constraintEnd_toEndOf="@id/v_user_setting_name_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_name"
+    />
+
+    <View
+        android:id="@+id/v_user_setting_name"
+        style="@style/view_setting_line"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_setting_name"
+
+    />
+
+    <!--个人头像-->
+
+    <View android:id="@+id/v_user_setting_photo_bg"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:background="@drawable/selector_item_white_to_gary"
+          android:onClick="onClickUserSetting"
+          app:layout_constraintTop_toBottomOf="@+id/v_user_setting_name"
+    />
+    <ImageView
+        android:id="@+id/iv_user_setting_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_user_setting_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_setting_photo_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_setting_photo_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_setting_photo_bg"
+
+    />
+    <TextView
+        android:id="@+id/tv_text2"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="个人头像"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_photo"
+        app:layout_constraintStart_toEndOf="@id/iv_user_setting_photo"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_photo"
+    />
+
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="10dp"
+        android:src="@mipmap/ic_user_icon"
+        android:textColor="#ff999999"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_photo"
+        app:layout_constraintEnd_toStartOf="@id/ic_user_setting_photo_end"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_photo"
+    />
+
+    <ImageView
+        android:id="@+id/ic_user_setting_photo_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_arrow_left"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_photo"
+        app:layout_constraintEnd_toEndOf="@id/v_user_setting_photo_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_photo"
+    />
+
+    <View
+        android:id="@+id/v_user_setting_photo"
+        style="@style/view_setting_line"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_setting_photo"
+
+    />
+
+    <!--手机号-->
+
+    <View android:id="@+id/v_user_setting_phone_bg"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:background="@drawable/selector_item_white_to_gary"
+          android:onClick="onClickUserSetting"
+          app:layout_constraintTop_toBottomOf="@+id/v_user_setting_photo"
+    />
+
+    <ImageView
+        android:id="@+id/iv_user_setting_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_user_setting_phone"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_setting_phone_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_setting_phone_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_setting_phone_bg"
+
+    />
+    <TextView
+        android:id="@+id/tv_text3"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="手机号"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_phone"
+        app:layout_constraintStart_toEndOf="@id/iv_user_setting_phone"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_phone"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="13678728738"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_setting_phone"
+        app:layout_constraintEnd_toEndOf="@id/v_user_setting_phone_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_user_setting_phone"
+    />
+
+
+    <!--更换手机号-->
+    <TextView
+        android:id="@+id/tv_user_setting_change_phone"
+        android:layout_width="97dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="65dp"
+        android:background="@mipmap/ic_setting_exit_bg"
+        android:gravity="center_horizontal"
+        android:onClick="onClickUserSetting"
+        android:paddingTop="8dp"
+        android:text="更换手机号"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

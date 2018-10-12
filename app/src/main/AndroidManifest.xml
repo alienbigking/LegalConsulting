@@ -23,11 +23,14 @@
         />
         <activity android:name=".activity.QualificationAuthenticationEditActivity"/>
         <activity android:name=".activity.QualificationAuthenticationShowActivity"/>
-        <activity android:name=".activity.OderActivity"/>
+        <activity android:name=".activity.OrderActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.OrderGetSettingActivity"/>
         <activity android:name=".activity.BountyActivity"/>
         <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.UserSettingActivity"/>
+        <activity android:name=".activity.AllOrderActivity"/>
+        <activity android:name=".activity.IdeaSubmitActivity"/>
     </application>
 
     <supports-screens
