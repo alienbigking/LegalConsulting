@@ -26,7 +26,7 @@ class SettingActivity : BaseActivity() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_setting_exit)
 
-        tv_setting_clear_size.text= SystemUtil.getTotalCacheSize(this)
+        tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
 
     }
 
@@ -68,7 +68,7 @@ class SettingActivity : BaseActivity() {
         val selectDialog = selectDialog("确认清除吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             SystemUtil.clearAllCache(this)
-            tv_setting_clear_size.text= SystemUtil.getTotalCacheSize(this)
+            tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
             showToast("清除完成")
             selectDialog.dismiss()
         }

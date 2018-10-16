@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_gary_bg">
+
+    <include android:id="@+id/in_top"
+             layout="@layout/default_top"/>
+
+
+    <TextView
+        android:id="@+id/tv_withdraw_top_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="19dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="提现需要短信确认，验证码已发送至手机：138****6768，轻按提示操作。"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_top"
+    />
+
+    <!--白色背景-->
+
+    <View android:id="@+id/v_withdraw_code_bg"
+          android:layout_width="match_parent"
+          android:layout_height="41dp"
+          android:layout_marginTop="16dp"
+          android:background="@color/white"
+          app:layout_constraintTop_toBottomOf="@+id/tv_withdraw_top_title"/>
+
+
+    <TextView
+        android:id="@+id/tv_withdraw_code_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:text="验证码"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_withdraw_code_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_withdraw_code_bg"
+    />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:background="@null"
+        android:hint="请输入验证码"
+        android:inputType="number"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_withdraw_code_bg"
+
+        app:layout_constraintStart_toEndOf="@id/tv_withdraw_code_start"
+        app:layout_constraintTop_toTopOf="@id/v_withdraw_code_bg"
+    />
+
+
+    <View android:layout_width="1dp" android:layout_height="14dp"
+          android:layout_marginEnd="10dp"
+          android:background="#FF264C90"
+          app:layout_constraintBottom_toBottomOf="@id/tv_withdraw_get_code"
+          app:layout_constraintEnd_toStartOf="@id/tv_withdraw_get_code"
+          app:layout_constraintTop_toTopOf="@id/tv_withdraw_get_code"/>
+    <TextView
+        android:id="@+id/tv_withdraw_get_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="获取验证码"
+        android:textColor="#ff264c90"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_withdraw_code_bg"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_withdraw_code_bg"
+    />
+
+    <!--确认-->
+    <TextView
+        android:id="@+id/tv_withdraw_send"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="29dp"
+        android:background="@drawable/shape_idea_submit_send_bg"
+        android:gravity="center"
+        android:onClick="onClickWithdraw"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_withdraw_code_bg"/>
+
+
+</android.support.constraint.ConstraintLayout>

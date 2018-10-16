@@ -32,6 +32,9 @@
         <activity android:name=".activity.AllOrderActivity"/>
         <activity android:name=".activity.IdeaSubmitActivity"/>
         <activity android:name=".activity.ChooseMajorsActivity"/>
+        <activity android:name=".activity.WithdrawFirstActivity"/>
+        <activity android:name=".activity.WithdrawSecondActivity"/>
+        <activity android:name=".activity.WithdrawThirdActivity"/>
     </application>
 
     <supports-screens

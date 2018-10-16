@@ -1,5 +1,6 @@
 package com.gkzxhn.legalconsulting.activity
 
+import android.content.Intent
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import kotlinx.android.synthetic.main.default_top.*
@@ -29,7 +30,16 @@ class BountyActivity : BaseActivity() {
         }
     }
 
-    fun onClickBounty(view:View) {
-
+    fun onClickBounty(view: View) {
+        when (view.id) {
+            R.id.v_bounty_get_money
+            -> {
+                startActivity(Intent(this, WithdrawFirstActivity::class.java))
+            }
+            R.id.v_bounty_money_list
+            -> {
+                startActivity(Intent(this, WithdrawFirstActivity::class.java))
+            }
+        }
     }
 }
