@@ -1,45 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="260dp"
-              android:layout_height="wrap_content"
-              android:background="@drawable/shape_dialog"
-              android:gravity="center"
-              android:orientation="vertical">
+<android.support.constraint.ConstraintLayout
 
-    <TextView
-        android:id="@+id/dialog_title"
-        android:paddingTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_update_dialog_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="提示"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/ic_setting_update_dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_update_dialog_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="最新版本"
+        android:textColor="#ff333333"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_update_dialog_version"
+        app:layout_constraintTop_toBottomOf="@+id/iv_update_dialog_top"
+    />
     <TextView
-        android:gravity="center"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:padding="10dp"
-        android:id="@+id/id_tv_loadingmsg"
+        android:id="@+id/tv_update_dialog_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:textSize="16.0dip" />
+        android:layout_marginStart="5dp"
+        android:padding="1dp"
+        android:text="V3.3.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/shape_update_version"
+        android:textColor="@color/white"
+        android:textSize="9sp"
+        app:layout_constraintStart_toEndOf="@id/tv_update_dialog_new"
+        app:layout_constraintTop_toTopOf="@+id/tv_update_dialog_new"
+        app:layout_constraintBottom_toBottomOf="@id/tv_update_dialog_new"
+    />
+
+    <ProgressBar
+        android:id="@+id/pb_update_dialog_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="210dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="34dp"
+        android:indeterminateTint="#FFEAEBEE"
+        android:progress="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_dialog_new"/>
+
+
+    <TextView
+        android:id="@+id/tv_update_dialog_cancel"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_update_dialog_update"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pb_update_dialog_progress_bar"
+    />
+    <TextView
+        android:id="@+id/tv_update_dialog_update"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center"
+        android:text="立即更新"
+        android:textColor="#FF5159A2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_update_dialog_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/pb_update_dialog_progress_bar"
+    />
 
     <View
+        android:layout_width="1dp"
+        android:layout_height="13dp"
         android:background="#dfdfdf"
-        android:layout_width="wrap_content"
-        android:layout_height="0.5dp"/>
+        app:layout_constraintBottom_toBottomOf="@+id/tv_update_dialog_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_update_dialog_cancel"/>
 
-    <TextView
-        android:gravity="center"
-        android:padding="10dp"
-        android:id="@+id/dialog_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="确定"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="17sp" />
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

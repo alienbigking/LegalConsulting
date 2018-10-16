@@ -10,7 +10,14 @@ package com.gkzxhn.legalconsulting.common
 object Constants {
 
     /****** 页面跳转相关 ******/
+
     val ORDER_GET_STATE = "getOrderState"
+
+//    专业领域选择 页面间传值
+    val RESULT_CHOOSE_MAJORS = "Result_Choose_majors"
+    val INTENT_SELECTSTRING = "INTENT_SELECTSTRING"
+    val REQUESTCODE_CHOOSE_MAJORS = 0x111111
+    val RESULTCODE_CHOOSE_MAJORS = 0x111112
 
 
     /****** SharedPreferences 相关******/

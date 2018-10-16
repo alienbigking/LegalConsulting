@@ -8,7 +8,6 @@ import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.utils.ObtainVersion
-import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.LoginView
 
@@ -29,15 +28,15 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     }
 
     fun login() {
-        if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
-            mContext?.showToast("请填写完成后操作！")
-        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
-            mContext?.showToast("手机号格式不正确")
-        } else {
-            mContext?.showToast("登录中，请稍候。。")
+//        if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
+//            mContext?.showToast("请填写完成后操作！")
+//        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+//            mContext?.showToast("手机号格式不正确")
+//        } else {
+//            mContext?.showToast("登录中，请稍候。。")
             var intent = Intent(mContext, QualificationAuthenticationActivity::class.java)
             mContext?.startActivity(intent)
-        }
+//        }
     }
 
     fun sendCode() {

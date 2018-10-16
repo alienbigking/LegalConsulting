@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:background="@null"
+                android:gravity="end"
                 android:hint="请输入真实姓名"
                 android:textColor="#ff999999"
                 android:textSize="12sp"
@@ -119,29 +120,40 @@
                 app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_name"
             />
 
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="26dp"
-                android:text="男"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_qualification_authentication_sex"
-                app:layout_constraintEnd_toStartOf="@id/checkBox2"
-                app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex"
-            />
 
-            <CheckBox
-                android:id="@+id/checkBox2"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:text="女"
-                android:textSize="12sp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@id/tv_qualification_authentication_sex"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex"
-            />
+                app:layout_constraintTop_toTopOf="@id/tv_qualification_authentication_sex">
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:button="@drawable/selector_sex_check"
+                    android:checked="true"
+                    android:paddingStart="5dp"
+                    android:text="男"
+                    android:textSize="12sp"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_weight="1"
+                    android:button="@drawable/selector_sex_check"
+                    android:paddingStart="5dp"
+                    android:text="女"
+                    android:textSize="12sp"/>
+
+            </RadioGroup>
+
 
             <View
                 android:id="@+id/v_qualification_authentication_sex"
@@ -151,10 +163,15 @@
 
             <!--地域-->
 
-            <View android:layout_width="match_parent"
-                  android:onClick="onClick"
-                  android:layout_height="0dp"
-            />
+            <View
+                android:id="@+id/v_qualification_authentication_territory_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/selector_item_white_to_gary"
+                android:onClick="onClickQualificationAuthentication"
+                app:layout_constraintBottom_toTopOf="@+id/v_qualification_authentication_territory"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_sex"/>
+
             <TextView
                 android:id="@+id/tv_qualification_authentication_territory"
                 android:layout_width="wrap_content"
@@ -194,6 +211,17 @@
                 style="@style/view_qualification_authentication_line"
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_territory"
             />
+
+            <!--律所地址-->
+            <View
+                android:id="@+id/v_qualification_authentication_address_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/selector_item_white_to_gary"
+                android:onClick="onClickQualificationAuthentication"
+                app:layout_constraintBottom_toTopOf="@+id/v_qualification_authentication_title_bg2"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_territory"/>
+
 
             <TextView
                 android:id="@+id/tv_qualification_authentication_address"
@@ -270,6 +298,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
                 android:background="@null"
+                android:gravity="end"
                 android:hint="请输入执业机构"
                 android:textColor="#ff999999"
                 android:textSize="12sp"
@@ -284,6 +313,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_institution"
             />
 
+
+            <!--专业领域-->
+
+            <View
+                android:id="@+id/v_qualification_authentication_professional_field_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/selector_item_white_to_gary"
+                android:onClick="onClickQualificationAuthentication"
+                app:layout_constraintBottom_toTopOf="@+id/v_qualification_authentication_professional_field"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_institution"/>
+
             <TextView
                 android:id="@+id/tv_qualification_authentication_professional_field"
                 android:layout_width="wrap_content"
@@ -297,6 +338,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_institution"/>
 
             <TextView
+                android:id="@+id/tv_qualification_authentication_professional_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -330,6 +372,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="17dp"
+                android:gravity="end"
                 android:text="职业年限"
                 android:textColor="#ff333333"
                 android:textSize="12sp"
@@ -342,7 +385,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
                 android:background="@null"
+                android:gravity="end"
                 android:hint="请填写职业年限"
+                android:inputType="number"
                 android:textColor="#ff999999"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_year"
@@ -489,7 +534,6 @@
                   android:layout_marginBottom="16dp"
                   android:layout_marginTop="15dp"
                   android:background="@mipmap/up_idcard_di"
-                  app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintEnd_toStartOf="@id/v_qualification_authentication_id2"
                   app:layout_constraintHorizontal_chainStyle="packed"
                   app:layout_constraintStart_toStartOf="parent"
@@ -524,22 +568,38 @@
                 app:layout_constraintStart_toStartOf="@id/v_qualification_authentication_id2"
                 app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_id2"/>
 
+
+            <View
+                android:id="@+id/v_qualification_authentication_edit_send"
+                android:layout_width="match_parent"
+                android:layout_height="89dp"
+                android:layout_marginTop="16dp"
+                android:background="#ffeae8f1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_id2"
+            />
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_edit_send"
+                android:layout_width="330dp"
+                android:layout_height="44dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+                android:gravity="center"
+                android:text="提交申请"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_id2"
+            />
+
         </android.support.constraint.ConstraintLayout>
+
 
     </ScrollView>
 
-    <TextView
-        android:id="@+id/tv_qualification_authentication_edit_send"
-        android:layout_width="330dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/shape_qualification_authentication_edit_bg_text"
-        android:gravity="center"
-        android:text="提交申请"
-        android:textColor="#ffffffff"
-        android:textSize="14sp"
-    />
 
 </LinearLayout>

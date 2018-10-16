@@ -94,6 +94,7 @@
     />
 
     <TextView
+        android:id="@+id/tv_setting_clear_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -168,15 +169,14 @@
         android:layout_marginBottom="65dp"
         android:background="@mipmap/ic_setting_exit_bg"
         android:gravity="center_horizontal"
+        android:onClick="onClickSetting"
         android:paddingTop="8dp"
         android:text="退出账号"
-        android:onClick="onClickSetting"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
 
 
 </android.support.constraint.ConstraintLayout>

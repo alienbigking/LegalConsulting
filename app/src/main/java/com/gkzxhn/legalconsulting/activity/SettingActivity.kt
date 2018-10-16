@@ -5,6 +5,9 @@ import android.view.View
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.SystemUtil
+import com.gkzxhn.legalconsulting.utils.selectDialog
+import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
 
@@ -22,6 +25,9 @@ class SettingActivity : BaseActivity() {
     override fun init() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_setting_exit)
+
+        tv_setting_clear_size.text= SystemUtil.getTotalCacheSize(this)
+
     }
 
     private fun initTopTitle() {
@@ -32,7 +38,6 @@ class SettingActivity : BaseActivity() {
 
     }
 
-
     fun onClickSetting(view: View) {
         when (view.id) {
 
@@ -42,7 +47,7 @@ class SettingActivity : BaseActivity() {
             }
         /****** 清除缓存 ******/
             R.id.v_setting_clear_bg -> {
-
+                clearDialog()
             }
         /****** 版本更新 ******/
             R.id.v_setting_update_bg -> {
@@ -52,30 +57,41 @@ class SettingActivity : BaseActivity() {
             R.id.tv_setting_exit -> {
 
             }
-
         }
     }
 
-    fun initDialog() {
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/12 4:33 PM.
+     * @description：清理缓存的dialog处理
+     */
+    private fun clearDialog() {
+        val selectDialog = selectDialog("确认清除吗？", false)
+        selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
+            SystemUtil.clearAllCache(this)
+            tv_setting_clear_size.text= SystemUtil.getTotalCacheSize(this)
+            showToast("清除完成")
+            selectDialog.dismiss()
+        }
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/12 3:58 PM.
+     * @description：加载更新的Dialog
+     */
+    private fun initDialog() {
         val progressDialog = android.app.Dialog(this, R.style.progress_dialog)
         progressDialog.setContentView(R.layout.dialog_seeting_update)
         progressDialog.setCancelable(true)
         progressDialog.setCanceledOnTouchOutside(true)
         progressDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        val msg = progressDialog.findViewById<TextView>(R.id.id_tv_loadingmsg) as TextView
-        val save = progressDialog.findViewById<TextView>(R.id.dialog_save) as TextView
-        val title = progressDialog.findViewById<TextView>(R.id.dialog_title) as TextView
-        title.text = "发现新版"
-        save.text = "更新"
-        save.setOnClickListener { _ ->
-            val intent = Intent()
-            intent.action = "android.intent.action.VIEW"
-//            val content_url = Uri.parse(url)
-//            intent.data = content_url
-//            context.startActivity(intent)
+        val cancel = progressDialog.findViewById(R.id.tv_update_dialog_cancel) as TextView
+        val update = progressDialog.findViewById(R.id.tv_update_dialog_update) as TextView
+        cancel.setOnClickListener { _ ->
             progressDialog.dismiss()
         }
-//        msg.text = message
+        update.setOnClickListener { _ ->
+            progressDialog.dismiss()
+        }
         progressDialog.show()
     }
 

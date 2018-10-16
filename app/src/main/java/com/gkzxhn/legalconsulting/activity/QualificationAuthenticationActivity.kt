@@ -6,6 +6,7 @@ import com.gkzxhn.legalconsulting.view.QualificationAuthenticationView
 import kotlinx.android.synthetic.main.activity_qualification_authentication.tv_qualification_authentication_go as qualificationAuthentication
 import kotlinx.android.synthetic.main.activity_qualification_authentication.tv_qualification_authentication_message as qualificationAuthenticationMessage
 import kotlinx.android.synthetic.main.default_top.iv_default_top_back as back
+import kotlinx.android.synthetic.main.default_top.tv_default_top_title as top_title
 
 /**
  * Explanation: 资格认证
@@ -29,9 +30,18 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
             mPresenter?.qualificationAuthentication()
         }
 
+        initTitleTop()
+
+
+    }
+
+    private fun initTitleTop() {
         back.setOnClickListener {
             finish()
         }
+        top_title.text = "资格认证"
+
+
     }
 
     override fun changeMessage(message: String) {

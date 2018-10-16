@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEAE8F1">
+
+
+    <include android:id="@+id/in_top"
+             layout="@layout/default_top"/>
+
+
+    <TextView
+        android:id="@+id/tv_choose_majors_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="可多选（不超过三个）"
+        android:textColor="#ff5159a2"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_top"
+    />
+
+    <!--白色背景-->
+    <View android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginTop="11dp"
+          android:background="@color/white"
+          app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_8"
+          app:layout_constraintTop_toBottomOf="@+id/tv_choose_majors_top"
+    />
+
+    <!--财产纠纷-->
+    <View
+        android:id="@+id/v_choose_majors_bg_1"
+        style="@style/choose_majors_bg"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        app:layout_constraintTop_toBottomOf="@id/tv_choose_majors_top"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="财产纠纷"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_1"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_1"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_1"/>
+
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_1"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_1"/>
+
+    <!--婚姻家庭-->
+    <View
+        android:id="@+id/v_choose_majors_bg_2"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_1"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="婚姻家庭"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_2"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_2"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_2"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_2"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_2"/>
+
+    <!--交通事故-->
+    <View
+        android:id="@+id/v_choose_majors_bg_3"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_2"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="交通事故"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_3"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_3"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_3"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_3"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_3"/>
+    <!--工伤赔偿-->
+    <View
+        android:id="@+id/v_choose_majors_bg_4"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_3"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="工伤赔偿"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_4"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_4"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_4"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_4"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_4"/>
+    <!--合同纠纷-->
+    <View
+        android:id="@+id/v_choose_majors_bg_5"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_4"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="合同纠纷"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_5"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_5"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_5"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_5"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_5"/>
+    <!--刑事辩护-->
+    <View
+        android:id="@+id/v_choose_majors_bg_6"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_5"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="刑事辩护"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_6"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_6"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_6"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_6"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_6"/>
+    <!--房产纠纷-->
+    <View
+        android:id="@+id/v_choose_majors_bg_7"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_6"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="房产纠纷"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_7"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_7"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_7"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_7"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_7"/>
+    <!--劳动就业-->
+    <View
+        android:id="@+id/v_choose_majors_bg_8"
+        style="@style/choose_majors_bg"
+        app:layout_constraintTop_toBottomOf="@id/v_choose_majors_7"/>
+
+    <TextView
+        style="@style/choose_majors_text"
+        android:text="劳动就业"
+        app:layout_constraintBottom_toBottomOf="@id/v_choose_majors_bg_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_8"
+    />
+
+    <ImageView
+        android:id="@+id/iv_choose_majors_8"
+        style="@style/choose_majors_image"
+        android:src="@mipmap/ic_order_get_setting_select_ok"
+        app:layout_constraintBottom_toBottomOf="@+id/v_choose_majors_bg_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_choose_majors_bg_8"/>
+
+    <!--分隔线-->
+
+    <View android:id="@+id/v_choose_majors_8"
+          style="@style/choose_majors_line"
+          app:layout_constraintTop_toBottomOf="@+id/v_choose_majors_bg_8"/>
+
+</android.support.constraint.ConstraintLayout>
