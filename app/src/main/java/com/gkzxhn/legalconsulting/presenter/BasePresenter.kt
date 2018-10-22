@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference
  * @author LSX
  *    -----2018/9/6
  */
-open class BasePresenter<M : IBaseModel, V : BaseView>(context: Context?, protected val mModel: M, view: V?)  {
+open class BasePresenter<M : IBaseModel, V : BaseView>(context: Context, protected val mModel: M, view: V)  {
     protected var mWeakContext: WeakReference<Context>? = null //弱引用Context
     protected val UNAUTHCODE = "401"
     protected val PAGE_SIZE = 100//分页 每页数量
@@ -19,12 +19,8 @@ open class BasePresenter<M : IBaseModel, V : BaseView>(context: Context?, protec
     protected var mWeakView: WeakReference<V>? = null//弱引用 view
 
     init {
-        context?.let {
-            mWeakContext = WeakReference(it)
-        }
-        view?.let {
-            mWeakView = WeakReference(it)
-        }
+            mWeakContext = WeakReference(context)
+            mWeakView = WeakReference(view)
     }
 
 

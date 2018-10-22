@@ -1,9 +1,8 @@
-package com.gkzxhn.legalconsulting.net.error_exception
+package com.gkzxhn.legalconsulting.net
 
 import android.content.Context
 import android.util.Log
-import com.gkzxhn.legalconsulting.net.ApiService
-import com.gkzxhn.legalconsulting.net.CacheInterceptor
+import com.gkzxhn.legalconsulting.net.error_exception.MyGsonConverterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,11 +13,11 @@ import java.util.concurrent.TimeUnit
 
 
  /**
- * Explanation:
+ * Explanation: 登录相关
  * @author LSX
  *    -----2018/9/6
  */
-class RetrofitClientcheshi private constructor(context: Context, baseUrl:String){
+class RetrofitClientLogin private constructor(context: Context, baseUrl:String){
     var httpCacheDirectory : File? = null
     val mContext : Context = context
     var cache : Cache? = null
@@ -49,8 +48,8 @@ class RetrofitClientcheshi private constructor(context: Context, baseUrl:String)
         //okhttp创建了
         okHttpClient = OkHttpClient.Builder()
 //                .cache(cache)
-                .addInterceptor(CacheInterceptor(mContext))
-                .addNetworkInterceptor(CacheInterceptor(mContext))
+                .addInterceptor(CacheInterceptorLogin(mContext))
+                .addNetworkInterceptor(CacheInterceptorLogin(mContext))
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
@@ -68,12 +67,12 @@ class RetrofitClientcheshi private constructor(context: Context, baseUrl:String)
     }
 
     companion object {
-        var instance: RetrofitClientcheshi? = null
-        fun getInstance(context: Context,baseUrl: String) : RetrofitClientcheshi {
+        var instance: RetrofitClientLogin? = null
+        fun getInstance(context: Context) : RetrofitClientLogin {
             if (instance == null) {
-                synchronized(RetrofitClientcheshi::class){
+                synchronized(RetrofitClientLogin::class){
                     if (instance == null) {
-                        instance = RetrofitClientcheshi(context,baseUrl)
+                        instance = RetrofitClientLogin(context, NetWorkCodeInfo.BASE_URL)
                     }
                 }
             }

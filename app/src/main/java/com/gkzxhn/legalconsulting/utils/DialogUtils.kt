@@ -7,8 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.activity.LoginActivity
-import com.gkzxhn.legalconsulting.net.NetWorkCodeInfo
 import java.util.*
 
 
@@ -137,11 +135,11 @@ fun Context.UpDialog(context: Context, message: String, flag: Boolean, url: Stri
 
 fun getRequestMap(mContext: Context, dataMap: LinkedHashMap<String, String>): LinkedHashMap<String, String> {
     var map = LinkedHashMap<String, String>()
-    map.put("rf", "2")
-    map.put("ts", System.currentTimeMillis().toString())
-    map.put("v", ObtainVersion.getVersionCode(mContext).toString())
-    map.put("i", NetWorkCodeInfo.BASE_URL)
-    map.put("udid", ObtainUdis.getUDID(LoginActivity::class.java, mContext))
+//    map.put("rf", "2")
+//    map.put("ts", System.currentTimeMillis().toString())
+//    map.put("v", ObtainVersion.getVersionCode(mContext).toString())
+//    map.put("i", NetWorkCodeInfo.BASE_URL)
+//    map.put("udid", ObtainUdis.getUDID(LoginActivity::class.java, mContext))
 
     for ((k, v) in dataMap) {
         map[k] = v

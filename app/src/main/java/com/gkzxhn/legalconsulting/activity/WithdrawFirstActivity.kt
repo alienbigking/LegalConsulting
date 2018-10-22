@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.default_top.*
  * @date：2018/10/16 2:10 PM
  * @description：提现
  */
+
 class WithdrawFirstActivity : BaseActivity() {
 
 

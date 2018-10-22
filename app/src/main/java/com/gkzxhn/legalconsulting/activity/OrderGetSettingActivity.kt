@@ -5,8 +5,17 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants.ORDER_GET_STATE
 import com.gkzxhn.legalconsulting.common.Constants.SP_ORDER_GET_STATE
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.utils.showToast
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_order_get_setting.*
 import kotlinx.android.synthetic.main.default_top.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import retrofit2.Response
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * @classname：OderGetSettingActivity
@@ -43,12 +52,15 @@ class OrderGetSettingActivity : BaseActivity() {
                 getOrderState = "1"
                 App.EDIT?.putString(SP_ORDER_GET_STATE, getOrderState)?.commit()
                 changeGetOrderState()
+                setOrderState("BUSY")
             }
         /****** 接单 ******/
             R.id.v_order_get_setting2_bg -> {
                 getOrderState = "2"
                 App.EDIT?.putString(SP_ORDER_GET_STATE, getOrderState)?.commit()
                 changeGetOrderState()
+                setOrderState("RECEIVING")
+
             }
 
 
@@ -69,5 +81,29 @@ class OrderGetSettingActivity : BaseActivity() {
             iv_order_get_setting_select2.visibility = View.VISIBLE
         }
     }
+
+    private fun setOrderState(OrderState: String) {
+        val Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),  Gson().toJson(OrderState))
+
+        RetrofitClient.getInstance(this).mApi?.setOrderState(Body)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
+                    override fun success(t: Response<Void>) {
+                        when (t.code()) {
+                            204 -> {
+                                showToast("设置成功")
+                            }
+                            else -> {
+                                showToast(t.code().toString() + t.message())
+                            }
+                        }
+                    }
+                })
+
+
+    }
+
 
 }

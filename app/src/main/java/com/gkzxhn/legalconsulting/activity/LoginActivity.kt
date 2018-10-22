@@ -42,12 +42,12 @@ class LoginActivity : BaseActivity(), LoginView {
         }
 
         sendCode.setOnClickListener {
-
             mPresenter?.sendCode()
         }
-
         ProjectUtils.addViewTouchChange(login)
     }
+
+
 
 
 }

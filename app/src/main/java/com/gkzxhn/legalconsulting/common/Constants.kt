@@ -24,6 +24,7 @@ object Constants {
 
 //    存储接单的状态
     val SP_ORDER_GET_STATE = "sp_getOrderState"
+    val SP_TOKEN = "SP_Token"
 
 
 

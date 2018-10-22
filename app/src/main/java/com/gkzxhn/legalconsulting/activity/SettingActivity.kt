@@ -4,10 +4,9 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.SystemUtil
-import com.gkzxhn.legalconsulting.utils.selectDialog
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
 
@@ -55,7 +54,7 @@ class SettingActivity : BaseActivity() {
             }
         /****** 退出账号 ******/
             R.id.tv_setting_exit -> {
-
+                exit()
             }
         }
     }
@@ -93,6 +92,20 @@ class SettingActivity : BaseActivity() {
             progressDialog.dismiss()
         }
         progressDialog.show()
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/22 3:10 PM.
+     * @description：退出账号
+     */
+    private fun exit() {
+        val selectDialog = selectDialog("确认退出账号吗？", false)
+        selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
+            App.EDIT?.putString(Constants.SP_TOKEN,"")?.commit()
+            newIntent<SplashActivity>()
+            showToast("账号已退出")
+            selectDialog.dismiss()
+        }
     }
 
 }

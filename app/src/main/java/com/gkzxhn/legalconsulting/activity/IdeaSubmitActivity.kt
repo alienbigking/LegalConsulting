@@ -2,9 +2,19 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.getRequestMap
 import com.gkzxhn.legalconsulting.utils.showToast
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_idea_submit.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import retrofit2.Response
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import java.util.*
 
 /**
  * @classname：IdeaSubmitActivity
@@ -27,8 +37,36 @@ class IdeaSubmitActivity : BaseActivity() {
                 finish()
             }
             R.id.tv_idea_submit_send -> {
-                showToast(et_idea_submit_title.text.trim().toString()+"__"+et_idea_submit_content.text.trim().toString())
+                submitSend(et_idea_submit_title.text.trim().toString(), et_idea_submit_content.text.trim().toString())
             }
         }
     }
+
+
+    private fun submitSend(titile: String, content: String) {
+        var map = LinkedHashMap<String, String>()
+        map["title"] = titile
+        map["content"] = content
+        getRequestMap(this, map)
+        var Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), Gson().toJson(map))
+        RetrofitClient.getInstance(this).mApi?.feedback(Body)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
+                    override fun success(t: Response<Void>) {
+                        when (t.code()) {
+                            204 -> {
+                                showToast("反馈成功")
+                            }
+                            else -> {
+                                showToast("错误码："+t.code().toString() + t.message())
+                            }
+                        }
+                    }
+                })
+
+
+    }
+
 }

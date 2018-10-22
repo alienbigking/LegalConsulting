@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_oder.*
  */
 
 class OrderActivity : BaseActivity() {
+
     override fun init() {
         iv_oder_back.setOnClickListener { finish() }
 

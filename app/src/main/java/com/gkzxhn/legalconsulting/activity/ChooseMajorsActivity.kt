@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.default_top.*
  * @date：2018/10/15 3:51 PM
  * @description：专业领域 选择
  */
+
 class ChooseMajorsActivity : BaseActivity() {
 
     var selectNumber = 0
