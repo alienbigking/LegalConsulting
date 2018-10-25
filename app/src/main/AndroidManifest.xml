@@ -4,6 +4,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".common.App"
         android:allowBackup="true"
@@ -28,7 +32,7 @@
         <activity android:name=".activity.QualificationAuthenticationEditActivity"/>
         <activity android:name=".activity.QualificationAuthenticationShowActivity"/>
         <activity android:name=".activity.OrderActivity"/>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" android:launchMode="singleTop"/>
         <activity android:name=".activity.OrderGetSettingActivity"/>
         <activity android:name=".activity.BountyActivity"/>
         <activity android:name=".activity.SettingActivity"/>
@@ -39,6 +43,21 @@
         <activity android:name=".activity.WithdrawFirstActivity"/>
         <activity android:name=".activity.WithdrawSecondActivity"/>
         <activity android:name=".activity.WithdrawThirdActivity"/>
+        <activity android:name=".activity.ChangePhoneFirstActivity"/>
+        <activity android:name=".activity.ChangePhoneSecondActivity"/>
+        <activity android:name=".activity.ImageCropActivity"/>
+        <activity android:name=".activity.ClipImageActivity"/>
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.gkzxhn.legalconsulting.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
     <supports-screens

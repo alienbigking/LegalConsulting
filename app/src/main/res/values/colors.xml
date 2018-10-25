@@ -39,4 +39,8 @@
 
     <color name="item_gary">#fff9f8fe</color>
 
+
+    <color name="dark_blue">#FF5159A2</color>
+    <color name="text_gray">#666666</color>
+
 </resources>

@@ -63,4 +63,10 @@ dependencies {
 //   为了espresso配置延迟加载类库：
     implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
     androidTestImplementation project(':auto_espresso')
+
+    //dialog
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+//    自动裁剪
+    implementation 'com.github.pqpo:SmartCropper:v1.2.3@aar'
 }

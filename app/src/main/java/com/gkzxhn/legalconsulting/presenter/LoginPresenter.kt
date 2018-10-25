@@ -1,8 +1,10 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
@@ -11,10 +13,7 @@ import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
-import com.gkzxhn.legalconsulting.utils.ObtainVersion
-import com.gkzxhn.legalconsulting.utils.TsDialog
-import com.gkzxhn.legalconsulting.utils.getRequestMap
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.LoginView
 import com.google.gson.Gson
 import okhttp3.MediaType
@@ -43,47 +42,48 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     }
 
     fun login() {
-//        if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
-//            mContext?.showToast("请填写完成后操作！")
-//        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
-//            mContext?.showToast("手机号格式不正确")
-//        } else {
-//            mContext?.showToast("登录中，请稍候。。")
-//            var intent = Intent(mContext, QualificationAuthenticationActivity::class.java)
-//            mContext?.startActivity(intent)
-//        }
-        requestLogin()
+        if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
+            mContext?.showToast("请填写完成后操作！")
+        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+            mContext?.showToast("手机号格式不正确")
+        } else {
+            requestLogin()
+        }
 
 
     }
 
 
     fun sendCode() {
-//        mContext?.showToast("验证码已发送")
-//        var intent = Intent(mContext, MainActivity::class.java)
-//        mContext?.startActivity(intent)
+        if (!StringUtils.isMobileNO(mView?.getPhone())) {
+            mContext?.showToast("手机号格式不正确")
+        } else {
+            mContext?.let {
+                RetrofitClientLogin.Companion.getInstance(it).mApi
+                        ?.getCode(mView?.getPhone()!!)
+                        ?.subscribeOn(Schedulers.io())
+                        ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe(object : HttpObserver<Response<Void>>(it) {
+                            override fun success(t: Response<Void>) {
+                                if (t.code() == 201) {
+                                    mView?.startCountDown(60)
+                                    it.showToast(it.getString(R.string.have_send).toString())
+                                } else {
+                                    mView?.stopCountDown()
 
-        mContext?.let {
-            RetrofitClientLogin.Companion.getInstance(it).mApi
-                    ?.getCode(mView?.getPhone()!!)
-                    ?.subscribeOn(Schedulers.io())
-                    ?.unsubscribeOn(AndroidSchedulers.mainThread())
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<Response<Void>>(it) {
-                        override fun success(t: Response<Void>) {
-                            if (t.code() == 201) {
-                                it.showToast(it.getString(R.string.have_send).toString())
-                            } else {
-                                it.TsDialog(it.getString(R.string.send_failed).toString(), false)
+                                    it.TsDialog(it.getString(R.string.send_failed).toString(), false)
+                                }
                             }
-                        }
 
-                        override fun onError(t: Throwable?) {
+                            override fun onError(t: Throwable?) {
+                                mView?.stopCountDown()
 
-                        }
-                    })
+                            }
+                        })
+            }
+
         }
-
 
     }
 
@@ -111,7 +111,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             201 -> {
                                 //注册成功 sms.verification-code.NotMatched user.Existed
                                 getToken(map["phoneNumber"].toString(), map["verificationCode"].toString())
-
                             }
                             400 -> {
                                 try {
@@ -138,12 +137,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                 }
                             }
                             else -> {
-                                //注册失败
-                                var errorString: String? = null
-                                try {
-                                    errorString = JSONObject(t.errorBody().string()).getString("message")
-                                } catch (e: Exception) {
-                                }
+
                             }
                         }
                     }
@@ -183,7 +177,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             App.EDIT?.putString("refreshToken", refreshToken)?.commit()
                             getLawyersInfo()
 
-                            mContext?.showToast(token.toString())
+//                            mContext?.showToast(token.toString())
                         }
                     }
 
@@ -194,7 +188,10 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                 })
     }
 
-
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
+     * @description：获取律师信息
+     */
     private fun getLawyersInfo() {
         RetrofitClient.getInstance(mContext!!).mApi?.getLawyersInfo()
                 ?.subscribeOn(Schedulers.io())
@@ -202,11 +199,13 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
                     override fun success(date: LawyersInfo) {
-
+                        mContext?.startActivity(Intent(mContext, MainActivity::class.java))
                     }
 
                     override fun onError(t: Throwable?) {
                         super.onError(t)
+                        mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+
                     }
                 })
 

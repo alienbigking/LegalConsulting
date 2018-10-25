@@ -51,7 +51,7 @@ interface ApiService {
     fun setOrderState(@Body map: RequestBody): Observable<Response<Void>>
 
     /****** 意见反馈 ******/
-    @POST("lawyers/feedback")
+    @POST("lawyer/feedback")
     @Headers("Content-Type:application/json;charset=utf-8")
     fun feedback(@Body map: RequestBody): Observable<Response<Void>>
 

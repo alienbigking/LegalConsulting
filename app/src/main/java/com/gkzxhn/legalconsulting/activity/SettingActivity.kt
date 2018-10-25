@@ -6,7 +6,10 @@ import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.utils.*
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.SystemUtil
+import com.gkzxhn.legalconsulting.utils.selectDialog
+import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
 
@@ -102,8 +105,10 @@ class SettingActivity : BaseActivity() {
         val selectDialog = selectDialog("确认退出账号吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             App.EDIT?.putString(Constants.SP_TOKEN,"")?.commit()
-            newIntent<SplashActivity>()
-            showToast("账号已退出")
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
             selectDialog.dismiss()
         }
     }

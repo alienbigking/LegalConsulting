@@ -9,4 +9,6 @@ package com.gkzxhn.legalconsulting.view
 interface LoginView : BaseView {
     fun getPhone(): String
     fun getCode(): String
+    fun stopCountDown()
+    fun startCountDown(int: Int)
 }

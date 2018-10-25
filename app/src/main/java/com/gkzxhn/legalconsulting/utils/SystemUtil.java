@@ -4,6 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
@@ -11,6 +14,7 @@ import android.telephony.TelephonyManager;
 import com.gkzxhn.legalconsulting.common.App;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Locale;
 
@@ -184,6 +188,40 @@ public class SystemUtil {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
                 + "TB";
+    }
+
+    //首先我们先获取当前图片的旋转角度
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    //然后我们再根据图片的旋转角度，给图片进行相应角度的反向旋转
+    public static Bitmap rotateBitmap(Bitmap bitmap, int rotate) {
+        if (bitmap == null)
+            return null;
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        Matrix mtx = new Matrix();
+        mtx.postRotate(rotate);
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
 
 

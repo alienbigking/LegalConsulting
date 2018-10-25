@@ -26,7 +26,14 @@ object Constants {
     val SP_ORDER_GET_STATE = "sp_getOrderState"
     val SP_TOKEN = "SP_Token"
 
+    /**
+     * 头像裁剪URI
+     */
+    val INTENT_CROP_IMAGE_URI = "intent_crop_image_uri"
 
-
+    /**
+     * 裁剪过后的绝对路径
+     */
+    val CROP_PATH = "crop_path"
 
 }

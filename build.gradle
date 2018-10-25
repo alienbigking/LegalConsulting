@@ -19,9 +19,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+//        裁剪用到的地址
+        maven { url 'https://jitpack.io' }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+

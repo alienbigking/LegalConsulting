@@ -16,5 +16,13 @@
     <string name="verify_number_error">验证码错误</string>
     <string name="password_error">密码错误</string>
     <string name="user_is_Existed">用户已存在</string>
+    <string name="get_verify">获取验证码</string>
 
+
+    <string name="save">保存</string>
+    <string name="family_call_permission_agree">同意相机和录音权限才能够使用亲情电话功能</string>
+    <string name="please_agree_permission">请同意权限申请</string>
+    <string name="please_choice_photo_from">请选择图片来源</string>
+    <string name="take_photo">拍照</string>
+    <string name="photo_album">相册</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:background="@android:color/black"
+             android:layout_height="match_parent">
+
+
+    <me.pqpo.smartcropperlib.view.CropImageView
+        android:id="@+id/iv_crop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:textColor="@color/white"
+        android:layout_gravity="right"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="26dp"
+        android:text="@string/save"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</FrameLayout>
