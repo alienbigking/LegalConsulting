@@ -22,8 +22,7 @@ object Constants {
 
     /****** SharedPreferences 相关******/
 
-//    存储接单的状态
-    val SP_ORDER_GET_STATE = "sp_getOrderState"
+//    存储项目验证Token的状态
     val SP_TOKEN = "SP_Token"
 
     /**

@@ -1,6 +1,8 @@
 package com.gkzxhn.legalconsulting.net
 
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.UploadFile
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -15,11 +17,6 @@ import rx.Observable
  */
 
 interface ApiService {
-
-    companion object {
-        val BASE_URL: String
-            get() = NetWorkCodeInfo.BASE_URL_PROJECT
-    }
 
     // 获取验证码
     @POST("/users/{phoneNumber}/verification-codes/login")
@@ -37,13 +34,8 @@ interface ApiService {
     fun updatePhoneNumber(@HeaderMap headers: Map<String, String>,
                           @Body requestBody: RequestBody): Observable<Response<Void>>
 
-
-//    @GET("lawyers")
-//    fun getLawyersInfo(@HeaderMap headers: Map<String, String>,@Query("username") username: String):Observable<LawyersInfo>
-
     @GET("lawyer/profiles")
     fun getLawyersInfo(): Observable<LawyersInfo>
-
 
     /****** 设置接单状态 ******/
     @POST("lawyer/profiles/service-status")
@@ -55,7 +47,6 @@ interface ApiService {
     @Headers("Content-Type:application/json;charset=utf-8")
     fun feedback(@Body map: RequestBody): Observable<Response<Void>>
 
-
     /**
      * 获取token
      */
@@ -66,9 +57,18 @@ interface ApiService {
                  @Field("password") password: String? = null,
                  @Field("refresh_token") refreshToken: String? = null): Observable<ResponseBody>
 
-//    /*****  上传头像  */
-//    @POST(NetWorkCodeInfo.BASE_START + NetWorkCodeInfo.UPLOAD_IMAGE)
-//    @Multipart
-//    fun uploadImages(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>): Observable<BaseResponseEntity<UploadImage>>
+    /*****  上传头像  */
+    @POST("lawyer/profiles/avatar")
+    fun uploadAvatar(@Body map: RequestBody): Observable<Response<Void>>
+
+    /*****  上传文件  */
+    @POST("/files")
+    @Multipart
+    fun uploadFiles(@Part file: MultipartBody.Part): Observable<UploadFile>
+
+    // 下载文件
+    @GET(" /files/{id}")
+    fun downloadFile(@Path("id") id: String): Observable<Response<Void>>
+
 
 }

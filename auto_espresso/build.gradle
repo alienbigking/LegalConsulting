@@ -30,19 +30,19 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'junit:junit:4.12'
-    compile 'com.android.support.test:runner:1.0.2'
-    compile 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
-    compile('com.android.support.test:runner:1.0.1', {
+    implementation 'junit:junit:4.12'
+    implementation 'com.android.support.test:runner:1.0.2'
+    implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
+    implementation('com.android.support.test:runner:1.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //Espresso Intent
-    compile 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    implementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
     //Espresso WebView
-    compile 'com.android.support.test.espresso:espresso-web:3.0.2'
+    implementation 'com.android.support.test.espresso:espresso-web:3.0.2'
     //单元测试
-    compile('com.android.support.test.espresso:espresso-contrib:3.0.1', {
+    implementation('com.android.support.test.espresso:espresso-contrib:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
@@ -51,7 +51,7 @@ dependencies {
         exclude module: 'recyclerview-v7'
     })
     //Espresso UI测试
-    compile('com.android.support.test.espresso:espresso-core:3.0.1', {
+    implementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation files('libs/poi-3.7-20101029.jar')

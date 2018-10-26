@@ -12,16 +12,28 @@ import android.util.Log
 import android.view.View
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
-import com.gkzxhn.gkprison.utils.ImageUtils
+import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.customview.ClipViewLayout.getRealFilePathFromUri
+import com.gkzxhn.legalconsulting.entity.UploadFile
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
 import com.gkzxhn.legalconsulting.utils.*
+import com.google.gson.Gson
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_user_setting.*
 import kotlinx.android.synthetic.main.default_top.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Response
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.io.File
+import java.util.*
 
 /**
  * @classname：UserSettingActivity
@@ -208,6 +220,7 @@ class UserSettingActivity : BaseActivity() {
                         iv_user_setting_image.setImageBitmap(bitMap)
                         //此处后面可以将bitMap转为二进制上传后台网络
                         //......
+                        uploadFiles(File(cropImagePath))
 
                     }
                 }
@@ -248,6 +261,72 @@ class UserSettingActivity : BaseActivity() {
         intent.putExtra("type", 2)
         intent.data = uri
         startActivityForResult(intent, REQUEST_CROP_PHOTO)
+    }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/26 2:06 PM.
+     * @description：上传头像
+     */
+    private fun uploadAvatar(fileId: String, thumb: String) {
+        var map = LinkedHashMap<String, String>()
+        map["fileId"] = fileId
+        map["thumb"] = thumb
+        var body2 = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                Gson().toJson(map))
+        RetrofitClient.getInstance(this).mApi?.uploadAvatar(body2)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
+                    override fun success(date: Response<Void>) {
+                        if (date.code() == 200) {
+                            showToast("上传成功")
+                        }
+                    }
+
+                })
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/26 2:07 PM.
+     * @description：上传文件
+     */
+    private fun uploadFiles(file: File) {
+        val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        RetrofitClientLogin.getInstance(this).mApi?.uploadFiles(body)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<UploadFile>(this) {
+                    override fun success(date: UploadFile) {
+                        date.id?.let {
+                            //                            downloadFile(it)
+                            val fileBase64Str = ImageUtils.imageToBase64(file.path)
+                            if (fileBase64Str != null) {
+                                uploadAvatar(date.id, fileBase64Str)
+                            }
+                        }
+                    }
+                })
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/26 2:06 PM.
+     * @description： 下载文件
+     */
+    private fun downloadFile(id: String) {
+        RetrofitClientLogin.getInstance(this).mApi?.downloadFile(id)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
+                    override fun success(date: Response<Void>) {
+
+                    }
+
+                })
     }
 
 

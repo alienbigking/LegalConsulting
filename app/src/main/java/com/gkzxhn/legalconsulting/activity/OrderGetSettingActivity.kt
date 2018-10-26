@@ -2,9 +2,7 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.view.View
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.common.App
-import com.gkzxhn.legalconsulting.common.Constants.ORDER_GET_STATE
-import com.gkzxhn.legalconsulting.common.Constants.SP_ORDER_GET_STATE
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.showToast
@@ -29,7 +27,7 @@ class OrderGetSettingActivity : BaseActivity() {
 
     override fun init() {
         initTopTitle()
-        getOrderState = intent.getStringExtra(ORDER_GET_STATE)
+        getOrderState = intent.getStringExtra(Constants.ORDER_GET_STATE)
         changeGetOrderState()
     }
 
@@ -50,15 +48,11 @@ class OrderGetSettingActivity : BaseActivity() {
         /****** 忙碌 ******/
             R.id.v_order_get_setting1_bg -> {
                 getOrderState = "1"
-                App.EDIT?.putString(SP_ORDER_GET_STATE, getOrderState)?.commit()
-                changeGetOrderState()
                 setOrderState("BUSY")
             }
         /****** 接单 ******/
             R.id.v_order_get_setting2_bg -> {
                 getOrderState = "2"
-                App.EDIT?.putString(SP_ORDER_GET_STATE, getOrderState)?.commit()
-                changeGetOrderState()
                 setOrderState("RECEIVING")
 
             }
@@ -94,6 +88,7 @@ class OrderGetSettingActivity : BaseActivity() {
                         when (t.code()) {
                             204 -> {
                                 showToast("设置成功")
+                                changeGetOrderState()
                             }
                             else -> {
                                 showToast(t.code().toString() + t.message())

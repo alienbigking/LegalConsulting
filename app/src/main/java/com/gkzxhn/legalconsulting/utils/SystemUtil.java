@@ -96,6 +96,7 @@ public class SystemUtil {
 
     /**
      * 获取缓存大小
+     *
      * @param context
      * @return
      * @throws Exception
@@ -105,11 +106,12 @@ public class SystemUtil {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             cacheSize += getFolderSize(context.getExternalCacheDir());
         }
-        return getFormatSize(cacheSize);
+        return getFormatSize(cacheSize, true);
     }
 
     /**
      * 清除缓存
+     *
      * @param context
      */
     public static void clearAllCache(Context context) {
@@ -155,6 +157,7 @@ public class SystemUtil {
 
     /**
      * 格式化单位
+     *
      * @param size
      * @return
      */
@@ -162,6 +165,7 @@ public class SystemUtil {
         double kiloByte = size / 1024;
         if (kiloByte < 1) {
 //            return size + "Byte";
+//            return "0K";
             return "0K";
         }
 
@@ -188,6 +192,28 @@ public class SystemUtil {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
                 + "TB";
+    }
+
+    /**
+     * 格式化单位  只取M
+     *
+     * @param size
+     * @return
+     */
+    public static String getFormatSize(double size, boolean d) {
+        double kiloByte = size / 1024;
+        double megaByte = kiloByte / 1024;
+
+        if (kiloByte < 1) {
+            return "0M";
+        } else {
+            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP)
+                    .toPlainString() + "M";
+
+        }
+
+
     }
 
     //首先我们先获取当前图片的旋转角度
@@ -223,6 +249,7 @@ public class SystemUtil {
         mtx.postRotate(rotate);
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
+
 
 
 }

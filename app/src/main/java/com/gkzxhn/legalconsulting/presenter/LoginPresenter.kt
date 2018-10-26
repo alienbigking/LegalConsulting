@@ -11,9 +11,10 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.net.RetrofitClient
-import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
-import com.gkzxhn.legalconsulting.utils.*
+import com.gkzxhn.legalconsulting.utils.ObtainVersion
+import com.gkzxhn.legalconsulting.utils.StringUtils
+import com.gkzxhn.legalconsulting.utils.TsDialog
+import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.LoginView
 import com.google.gson.Gson
 import okhttp3.MediaType
@@ -22,7 +23,6 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Response
 import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -59,10 +59,8 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
             mContext?.showToast("手机号格式不正确")
         } else {
             mContext?.let {
-                RetrofitClientLogin.Companion.getInstance(it).mApi
-                        ?.getCode(mView?.getPhone()!!)
-                        ?.subscribeOn(Schedulers.io())
-                        ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                mModel.getCode(it, mView?.getPhone()!!)
+                        .unsubscribeOn(AndroidSchedulers.mainThread())
                         ?.observeOn(AndroidSchedulers.mainThread())
                         ?.subscribe(object : HttpObserver<Response<Void>>(it) {
                             override fun success(t: Response<Void>) {
@@ -97,13 +95,10 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
         map["verificationCode"] = mView?.getCode().toString()
         map["name"] = mView?.getPhone().toString()
         map["group"] = "LAWYER"
-        getRequestMap(mContext!!, map)
-        var create = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+        var body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                 Gson().toJson(map))
-        RetrofitClientLogin.Companion.getInstance(mContext!!).mApi
-                ?.login(create)
-                ?.subscribeOn(Schedulers.io())
-                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+        mModel.login(mContext!!, body)
+                .unsubscribeOn(AndroidSchedulers.mainThread())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : HttpObserver<Response<Void>>(mContext!!) {
                     override fun success(t: Response<Void>) {
@@ -142,8 +137,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                         }
                     }
                 }
-
-
                 )
 
     }
@@ -154,38 +147,28 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
      * @description：获取Token
      */
     private fun getToken(phoneNumber: String, code: String) {
-        var map = LinkedHashMap<String, String>()
-        getRequestMap(mContext!!, map)
-        RetrofitClientLogin.Companion.getInstance(mContext!!)
-                .mApi?.getToken("password", phoneNumber, code)
-                ?.subscribeOn(Schedulers.io())
-//                ?.unsubscribeOn(AndroidSchedulers.mainThread())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : HttpObserver<ResponseBody>(mContext!!) {
-                    override fun success(t: ResponseBody) {
-                        var string = t.string()
-                        if (!TextUtils.isEmpty(string)) {
-                            var token: String? = null
-                            var refreshToken: String? = null
-                            try {
-                                token = JSONObject(string).getString("access_token")
-                                refreshToken = JSONObject(string).getString("refresh_token")
-                            } catch (e: Exception) {
+        mContext?.let {
+            mModel.getToken(it, phoneNumber, code)?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<ResponseBody>(it) {
+                        override fun success(t: ResponseBody) {
+                            val string = t.string()
+                            if (!TextUtils.isEmpty(string)) {
+                                var token: String? = null
+                                var refreshToken: String? = null
+                                try {
+                                    token = JSONObject(string).getString("access_token")
+                                    refreshToken = JSONObject(string).getString("refresh_token")
+                                } catch (e: Exception) {
+
+                                }
+                                App.EDIT?.putString(Constants.SP_TOKEN, token)?.commit()
+                                App.EDIT?.putString("refreshToken", refreshToken)?.commit()
+                                getLawyersInfo()
 
                             }
-                            App.EDIT?.putString(Constants.SP_TOKEN, token)?.commit()
-                            App.EDIT?.putString("refreshToken", refreshToken)?.commit()
-                            getLawyersInfo()
-
-//                            mContext?.showToast(token.toString())
                         }
-                    }
-
-
-                    override fun onError(t: Throwable?) {
-
-                    }
-                })
+                    })
+        }
     }
 
     /**
@@ -193,21 +176,21 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
      * @description：获取律师信息
      */
     private fun getLawyersInfo() {
-        RetrofitClient.getInstance(mContext!!).mApi?.getLawyersInfo()
-                ?.subscribeOn(Schedulers.io())
-                ?.unsubscribeOn(AndroidSchedulers.mainThread())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
-                    override fun success(date: LawyersInfo) {
-                        mContext?.startActivity(Intent(mContext, MainActivity::class.java))
-                    }
+        mContext?.let {
+            mModel.getLawyersInfo(it)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
+                        override fun success(date: LawyersInfo) {
+                            mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                        }
 
-                    override fun onError(t: Throwable?) {
-                        super.onError(t)
-                        mContext?.startActivity(Intent(mContext, MainActivity::class.java))
-
-                    }
-                })
+                        override fun onError(t: Throwable?) {
+                            super.onError(t)
+                            mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                        }
+                    })
+        }
 
     }
 

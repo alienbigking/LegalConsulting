@@ -1,8 +1,10 @@
 package com.gkzxhn.legalconsulting.model
 
 import android.content.Context
-import com.gkzxhn.legalconsulting.entity.Login
-import com.gkzxhn.legalconsulting.net.BaseResponseEntity
+import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Response
 import rx.Observable
 
 
@@ -13,13 +15,12 @@ import rx.Observable
  */
 
 interface ILoginModel : IBaseModel {
-    fun sendMessage(context: Context, map: Map<String, String>): Observable<BaseResponseEntity<String>>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    fun login(context: Context, map: Map<String, String>): Observable<BaseResponseEntity<Login>>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    fun getCode(context: Context, phone: String): Observable<Response<Void>>
 
+    fun getLawyersInfo(context: Context): Observable<LawyersInfo>
 
+    fun login(context: Context, body: RequestBody): Observable<Response<Void>>
+
+    fun getToken(context: Context, phoneNumber: String, code: String): Observable<ResponseBody>?
 }

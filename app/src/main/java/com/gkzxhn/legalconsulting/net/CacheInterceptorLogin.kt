@@ -3,6 +3,8 @@ package com.gkzxhn.legalconsulting.net
 import android.content.Context
 import android.util.Base64
 import android.util.Log
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.utils.NetworkUtils
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -23,7 +25,12 @@ class CacheInterceptorLogin(context: Context) : Interceptor {
             val credentials = "lawyer.app" + ":" + "506a7b6dfc5d42fe857ea9494bb24014"
             val basic = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
 
+            val token = App.SP?.getString(Constants.SP_TOKEN, "")
+
+            val mtoken = "Bearer $token"
+
             val method = request?.newBuilder()?.addHeader("Authorization", basic)
+                    ?.addHeader("Authorization", mtoken)
                     ?.method(request.method(), request.body())
 
             return chain?.proceed(method?.build())

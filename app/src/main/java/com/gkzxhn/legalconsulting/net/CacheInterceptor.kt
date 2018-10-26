@@ -23,9 +23,7 @@ class CacheInterceptor(context: Context) : Interceptor {
         var request = chain?.request()
         if (NetworkUtils.isNetConneted(context)) {
 
-//            val mtoken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXV0aCIsImxlZ2FsIl0sInVzZXJfbmFtZSI6IjIzZGZlNzBjOTUyOTQ5ZmI4NTdlN2I3Yjc5MDVhOGNlIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUzOTk5ODg0NiwianRpIjoiOGRjNGIyNGYtMWE5NS00M2Y2LTllZjMtMmVkNWE5ZDcwOGI4IiwidGVuYW50IjpudWxsLCJjbGllbnRfaWQiOiJsYXd5ZXIuYXBwIn0.rb8GLrs7exgQh-heMsA1JCzF74kqLR2JWh7M-zTfHZw"
             val token = App.SP?.getString(Constants.SP_TOKEN, "")
-//            val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXV0aCIsImxlZ2FsIl0sInVzZXJfbmFtZSI6IjIzZGZlNzBjOTUyOTQ5ZmI4NTdlN2I3Yjc5MDVhOGNlIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUzOTk5ODg0NiwianRpIjoiOGRjNGIyNGYtMWE5NS00M2Y2LTllZjMtMmVkNWE5ZDcwOGI4IiwidGVuYW50IjpudWxsLCJjbGllbnRfaWQiOiJsYXd5ZXIuYXBwIn0.rb8GLrs7exgQh-heMsA1JCzF74kqLR2JWh7M-zTfHZw"
 
             val mtoken = "Bearer $token"
             val method = request?.newBuilder()?.addHeader("Authorization", mtoken)

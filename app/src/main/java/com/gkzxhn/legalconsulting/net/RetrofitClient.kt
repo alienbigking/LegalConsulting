@@ -82,7 +82,7 @@ class RetrofitClient private constructor(context: Context, baseUrl: String) {
             if (instance == null) {
                 synchronized(RetrofitClient::class) {
                     if (instance == null) {
-                        instance = RetrofitClient(context, ApiService.BASE_URL)
+                        instance = RetrofitClient(context, NetWorkCodeInfo.BASE_URL_PROJECT)
                     }
                 }
             }

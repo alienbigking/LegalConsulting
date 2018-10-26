@@ -5,7 +5,6 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.getRequestMap
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_idea_submit.*
@@ -47,7 +46,6 @@ class IdeaSubmitActivity : BaseActivity() {
         var map = LinkedHashMap<String, String>()
         map["title"] = titile
         map["content"] = content
-        getRequestMap(this, map)
         var Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), Gson().toJson(map))
         RetrofitClient.getInstance(this).mApi?.feedback(Body)
                 ?.subscribeOn(Schedulers.io())
