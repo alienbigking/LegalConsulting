@@ -12,8 +12,8 @@ import android.util.Log
 import android.view.View
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
-import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.customview.ClipViewLayout.getRealFilePathFromUri
 import com.gkzxhn.legalconsulting.entity.UploadFile
@@ -50,7 +50,8 @@ class UserSettingActivity : BaseActivity() {
     private val REQUEST_CROP_PHOTO = 104     //简单裁剪头像
     lateinit var photoDir: File
     var mTakePhotoUri: Uri? = null      //拍照uri
-
+    private var name = ""
+    private var phoneNumber = ""
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_user_setting
@@ -59,6 +60,17 @@ class UserSettingActivity : BaseActivity() {
     override fun init() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_user_setting_change_phone)
+        name = intent.getStringExtra("name")
+        phoneNumber = intent.getStringExtra("phoneNumber")
+        tv_user_setting_change_name.text = name
+        val avatarStr = App.SP?.getString(Constants.SP_AVATARFILE, "")
+        if (avatarStr?.isNotEmpty()!!) {
+            val decodeFile = BitmapFactory.decodeFile(avatarStr)
+            iv_user_setting_image.setImageBitmap(decodeFile)
+        }
+        tv_user_setting_phone.text = StringUtils.phoneChange(phoneNumber)
+
+
         photoDir = File(externalCacheDir, "photo")
         if (!photoDir.exists()) {
             photoDir.mkdirs()
@@ -70,8 +82,6 @@ class UserSettingActivity : BaseActivity() {
         iv_default_top_back.setOnClickListener {
             finish()
         }
-
-
     }
 
 
@@ -85,9 +95,11 @@ class UserSettingActivity : BaseActivity() {
             }
         /****** 更换手机号 ******/
             R.id.tv_user_setting_change_phone -> {
-                newIntent<ChangePhoneFirstActivity>()
+                var intent = Intent(this, ChangePhoneFirstActivity::class.java)
+                intent.putExtra("phoneNumber", phoneNumber)
+                startActivity(intent)
+                finish()
             }
-
         }
     }
 
@@ -219,7 +231,6 @@ class UserSettingActivity : BaseActivity() {
                         val bitMap = BitmapFactory.decodeFile(cropImagePath)
                         iv_user_setting_image.setImageBitmap(bitMap)
                         //此处后面可以将bitMap转为二进制上传后台网络
-                        //......
                         uploadFiles(File(cropImagePath))
 
                     }
@@ -325,10 +336,8 @@ class UserSettingActivity : BaseActivity() {
                     override fun success(date: Response<Void>) {
 
                     }
-
                 })
     }
-
 
 }
 

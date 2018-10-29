@@ -18,14 +18,14 @@
         android:textSize="16sp"/>
 
     <!--个人信息栏-->
-    <View
+    <view
         android:id="@+id/v_user_top_bg"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@mipmap/ic_user_top_bg"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_title"/>
 
-    <ImageView
+    <com.gkzxhn.legalconsulting.customview.CircleImageView
         android:id="@+id/iv_user_icon"
         android:layout_width="66dp"
         android:layout_height="66dp"

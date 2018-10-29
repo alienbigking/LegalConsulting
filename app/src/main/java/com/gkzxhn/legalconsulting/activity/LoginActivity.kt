@@ -23,6 +23,10 @@ import kotlinx.android.synthetic.main.activity_login.tv_login_login as login
 
 class LoginActivity : BaseActivity(), LoginView {
 
+    override fun onFinish() {
+        finish()
+    }
+
 
     var timeDisposable: Disposable? = null      //倒计时任务
     private var sendClick: Boolean = false  //是否已经点击发送验证码

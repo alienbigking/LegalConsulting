@@ -6,7 +6,7 @@ package com.gkzxhn.legalconsulting.view
  *    -----2018/9/6
  */
 
-interface LoginView : BaseView {
+interface PhoneChangeView : BaseView {
     fun getPhone(): String
     fun getCode(): String
     fun stopCountDown()

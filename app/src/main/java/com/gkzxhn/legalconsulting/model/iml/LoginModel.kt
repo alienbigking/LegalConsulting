@@ -43,5 +43,12 @@ class LoginModel : BaseModel(), ILoginModel {
                 ?.subscribeOn(Schedulers.io())
     }
 
+    override fun uploadCrash(context: Context, body: RequestBody): Observable<Response<Void>> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.uploadCrash(body)
+                ?.subscribeOn(Schedulers.io())
+                as Observable<Response<Void>>
+    }
+
 
 }

@@ -1,7 +1,5 @@
 package com.gkzxhn.legalconsulting.net.error_exception;
 
-import android.util.Log;
-
 import com.gkzxhn.legalconsulting.net.BaseResponseEntity;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -37,7 +35,7 @@ public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody,T>
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
         BaseResponseEntity result = mGson.fromJson(response, BaseResponseEntity.class);
-        Log.e("okhttp", "convert: okhttp"+result.message+response );
+//        Log.e("okhttp", "convert: okhttp"+result.message+response );
 //        //判断code可自己改动
 //        if (result.code != 200) {
 //            value.close();

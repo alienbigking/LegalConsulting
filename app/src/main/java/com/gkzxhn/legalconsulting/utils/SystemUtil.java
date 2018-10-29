@@ -93,10 +93,8 @@ public class SystemUtil {
         return null;
     }
 
-
     /**
      * 获取缓存大小
-     *
      * @param context
      * @return
      * @throws Exception

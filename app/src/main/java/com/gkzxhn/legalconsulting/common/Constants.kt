@@ -13,7 +13,7 @@ object Constants {
 
     val ORDER_GET_STATE = "getOrderState"
 
-//    专业领域选择 页面间传值
+    //    专业领域选择 页面间传值
     val RESULT_CHOOSE_MAJORS = "Result_Choose_majors"
     val INTENT_SELECTSTRING = "INTENT_SELECTSTRING"
     val REQUESTCODE_CHOOSE_MAJORS = 0x111111
@@ -24,6 +24,11 @@ object Constants {
 
 //    存储项目验证Token的状态
     val SP_TOKEN = "SP_Token"
+    val SP_PHONE = "SP_PHONE"
+    //    头像的绝对路径
+    val SP_AVATARFILE = "sp_avatarFile"
+    //    头像的base64码
+    val SP_AVATAR_THUMB = "sp_avatar_thumb"
 
     /**
      * 头像裁剪URI

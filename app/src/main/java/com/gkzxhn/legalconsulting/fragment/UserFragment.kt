@@ -3,13 +3,15 @@ package com.gkzxhn.legalconsulting.fragment
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.View
-import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.*
+import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.Profiles
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import kotlinx.android.synthetic.main.user_fragment.*
@@ -25,7 +27,7 @@ import java.io.File
  */
 
 class UserFragment : BaseFragment(), View.OnClickListener {
-
+    var lawyersInfo: LawyersInfo? = null
 
     override fun provideContentViewId(): Int {
         return R.layout.user_fragment
@@ -72,7 +74,10 @@ class UserFragment : BaseFragment(), View.OnClickListener {
             }
 //            个人信息栏
             R.id.v_user_top_bg -> {
-                context?.startActivity(Intent(context, UserSettingActivity::class.java))
+                val intent = Intent(context, UserSettingActivity::class.java)
+                intent.putExtra("name", lawyersInfo?.name)
+                intent.putExtra("phoneNumber", lawyersInfo?.phoneNumber)
+                context?.startActivity(intent)
             }
         }
     }
@@ -95,23 +100,43 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(it) {
                         override fun success(date: LawyersInfo) {
-                            tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
-                            tv_user_name.text = date.name
-                            tv_user_fragment_get_order_state.text = if (date.profiles?.serviceStatus == "BUSY") "忙碌" else "接单"
-                            val file = File(contexts?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
-                            if (date.profiles?.avatarThumb != null) {
-                                val base64ToFile = ImageUtils.base64ToFile(date.profiles.avatarThumb!!, file.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
-                                    iv_user_icon.setImageBitmap(decodeFile)
-                                }
-
-                            }
+                            lawyersInfo = date
+                            date.profiles?.let { it1 -> loadUI(date, it1) }
                         }
 
                     })
         }
 
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/26 3:46 PM.
+     * @description：处理UI数据
+     */
+    private fun loadUI(date: LawyersInfo, profiles: Profiles) {
+        tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
+        tv_user_name.text = date.name
+        tv_user_fragment_get_order_state.text = if (date.profiles?.serviceStatus == "BUSY") "忙碌" else "接单"
+        App.EDIT.putString(Constants.SP_PHONE,date.phoneNumber)?.commit()
+
+        /****** 如果图片和上次一致就不转化了 ******/
+        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.profiles?.avatarThumb)!!) {
+            val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
+            iv_user_icon.setImageBitmap(decodeFile)
+        } else {
+            val file = File(context?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
+            if (date.profiles?.avatarThumb != null) {
+                val base64ToFile = ImageUtils.base64ToFile(profiles.avatarThumb!!, file.absolutePath)
+                if (base64ToFile) {
+                    App.EDIT.putString(Constants.SP_AVATARFILE, file.absolutePath)?.commit()
+                    App.EDIT.putString(Constants.SP_AVATAR_THUMB, profiles.avatarThumb)?.commit()
+
+                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
+                    iv_user_icon.setImageBitmap(decodeFile)
+                }
+
+            }
+        }
     }
 
 }

@@ -11,7 +11,6 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.utils.ObtainVersion
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.gkzxhn.legalconsulting.utils.TsDialog
 import com.gkzxhn.legalconsulting.utils.showToast
@@ -32,14 +31,6 @@ import java.util.*
  */
 
 class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginModel, LoginView>(context, LoginModel(), view) {
-
-    var time: String? = null
-    var versionName: String? = null
-
-    //构造方法
-    init {
-        versionName = ObtainVersion.getVersionName(App.mContext)
-    }
 
     fun login() {
         if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
@@ -138,7 +129,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     }
                 }
                 )
-
     }
 
 
@@ -183,6 +173,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
                         override fun success(date: LawyersInfo) {
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                            mView?.onFinish()
                         }
 
                         override fun onError(t: Throwable?) {
@@ -193,6 +184,5 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
         }
 
     }
-
 
 }

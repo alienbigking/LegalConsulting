@@ -3,7 +3,8 @@ package com.gkzxhn.legalconsulting.activity
 import android.annotation.SuppressLint
 import android.view.View
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.utils.newIntent
+import com.gkzxhn.legalconsulting.presenter.PhoneChangePresenter
+import com.gkzxhn.legalconsulting.view.PhoneChangeView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -17,19 +18,32 @@ import java.util.concurrent.TimeUnit
  * @description：
  */
 
-class ChangePhoneSecondActivity : BaseActivity() {
+class ChangePhoneSecondActivity : BaseActivity(), PhoneChangeView {
+
 
     var timeDisposable: Disposable? = null      //倒计时任务
     private var sendClick: Boolean = false  //是否已经点击发送验证码
+    lateinit var mPresenter: PhoneChangePresenter
 
     override fun init() {
-
+        mPresenter = PhoneChangePresenter(this, this)
     }
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_change_phone_2
     }
 
+    override fun getPhone(): String {
+        return et_change_phone_number.text.trim().toString()
+    }
+
+    override fun getCode(): String {
+        return et_change_phone.text.trim().toString()
+    }
+
+    override fun onFinish() {
+        finish()
+    }
 
     fun onClickChangPhone(view: View) {
         when (view.id) {
@@ -39,13 +53,11 @@ class ChangePhoneSecondActivity : BaseActivity() {
             }
         /****** 下一步 ******/
             R.id.tv_change_phone_next -> {
-                newIntent<ChangePhoneSecondActivity>()
+                mPresenter.updatePhoneNumber()
             }
         /****** 发送验证码 ******/
             R.id.tv_change_phone_code_send -> {
-                if (!sendClick) {
-                    startCountDown(60)
-                }
+                mPresenter.sendCode()
             }
 
         }
@@ -55,7 +67,7 @@ class ChangePhoneSecondActivity : BaseActivity() {
      * 开始倒计时
      */
     @SuppressLint("SetTextI18n")
-    fun startCountDown(seconds: Int) {
+    override fun startCountDown(seconds: Int) {
         sendClick = true
         timeDisposable = Observable.interval(0, 1L, TimeUnit.SECONDS)
                 .take(seconds + 1L)
@@ -81,7 +93,7 @@ class ChangePhoneSecondActivity : BaseActivity() {
     /**
      * 停止倒计时
      */
-    fun stopCountDown() {
+    override fun stopCountDown() {
         sendClick = false
         if (timeDisposable != null) {
             if (!timeDisposable!!.isDisposed) {

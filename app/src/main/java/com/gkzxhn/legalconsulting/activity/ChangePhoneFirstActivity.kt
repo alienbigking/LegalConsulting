@@ -4,7 +4,9 @@ package com.gkzxhn.legalconsulting.activity
 import android.annotation.SuppressLint
 import android.view.View
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.utils.newIntent
+import com.gkzxhn.legalconsulting.presenter.PhoneChangePresenter
+import com.gkzxhn.legalconsulting.utils.StringUtils
+import com.gkzxhn.legalconsulting.view.PhoneChangeView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -18,18 +20,35 @@ import java.util.concurrent.TimeUnit
  * @description：
  */
 
-class ChangePhoneFirstActivity : BaseActivity() {
+class ChangePhoneFirstActivity : BaseActivity(), PhoneChangeView {
+
+
+    override fun onFinish() {
+        finish()
+    }
+
 
     var timeDisposable: Disposable? = null      //倒计时任务
     private var sendClick: Boolean = false  //是否已经点击发送验证码
-
-    override fun init() {
-
-
-    }
+    var phoneNumber: String = ""
+    lateinit var mPresenter: PhoneChangePresenter
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_change_phone_1
+    }
+
+    override fun init() {
+        mPresenter = PhoneChangePresenter(this, this)
+        phoneNumber = intent.getStringExtra("phoneNumber")
+        tv_change_phone_number.text = StringUtils.phoneChange(phoneNumber)
+    }
+
+    override fun getPhone(): String {
+        return phoneNumber
+    }
+
+    override fun getCode(): String {
+        return et_change_phone.text.trim().toString()
     }
 
     fun onClickChangPhone(view: View) {
@@ -40,13 +59,11 @@ class ChangePhoneFirstActivity : BaseActivity() {
             }
         /****** 下一步 ******/
             R.id.tv_change_phone_next -> {
-                newIntent<ChangePhoneSecondActivity>()
+                mPresenter.login()
             }
         /****** 发送验证码 ******/
             R.id.tv_change_phone_code_send -> {
-                if (!sendClick) {
-                    startCountDown(60)
-                }
+                mPresenter.sendCode()
             }
 
         }
@@ -57,7 +74,7 @@ class ChangePhoneFirstActivity : BaseActivity() {
      * 开始倒计时
      */
     @SuppressLint("SetTextI18n")
-    fun startCountDown(seconds: Int) {
+    override fun startCountDown(seconds: Int) {
         sendClick = true
         timeDisposable = Observable.interval(0, 1L, TimeUnit.SECONDS)
                 .take(seconds + 1L)
@@ -83,7 +100,7 @@ class ChangePhoneFirstActivity : BaseActivity() {
     /**
      * 停止倒计时
      */
-    fun stopCountDown() {
+    override fun stopCountDown() {
         sendClick = false
         if (timeDisposable != null) {
             if (!timeDisposable!!.isDisposed) {
@@ -94,6 +111,5 @@ class ChangePhoneFirstActivity : BaseActivity() {
         tv_change_phone_code_send.text = getString(R.string.get_verify)
         tv_change_phone_code_send.setTextColor(resources.getColor(R.color.dark_blue))
     }
-
 
 }

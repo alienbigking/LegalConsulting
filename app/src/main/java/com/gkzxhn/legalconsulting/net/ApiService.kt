@@ -31,8 +31,7 @@ interface ApiService {
      * 修改我的手机号码
      */
     @PUT("users/me/phone-number")
-    fun updatePhoneNumber(@HeaderMap headers: Map<String, String>,
-                          @Body requestBody: RequestBody): Observable<Response<Void>>
+    fun updatePhoneNumber(@Body requestBody: RequestBody): Observable<Response<Void>>
 
     @GET("lawyer/profiles")
     fun getLawyersInfo(): Observable<LawyersInfo>
@@ -56,6 +55,10 @@ interface ApiService {
                  @Field("username") username: String? = null,
                  @Field("password") password: String? = null,
                  @Field("refresh_token") refreshToken: String? = null): Observable<ResponseBody>
+
+    /*****  崩溃日志上传  */
+    @POST("lawyers/crash")
+    fun uploadCrash(@Body map: RequestBody): Observable<Response<Void>>
 
     /*****  上传头像  */
     @POST("lawyer/profiles/avatar")
