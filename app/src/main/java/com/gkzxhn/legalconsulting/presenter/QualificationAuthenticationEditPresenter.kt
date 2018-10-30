@@ -9,9 +9,9 @@ import com.gkzxhn.legalconsulting.utils.ObtainVersion
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationEditView
 
 /**
- * Explanation: 登录
- * @author LSX
- *    -----2018/1/22
+ * @author：liushaoxiang
+ * @date：2018/10/30 11:56 AM
+ * @description： * @classname：认证页面信息
  */
 
 class QualificationAuthenticationEditPresenter(context: Context, view: QualificationAuthenticationEditView) : BasePresenter<BaseModel, QualificationAuthenticationEditView>(context, BaseModel(), view) {

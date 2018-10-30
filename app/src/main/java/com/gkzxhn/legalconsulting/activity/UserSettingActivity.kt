@@ -63,7 +63,7 @@ class UserSettingActivity : BaseActivity() {
         name = intent.getStringExtra("name")
         phoneNumber = intent.getStringExtra("phoneNumber")
         tv_user_setting_change_name.text = name
-        val avatarStr = App.SP?.getString(Constants.SP_AVATARFILE, "")
+        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
             val decodeFile = BitmapFactory.decodeFile(avatarStr)
             iv_user_setting_image.setImageBitmap(decodeFile)
@@ -111,7 +111,7 @@ class UserSettingActivity : BaseActivity() {
         MaterialDialog.Builder(this)
                 .title(getString(R.string.please_choice_photo_from))
                 .items(getString(R.string.take_photo), getString(R.string.photo_album))
-                .itemsGravity(GravityEnum.CENTER)
+                .itemsGravity(GravityEnum.START)
                 .itemsCallback { dialog, itemView, position, text ->
                     when (position) {
                         0 -> {

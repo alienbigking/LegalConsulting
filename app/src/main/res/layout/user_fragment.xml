@@ -18,7 +18,7 @@
         android:textSize="16sp"/>
 
     <!--个人信息栏-->
-    <view
+    <View
         android:id="@+id/v_user_top_bg"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -58,7 +58,6 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/iv_user_icon"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name"/>
-
 
     <!--白色背景-->
     <View

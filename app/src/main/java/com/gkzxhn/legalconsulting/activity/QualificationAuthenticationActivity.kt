@@ -16,22 +16,20 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as top_ti
 
 class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthenticationView {
 
-
     var mPresenter: QualificationAuthenticationPresenter? = null
-
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_qualification_authentication
     }
 
     override fun init() {
+
         mPresenter = QualificationAuthenticationPresenter(this, this)
         qualificationAuthentication.setOnClickListener {
             mPresenter?.qualificationAuthentication()
         }
 
         initTitleTop()
-
 
     }
 
@@ -41,15 +39,14 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
         }
         top_title.text = "资格认证"
 
-
     }
 
-    override fun changeMessage(message: String) {
-        qualificationAuthenticationMessage.text = message
+    override fun changeMessage(string: String) {
+        qualificationAuthenticationMessage.text = string
     }
 
-    override fun changeQualificationAuthentication(message: String) {
-        qualificationAuthentication.text = message
+    override fun changeQualificationAuthentication(string: String) {
+        qualificationAuthentication.text = string
     }
 
     override fun changeQualificationAuthenticationVisibility(visibility: Int) {

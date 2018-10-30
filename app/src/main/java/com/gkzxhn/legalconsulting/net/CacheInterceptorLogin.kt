@@ -26,7 +26,7 @@ class CacheInterceptorLogin(context: Context) : Interceptor {
             val basic = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
             val addHeader = request?.newBuilder()?.addHeader("Authorization", basic)
 
-            val token = App.SP?.getString(Constants.SP_TOKEN, "")
+            val token = App.SP.getString(Constants.SP_TOKEN, "")
             if (token != null) {
                 if (token.isNotEmpty()) {
                     val mtoken = "Bearer $token"
@@ -34,7 +34,6 @@ class CacheInterceptorLogin(context: Context) : Interceptor {
                 }
             }
             val method = addHeader?.method(request!!.method(), request.body())
-
             return chain?.proceed(method?.build())
         } else {
             Log.e("CacheInterceptor", " no network load cahe")

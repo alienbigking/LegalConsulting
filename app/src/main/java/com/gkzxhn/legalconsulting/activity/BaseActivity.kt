@@ -13,7 +13,7 @@ import android.support.test.espresso.IdlingResource
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.gkzxhn.legalconsulting.utils.showToast
-import com.liushaoxiang.espressoautotest.idlingregistry.SimpleIdlingResource
+import com.gkzxhn.legalconsulting.idlingregistry.SimpleIdlingResource
 import com.tbruyelle.rxpermissions2.RxPermissions
 import rx.subscriptions.CompositeSubscription
 

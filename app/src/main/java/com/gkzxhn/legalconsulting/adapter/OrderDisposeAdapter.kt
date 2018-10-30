@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gkzxhn.legalconsulting.R
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
-import kotlinx.android.synthetic.main.item_conversation.view.*
 import kotlinx.android.synthetic.main.item_order_dispose.view.*
 import java.util.*
 
@@ -60,7 +59,7 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             val entity = mDatas[position]
-            tv_order_dispose_name.text = "待处理单："+position
+            tv_order_dispose_name.text = "待处理单：$position"
             holder.itemView.setOnClickListener(android.view.View.OnClickListener {
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this,holder,position)

@@ -54,10 +54,7 @@ class OrderGetSettingActivity : BaseActivity() {
             R.id.v_order_get_setting2_bg -> {
                 getOrderState = "2"
                 setOrderState("RECEIVING")
-
             }
-
-
         }
     }
 

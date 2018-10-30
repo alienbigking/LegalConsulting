@@ -20,7 +20,6 @@ import java.util.*
 
 class OrderReceivingAdapter(private val mContext: Context, private val data: List<String>?) : RecyclerView.Adapter<OrderReceivingAdapter.ViewHolder>() {
 
-
     private var mDatas: ArrayList<String> = ArrayList()
     private var onItemClickListener: MultiItemTypeAdapter.OnItemClickListener? = null
     private var mCurrentIndex = -1

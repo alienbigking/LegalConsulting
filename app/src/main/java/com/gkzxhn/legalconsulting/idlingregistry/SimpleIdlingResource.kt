@@ -1,4 +1,4 @@
-package com.liushaoxiang.espressoautotest.idlingregistry
+package com.gkzxhn.legalconsulting.idlingregistry
 
 import android.support.test.espresso.IdlingResource
 import java.util.concurrent.atomic.AtomicBoolean

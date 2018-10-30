@@ -99,9 +99,9 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     ?.unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(it) {
-                        override fun success(date: LawyersInfo) {
-                            lawyersInfo = date
-                            date.profiles?.let { it1 -> loadUI(date, it1) }
+                        override fun success(t: LawyersInfo) {
+                            lawyersInfo = t
+                            t.profiles?.let { it1 -> loadUI(t, it1) }
                         }
 
                     })
@@ -117,11 +117,11 @@ class UserFragment : BaseFragment(), View.OnClickListener {
         tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
         tv_user_name.text = date.name
         tv_user_fragment_get_order_state.text = if (date.profiles?.serviceStatus == "BUSY") "忙碌" else "接单"
-        App.EDIT.putString(Constants.SP_PHONE,date.phoneNumber)?.commit()
+        App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
 
         /****** 如果图片和上次一致就不转化了 ******/
-        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.profiles?.avatarThumb)!!) {
-            val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
+        val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
+        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.profiles?.avatarThumb)!! && decodeFile != null) {
             iv_user_icon.setImageBitmap(decodeFile)
         } else {
             val file = File(context?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
@@ -134,6 +134,10 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
                     iv_user_icon.setImageBitmap(decodeFile)
                 }
+
+            }else{
+                App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
+                App.EDIT.putString(Constants.SP_AVATAR_THUMB, "")?.commit()
 
             }
         }

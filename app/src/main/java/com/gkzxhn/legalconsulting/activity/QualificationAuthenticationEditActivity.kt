@@ -20,8 +20,7 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
 
-
-    var mPresenter: QualificationAuthenticationEditPresenter? = null
+    lateinit var mPresenter: QualificationAuthenticationEditPresenter
     var selectString: ArrayList<String>? = arrayListOf()
 
     override fun provideContentViewId(): Int {
@@ -36,8 +35,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         }
 
         send.setOnClickListener {
-
-            mPresenter?.send()
+            mPresenter.send()
         }
     }
 
@@ -46,7 +44,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         /****** 专业领域 ******/
             R.id.v_qualification_authentication_professional_field_bg -> {
                 val intent = Intent(this, ChooseMajorsActivity::class.java)
-                intent.putStringArrayListExtra(Constants.INTENT_SELECTSTRING,selectString )
+                intent.putStringArrayListExtra(Constants.INTENT_SELECTSTRING, selectString)
                 startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
             }
         /****** 律所地址 ******/
@@ -57,9 +55,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             R.id.v_qualification_authentication_territory_bg -> {
 
             }
-
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -74,8 +70,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                 tv_qualification_authentication_professional_list.text = professionalList.substring(1, professionalList.length)
             }
         }
-
-
     }
 
 }

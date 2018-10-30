@@ -27,7 +27,7 @@ class SplashActivity : BaseActivity() {
     }
 
     val handler = Handler(Handler.Callback {
-        if (App.SP?.getString(Constants.SP_TOKEN, "")?.isNotBlank()!!) {
+        if (App.SP.getString(Constants.SP_TOKEN, "")?.isNotBlank()!!) {
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         } else {
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
