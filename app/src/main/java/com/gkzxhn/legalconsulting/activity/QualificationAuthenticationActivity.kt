@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as top_ti
 
 class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthenticationView {
 
-    var mPresenter: QualificationAuthenticationPresenter? = null
+    lateinit var mPresenter: QualificationAuthenticationPresenter
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_qualification_authentication
@@ -25,12 +25,14 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
     override fun init() {
 
         mPresenter = QualificationAuthenticationPresenter(this, this)
+
         qualificationAuthentication.setOnClickListener {
-            mPresenter?.qualificationAuthentication()
+            mPresenter.qualificationAuthentication()
         }
 
         initTitleTop()
-
+        /****** 处理初始UI显示 ******/
+        mPresenter.loadUISetting()
     }
 
     private fun initTitleTop() {
@@ -41,14 +43,26 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
 
     }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/31 3:29 PM.
+     * @description：改变文字说明
+     */
     override fun changeMessage(string: String) {
         qualificationAuthenticationMessage.text = string
     }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/31 3:28 PM.
+     * @description：改变下一步的按扭字符
+     */
     override fun changeQualificationAuthentication(string: String) {
         qualificationAuthentication.text = string
     }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/31 3:28 PM.
+     * @description：是否显示下一步的按扭
+     */
     override fun changeQualificationAuthenticationVisibility(visibility: Int) {
         qualificationAuthentication.visibility = visibility
 

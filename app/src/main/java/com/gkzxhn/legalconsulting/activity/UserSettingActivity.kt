@@ -63,7 +63,7 @@ class UserSettingActivity : BaseActivity() {
         name = intent.getStringExtra("name")
         phoneNumber = intent.getStringExtra("phoneNumber")
         tv_user_setting_change_name.text = name
-        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
+        val avatarStr = App.SP?.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
             val decodeFile = BitmapFactory.decodeFile(avatarStr)
             iv_user_setting_image.setImageBitmap(decodeFile)
@@ -119,16 +119,8 @@ class UserSettingActivity : BaseActivity() {
                             requestPermission(fileName, TAKE_PHOTO_IMAGE, front)
                         }
                         1 -> {
-                            val openAlbumIntent = Intent(Intent.ACTION_PICK)
-                            openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
-                                val mGalleryFile = File(File(externalCacheDir, "photo"), "12345.jpg")
-                                val uriForFile = FileProvider.getUriForFile(this, "${packageName}.fileprovider", mGalleryFile)
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile)
-                                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            }
-                            startActivityForResult(openAlbumIntent, CHOOSE_PHOTO_IMAGE)
+                            //相册选择图片
+                            requestPermission()
                         }
                         else -> {
                         }
@@ -137,7 +129,23 @@ class UserSettingActivity : BaseActivity() {
                 .show()
     }
 
-    /****** 开始拍照  ******/
+    /**
+     * 相册选择图片
+     */
+    private fun chooseAlbum() {
+        val openAlbumIntent = Intent(Intent.ACTION_PICK)
+        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
+            val mGalleryFile = File(File(externalCacheDir, "photo"), "12345.jpg")
+            val uriForFile = FileProvider.getUriForFile(this, "$packageName.fileprovider", mGalleryFile)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile)
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivityForResult(Intent.createChooser(openAlbumIntent, "File Browser"), CHOOSE_PHOTO_IMAGE)
+    }
+
+    /****** 获取拍照权限  ******/
     fun requestPermission(fileName: String, requestCode: Int, front: Boolean) {
         if (Build.VERSION.SDK_INT >= 23) {
             RxPermissions(this)
@@ -172,7 +180,7 @@ class UserSettingActivity : BaseActivity() {
         }
         val file = File(photoDir, fileName)
         if (Build.VERSION.SDK_INT >= 24) {
-            mTakePhotoUri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", file)
+            mTakePhotoUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
             openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         } else {
             mTakePhotoUri = Uri.fromFile(file)
@@ -191,29 +199,63 @@ class UserSettingActivity : BaseActivity() {
         startActivityForResult(openCameraIntent, requestCode)
     }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/31 10:42 AM.
+     * @description：获取相册选择图片权限
+     */
+    fun requestPermission() {
+        var storageFlag = 0
+        RxPermissions(this)
+                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe({ permission: Permission ->
+                    if (permission.granted) {
+                        // 用户已经同意该权限
+                        if (++storageFlag == 2) {
+                            chooseAlbum()
+                        }
+                        Log.d(javaClass.simpleName, permission.name + " is granted.")
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                        Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.");
+//                        showMessage(getString(R.string.please_agree_permission))
+                    } else {
+                        // 用户拒绝了该权限，并且选中『不再询问』
+                        Log.d(javaClass.simpleName, permission.name + " is denied.")
+//                        showMessage(getString(R.string.please_agree_permission))
+                    }
+                }, {
+                    it.message.toString().logE(this)
+                })
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             mTakePhotoUri.toString().logE(this)
             when (requestCode) {
+            /****** 拍照返回 ******/
                 TAKE_PHOTO_IMAGE -> {
                     val file = uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
                     val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
                     bitmap.compressImage(file, 2000)!!
-//                    cropImage(mTakePhotoUri, CROP_IMAGE)
-
+                    /****** 部分机型会自动旋转 这里旋转恢复 ******/
                     val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
                     SystemUtil.rotateBitmap(bitmap, readPictureDegree)
+
                     gotoClipActivity(Uri.fromFile(file))
                 }
+            /****** 选择图片返回 ******/
                 CHOOSE_PHOTO_IMAGE -> {
                     val file = FileUtils.getFileByUri(data!!.data, this)
-                    val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file!!.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
-//                    cropImage(data.data, CROP_IMAGE)
+                    if (file?.exists()!!) {
+                        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
+                        bitmap.compressImage(file, 2000)!!
+                    }
                     gotoClipActivity(data.data)
 
                 }
+            /****** 智能裁剪 ******/
                 CROP_IMAGE -> {
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
                     iv_user_setting_image.setPadding(0, 0, 0, 0)
@@ -221,6 +263,7 @@ class UserSettingActivity : BaseActivity() {
                     iv_user_setting_image.setImageBitmap(bitmap)
 //                    idFrontFile = bitmap.compressImage(File(path), 1000)
                 }
+            /****** 裁剪后返回 ******/
                 REQUEST_CROP_PHOTO -> {
                     if (resultCode == Activity.RESULT_OK) {
                         if (data?.data == null) {
@@ -291,7 +334,7 @@ class UserSettingActivity : BaseActivity() {
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : HttpObserver<Response<Void>>(this) {
                     override fun success(date: Response<Void>) {
-                        if (date.code() == 200) {
+                        if (date.code() == 204) {
                             showToast("上传成功")
                         }
                     }

@@ -16,8 +16,11 @@ object Constants {
     //    专业领域选择 页面间传值
     val RESULT_CHOOSE_MAJORS = "Result_Choose_majors"
     val INTENT_SELECTSTRING = "INTENT_SELECTSTRING"
-    val REQUESTCODE_CHOOSE_MAJORS = 0x111111
-    val RESULTCODE_CHOOSE_MAJORS = 0x111112
+    val REQUESTCODE_CHOOSE_MAJORS = 0x111
+    val RESULTCODE_CHOOSE_MAJORS = 0x112
+    //地址填写返回值
+    val RESULT_EDIT_ADDRESS = "RESULT_eidt_address"
+    val RESULTCODE_EDIT_ADDRESS = 23
 
 
     /****** SharedPreferences 相关******/
@@ -31,6 +34,15 @@ object Constants {
     val SP_AVATAR_THUMB = "sp_avatar_thumb"
 
     /**
+     *PENDING_CERTIFIED("待认证"),
+    PENDING_APPROVAL("待审核"),
+    APPROVAL_FAILURE("审核失败"),
+    CERTIFIED("已认证");
+     */
+    val SP_CERTIFICATIONSTATUS = "SP_CERTIFICATIONSTATUS"
+
+
+    /**
      * 头像裁剪URI
      */
     val INTENT_CROP_IMAGE_URI = "intent_crop_image_uri"
@@ -39,5 +51,17 @@ object Constants {
      * 裁剪过后的绝对路径
      */
     val CROP_PATH = "crop_path"
+
+
+    /****** 字符常量 ******/
+
+    /****** 待认证 ******/
+    val PENDING_CERTIFIED = "PENDING_CERTIFIED"
+    /****** 待审核 ******/
+    val PENDING_APPROVAL = "PENDING_APPROVAL"
+    /****** 审核失败 ******/
+    val APPROVAL_FAILURE = "APPROVAL_FAILURE"
+    /****** 已认证 ******/
+    val CERTIFIED = "CERTIFIED"
 
 }

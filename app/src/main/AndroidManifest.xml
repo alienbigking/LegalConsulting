@@ -47,6 +47,7 @@
         <activity android:name=".activity.ChangePhoneSecondActivity"/>
         <activity android:name=".activity.ImageCropActivity"/>
         <activity android:name=".activity.ClipImageActivity"/>
+        <activity android:name=".activity.EditAddressActivity"/>
 
 
         <provider

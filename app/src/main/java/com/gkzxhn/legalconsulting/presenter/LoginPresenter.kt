@@ -151,8 +151,8 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                 } catch (e: Exception) {
 
                                 }
-                                App.EDIT?.putString(Constants.SP_TOKEN, token)?.commit()
-                                App.EDIT?.putString("refreshToken", refreshToken)?.commit()
+                                App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
+                                App.EDIT.putString("refreshToken", refreshToken)?.commit()
                                 getLawyersInfo()
 
                             }
@@ -172,6 +172,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
                         override fun success(date: LawyersInfo) {
+                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, date.profiles?.certificationStatus)?.commit()
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
                             mView?.onFinish()
                         }

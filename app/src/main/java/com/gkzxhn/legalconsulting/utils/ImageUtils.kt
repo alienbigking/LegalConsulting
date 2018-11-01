@@ -56,7 +56,8 @@ object ImageUtils {
         options.inJustDecodeBounds = false
         return BitmapFactory.decodeFile(imagePath, options)
     }
-
+//    /storage/emulated/0/DCIM/Camera/IMG_20180523_173706.jpg
+//    /mnt/sdcard/
     /**
      * base64编码字符集转化成图片文件。
      * @param base64Str

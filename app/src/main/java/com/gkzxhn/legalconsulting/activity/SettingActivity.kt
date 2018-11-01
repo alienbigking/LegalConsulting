@@ -6,12 +6,17 @@ import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.entity.UpdateInfo
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.SystemUtil
 import com.gkzxhn.legalconsulting.utils.selectDialog
 import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * @classname：SettingActivtiy
@@ -27,9 +32,8 @@ class SettingActivity : BaseActivity() {
     override fun init() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_setting_exit)
-
         tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
-
+//        updateApp()
     }
 
     private fun initTopTitle() {
@@ -104,7 +108,7 @@ class SettingActivity : BaseActivity() {
     private fun exit() {
         val selectDialog = selectDialog("确认退出账号吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
-            App.EDIT?.putString(Constants.SP_TOKEN,"")?.commit()
+            App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
 
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -113,5 +117,17 @@ class SettingActivity : BaseActivity() {
         }
     }
 
+    private fun updateApp() {
+        RetrofitClient.getInstance(this).mApi?.updateApp()
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<UpdateInfo>(this) {
+                    override fun success(t: UpdateInfo) {
+
+                    }
+
+                })
+    }
 }
 

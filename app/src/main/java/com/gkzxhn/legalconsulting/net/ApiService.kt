@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.net
 
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.entity.UploadFile
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -33,8 +34,17 @@ interface ApiService {
     @PUT("users/me/phone-number")
     fun updatePhoneNumber(@Body requestBody: RequestBody): Observable<Response<Void>>
 
+    /**
+     *获取律师详情
+     */
     @GET("lawyer/profiles")
     fun getLawyersInfo(): Observable<LawyersInfo>
+
+    /**
+     *获取android最新版本
+     */
+    @GET("lawyer/app-version/android/lates")
+    fun updateApp(): Observable<UpdateInfo>
 
     /****** 设置接单状态 ******/
     @POST("lawyer/profiles/service-status")
@@ -45,6 +55,11 @@ interface ApiService {
     @POST("lawyer/feedback")
     @Headers("Content-Type:application/json;charset=utf-8")
     fun feedback(@Body map: RequestBody): Observable<Response<Void>>
+
+    /****** 添加或更新律师认证 ******/
+    @POST("lawyer/certification")
+    @Headers("Content-Type:application/json;charset=utf-8")
+    fun certification(@Body map: RequestBody): Observable<Response<Void>>
 
     /**
      * 获取token
@@ -57,7 +72,7 @@ interface ApiService {
                  @Field("refresh_token") refreshToken: String? = null): Observable<ResponseBody>
 
     /*****  崩溃日志上传  */
-    @POST("lawyers/crash")
+    @POST("lawyers/app-crash-log")
     fun uploadCrash(@Body map: RequestBody): Observable<Response<Void>>
 
     /*****  上传头像  */

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#FFF9F8FE">
+
+
+    <!--标题栏-->
+    <View android:id="@+id/v_edit_top_bg"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:background="@color/white"
+    />
+
+
+    <ImageView android:id="@+id/iv_edit_address_back"
+               android:layout_width="25dp"
+               android:layout_height="25dp"
+               android:layout_marginStart="15dp"
+               android:onClick="onClickChangPhone"
+               android:padding="5dp"
+               android:src="@mipmap/ic_back_gary"
+               app:layout_constraintBottom_toBottomOf="@id/v_edit_top_bg"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="@id/v_edit_top_bg"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="律所地址"
+        android:textColor="#ff666666"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_edit_address_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_edit_address_back"
+    />
+
+    <TextView
+        android:id="@+id/tv_edit_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="保存"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_edit_top_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_edit_top_bg"/>
+
+
+    <EditText
+        android:id="@+id/et_edit_address"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_set_bg"
+        android:gravity="start"
+        android:hint="请输入地址"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:textColor="#ff999999"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/v_edit_top_bg"
+    />
+
+</android.support.constraint.ConstraintLayout>

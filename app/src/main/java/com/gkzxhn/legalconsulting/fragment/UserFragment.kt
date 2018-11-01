@@ -62,7 +62,15 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                 context?.startActivity(Intent(context, BountyActivity::class.java))
             }
             R.id.v_user_rz_bg -> {
-                context?.startActivity(Intent(context, QualificationAuthenticationShowActivity::class.java))
+                when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
+                /****** 已认证 ******/
+                    Constants.CERTIFIED -> {
+                        context?.startActivity(Intent(context, QualificationAuthenticationShowActivity::class.java))
+                    }
+                    else -> {
+                        context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                    }
+                }
             }
 //            所有订单
             R.id.v_user_all_order_bg -> {
@@ -75,8 +83,8 @@ class UserFragment : BaseFragment(), View.OnClickListener {
 //            个人信息栏
             R.id.v_user_top_bg -> {
                 val intent = Intent(context, UserSettingActivity::class.java)
-                intent.putExtra("name", lawyersInfo?.name)
-                intent.putExtra("phoneNumber", lawyersInfo?.phoneNumber)
+                intent.putExtra("name", if (lawyersInfo != null) lawyersInfo?.name else "")
+                intent.putExtra("phoneNumber", if (lawyersInfo != null) lawyersInfo?.phoneNumber else "")
                 context?.startActivity(intent)
             }
         }
@@ -100,6 +108,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(it) {
                         override fun success(t: LawyersInfo) {
+                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, t.profiles?.certificationStatus)?.commit()
                             lawyersInfo = t
                             t.profiles?.let { it1 -> loadUI(t, it1) }
                         }
@@ -135,7 +144,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     iv_user_icon.setImageBitmap(decodeFile)
                 }
 
-            }else{
+            } else {
                 App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
                 App.EDIT.putString(Constants.SP_AVATAR_THUMB, "")?.commit()
 

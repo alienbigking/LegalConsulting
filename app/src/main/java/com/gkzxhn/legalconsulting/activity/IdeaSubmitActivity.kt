@@ -41,7 +41,6 @@ class IdeaSubmitActivity : BaseActivity() {
         }
     }
 
-
     private fun submitSend(titile: String, content: String) {
         var map = LinkedHashMap<String, String>()
         map["title"] = titile
@@ -56,15 +55,14 @@ class IdeaSubmitActivity : BaseActivity() {
                         when (t.code()) {
                             204 -> {
                                 showToast("反馈成功")
+                                finish()
                             }
                             else -> {
-                                showToast("错误码："+t.code().toString() + t.message())
+                                showToast("错误码：" + t.code().toString() + t.message())
                             }
                         }
                     }
                 })
-
-
     }
 
 }

@@ -7,4 +7,14 @@ package com.gkzxhn.legalconsulting.view
  */
 
 interface QualificationAuthenticationEditView :BaseView {
+
+    fun getName():String
+    fun getGender():String
+    fun getDescription():String
+
+    fun getLawOffice():String
+    fun getAddress():String
+    fun getProfessional():String
+    fun getYear():Int
+
 }
