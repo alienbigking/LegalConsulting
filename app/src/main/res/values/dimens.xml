@@ -2,4 +2,13 @@
 <resources>
 
     <!--<dimen name="dp10">10dp</dimen>-->
+    <dimen name="dimen_40">40dp</dimen>
+    <dimen name="dimen_1">1dp</dimen>
+    <dimen name="dimen_13">13dp</dimen>
+    <dimen name="dimen_26">26dp</dimen>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
+    <dimen name="dimen_2">2dp</dimen>
+    <dimen name="dimen_5">5dp</dimen>
+    <dimen name="dimen_250">250dp</dimen>
 </resources>

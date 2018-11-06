@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.net
 
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.QualificationAuthentication
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.entity.UploadFile
 import okhttp3.MultipartBody
@@ -43,7 +44,7 @@ interface ApiService {
     /**
      *获取android最新版本
      */
-    @GET("lawyer/app-version/android/lates")
+    @GET("lawyer/app-version/android/latest")
     fun updateApp(): Observable<UpdateInfo>
 
     /****** 设置接单状态 ******/
@@ -61,6 +62,11 @@ interface ApiService {
     @Headers("Content-Type:application/json;charset=utf-8")
     fun certification(@Body map: RequestBody): Observable<Response<Void>>
 
+   /****** 添加或更新律师认证 ******/
+    @GET("lawyer/certification")
+    @Headers("Content-Type:application/json;charset=utf-8")
+    fun getCertification(): Observable<QualificationAuthentication>
+
     /**
      * 获取token
      */
@@ -72,7 +78,7 @@ interface ApiService {
                  @Field("refresh_token") refreshToken: String? = null): Observable<ResponseBody>
 
     /*****  崩溃日志上传  */
-    @POST("lawyers/app-crash-log")
+    @POST("lawyer/app-crash-log")
     fun uploadCrash(@Body map: RequestBody): Observable<Response<Void>>
 
     /*****  上传头像  */
@@ -85,8 +91,9 @@ interface ApiService {
     fun uploadFiles(@Part file: MultipartBody.Part): Observable<UploadFile>
 
     // 下载文件
-    @GET(" /files/{id}")
-    fun downloadFile(@Path("id") id: String): Observable<Response<Void>>
+//    @Streaming
+    @GET("/files/{id}")
+    fun downloadFile(@Header("Range") range: String,@Path("id") id: String): Observable<ResponseBody>
 
 
 }

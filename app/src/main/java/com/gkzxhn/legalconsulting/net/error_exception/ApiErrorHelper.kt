@@ -32,7 +32,7 @@ object ApiErrorHelper {
             }
             else -> {
 //                context.TsDialog(e.message!!,false)
-                context.showToast("操作失败.数据异常")
+                context.showToast("数据异常")
                 Log.e("ApiErrorHelper", e.message, e)
             }
         }

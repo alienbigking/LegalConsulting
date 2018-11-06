@@ -1,5 +1,6 @@
 package com.gkzxhn.legalconsulting.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
 import android.widget.TextView
@@ -9,10 +10,7 @@ import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.SystemUtil
-import com.gkzxhn.legalconsulting.utils.selectDialog
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
 import rx.android.schedulers.AndroidSchedulers
@@ -29,11 +27,12 @@ class SettingActivity : BaseActivity() {
         return R.layout.activity_setting
     }
 
+    @SuppressLint("SetTextI18n")
     override fun init() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_setting_exit)
         tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
-//        updateApp()
+        tv_setting_version.text = "V_"+ObtainVersion.getVersionName(App.mContext)
     }
 
     private fun initTopTitle() {
@@ -57,7 +56,7 @@ class SettingActivity : BaseActivity() {
             }
         /****** 版本更新 ******/
             R.id.v_setting_update_bg -> {
-                initDialog()
+                updateApp()
             }
         /****** 退出账号 ******/
             R.id.tv_setting_exit -> {
@@ -75,30 +74,11 @@ class SettingActivity : BaseActivity() {
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             SystemUtil.clearAllCache(this)
             tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
+            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
+
             showToast("清除完成")
             selectDialog.dismiss()
         }
-    }
-
-    /**
-     * @methodName： created by liushaoxiang on 2018/10/12 3:58 PM.
-     * @description：加载更新的Dialog
-     */
-    private fun initDialog() {
-        val progressDialog = android.app.Dialog(this, R.style.progress_dialog)
-        progressDialog.setContentView(R.layout.dialog_seeting_update)
-        progressDialog.setCancelable(true)
-        progressDialog.setCanceledOnTouchOutside(true)
-        progressDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        val cancel = progressDialog.findViewById(R.id.tv_update_dialog_cancel) as TextView
-        val update = progressDialog.findViewById(R.id.tv_update_dialog_update) as TextView
-        cancel.setOnClickListener { _ ->
-            progressDialog.dismiss()
-        }
-        update.setOnClickListener { _ ->
-            progressDialog.dismiss()
-        }
-        progressDialog.show()
     }
 
     /**
@@ -124,9 +104,13 @@ class SettingActivity : BaseActivity() {
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : HttpObserver<UpdateInfo>(this) {
                     override fun success(t: UpdateInfo) {
-
+                        val versionCode = ObtainVersion.getVersionCode(App.mContext)
+                        if (t.number!! > versionCode) {
+                            showDownloadDialog(t)
+                        }else{
+                            TsDialog("已是最新版本",true)
+                        }
                     }
-
                 })
     }
 }

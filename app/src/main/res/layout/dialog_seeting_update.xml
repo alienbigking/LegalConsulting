@@ -27,11 +27,11 @@
         android:layout_marginTop="9dp"
         android:text="最新版本"
         android:textColor="#ff333333"
-        app:layout_constraintHorizontal_chainStyle="packed"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_update_dialog_version"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_update_dialog_top"
     />
     <TextView
@@ -39,15 +39,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:background="@drawable/shape_update_version"
         android:padding="1dp"
         android:text="V3.3.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/shape_update_version"
         android:textColor="@color/white"
         android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_update_dialog_new"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_update_dialog_new"
         app:layout_constraintTop_toTopOf="@+id/tv_update_dialog_new"
-        app:layout_constraintBottom_toBottomOf="@id/tv_update_dialog_new"
+    />
+
+    <TextView
+
+        android:id="@+id/tv_update_dialog_context"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="2222222"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_dialog_version"
+
     />
 
     <ProgressBar
@@ -60,7 +74,7 @@
         android:progress="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_update_dialog_new"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_dialog_context"/>
 
 
     <TextView
@@ -94,6 +108,7 @@
     />
 
     <View
+        android:id="@+id/v_dialog_update"
         android:layout_width="1dp"
         android:layout_height="13dp"
         android:background="#dfdfdf"

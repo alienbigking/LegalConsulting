@@ -7,10 +7,7 @@ package com.gkzxhn.legalconsulting.entity
  * @description：
  */
 data class UpdateInfo(
-
-//{"code":"0.1.0","number":11,"fileId":"fileId","description":"添加某某功能","force":false}
-
-        val id: String?,
+//{"code":"2.0.0","number":228,"fileId":"e2ba540e-7404-4f4d-8655-3febea756b72","description":"1","force":true}
         val code: String?,
         val number: Int?,
         val fileId: String?,

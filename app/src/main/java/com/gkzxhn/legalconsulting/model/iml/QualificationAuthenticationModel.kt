@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.model.iml
 
 import android.content.Context
+import com.gkzxhn.legalconsulting.entity.QualificationAuthentication
 import com.gkzxhn.legalconsulting.entity.UploadFile
 import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.net.RetrofitClient
@@ -20,17 +21,21 @@ import rx.schedulers.Schedulers
 
 class QualificationAuthenticationModel : BaseModel(), IQualificationAuthenticationModel {
 
+    override fun getCertification(context: Context): Observable<QualificationAuthentication> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.getCertification()
+                ?.subscribeOn(Schedulers.io()) as Observable<QualificationAuthentication>
+    }
+
     override fun certification(context: Context, body: RequestBody): Observable<Response<Void>> {
         return RetrofitClient.Companion.getInstance(context).mApi
                 ?.certification(body)
                 ?.subscribeOn(Schedulers.io()) as Observable<Response<Void>>
-
     }
 
     override fun uploadFiles(context: Context, body: MultipartBody.Part): Observable<UploadFile> {
         return RetrofitClientLogin.getInstance(context).mApi?.uploadFiles(body)
                 ?.subscribeOn(Schedulers.io()) as Observable<UploadFile>
     }
-
 
 }

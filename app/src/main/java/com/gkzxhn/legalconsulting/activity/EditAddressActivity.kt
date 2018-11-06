@@ -16,6 +16,11 @@ class EditAddressActivity : BaseActivity() {
 
     override fun init() {
 
+        val address = intent.getStringExtra("address").toString()
+        if (address.isNotEmpty()) {
+            et_edit_address.setText(address)
+        }
+
         tv_edit_save.setOnClickListener {
             var intent = Intent()
             intent.putExtra(Constants.RESULT_EDIT_ADDRESS, et_edit_address.text.trim().toString())
@@ -24,6 +29,7 @@ class EditAddressActivity : BaseActivity() {
         }
         iv_edit_address_back.setOnClickListener { onBackPressed() }
     }
+
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_edit_address

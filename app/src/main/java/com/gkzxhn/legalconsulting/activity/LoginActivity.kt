@@ -3,12 +3,18 @@ package com.gkzxhn.legalconsulting.activity
 import android.annotation.SuppressLint
 import android.view.WindowManager
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.entity.UpdateInfo
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.presenter.LoginPresenter
+import com.gkzxhn.legalconsulting.utils.ObtainVersion
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.view.LoginView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.activity_login.et_login_code as code
 import kotlinx.android.synthetic.main.activity_login.et_login_phone as loginPhone
@@ -50,7 +56,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun init() {
         mPresenter = LoginPresenter(this, this)
-
+        updateApp()
         login.setOnClickListener {
             mPresenter?.login()
         }
@@ -103,5 +109,24 @@ class LoginActivity : BaseActivity(), LoginView {
         sendCode.setTextColor(resources.getColor(R.color.dark_blue))
     }
 
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/6 4:09 PM.
+     * @description：检查更新
+     */
+    private fun updateApp() {
+        RetrofitClient.getInstance(this).mApi?.updateApp()
+                ?.subscribeOn(rx.schedulers.Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<UpdateInfo>(this) {
+                    override fun success(t: UpdateInfo) {
+                        val versionCode = ObtainVersion.getVersionCode(App.mContext)
+                        if (t.number!! > versionCode) {
+                            showDownloadDialog(t)
+                        }
+                    }
+                })
+    }
 
 }

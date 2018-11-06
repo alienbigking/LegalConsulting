@@ -6,15 +6,16 @@ package com.gkzxhn.legalconsulting.view
  *    -----2018/9/6
  */
 
-interface QualificationAuthenticationEditView :BaseView {
+interface QualificationAuthenticationEditView : BaseView {
 
-    fun getName():String
-    fun getGender():String
-    fun getDescription():String
+    fun getName(): String
+    fun getGender(): String
+    fun getDescription(): String
+    fun getLawOffice(): String
+    fun getAddress(): String
+    fun getProfessional(): String
+    fun getYear(): Int
+    fun onFinish()
 
-    fun getLawOffice():String
-    fun getAddress():String
-    fun getProfessional():String
-    fun getYear():Int
 
 }

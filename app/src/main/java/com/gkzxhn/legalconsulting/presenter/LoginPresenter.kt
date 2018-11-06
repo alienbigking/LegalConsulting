@@ -172,7 +172,11 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
                         override fun success(date: LawyersInfo) {
-                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, date.profiles?.certificationStatus)?.commit()
+                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, date.certificationStatus)?.commit()
+                            App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
+                            App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
+                            App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
+
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
                             mView?.onFinish()
                         }
@@ -180,6 +184,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                         override fun onError(t: Throwable?) {
                             super.onError(t)
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                            mView?.onFinish()
                         }
                     })
         }

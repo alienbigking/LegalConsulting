@@ -2,6 +2,7 @@ package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationEditActivity
 import com.gkzxhn.legalconsulting.common.App
@@ -25,6 +26,7 @@ class QualificationAuthenticationPresenter(context: Context, view: Qualification
     fun qualificationAuthentication() {
         var intent = Intent(mContext, QualificationAuthenticationEditActivity::class.java)
         mContext?.startActivity(intent)
+        mView?.onFinish()
     }
 
     fun loadUISetting() {
@@ -36,11 +38,8 @@ class QualificationAuthenticationPresenter(context: Context, view: Qualification
             }
         /****** 待审核 ******/
             Constants.PENDING_APPROVAL -> {
-                mView?.changeMessage(mContext?.getString(R.string.certified_not).toString())
-                mView?.changeQualificationAuthentication(mContext?.getString(R.string.certified_not_send).toString())
-//
-//                mView?.changeMessage(mContext?.getString(R.string.certified_wait).toString())
-//                mView?.changeQualificationAuthenticationVisibility(View.GONE)
+                mView?.changeMessage(mContext?.getString(R.string.certified_wait).toString())
+                mView?.changeQualificationAuthenticationVisibility(View.GONE)
             }
         /****** 审核失败 ******/
             Constants.APPROVAL_FAILURE -> {

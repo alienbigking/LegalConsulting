@@ -10,7 +10,7 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
+        versionCode 288
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -42,12 +42,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //引入okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     //引入retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     //引入rxjava
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.4'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
     //引入rxandroid
     implementation 'io.reactivex:rxandroid:1.2.0'
     //引入Log拦截器，方便DEBUG模式输出log信息

@@ -57,7 +57,7 @@
     />
 
 
-    <ImageView
+    <com.gkzxhn.legalconsulting.customview.CircleImageView
         android:id="@+id/iv_main_icon"
         android:layout_width="37dp"
         android:layout_height="37dp"
@@ -80,6 +80,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_main_icon"/>
 
     <TextView
+        android:id="@+id/tv_home_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

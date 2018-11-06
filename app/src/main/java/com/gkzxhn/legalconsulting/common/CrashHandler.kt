@@ -2,6 +2,7 @@ package com.gkzxhn.legalconsulting.common
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import com.gkzxhn.legalconsulting.entity.CrashLogger
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.utils.ObtainVersion
@@ -89,25 +90,26 @@ private constructor() : Thread.UncaughtExceptionHandler {
         return true
     }
 
-
     /**
      * @methodName： created by liushaoxiang on 2018/10/29 2:47 PM.
      * @description：上传崩溃日志
      */
     private fun uploadCrash(crashLogger: CrashLogger) {
         var map = LinkedHashMap<String, String>()
-        map.put("appVersion", crashLogger.appVersion)
-        map.put("contents", crashLogger.contents)
+        map.put("content", crashLogger.contents)
         map.put("deviceName", crashLogger.deviceName)
-        map.put("deviceType", crashLogger.deviceType)
-        map.put("phone", crashLogger.phone)
         map.put("sysVersion", crashLogger.sysVersion)
+        map.put("deviceType", crashLogger.deviceType)
+        map.put("appVersion", crashLogger.appVersion)
         var body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                 Gson().toJson(map))
         model.uploadCrash(App.mContext, body)
                 .subscribe({
+                    it.code()
+                    Log.v("okhttp",it.code().toString())
                     flag = true
                 }, {
+                    Log.v("okhttp",it.message.toString())
                     flag = true
                 })
     }

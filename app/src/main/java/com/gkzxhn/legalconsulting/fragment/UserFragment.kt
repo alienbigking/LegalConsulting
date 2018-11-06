@@ -8,7 +8,6 @@ import com.gkzxhn.legalconsulting.activity.*
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
-import com.gkzxhn.legalconsulting.entity.Profiles
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ImageUtils
@@ -108,42 +107,42 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(it) {
                         override fun success(t: LawyersInfo) {
-                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, t.profiles?.certificationStatus)?.commit()
+                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, t.certificationStatus)?.commit()
                             lawyersInfo = t
-                            t.profiles?.let { it1 -> loadUI(t, it1) }
+                            loadUI(t)
                         }
 
                     })
         }
-
     }
 
     /**
      * @methodName： created by liushaoxiang on 2018/10/26 3:46 PM.
      * @description：处理UI数据
      */
-    private fun loadUI(date: LawyersInfo, profiles: Profiles) {
+    private fun loadUI(date: LawyersInfo) {
         tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
         tv_user_name.text = date.name
-        tv_user_fragment_get_order_state.text = if (date.profiles?.serviceStatus == "BUSY") "忙碌" else "接单"
+        tv_user_fragment_get_order_state.text = if (date.serviceStatus == "BUSY") "忙碌" else "接单"
         App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
+        App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
+        App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
 
         /****** 如果图片和上次一致就不转化了 ******/
         val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
-        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.profiles?.avatarThumb)!! && decodeFile != null) {
+        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.avatarThumb)!! && decodeFile != null) {
             iv_user_icon.setImageBitmap(decodeFile)
         } else {
             val file = File(context?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
-            if (date.profiles?.avatarThumb != null) {
-                val base64ToFile = ImageUtils.base64ToFile(profiles.avatarThumb!!, file.absolutePath)
+            if (date.avatarThumb != null) {
+                val base64ToFile = ImageUtils.base64ToFile(date.avatarThumb!!, file.absolutePath)
                 if (base64ToFile) {
                     App.EDIT.putString(Constants.SP_AVATARFILE, file.absolutePath)?.commit()
-                    App.EDIT.putString(Constants.SP_AVATAR_THUMB, profiles.avatarThumb)?.commit()
+                    App.EDIT.putString(Constants.SP_AVATAR_THUMB, date.avatarThumb)?.commit()
 
                     val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
                     iv_user_icon.setImageBitmap(decodeFile)
                 }
-
             } else {
                 App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
                 App.EDIT.putString(Constants.SP_AVATAR_THUMB, "")?.commit()

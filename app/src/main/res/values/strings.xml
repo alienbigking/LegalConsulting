@@ -27,7 +27,6 @@
     <string name="photo_album">相册</string>
 
 
-
     <string name="certified_fail">您提交的认证申请没有通过审核，请重新认证～</string>
     <string name="certified_wait">您提交的认证申请正在审核中，请耐心等待～</string>
     <string name="certified_not">您还未进行资格认证</string>
@@ -37,6 +36,14 @@
     <string name="please_select">请选择</string>
 
 
+    <string name="pause">暂停</string>
+    <string name="go_on">继续</string>
+    <string name="retry">重试</string>
+    <string name="skip">跳过</string>
+    <string name="status">在线</string>
+    <string name="install">安装</string>
+    <string name="update_now">现在更新</string>
+    <string name="download_background">后台下载</string>
 
 
 </resources>

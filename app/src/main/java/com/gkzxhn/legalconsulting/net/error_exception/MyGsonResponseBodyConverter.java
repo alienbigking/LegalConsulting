@@ -1,6 +1,5 @@
 package com.gkzxhn.legalconsulting.net.error_exception;
 
-import com.gkzxhn.legalconsulting.net.BaseResponseEntity;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -34,13 +33,6 @@ public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody,T>
     @Override
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
-        BaseResponseEntity result = mGson.fromJson(response, BaseResponseEntity.class);
-//        Log.e("okhttp", "convert: okhttp"+result.message+response );
-//        //判断code可自己改动
-//        if (result.code != 200) {
-//            value.close();
-//            throw new ApiException(result.code, result.message);
-//        }
         MediaType mediaType = value.contentType();
         Charset charset = mediaType != null ? mediaType.charset(UTF_8) : UTF_8;
         ByteArrayInputStream bis = new ByteArrayInputStream(response.getBytes());

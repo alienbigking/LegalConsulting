@@ -3,10 +3,16 @@ package com.gkzxhn.legalconsulting.activity
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.fragment.BaseFragment
 import com.gkzxhn.legalconsulting.fragment.ConversationFragment
 import com.gkzxhn.legalconsulting.fragment.MainFragment
 import com.gkzxhn.legalconsulting.fragment.UserFragment
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.utils.ObtainVersion
+import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import kotlinx.android.synthetic.main.activity_main.tv_main_conversation as mainConversation
 import kotlinx.android.synthetic.main.activity_main.tv_main_home as mainHome
@@ -38,6 +44,8 @@ class MainActivity : BaseActivity() {
         mainAdapter = MainAdapter(supportFragmentManager, tbList)
         vpMain.adapter = mainAdapter
         vpMain.offscreenPageLimit = 3
+
+        updateApp()
 
     }
 
@@ -87,6 +95,26 @@ class MainActivity : BaseActivity() {
         resources?.getColor(R.color.main_bottom_black)?.let { it1 -> mainConversation.setTextColor(it1) }
         resources?.getColor(R.color.main_bottom_purple)?.let { it1 -> mainMy.setTextColor(it1) }
 
+    }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/6 4:09 PM.
+     * @description：检查更新
+     */
+    private fun updateApp() {
+        RetrofitClient.getInstance(this).mApi?.updateApp()
+                ?.subscribeOn(rx.schedulers.Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<UpdateInfo>(this) {
+                    override fun success(t: UpdateInfo) {
+                        val versionCode = ObtainVersion.getVersionCode(App.mContext)
+                        if (t.number!! > versionCode) {
+                            showDownloadDialog(t)
+                        }
+                    }
+                })
     }
 
 }

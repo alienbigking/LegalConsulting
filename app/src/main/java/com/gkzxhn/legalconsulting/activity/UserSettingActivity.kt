@@ -63,7 +63,7 @@ class UserSettingActivity : BaseActivity() {
         name = intent.getStringExtra("name")
         phoneNumber = intent.getStringExtra("phoneNumber")
         tv_user_setting_change_name.text = name
-        val avatarStr = App.SP?.getString(Constants.SP_AVATARFILE, "")
+        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
             val decodeFile = BitmapFactory.decodeFile(avatarStr)
             iv_user_setting_image.setImageBitmap(decodeFile)
@@ -366,21 +366,21 @@ class UserSettingActivity : BaseActivity() {
                 })
     }
 
-    /**
-     * @methodName： created by liushaoxiang on 2018/10/26 2:06 PM.
-     * @description： 下载文件
-     */
-    private fun downloadFile(id: String) {
-        RetrofitClientLogin.getInstance(this).mApi?.downloadFile(id)
-                ?.subscribeOn(Schedulers.io())
-                ?.unsubscribeOn(AndroidSchedulers.mainThread())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
-                    override fun success(date: Response<Void>) {
-
-                    }
-                })
-    }
+//    /**
+//     * @methodName： created by liushaoxiang on 2018/10/26 2:06 PM.
+//     * @description： 下载文件
+//     */
+//    private fun downloadFile(id: String) {
+//        RetrofitClientLogin.getInstance(this).mApi?.downloadFile(id)
+//                ?.subscribeOn(Schedulers.io())
+//                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+//                ?.observeOn(AndroidSchedulers.mainThread())
+//                ?.subscribe(object : HttpObserver<ResponseBody>(this) {
+//                    override fun success(date: ResponseBody) {
+//
+//                    }
+//                })
+//    }
 
 }
 

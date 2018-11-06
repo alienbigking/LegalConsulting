@@ -24,7 +24,6 @@ class QualificationAuthentication {
 
 class IdentificationPictures {
 
-    var id: String? = null
     var fileId: String? = null
     var thumb: String? = null
 
@@ -47,7 +46,6 @@ class LawOfficeAddress {
 
 class CertificatePictures {
 
-    var id: String? = null
     var fileId: String? = null
     var thumb: String? = null
 
@@ -55,7 +53,6 @@ class CertificatePictures {
 
 class AssessmentPictures {
 
-    var id: String? = null
     var fileId: String? = null
     var thumb: String? = null
 

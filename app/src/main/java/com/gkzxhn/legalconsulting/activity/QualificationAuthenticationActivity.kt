@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as top_ti
  */
 
 class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthenticationView {
+    override fun onFinish() {
+        finish()
+    }
 
     lateinit var mPresenter: QualificationAuthenticationPresenter
 

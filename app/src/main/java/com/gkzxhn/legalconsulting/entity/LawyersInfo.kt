@@ -13,27 +13,22 @@ data class LawyersInfo(
         val username: String?,
         val name: String?,
         val phoneNumber: String?,
-        val profiles: Profiles?
+        var avatarThumb: String? ,
+        var avatarFileId: String? ,
+        var orderStatus: String? ,
+        /******
+         * PENDING_CERTIFIED("待认证"),
+        PENDING_APPROVAL("待审核"),
+        APPROVAL_FAILURE("审核失败"),
+        CERTIFIED("已认证");
+         ******/
+        var certificationStatus: String? ,
+        var orderCount: Int? ,
+        var score: Int? ,
+        var rewardAmount: Int? ,
+        /****** 接单状态 ******/
+        var serviceStatus: String? ,
+        var lawOffice: String? ,
+        var level: String? ,
+        var description: String?
 )
-
-class Profiles {
-    var avatarThumb: String? = null
-    var avatarFileId: String? = null
-    var orderStatus: String? = null
-    /******
-     * PENDING_CERTIFIED("待认证"),
-    PENDING_APPROVAL("待审核"),
-    APPROVAL_FAILURE("审核失败"),
-    CERTIFIED("已认证");
-     ******/
-    var certificationStatus: String? = null
-    var orderCount: Int? = null
-    var score: Int? = null
-    var rewardAmount: Int? = null
-    /****** 接单状态 ******/
-    var serviceStatus: String? = null
-    var lawOffice: String? = null
-    var level: String? = null
-    var description: String? = null
-
-}

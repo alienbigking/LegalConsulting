@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -34,6 +33,9 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
  */
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
+    override fun onFinish() {
+        finish()
+    }
 
 
     override fun getName(): String {
@@ -125,7 +127,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             showListDialog("3.jpg", false, TAKE_PHOTO_IMAGE_3, CHOOSE_PHOTO_IMAGE_3)
         }
         v_qualification_authentication_id2.setOnClickListener {
-            T
             showListDialog("4.jpg", false, TAKE_PHOTO_IMAGE_4, CHOOSE_PHOTO_IMAGE_4)
         }
 
@@ -146,6 +147,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         /****** 律所地址 ******/
             R.id.v_qualification_authentication_address_bg -> {
                 val intent = Intent(this, EditAddressActivity::class.java)
+                intent.putExtra("address",getAddress())
                 startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
             }
         }

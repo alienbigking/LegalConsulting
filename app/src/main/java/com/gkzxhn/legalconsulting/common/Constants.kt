@@ -28,6 +28,8 @@ object Constants {
 //    存储项目验证Token的状态
     val SP_TOKEN = "SP_Token"
     val SP_PHONE = "SP_PHONE"
+    val SP_NAME = "sp_user_name"
+    val SP_LAWOFFICE = "sp_user_lawOffice"
     //    头像的绝对路径
     val SP_AVATARFILE = "sp_avatarFile"
     //    头像的base64码
@@ -63,5 +65,11 @@ object Constants {
     val APPROVAL_FAILURE = "APPROVAL_FAILURE"
     /****** 已认证 ******/
     val CERTIFIED = "CERTIFIED"
+
+
+    /****** 与后台约定的前缀 ******/
+    val BASE_64_START = "data:image/png;base64,"
+//    val APK_ADRESS="LegalConsulting.apk"
+    val APK_ADRESS="legal.apk"
 
 }
