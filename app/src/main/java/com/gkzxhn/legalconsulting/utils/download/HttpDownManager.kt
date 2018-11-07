@@ -22,7 +22,10 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- * Created by 方 on 2018/4/13.
+ * @classname：下载文件 管理类
+ * @author：liushaoxiang
+ * @date：2018/11/6 5:33 PM
+ * @description：
  */
 class HttpDownManager private constructor() {
 

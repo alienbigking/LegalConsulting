@@ -7,7 +7,6 @@ package com.gkzxhn.legalconsulting.net;
 public interface NetWorkCodeInfo {
 
     /***** 开发环境 *****/
-
         String BASE_URL ="http://10.10.10.17:8081";
         String BASE_URL_PROJECT ="http://10.10.10.17:8086";
 

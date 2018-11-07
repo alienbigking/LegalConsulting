@@ -9,11 +9,13 @@ import com.gkzxhn.legalconsulting.utils.logE
 
 
 /**
- * 用于在Http请求开始时，自动显示一个ProgressDialog
+ * @classname：
+ * * 用于在Http请求开始时，自动显示一个ProgressDialog
  * 在Http请求结束是，关闭ProgressDialog
  * 调用者自己对请求数据进行处理
- * Created by 方 on 2018/4/13.
- *
+ * @author：liushaoxiang
+ * @date：2018/11/6 5:00 PM
+ * @description：
  */
 class ProgressDownSubscriber<T> : MySubscriber<T>, DownloadProgressListener {
 

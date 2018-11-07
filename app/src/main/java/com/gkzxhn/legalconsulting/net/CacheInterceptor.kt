@@ -23,11 +23,17 @@ class CacheInterceptor(context: Context) : Interceptor {
         var request = chain?.request()
         if (NetworkUtils.isNetConneted(context)) {
 
-            val token = App.SP?.getString(Constants.SP_TOKEN, "")
+            val addHeader = request?.newBuilder()
 
-            val mtoken = "Bearer $token"
-            val method = request?.newBuilder()?.addHeader("Authorization", mtoken)
-                    ?.method(request.method(), request.body())
+            val token = App.SP.getString(Constants.SP_TOKEN, "")
+            if (token != null) {
+                if (token.isNotEmpty()) {
+                    val mtoken = "Bearer $token"
+                    addHeader?.addHeader("Authorization", mtoken)
+                }
+            }
+
+            val method = addHeader?.method(request!!.method(), request.body())
 
             return chain?.proceed(method?.build())
 

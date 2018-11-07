@@ -3,8 +3,10 @@ package com.gkzxhn.legalconsulting.utils.download
 
 
 /**
- * 下载监听
- * Created by 方 on 2018/4/13.
+ * @classname：下载监听
+ * @author：liushaoxiang
+ * @date：2018/11/6 5:20 PM
+ * @description：
  */
 abstract class HttpProgressOnNextListener<T> {
     /**

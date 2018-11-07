@@ -7,6 +7,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.*
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
@@ -149,6 +150,8 @@ class UserFragment : BaseFragment(), View.OnClickListener {
 
             }
         }
+
+        RxBus.instance.post(date)
     }
 
 }

@@ -10,7 +10,7 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 288
+        versionCode 2566
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -27,7 +27,6 @@ android {
         exclude 'META-INF/NOTICE'
         //    3）配置属性，解决POI第三方库重复打包了META-INF的问题
         exclude 'META-INF/*'
-
     }
 }
 

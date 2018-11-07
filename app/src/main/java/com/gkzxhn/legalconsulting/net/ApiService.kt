@@ -1,9 +1,6 @@
 package com.gkzxhn.legalconsulting.net
 
-import com.gkzxhn.legalconsulting.entity.LawyersInfo
-import com.gkzxhn.legalconsulting.entity.QualificationAuthentication
-import com.gkzxhn.legalconsulting.entity.UpdateInfo
-import com.gkzxhn.legalconsulting.entity.UploadFile
+import com.gkzxhn.legalconsulting.entity.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -62,7 +59,7 @@ interface ApiService {
     @Headers("Content-Type:application/json;charset=utf-8")
     fun certification(@Body map: RequestBody): Observable<Response<Void>>
 
-   /****** 添加或更新律师认证 ******/
+    /****** 添加或更新律师认证 ******/
     @GET("lawyer/certification")
     @Headers("Content-Type:application/json;charset=utf-8")
     fun getCertification(): Observable<QualificationAuthentication>
@@ -91,9 +88,11 @@ interface ApiService {
     fun uploadFiles(@Part file: MultipartBody.Part): Observable<UploadFile>
 
     // 下载文件
-//    @Streaming
     @GET("/files/{id}")
-    fun downloadFile(@Header("Range") range: String,@Path("id") id: String): Observable<ResponseBody>
+    fun downloadFile(@Header("Range") range: String, @Path("id") id: String): Observable<ResponseBody>
 
+    //    获取抢单列表
+    @GET("lawyer/rush/legal-advice")
+    fun getOrderReceiving(): Observable<OrderReceiving>
 
 }

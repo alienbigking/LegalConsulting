@@ -6,7 +6,7 @@ package com.gkzxhn.legalconsulting.view
  *    -----2018/9/6
  */
 
-interface QualificationAuthenticationView :BaseView {
+interface QualificationAuthenticationView : BaseView {
     fun changeMessage(string: String)
     fun changeQualificationAuthentication(string: String)
     fun changeQualificationAuthenticationVisibility(visibility: Int)

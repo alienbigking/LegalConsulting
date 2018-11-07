@@ -56,7 +56,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun init() {
         mPresenter = LoginPresenter(this, this)
-        updateApp()
+//        updateApp()
         login.setOnClickListener {
             mPresenter?.login()
         }

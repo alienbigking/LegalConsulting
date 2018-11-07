@@ -7,7 +7,10 @@ import java.io.IOException
 
 
 /**
- * Created by 方 on 2018/4/13.
+ * @classname：
+ * @author：liushaoxiang
+ * @date：2018/11/6 5:34 PM
+ * @description：
  */
 class DownloadInterceptor(private val listener: DownloadProgressListener) : Interceptor {
 

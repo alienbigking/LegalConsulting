@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -321,7 +322,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
 
                     override fun onComplete() {
-                        "download onComplete ---- 安装 安装".logE(this)
+                        "download onComplete ----".logE(this)
                         tvConfirm.text = getString(R.string.install)
                         installApk()
                     }
@@ -334,18 +335,20 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
 
                 HttpDownManager.getInstance().startDown(downloadInfo)
+                tvConfirm.setTextColor(ContextCompat.getColor(App.mContext,R.color.text_gray))
             } else {
                 "download updateProgress ---- ${downloadInfo?.readLength}>>>>${downloadInfo?.countLength}".logE(this)
                 when (downloadInfo?.state) {
                     DownState.DOWN -> {
                         //停止状态, 点击继续下载
                         HttpDownManager.getInstance().startDown(downloadInfo)
-                        tvConfirm.text = getString(R.string.pause)
+                        /****** 暂时不做断点下载  所以文字方面先不显示 功能 未完成 等待下版本更新 ******/
+//                        tvConfirm.text = getString(R.string.pause)
                     }
                     DownState.START -> {
                         //正在下载中, 暂停下载
                         HttpDownManager.getInstance().pause(downloadInfo)
-                        tvConfirm.text = getString(R.string.go_on)
+//                        tvConfirm.text = getString(R.string.go_on)
                     }
                     DownState.FINISH -> {
                         installApk()
@@ -353,15 +356,15 @@ abstract class BaseActivity : AppCompatActivity() {
                     DownState.PAUSE, DownState.STOP -> {
                         //暂停, 点击继续下载
                         HttpDownManager.getInstance().startDown(downloadInfo)
-                        tvConfirm.text = getString(R.string.pause)
+//                        tvConfirm.text = getString(R.string.pause)
                     }
                     DownState.ERROR -> {
                         HttpDownManager.getInstance().startDown(downloadInfo)
-                        tvConfirm.text = getString(R.string.pause)
+//                        tvConfirm.text = getString(R.string.pause)
                     }
                     else -> {
                         HttpDownManager.getInstance().startDown(downloadInfo)
-                        tvConfirm.text = getString(R.string.pause)
+//                        tvConfirm.text = getString(R.string.pause)
                     }
                 }
             }
@@ -390,7 +393,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 it.downInfos.remove(downloadInfo)
                 downloadInfo?.state = DownState.STOP
                 downloadInfo?.readLength = 0
-                tvConfirm.text = "暂停"
+//                tvConfirm.text = "暂停"
                 it.startDown(downloadInfo)
             }
         }

@@ -17,5 +17,4 @@ interface QualificationAuthenticationEditView : BaseView {
     fun getYear(): Int
     fun onFinish()
 
-
 }

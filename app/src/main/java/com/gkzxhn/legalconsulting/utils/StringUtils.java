@@ -2,7 +2,11 @@ package com.gkzxhn.legalconsulting.utils;
 
 import android.text.TextUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Explanation：
@@ -87,7 +91,18 @@ public class StringUtils {
             return mobileNums.matches(telRegex);
     }
 
-
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/7 2:40 PM.
+     * @description： 将2018-11-07T05:54:21.000+0000  改成标准时间
+     */
+    public static String parseDate(String dateStr) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
+        Date result;
+        result = df.parse(dateStr);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return sdf.format(result);
+    }
 
 
 }

@@ -5,7 +5,10 @@ import com.gkzxhn.legalconsulting.utils.download.HttpProgressOnNextListener
 
 
 /**
- * Created by 方 on 2018/4/13.
+ * @classname：
+ * @author：liushaoxiang
+ * @date：2018/11/6 5:00 PM
+ * @description：
  */
 class DownInfo {
     /*存储位置*/

@@ -69,7 +69,6 @@ class ChangePhoneFirstActivity : BaseActivity(), PhoneChangeView {
         }
     }
 
-
     /**
      * 开始倒计时
      */

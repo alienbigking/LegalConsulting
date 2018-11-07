@@ -9,7 +9,11 @@ import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationEditActivi
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.common.RxBus
+import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.utils.logE
 import kotlinx.android.synthetic.main.main_fragment.*
+import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import kotlinx.android.synthetic.main.main_fragment.iv_main_message_top as ivMessageTop
 import kotlinx.android.synthetic.main.main_fragment.tv_home_edit_order as tvEditOrder
@@ -45,6 +49,14 @@ class MainFragment : BaseFragment() {
         VpHome.adapter = mainAdapter
         VpHome.offscreenPageLimit = 3
 
+        RxBus.instance.toObserverable(LawyersInfo::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    loadTopUI()
+                }, {
+                    it.message.toString().logE(this)
+                })
     }
 
     private fun loadTopUI() {
@@ -91,8 +103,7 @@ class MainFragment : BaseFragment() {
         }
 
         v_home_top_bg.setOnClickListener {
-            var d = "ddfd"
-            val toInt = d.toInt()
+
         }
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
