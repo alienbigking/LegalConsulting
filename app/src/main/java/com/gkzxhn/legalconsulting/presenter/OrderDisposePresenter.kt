@@ -1,7 +1,7 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import com.gkzxhn.legalconsulting.entity.OrderReceiving
+import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -16,13 +16,13 @@ import rx.android.schedulers.AndroidSchedulers
  */
 class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePresenter<IOrderModel, OrderDisposeView>(context, OrderModel(), view) {
 
-    fun getOrderReceiving() {
+    fun getOrderDispose() {
         mContext?.let {
-            mModel.getOrderReceiving(it)
+            mModel.getOrderDispose(it)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<OrderReceiving>(it) {
-                        override fun success(t: OrderReceiving) {
+                    ?.subscribe(object : HttpObserver<OrderDispose>(it) {
+                        override fun success(t: OrderDispose) {
                             if (t.content!!.isNotEmpty()) {
                                 mView?.updateData(t.content)
                             }

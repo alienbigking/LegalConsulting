@@ -5,12 +5,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderDisposeAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
-import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
+import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.presenter.OrderDisposePresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
@@ -20,21 +19,12 @@ import kotlinx.android.synthetic.main.order_disposer_fragment.*
 
 
 /**
- * Explanation：我的咨询里面
+ * Explanation：我的咨询里面（指定单）
  * @author LSX
  * Created on 2018/9/10.
  */
 
 class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
-
-
-    override fun offLoadMore() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updateData(data: List<OrderReceivingContent>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private var mAdapter: OrderDisposeAdapter? = null
 
@@ -44,15 +34,19 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
     lateinit var mPresenter: OrderDisposePresenter
 
 
+    override fun provideContentViewId(): Int {
+        return R.layout.order_disposer_fragment
+    }
+
     override fun init() {
         mPresenter = OrderDisposePresenter(context!!, this)
         list = ArrayList()
-        mAdapter = context?.let { OrderDisposeAdapter(it, list) }
+        mAdapter = context?.let { OrderDisposeAdapter(it, null) }
         rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
         rcl_order_disposer.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-        getData()
+        mPresenter.getOrderDispose()
     }
 
     override fun initListener() {
@@ -60,7 +54,8 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 cont++
-                getData()
+//                mPresenter.getOrderDispose()
+                offLoadMore()
             }
 
         })
@@ -70,7 +65,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             override fun onRefresh() {
                 list?.clear()
                 cont = 0
-                getData()
+                mPresenter.getOrderDispose()
                 loading_refresh?.finishRefreshing()
             }
 
@@ -82,7 +77,11 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                startActivity(Intent(context, OrderActivity::class.java))
+                val intent = Intent(context, OrderActivity::class.java)
+                val data = mAdapter!!.getCurrentItem()
+                intent.putExtra("orderId", data.id)
+                intent.putExtra("orderState", 2)
+                startActivity(intent)
             }
 
         })
@@ -90,37 +89,16 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
     }
 
 
-    private fun getData() {
-        var activity = activity as MainActivity
-
-        Thread(Runnable //	开启一个线程处理逻辑，然后在线程中在开启一个UI线程，当子线程中的逻辑完成之后，
-        //	就会执行UI线程中的操作，将结果反馈到UI界面。
-        {
-            // 模拟耗时的操作，在子线程中进行。
-            try {
-                for (i in 0..10) {
-                    list?.add("会话：")
-                }
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-
-            // 更新主线程ＵＩ，跑在主线程。
-            activity.runOnUiThread(java.lang.Runnable {
-                //加载更多取消
-                if (loading_more!!.isLoading) {
-                    loading_more?.finishLoading()
-                }
-                mAdapter?.updateItems(list)
-            })
-        }).start()
-
+    override fun offLoadMore() {
+        //加载更多取消
+        if (loading_more!!.isLoading) {
+            loading_more?.finishLoading()
+        }
     }
 
+    override fun updateData(data: List<OrderDispose.ContentBean>?) {
+        mAdapter?.updateItems(data)
 
-    override fun provideContentViewId(): Int {
-        return R.layout.order_disposer_fragment
     }
 
 

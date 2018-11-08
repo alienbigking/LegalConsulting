@@ -1,6 +1,6 @@
 package com.gkzxhn.legalconsulting.view
 
-import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
+import com.gkzxhn.legalconsulting.entity.OrderDispose
 
 /**
  * Explanation:
@@ -12,5 +12,5 @@ interface OrderDisposeView : BaseView {
 
     fun offLoadMore()
 
-    fun updateData(data: List<OrderReceivingContent>?)
+    fun updateData(data: List<OrderDispose.ContentBean>?)
 }

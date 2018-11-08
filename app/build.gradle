@@ -10,7 +10,7 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2566
+        versionCode 28833387
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.zhy:base-rvadapter:3.0.3'
     //glide
-    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.2.0'
 
 //   为了espresso配置延迟加载类库：
     implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
@@ -66,6 +66,6 @@ dependencies {
     //相册要用到的dialog
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
-//    自动裁剪
+    //自动裁剪
     implementation 'com.github.pqpo:SmartCropper:v1.2.3@aar'
 }

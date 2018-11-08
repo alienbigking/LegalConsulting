@@ -74,18 +74,27 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                startActivity(Intent(context, OrderActivity::class.java))
+                val intent = Intent(context, OrderActivity::class.java)
+                val data = mAdapter!!.getCurrentItem()
+                intent.putExtra("orderId", data.id)
+                intent.putExtra("orderState", 1)
+                startActivity(intent)
+            }
+
+        })
+
+//        抢单事件的回调监听
+        mAdapter?.setOnItemRushListener(object : OrderReceivingAdapter.ItemRushListener{
+            override fun onRushListener() {
+                mPresenter.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
             }
 
         })
 
     }
 
-
-
     override fun updateData(data: List<OrderReceivingContent>?) {
         mAdapter?.updateItems(data)
-
     }
 
     override fun offLoadMore() {

@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/iv_order_dispose_item"/>
 
     <TextView
+        android:id="@+id/tv_order_dispose_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -87,6 +88,7 @@
     />
 
     <TextView
+        android:id="@+id/tv_order_dispose_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"

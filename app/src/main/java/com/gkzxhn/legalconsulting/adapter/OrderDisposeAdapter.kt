@@ -1,5 +1,6 @@
 package com.gkzxhn.legalconsulting.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.entity.OrderDispose
+import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.item_order_dispose.view.*
 import java.util.*
@@ -18,17 +21,16 @@ import java.util.*
  * Created on 2018/9/10.
  */
 
-class OrderDisposeAdapter(private val mContext: Context, private val data: List<String>?) : RecyclerView.Adapter<OrderDisposeAdapter.ViewHolder>() {
+class OrderDisposeAdapter(private val mContext: Context, private val data: List<OrderDispose.ContentBean>?) : RecyclerView.Adapter<OrderDisposeAdapter.ViewHolder>() {
 
-
-    private var mDatas: ArrayList<String> = ArrayList()
+    private var mDatas: ArrayList<OrderDispose.ContentBean> = ArrayList()
     private var onItemClickListener: MultiItemTypeAdapter.OnItemClickListener? = null
     private var mCurrentIndex = -1
 
     /**
      *  获取当前项实体
      */
-    fun getCurrentItem(): String {
+    fun getCurrentItem(): OrderDispose.ContentBean {
         return mDatas[mCurrentIndex]
     }
 
@@ -39,9 +41,9 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     /**
      * 更新数据
      */
-    fun updateItems(mDatas: List<String>?) {
+    fun updateItems(mDatas: List<OrderDispose.ContentBean>?) {
         this.mDatas.clear()
-        if (mDatas != null && mDatas.size > 0) {
+        if (mDatas != null && mDatas.isNotEmpty()) {
             this.mDatas.addAll(mDatas)
         }
         notifyDataSetChanged()
@@ -56,10 +58,15 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view)
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             val entity = mDatas[position]
-            tv_order_dispose_name.text = "待处理单：$position"
+            tv_order_dispose_name.text = entity.customer!!.name
+            /****** 价格 ******/
+            tv_main_top_end.text ="￥"+ entity.reward
+            tv_order_dispose_description.text =entity.description
+            tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
             holder.itemView.setOnClickListener(android.view.View.OnClickListener {
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this,holder,position)
@@ -70,6 +77,5 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     override fun getItemCount(): Int {
         return mDatas.size
     }
-
 
 }

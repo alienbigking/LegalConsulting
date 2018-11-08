@@ -86,6 +86,7 @@ class OrderGetSettingActivity : BaseActivity() {
                             204 -> {
                                 showToast("设置成功")
                                 changeGetOrderState()
+                                finish()
                             }
                             else -> {
                                 showToast(t.code().toString() + t.message())

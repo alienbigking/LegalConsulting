@@ -38,6 +38,19 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
         this.onItemClickListener = onItemClickListener
     }
 
+
+    /****** 回调抢单事件 ******/
+    private var onItemRushListener: ItemRushListener? = null
+
+    fun setOnItemRushListener(ItemRushListener: ItemRushListener) {
+        this.onItemRushListener = ItemRushListener
+    }
+
+    interface ItemRushListener{
+       fun onRushListener()
+    }
+
+
     /**
      * 更新数据
      */
@@ -65,7 +78,7 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
             /****** 姓名 ******/
             tv_item_order_receiving_name.text = entity.customer!!.name
             /****** 赏金  ******/
-            tv_main_top_end.text = "￥"+entity.reward.toString()
+            tv_main_top_end.text = "￥" + entity.reward.toString()
             tv_item_order_receiving_time.text = StringUtils.parseDate(entity.createdTime!!)
             tv_item_order_receiving_context.text = entity.description
             holder.itemView.setOnClickListener({
@@ -84,6 +97,12 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
 
                 }
             }
+
+            tv_item_order_receiving_rush.setOnClickListener {
+                mCurrentIndex = position
+                onItemRushListener?.onRushListener()
+            }
+
         }
     }
 

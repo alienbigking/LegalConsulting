@@ -95,4 +95,28 @@ interface ApiService {
     @GET("lawyer/rush/legal-advice")
     fun getOrderReceiving(): Observable<OrderReceiving>
 
+    //    获取抢单的明细
+    @GET("/lawyer/rush/legal-advice/{id}")
+    fun getOrderRushInfo(@Path("id") id: String): Observable<OrderRushInfo>
+
+    //    接单
+    @POST("lawyer/rush/legal-advice/{id}/receiving")
+    fun acceptRushOrder(@Path("id") id: String): Observable<OrderMyInfo>
+
+    //    获取我的咨询
+    @GET("lawyer/my/legal-advice")
+    fun getOrderDispose(): Observable<OrderDispose>
+
+    //    获取我的咨询的明细
+    @GET("/lawyer/my/legal-advice/{id}")
+    fun getOrderMyInfo(@Path("id") id: String): Observable<OrderMyInfo>
+
+    //  接单
+    @POST("lawyer/my/legal-advice/{id}/receiving")
+    fun acceptMyOrder(@Path("id") id: String): Observable<OrderMyInfo>
+
+    //  拒绝单
+    @POST("lawyer/my/legal-advice/{id}/refused")
+    fun rejectMyOrder(@Path("id") id: String): Observable<OrderMyInfo>
+
 }

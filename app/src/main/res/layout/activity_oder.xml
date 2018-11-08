@@ -1,217 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_order_all"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_gary_bg"
+              android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_oder_back"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:padding="5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@mipmap/ic_back_gary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <include
+        layout="@layout/default_top"/>
 
-    <ImageView
-        android:id="@+id/iv_oder_icon"
-        android:layout_width="84dp"
-        android:layout_height="84dp"
-        android:src="@mipmap/ic_ls_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_oder_back"/>
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/main_gary_bg">
 
 
-    <TextView
-        android:id="@+id/tv_order_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="王二小"
-        android:textColor="#ff333333"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_oder_icon"
-    />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_order_all"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:paddingTop="21dp"
+        >
 
-    <TextView
-        android:id="@+id/tv_order_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="¥39.9"
-        android:textColor="#ffff6600"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_name"
-    />
+            <com.gkzxhn.legalconsulting.customview.CircleImageView
+                android:id="@+id/iv_oder_icon"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginStart="15dp"
+                android:src="@mipmap/ic_ls_icon"
+                app:layout_constraintStart_toStartOf="parent"
+            />
 
-    <TextView
-        android:id="@+id/tv_order_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:text="2018-08-08"
-        android:textColor="#ff999999"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_price"
-    />
+            <TextView
+                android:id="@+id/tv_order_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="一 一 一"
+                android:textColor="#ff333333"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/iv_oder_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_oder_icon"
+            />
 
-    <TextView
-        android:id="@+id/tv_order_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:text="财产纠纷"
-        android:textColor="#ffff6600"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
-    />
+            <TextView
+                android:id="@+id/tv_order_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:text="¥00.0"
+                android:textColor="#ffff6600"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_order_name"
+            />
 
-    <View
-        android:id="@+id/v_order_zj"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFD9D9D9"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_type"/>
+            <TextView
+                android:id="@+id/tv_order_time"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="9dp"
+                android:text="0000-00-00"
+                android:textColor="#ff999999"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/tv_order_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_name"
+            />
+
+            <TextView
+                android:id="@+id/tv_order_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="9dp"
+                android:text="一 一 一 一"
+                android:textColor="#ffff6600"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/iv_oder_icon"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
+            />
 
 
-    <TextView
-        android:id="@+id/tv_order_context_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:text="咨询内容"
-        android:textColor="#ff333333"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_order_zj"
-    />
+            <TextView
+                android:id="@+id/tv_order_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="----------------"
+                android:textColor="#ff666666"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_oder_icon"
+            />
 
-    <TextView
+            <ImageView
+                android:id="@+id/iv_oder_image1"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#54b6e167"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
+            />
 
-        android:id="@+id/tv_order_context"
-        android:layout_width="324dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="我想咨询个人隐私问题，我对象通过他在派出所的朋友关系私
-自调出我的微信消费记录聊天记录，侵犯我的权利我想咨询个
-人隐私问题，我对象通过他在派出所的朋友关系私自调出我的
-微信消费记录聊天记录，侵犯我的权利。"
-        android:textColor="#ff666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_context_top"
-    />
+            <ImageView
+                android:id="@+id/iv_oder_image2"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#54b6e167"
+                app:layout_constraintStart_toEndOf="@id/iv_oder_image1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
+            />
 
-    <View
-        android:id="@+id/v_order_oval1"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/shape_order_oval_blue"
-        app:layout_constraintEnd_toStartOf="@id/v_order_oval2"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_context"/>
-    <View
-        android:id="@+id/v_order_oval2"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:background="@drawable/shape_order_oval_black"
-        app:layout_constraintEnd_toStartOf="@id/v_order_oval3"
-        app:layout_constraintStart_toEndOf="@+id/v_order_oval1"
-        app:layout_constraintTop_toTopOf="@id/v_order_oval1"/>
-    <View
-        android:id="@+id/v_order_oval3"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/shape_order_oval_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/v_order_oval2"
-        app:layout_constraintTop_toTopOf="@id/v_order_oval1"/>
+            <View
+                android:id="@+id/v_order_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:background="#FFD9D9D9"
+                app:layout_constraintTop_toBottomOf="@+id/iv_oder_image1"/>
 
-    <View android:layout_width="0dp"
-          android:layout_height="2dp"
-          android:background="#FF264C90"
-          app:layout_constraintBottom_toBottomOf="@id/v_order_oval1"
-          app:layout_constraintEnd_toStartOf="@id/v_order_oval2"
-          app:layout_constraintStart_toEndOf="@id/v_order_oval1"
-          app:layout_constraintTop_toTopOf="@id/v_order_oval1"/>
-    <View android:layout_width="0dp"
-          android:layout_height="2dp"
-          android:background="#FF666666"
-          app:layout_constraintBottom_toBottomOf="@id/v_order_oval1"
-          app:layout_constraintEnd_toStartOf="@id/v_order_oval3"
-          app:layout_constraintStart_toEndOf="@id/v_order_oval2"
-          app:layout_constraintTop_toTopOf="@id/v_order_oval1"/>
+            <TextView
+                android:id="@+id/tv_order_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="一 一 一"
+                android:textColor="#ff01882a"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_order_line"
+            />
 
-    <TextView
-        android:id="@+id/tv_order_oval_type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="已接单"
-        android:textColor="#ff264c90"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@id/v_order_oval1"
-        app:layout_constraintStart_toStartOf="@id/v_order_oval1"
-        app:layout_constraintTop_toBottomOf="@id/v_order_oval1"
-    />
+            <TextView
+                android:id="@+id/tv_order_explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="＊三天内无人接单，系统自动取消;\n   无人接单／律师拒单后，付款金额将于7个工作日内原路返回。"
+                android:textColor="#ff999999"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_state"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="08-08 13:06"
-        android:textColor="#ff264c90"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@id/v_order_oval1"
-        app:layout_constraintStart_toStartOf="@id/v_order_oval1"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_oval_type1"
-    />
+            <!--灰色的背影-->
+            <View android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_marginTop="15dp"
+                  android:background="@color/main_gary_bg"
+                  app:layout_constraintBottom_toBottomOf="@id/cl_order_all"
+                  app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
 
-    <TextView
-        android:id="@+id/tv_order_oval_type2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="处理中"
-        android:textColor="#FF666666"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@id/v_order_oval2"
-        app:layout_constraintStart_toStartOf="@id/v_order_oval2"
-        app:layout_constraintTop_toBottomOf="@id/v_order_oval2"
-    />
-    <TextView
-        android:id="@+id/tv_order_oval_type3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="已完成"
-        android:textColor="#FF666666"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@id/v_order_oval3"
-        app:layout_constraintStart_toStartOf="@id/v_order_oval3"
-        app:layout_constraintTop_toBottomOf="@id/v_order_oval3"
-    />
+
+            <!--白色的背影-->
+            <View android:id="@+id/v_order_white_bg"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_marginTop="24dp"
+                  android:background="@color/white"
+                  app:layout_constraintBottom_toBottomOf="@id/cl_order_all"
+                  app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
+
+            <TextView
+                android:id="@+id/tv_order_state_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:visibility="visible"
+                android:layout_marginTop="16dp"
+                android:text="一一一（一 一 律师）"
+                android:textColor="#ff525aa6"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/v_order_white_bg"
+            />
+
+            <View
+                android:id="@+id/v_order_state_name"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:background="#FFD9D9D9"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_state_name"/>
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/tv_order_get_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="接单时间：0000-00-00  00:00"
+                android:textColor="#ff666666"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/cl_order_all"
+                app:layout_constraintTop_toBottomOf="@+id/v_order_state_name"
+            />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
 
     <TextView
         android:id="@+id/tv_order_next"
@@ -221,14 +228,51 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
+        android:visibility="gone"
         android:background="@drawable/shape_qualification_authentication_edit_bg_text"
         android:gravity="center"
-        android:text="发消息"
+        android:text=" - - -"
         android:textColor="#ffffffff"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
     />
 
-</android.support.constraint.ConstraintLayout>
+
+    <!--指定单的选择-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_order_bottom_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/main_gary_bg"
+    >
+        <TextView
+            android:id="@+id/tv_order_reject"
+            android:layout_width="100dp"
+            android:layout_height="44dp"
+            android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+            android:gravity="center"
+            android:text="拒绝"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_order_accept"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+        />
+
+        <TextView
+            android:id="@+id/tv_order_accept"
+            android:layout_width="100dp"
+            android:layout_height="44dp"
+            android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+            android:gravity="center"
+            android:text="接受"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_order_reject"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

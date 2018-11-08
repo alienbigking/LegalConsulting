@@ -96,6 +96,9 @@ public class StringUtils {
      * @description： 将2018-11-07T05:54:21.000+0000  改成标准时间
      */
     public static String parseDate(String dateStr) throws ParseException {
+        if (dateStr == null) {
+            return "0000-00-00 00:00:00";
+        }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
         Date result;
         result = df.parse(dateStr);
