@@ -4,7 +4,7 @@ package com.gkzxhn.legalconsulting.entity
  * @classname：OrderReceiving
  * @author：liushaoxiang
  * @date：2018/11/7 2:57 PM
- * @description：
+ * @description： 抢单
  */
 
 data class OrderReceiving(
@@ -19,7 +19,6 @@ data class OrderReceiving(
         var number: Int
 )
 
-
 class OrderReceivingCustomer {
     var id: String? = null
     var name: String? = null
@@ -32,7 +31,7 @@ class OrderReceivingContent {
     var customer: OrderReceivingCustomer? = null
     var categories: List<String>? = null
     var description: String? = null
-    var reward: Int = 0
+    var reward: Double = 0.0
     var createdTime: String? = null
 }
 

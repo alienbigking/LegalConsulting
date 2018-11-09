@@ -29,4 +29,15 @@
     </com.gkzxhn.legalconsulting.customview.PullToRefreshLayout>
 
 
+    <TextView
+        android:id="@+id/tv_order_disposer_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="未认证不能接单"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+    />
+
 </LinearLayout>

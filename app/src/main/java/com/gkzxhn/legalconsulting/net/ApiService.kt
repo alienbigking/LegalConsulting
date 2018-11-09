@@ -112,7 +112,7 @@ interface ApiService {
     fun getOrderMyInfo(@Path("id") id: String): Observable<OrderMyInfo>
 
     //  接单
-    @POST("lawyer/my/legal-advice/{id}/receiving")
+    @POST("lawyer/my/legal-advice/{id}/accepted")
     fun acceptMyOrder(@Path("id") id: String): Observable<OrderMyInfo>
 
     //  拒绝单

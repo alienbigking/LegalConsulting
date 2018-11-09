@@ -16,5 +16,6 @@ public interface NetWorkCodeInfo {
 
     /***** 正试请求的网址 *****/
     //String BASE_URL ="http://api.auth.prisonpublic.com";
+    //String BASE_URL_PROJECT ="http://api.legal.prisonpublic.com";
 
 }

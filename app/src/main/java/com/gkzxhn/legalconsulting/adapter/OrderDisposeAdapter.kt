@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
@@ -38,6 +39,18 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
         this.onItemClickListener = onItemClickListener
     }
 
+    /****** 回调拒单 接单事件 ******/
+    private var onItemOrderListener: ItemOrderListener? = null
+
+    fun setOnItemOrderListener(ItemOrderListener: ItemOrderListener) {
+        this.onItemOrderListener = ItemOrderListener
+    }
+
+    interface ItemOrderListener {
+        fun onRefusedListener()
+        fun onAcceptListener()
+    }
+
     /**
      * 更新数据
      */
@@ -64,13 +77,37 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
             val entity = mDatas[position]
             tv_order_dispose_name.text = entity.customer!!.name
             /****** 价格 ******/
-            tv_main_top_end.text ="￥"+ entity.reward
-            tv_order_dispose_description.text =entity.description
+            tv_main_top_end.text = "￥" + entity.reward
+            tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
+
+            /****** 待接单的时候 显示按扭 ******/
+            if (entity.status == Constants.ORDER_STATE_PENDING_RECEIVING) {
+                tv_order_dispose_refused.visibility = View.VISIBLE
+                tv_order_dispose_accept.visibility = View.VISIBLE
+                v_order_dispose_description.visibility = View.VISIBLE
+            } else {
+                tv_order_dispose_refused.visibility = View.GONE
+                tv_order_dispose_accept.visibility = View.GONE
+                v_order_dispose_description.visibility = View.GONE
+            }
             holder.itemView.setOnClickListener(android.view.View.OnClickListener {
                 mCurrentIndex = position
-                onItemClickListener?.onItemClick(this,holder,position)
+                onItemClickListener?.onItemClick(this, holder, position)
             })
+
+            /****** 拒绝单 ******/
+            tv_order_dispose_refused.setOnClickListener {
+                mCurrentIndex = position
+                onItemOrderListener?.onRefusedListener()
+            }
+
+            /****** 接单 ******/
+            tv_order_dispose_accept.setOnClickListener {
+                mCurrentIndex = position
+                onItemOrderListener?.onAcceptListener()
+
+            }
         }
     }
 

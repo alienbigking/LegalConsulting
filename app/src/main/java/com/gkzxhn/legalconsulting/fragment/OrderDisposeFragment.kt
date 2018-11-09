@@ -13,6 +13,7 @@ import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.presenter.OrderDisposePresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.view.OrderDisposeView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_disposer_fragment.*
@@ -33,20 +34,27 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 
     lateinit var mPresenter: OrderDisposePresenter
 
-
     override fun provideContentViewId(): Int {
         return R.layout.order_disposer_fragment
     }
 
     override fun init() {
         mPresenter = OrderDisposePresenter(context!!, this)
-        list = ArrayList()
-        mAdapter = context?.let { OrderDisposeAdapter(it, null) }
-        rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
-        rcl_order_disposer.adapter = mAdapter
-        val decoration = DisplayUtils.dp2px(App.mContext, 15f)
-        rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-        mPresenter.getOrderDispose()
+
+        /****** 认证未通过时显示空状态  ******/
+        if (!ProjectUtils.certificationStatus()) {
+            loading_refresh.visibility=View.GONE
+            tv_order_disposer_null.visibility=View.VISIBLE
+        }else{
+            list = ArrayList()
+            mAdapter = context?.let { OrderDisposeAdapter(it, null) }
+            rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
+            rcl_order_disposer.adapter = mAdapter
+            val decoration = DisplayUtils.dp2px(App.mContext, 15f)
+            rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
+            mPresenter.getOrderDispose()
+        }
+
     }
 
     override fun initListener() {
@@ -57,7 +65,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 //                mPresenter.getOrderDispose()
                 offLoadMore()
             }
-
         })
 
         //下啦刷新
@@ -68,7 +75,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 mPresenter.getOrderDispose()
                 loading_refresh?.finishRefreshing()
             }
-
         }, 1)
 
         mAdapter?.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {
@@ -83,11 +89,21 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 intent.putExtra("orderState", 2)
                 startActivity(intent)
             }
+        })
 
+        mAdapter?.setOnItemOrderListener(object : OrderDisposeAdapter.ItemOrderListener {
+            override fun onRefusedListener() {
+                val data = mAdapter!!.getCurrentItem()
+                mPresenter.rejectMyOrder(data.id!!)
+            }
+
+            override fun onAcceptListener() {
+                val data = mAdapter!!.getCurrentItem()
+                mPresenter.acceptMyOrder(data.id!!)
+            }
         })
 
     }
-
 
     override fun offLoadMore() {
         //加载更多取消

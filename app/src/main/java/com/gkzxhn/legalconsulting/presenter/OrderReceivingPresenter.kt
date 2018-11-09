@@ -2,8 +2,10 @@ package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
 import com.gkzxhn.legalconsulting.entity.OrderReceiving
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -41,8 +43,9 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_PROCESSING) {
+                            if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
+                                RxBus.instance.post(RxBusBean.HomePoint(true,1))
                                 getOrderReceiving()
                             }
                         }

@@ -43,7 +43,6 @@ object Constants {
      */
     val SP_CERTIFICATIONSTATUS = "SP_CERTIFICATIONSTATUS"
 
-
     /**
      * 头像裁剪URI
      */
@@ -72,16 +71,15 @@ object Constants {
     // ("待审核")
     val ORDER_STATE_PENDING_APPROVAL = "PENDING_APPROVAL"
     // ("待接单")
-    val ORDER_STATE_PENDING_RECEIVING = "PENDING_RECEIVING"
+    val ORDER_STATE_PENDING_RECEIVING = "PENDING_ACCEPT"
     // ("处理中")
-    val ORDER_STATE_PROCESSING = "PROCESSING"
+    val ORDER_STATE_ACCEPTED = "ACCEPTED"
     // ("已完成")
     val ORDER_STATE_COMPLETE = "COMPLETE"
     // ("已拒绝")
     val ORDER_STATE_REFUSED = "REFUSED"
     // ("已取消")
     val ORDER_STATE_CANCELLED = "CANCELLED"
-
 
     /****** 与后台约定的前缀 ******/
     val BASE_64_START = "data:image/png;base64,"

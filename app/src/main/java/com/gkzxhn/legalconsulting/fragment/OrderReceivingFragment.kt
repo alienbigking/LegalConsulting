@@ -13,6 +13,8 @@ import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
 import com.gkzxhn.legalconsulting.presenter.OrderReceivingPresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderReceivingView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_receiving_fragment.*
@@ -80,17 +82,18 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                 intent.putExtra("orderState", 1)
                 startActivity(intent)
             }
-
         })
 
 //        抢单事件的回调监听
-        mAdapter?.setOnItemRushListener(object : OrderReceivingAdapter.ItemRushListener{
+        mAdapter?.setOnItemRushListener(object : OrderReceivingAdapter.ItemRushListener {
             override fun onRushListener() {
-                mPresenter.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
+                if (ProjectUtils.certificationStatus()) {
+                    mPresenter.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
+                } else {
+                    context?.showToast("您认证尚未通过，不能进行此操作！")
+                }
             }
-
         })
-
     }
 
     override fun updateData(data: List<OrderReceivingContent>?) {

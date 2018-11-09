@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.item_order_receiving.view.*
@@ -46,8 +47,8 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
         this.onItemRushListener = ItemRushListener
     }
 
-    interface ItemRushListener{
-       fun onRushListener()
+    interface ItemRushListener {
+        fun onRushListener()
     }
 
 
@@ -81,6 +82,12 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
             tv_main_top_end.text = "￥" + entity.reward.toString()
             tv_item_order_receiving_time.text = StringUtils.parseDate(entity.createdTime!!)
             tv_item_order_receiving_context.text = entity.description
+
+            if (!ProjectUtils.certificationStatus()) {
+                /****** 认证未通过 按扭变成灰色 ******/
+                tv_item_order_receiving_rush.setBackgroundResource(R.drawable.shape_order_bg_select_gary)
+            }
+
             holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
@@ -94,7 +101,6 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
                 } else {
                     tv_item_order_receiving_context.setLines(2)
                     tv_order_dispose_open.text = "展开"
-
                 }
             }
 

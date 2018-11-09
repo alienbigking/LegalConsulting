@@ -11,6 +11,7 @@ import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.utils.logE
 import kotlinx.android.synthetic.main.main_fragment.*
 import rx.android.schedulers.AndroidSchedulers
@@ -49,6 +50,7 @@ class MainFragment : BaseFragment() {
         VpHome.adapter = mainAdapter
         VpHome.offscreenPageLimit = 3
 
+        /****** 接受更新的律师信息 ******/
         RxBus.instance.toObserverable(LawyersInfo::class.java)
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,11 +59,27 @@ class MainFragment : BaseFragment() {
                 }, {
                     it.message.toString().logE(this)
                 })
+
+        /****** 接受控件小红点的消息 ******/
+        RxBus.instance.toObserverable(RxBusBean.HomePoint::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    tv_main_red_point.visibility = if (it.show) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                    tv_main_red_point.text= it.number.toString()
+
+                }, {
+                    it.message.toString().logE(this)
+                })
     }
 
     private fun loadTopUI() {
-        tv_main_name.text=App.SP.getString(Constants.SP_NAME, "- - - -")
-        tv_home_address.text="执业律所："+App.SP.getString(Constants.SP_LAWOFFICE, "- - - -")
+        tv_main_name.text = App.SP.getString(Constants.SP_NAME, "- - - -")
+        tv_home_address.text = "执业律所：" + App.SP.getString(Constants.SP_LAWOFFICE, "- - - -")
 
         val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
@@ -103,7 +121,6 @@ class MainFragment : BaseFragment() {
         }
 
         v_home_top_bg.setOnClickListener {
-
         }
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {

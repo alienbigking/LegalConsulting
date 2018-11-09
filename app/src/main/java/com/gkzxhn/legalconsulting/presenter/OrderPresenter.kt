@@ -10,6 +10,8 @@ import com.gkzxhn.legalconsulting.entity.OrderRushInfo
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.utils.ImageUtils
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderView
@@ -37,14 +39,22 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setReward("￥" + t.reward)
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setNextText("抢单")
+
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
-                            mView?.setOrderType("","","")
+                            ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+
+                            if (t.attachments!!.size > 1&&t.attachments!=null) {
+                                ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
+                            }
+                            val str1 = ProjectUtils.categoriesConversion(t.categories!![0])
+                            val str2 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 1) t.categories!![1] else "")
+                            val str3 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 2) t.categories!![2] else "")
+                            mView?.setOrderType(str1, str2, str3)
                         }
                     })
         }
-
     }
 
     /****** 2，获取 指定订单的明细 ******/
@@ -55,45 +65,58 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
-                            mView?.setDescription(t.description!!)
-                            mView?.setName(t.customer?.name!!)
-                            mView?.setReward("￥" + t.reward)
-                            mView?.setOrderState("已支付")
-                            mView?.setTime(StringUtils.parseDate(t.createdTime))
-                            when (t.status) {
-                            /****** 待接单 ******/
-                                Constants.ORDER_STATE_PENDING_RECEIVING -> {
-                                    mView?.setShowOrderInfo(View.GONE, "", "")
-                                    mView?.setBottomSelectVisibility(View.VISIBLE)
-                                }
-                            /****** 已接单 ******/
-                                Constants.ORDER_STATE_PROCESSING -> {
-                                    mView?.setShowOrderInfo(View.VISIBLE, "接单时间：" + StringUtils.parseDate(t.receivingTime), "已接单（" + t.lawyer?.name!! + "律师）")
-                                    mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
-                                }
-                            /****** 已完成 ******/
-                                Constants.ORDER_STATE_COMPLETE -> {
-                                    mView?.setShowOrderInfo(View.GONE, "", "")
-                                    mView?.setOrderState("已完成")
-                                }
-                            /******  已拒绝 ******/
-                                Constants.ORDER_STATE_REFUSED -> {
-                                    mView?.setOrderState("已退款")
-                                    mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
-                                    mView?.setShowOrderInfo(View.VISIBLE, "拒单时间" + StringUtils.parseDate(t.receivingTime), "拒接单" + t.lawyer?.name!!)
-
-                                }
-                            /******  已取消 ******/
-                                Constants.ORDER_STATE_CANCELLED -> {
-                                    mView?.setOrderState("已取消")
-                                    mView?.setShowOrderInfo(View.GONE, "", "")
-                                    mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
-                                }
-                            }
+                            initOrderInfo(t)
                         }
                     })
         }
+    }
 
+    private fun initOrderInfo(t: OrderMyInfo) {
+        mView?.setDescription(t.description!!)
+        mView?.setName(t.customer?.name!!)
+        mView?.setReward("￥" + t.reward)
+        mView?.setOrderState("已支付")
+        mView?.setTime(StringUtils.parseDate(t.createdTime))
+
+        ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+        if (t.attachments!!.size > 1&&t.attachments!=null) {
+            ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
+        }
+
+        val str1 = ProjectUtils.categoriesConversion(t.categories!![0])
+        val str2 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 1) t.categories!![1] else "")
+        val str3 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 2) t.categories!![2] else "")
+        mView?.setOrderType(str1, str2, str3)
+        when (t.status) {
+        /****** 待接单 ******/
+            Constants.ORDER_STATE_PENDING_RECEIVING -> {
+                mView?.setShowOrderInfo(View.GONE, "", "")
+                mView?.setBottomSelectVisibility(View.VISIBLE)
+            }
+        /****** 已接单 ******/
+            Constants.ORDER_STATE_ACCEPTED -> {
+                mView?.setShowOrderInfo(View.VISIBLE, "接单时间：" + StringUtils.parseDate(t.acceptedTime), "已接单（" + t.lawyer?.name!! + "律师）")
+                mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
+            }
+        /****** 已完成 ******/
+            Constants.ORDER_STATE_COMPLETE -> {
+                mView?.setShowOrderInfo(View.GONE, "", "")
+                mView?.setOrderState("已完成")
+            }
+        /******  已拒绝 ******/
+            Constants.ORDER_STATE_REFUSED -> {
+                mView?.setOrderState("已退款")
+                mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
+                mView?.setShowOrderInfo(View.VISIBLE, "拒单时间" + StringUtils.parseDate(t.acceptedTime), "拒接单" + t.lawyer?.name!!)
+
+            }
+        /******  已取消 ******/
+            Constants.ORDER_STATE_CANCELLED -> {
+                mView?.setOrderState("已取消")
+                mView?.setShowOrderInfo(View.GONE, "", "")
+                mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
+            }
+        }
     }
 
     /****** 抢单 ******/
@@ -104,15 +127,15 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_PROCESSING) {
+                            if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("抢单成功")
+                                initOrderInfo(t)
                             } else {
                                 mContext?.showToast("抢单失败")
                             }
                         }
                     })
         }
-
     }
 
     /****** 接受订单 ******/
@@ -123,13 +146,13 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_PROCESSING) {
+                            if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
+                                initOrderInfo(t)
                             }
                         }
                     })
         }
-
     }
 
     /****** 拒绝订单 ******/
@@ -141,39 +164,16 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_REFUSED) {
+                                initOrderInfo(t)
                                 mContext?.showToast("订单拒绝成功")
                             }
                         }
                     })
         }
-
     }
 
     fun sendMessage() {
         mContext?.showToast("限时通讯开发中")
-
     }
-
-
-    fun dd(str: String) :String{
-      return  when (str) {
-             "PROPERTY_DISPUTES"-> "财产纠纷"
-//            "婚姻家庭" -> categories?.add("MARRIAGE_FAMILY")
-//            "交通事故" -> categories?.add("TRAFFIC_ACCIDENT")
-//            "工伤赔偿" -> categories?.add("WORK_COMPENSATION")
-//
-//            "合同纠纷" -> categories?.add("CONTRACT_DISPUTE")
-//
-//            "刑事辩护" -> categories?.add("CRIMINAL_DEFENSE")
-//
-//            "房产纠纷" -> categories?.add("HOUSING_DISPUTES")
-//
-//            "劳动就业" -> categories?.add("LABOR_EMPLOYMENT")
-          else -> {
-              ""
-          }
-      }
-    }
-
 
 }

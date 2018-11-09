@@ -1,12 +1,14 @@
 package com.gkzxhn.legalconsulting.activity
 
+import android.graphics.Bitmap
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.OrderPresenter
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderView
 import kotlinx.android.synthetic.main.activity_oder.*
 import kotlinx.android.synthetic.main.default_top.*
-
 
 /**
  * Explanation：订单详情
@@ -21,7 +23,6 @@ class OrderActivity : BaseActivity(), OrderView {
     override fun provideContentViewId(): Int {
         return R.layout.activity_oder
     }
-
 
     override fun init() {
         mPresenter = OrderPresenter(this, this)
@@ -43,8 +44,12 @@ class OrderActivity : BaseActivity(), OrderView {
                 /****** 发消息 ******/
                 mPresenter.sendMessage()
             } else {
-                /****** 抢单 ******/
-                mPresenter.acceptRushOrder(orderID)
+                if (ProjectUtils.certificationStatus()) {
+                    /****** 抢单 ******/
+                    mPresenter.acceptRushOrder(orderID)
+                }else{
+                    showToast("您认证尚未通过，不能进行此操作！")
+                }
             }
         }
 
@@ -55,9 +60,7 @@ class OrderActivity : BaseActivity(), OrderView {
         /****** 接受订单 ******/
         tv_order_accept.setOnClickListener {
             mPresenter.acceptMyOrder(orderID)
-
         }
-
     }
 
     override fun onFinish() {
@@ -79,11 +82,11 @@ class OrderActivity : BaseActivity(), OrderView {
     override fun setOrderType(str1: String, str2: String, str3: String) {
         tv_order_type1.text = str1
         if (str2.isNotEmpty()) {
-            tv_order_type2.visibility=View.VISIBLE
+            tv_order_type2.visibility = View.VISIBLE
             tv_order_type2.text = str2
         }
         if (str3.isNotEmpty()) {
-            tv_order_type3.visibility=View.VISIBLE
+            tv_order_type3.visibility = View.VISIBLE
             tv_order_type3.text = str3
         }
     }
@@ -99,6 +102,16 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setOrderState(str: String) {
         tv_order_state.text = str
+    }
+
+    override fun setImage1(bitmap: Bitmap) {
+        iv_oder_image1.visibility = View.VISIBLE
+        iv_oder_image1.setImageBitmap(bitmap)
+    }
+
+    override fun setImage2(bitmap: Bitmap) {
+        iv_oder_image2.visibility = View.VISIBLE
+        iv_oder_image2.setImageBitmap(bitmap)
     }
 
     override fun setAllbgColor(color: Int) {
@@ -119,8 +132,7 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_state_name.visibility = visibility
         tv_order_state_name.text = name
         v_order_state_name.visibility = visibility
-
+        v_order_white_bg.visibility = visibility
     }
-
 
 }

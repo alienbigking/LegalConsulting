@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/ll_order_all"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/main_gary_bg"
-              android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/ll_order_all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_gary_bg"
+    android:orientation="vertical">
 
     <include
         layout="@layout/default_top"/>
@@ -138,8 +139,9 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginStart="15dp"
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
-                android:background="#54b6e167"
+                android:background="#54f0f4e9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
             />
@@ -151,6 +153,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:background="#54b6e167"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/iv_oder_image1"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
             />
@@ -206,6 +209,7 @@
                   android:layout_height="0dp"
                   android:layout_marginTop="24dp"
                   android:background="@color/white"
+                  android:visibility="gone"
                   app:layout_constraintBottom_toBottomOf="@id/cl_order_all"
                   app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
 
@@ -218,7 +222,7 @@
                 android:text="一一一（一 一 律师）"
                 android:textColor="#ff525aa6"
                 android:textSize="14sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/v_order_white_bg"
             />
@@ -231,7 +235,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="#FFD9D9D9"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_state_name"/>
 
             <TextView
@@ -244,7 +248,7 @@
                 android:text="接单时间：0000-00-00  00:00"
                 android:textColor="#ff666666"
                 android:textSize="12sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/cl_order_all"
                 app:layout_constraintTop_toBottomOf="@+id/v_order_state_name"
@@ -271,7 +275,6 @@
         android:visibility="gone"
     />
 
-
     <!--指定单的选择-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_order_bottom_select"
@@ -285,10 +288,10 @@
             android:layout_width="100dp"
             android:layout_height="44dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+            android:background="@drawable/shape_order_bottom_bg"
             android:gravity="center"
             android:text="拒绝"
-            android:textColor="#ffffffff"
+            android:textColor="#FF666666"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_order_accept"
@@ -300,14 +303,15 @@
             android:id="@+id/tv_order_accept"
             android:layout_width="100dp"
             android:layout_height="44dp"
-            android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+            android:background="@drawable/shape_order_bottom_bg2"
             android:gravity="center"
             android:text="接受"
-            android:textColor="#ffffffff"
+            android:textColor="#FF525BA3"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_order_reject"
         />
 
     </android.support.constraint.ConstraintLayout>
+
 </LinearLayout>

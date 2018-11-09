@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.text.TextUtils
 import android.util.Base64
+import com.gkzxhn.legalconsulting.common.App.Companion.mContext
+import com.gkzxhn.legalconsulting.common.Constants
 import java.io.*
 
 
@@ -90,6 +92,21 @@ object ImageUtils {
             return false
         }
 
+    }
+
+    fun base64ToBitmap(fileName: String, base64Str: String): Bitmap? {
+        val file1 = File(mContext.cacheDir, fileName)
+        return if (base64Str.isNotEmpty() && base64Str.length > Constants.BASE_64_START.length) {
+            val base64ToFile = ImageUtils.base64ToFile(base64Str.substring(Constants.BASE_64_START.length), file1.absolutePath)
+            if (base64ToFile) {
+                val decodeFile = BitmapFactory.decodeFile(file1.absolutePath)
+                decodeFile
+            } else {
+                null
+            }
+        } else {
+            null
+        }
     }
 
     /**

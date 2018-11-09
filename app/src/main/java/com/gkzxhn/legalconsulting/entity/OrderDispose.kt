@@ -4,7 +4,7 @@ package com.gkzxhn.legalconsulting.entity
  * @classname：OrderDispose
  * @author：liushaoxiang
  * @date：2018/11/8 9:35 AM
- * @description： 我的咨询
+ * @description： 我的咨询（指定 单）
  */
 
  class OrderDispose {
@@ -48,7 +48,7 @@ package com.gkzxhn.legalconsulting.entity
         var status: String? = null
         var customer: CustomerBean? = null
         var description: String? = null
-        var reward: Int = 0
+        var reward: Double = 0.0
         var createdTime: String? = null
         var receivingTime: Any? = null
         var categories: List<String>? = null
