@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_order_all"
+<LinearLayout android:id="@+id/ll_order_all"
+              xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -71,15 +71,50 @@
             />
 
             <TextView
-                android:id="@+id/tv_order_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_order_type1"
+                android:layout_width="69dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="9dp"
-                android:text="一 一 一 一"
+                android:background="@drawable/shape_order_type_bg"
+                android:gravity="center"
+                android:text="一 一"
                 android:textColor="#ffff6600"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/iv_oder_icon"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+            />
+            <TextView
+                android:id="@+id/tv_order_type2"
+                android:layout_width="69dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/shape_order_type_bg"
+                android:gravity="center"
+                android:text="一 一"
+                android:textColor="#ffff6600"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/tv_order_type1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
+            />
+            <TextView
+                android:id="@+id/tv_order_type3"
+                android:layout_width="69dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/shape_order_type_bg"
+                android:gravity="center"
+                android:text="一 一"
+                android:textColor="#ffff6600"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_order_type2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
             />
 
@@ -179,28 +214,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:visibility="visible"
                 android:layout_marginTop="16dp"
                 android:text="一一一（一 一 律师）"
                 android:textColor="#ff525aa6"
                 android:textSize="14sp"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/v_order_white_bg"
             />
 
             <View
                 android:id="@+id/v_order_state_name"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="#FFD9D9D9"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_state_name"/>
 
             <TextView
-                android:visibility="visible"
                 android:id="@+id/tv_order_get_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -210,6 +244,7 @@
                 android:text="接单时间：0000-00-00  00:00"
                 android:textColor="#ff666666"
                 android:textSize="12sp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/cl_order_all"
                 app:layout_constraintTop_toBottomOf="@+id/v_order_state_name"
@@ -228,12 +263,12 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
-        android:visibility="gone"
         android:background="@drawable/shape_qualification_authentication_edit_bg_text"
         android:gravity="center"
         android:text=" - - -"
         android:textColor="#ffffffff"
         android:textSize="14sp"
+        android:visibility="gone"
     />
 
 
@@ -242,19 +277,19 @@
         android:id="@+id/cl_order_bottom_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:background="@color/main_gary_bg"
+        android:visibility="gone"
     >
         <TextView
             android:id="@+id/tv_order_reject"
             android:layout_width="100dp"
             android:layout_height="44dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/shape_qualification_authentication_edit_bg_text"
             android:gravity="center"
             android:text="拒绝"
             android:textColor="#ffffffff"
             android:textSize="14sp"
-            android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_order_accept"
             app:layout_constraintStart_toStartOf="parent"

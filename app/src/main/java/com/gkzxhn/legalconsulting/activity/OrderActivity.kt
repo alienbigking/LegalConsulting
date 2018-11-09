@@ -42,7 +42,7 @@ class OrderActivity : BaseActivity(), OrderView {
             if (tv_order_next.text.trim().toString() == resources.getString(R.string.send_message)) {
                 /****** 发消息 ******/
                 mPresenter.sendMessage()
-            }else{
+            } else {
                 /****** 抢单 ******/
                 mPresenter.acceptRushOrder(orderID)
             }
@@ -76,6 +76,18 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_time.text = time
     }
 
+    override fun setOrderType(str1: String, str2: String, str3: String) {
+        tv_order_type1.text = str1
+        if (str2.isNotEmpty()) {
+            tv_order_type2.visibility=View.VISIBLE
+            tv_order_type2.text = str2
+        }
+        if (str3.isNotEmpty()) {
+            tv_order_type3.visibility=View.VISIBLE
+            tv_order_type3.text = str3
+        }
+    }
+
     override fun setReward(reward: String) {
         tv_order_price.text = reward
     }
@@ -103,9 +115,9 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setShowOrderInfo(visibility: Int, time: String, name: String) {
         tv_order_get_time.visibility = visibility
-        tv_order_get_time.text=time
+        tv_order_get_time.text = time
         tv_order_state_name.visibility = visibility
-        tv_order_state_name.text=name
+        tv_order_state_name.text = name
         v_order_state_name.visibility = visibility
 
     }

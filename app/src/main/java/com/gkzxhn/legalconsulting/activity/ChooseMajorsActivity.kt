@@ -25,7 +25,7 @@ class ChooseMajorsActivity : BaseActivity() {
     }
 
     private fun initSelect() {
-       var intentSelectString = intent.getStringArrayListExtra(Constants.INTENT_SELECTSTRING) as java.util.ArrayList<String>
+        var intentSelectString = intent.getStringArrayListExtra(Constants.INTENT_SELECTSTRING) as java.util.ArrayList<String>
         for (str: String in intentSelectString) {
             initSelect(str)
         }
@@ -45,9 +45,7 @@ class ChooseMajorsActivity : BaseActivity() {
         tv_default_top_end.setOnClickListener {
             onBackPressed()
         }
-
     }
-
 
     fun onClickChooseMajors(view: View) {
         when (view.id) {

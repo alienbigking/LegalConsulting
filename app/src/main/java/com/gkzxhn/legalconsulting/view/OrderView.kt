@@ -19,4 +19,5 @@ interface OrderView : BaseView {
     fun setOrderStateColor(color: Int)
     fun setBottomSelectVisibility(visibility: Int)
     fun setShowOrderInfo(visibility: Int, time: String, name: String)
+    fun setOrderType(str1: String, str2: String, str3: String)
 }

@@ -40,6 +40,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
+                            mView?.setOrderType("","","")
                         }
                     })
         }
@@ -151,6 +152,27 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
     fun sendMessage() {
         mContext?.showToast("限时通讯开发中")
 
+    }
+
+
+    fun dd(str: String) :String{
+      return  when (str) {
+             "PROPERTY_DISPUTES"-> "财产纠纷"
+//            "婚姻家庭" -> categories?.add("MARRIAGE_FAMILY")
+//            "交通事故" -> categories?.add("TRAFFIC_ACCIDENT")
+//            "工伤赔偿" -> categories?.add("WORK_COMPENSATION")
+//
+//            "合同纠纷" -> categories?.add("CONTRACT_DISPUTE")
+//
+//            "刑事辩护" -> categories?.add("CRIMINAL_DEFENSE")
+//
+//            "房产纠纷" -> categories?.add("HOUSING_DISPUTES")
+//
+//            "劳动就业" -> categories?.add("LABOR_EMPLOYMENT")
+          else -> {
+              ""
+          }
+      }
     }
 
 
