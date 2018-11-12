@@ -19,7 +19,6 @@ import com.gkzxhn.legalconsulting.view.OrderReceivingView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_receiving_fragment.*
 
-
 /**
  * Explanation：抢单
  * @author LSX
@@ -30,9 +29,16 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
 
     private var mAdapter: OrderReceivingAdapter? = null
 
-    private var cont: Int = 0
-    private var list: MutableList<String>? = null
     lateinit var mPresenter: OrderReceivingPresenter
+
+
+    var loadMore = false
+    var page = 0
+
+    override fun setLastPage(lastPage: Boolean, page: Int) {
+        this.loadMore = !lastPage
+        this.page = page
+    }
 
     override fun provideContentViewId(): Int {
         return R.layout.order_receiving_fragment
@@ -40,22 +46,23 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
 
     override fun init() {
         mPresenter = OrderReceivingPresenter(context!!, this)
-        list = ArrayList()
-        mAdapter = context?.let { OrderReceivingAdapter(it, null) }
+        mAdapter = context?.let { OrderReceivingAdapter(it) }
         rcl_order_receiving.layoutManager = LinearLayoutManager(context, 1, false)
         rcl_order_receiving.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_order_receiving.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-        mPresenter.getOrderReceiving()
+        mPresenter.getOrderReceiving("0")
     }
 
     override fun initListener() {
         //加载更多
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
-                cont++
-//                mPresenter.getOrderReceiving()
-                loading_more.finishLoading()
+                if (loadMore) {
+                    mPresenter.getOrderReceiving((page+1).toString())
+                }else{
+                    offLoadMore()
+                }
             }
 
         })
@@ -63,9 +70,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                list?.clear()
-                cont = 0
-                mPresenter.getOrderReceiving()
+                mPresenter.getOrderReceiving("0")
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -96,14 +101,18 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         })
     }
 
-    override fun updateData(data: List<OrderReceivingContent>?) {
-        mAdapter?.updateItems(data)
+    override fun updateData(clear: Boolean, data: List<OrderReceivingContent>?) {
+        mAdapter?.updateItems(clear, data)
     }
 
     override fun offLoadMore() {
         if (loading_more!!.isLoading) {
             loading_more?.finishLoading()
         }
+    }
+
+    override fun showNullView(show:Boolean) {
+        tv_item_order_receiving_bull.visibility=if (show)View.VISIBLE else View.GONE
     }
 
 }

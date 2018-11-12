@@ -75,4 +75,5 @@ object ProjectUtils {
         val certificationStatus = App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")
         return certificationStatus == Constants.CERTIFIED
     }
+
 }

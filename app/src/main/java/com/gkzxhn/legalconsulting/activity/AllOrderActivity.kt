@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.default_top.*
  * @description：所有订单
  */
 class AllOrderActivity : BaseActivity() {
+
     override fun provideContentViewId(): Int {
         return R.layout.activity_all_order
     }

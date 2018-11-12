@@ -17,11 +17,11 @@ import rx.Observable
 
 interface IOrderModel : IBaseModel {
 
-    fun getOrderReceiving(context: Context): Observable<OrderReceiving>
-    fun getOrderDispose(context: Context): Observable<OrderDispose>
+    fun getOrderDispose(context: Context ,page: String, size: String): Observable<OrderDispose>
     fun getOrderRushInfo(context: Context, id: String): Observable<OrderRushInfo>
     fun getOrderMyInfo(context: Context, id: String): Observable<OrderMyInfo>
     fun rejectMyOrder(context: Context, id: String): Observable<OrderMyInfo>
     fun acceptRushOrder(context: Context, id: String): Observable<OrderMyInfo>
     fun acceptMyOrder(context: Context, id: String): Observable<OrderMyInfo>
+    fun getOrderReceiving(context: Context, page: String, size: String): Observable<OrderReceiving>
 }

@@ -54,8 +54,10 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     /**
      * 更新数据
      */
-    fun updateItems(mDatas: List<OrderDispose.ContentBean>?) {
-        this.mDatas.clear()
+    fun updateItems(clear:Boolean,mDatas: List<OrderDispose.ContentBean>?) {
+        if (clear) {
+            this.mDatas.clear()
+        }
         if (mDatas != null && mDatas.isNotEmpty()) {
             this.mDatas.addAll(mDatas)
         }

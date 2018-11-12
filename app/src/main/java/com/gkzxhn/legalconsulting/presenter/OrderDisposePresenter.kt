@@ -21,21 +21,29 @@ import rx.android.schedulers.AndroidSchedulers
  */
 class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePresenter<IOrderModel, OrderDisposeView>(context, OrderModel(), view) {
 
-    fun getOrderDispose() {
+    fun getOrderDispose(page: String) {
         mContext?.let {
-            mModel.getOrderDispose(it)
+            mModel.getOrderDispose(it, page, "10")
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderDispose>(it) {
                         override fun success(t: OrderDispose) {
+                            mView?.offLoadMore()
+                            mView?.setLastPage(!t.last, t.number)
                             if (t.content!!.isNotEmpty()) {
-                                mView?.updateData(t.content)
-                                RxBus.instance.post(RxBusBean.HomePoint(false,1))
+                                mView?.updateData(t.first, t.content)
+                                RxBus.instance.post(RxBusBean.HomePoint(false, 1))
+                            } else {
+                                mView?.showNullView(true, "您还没有咨询订单")
                             }
+                        }
+
+                        override fun onError(t: Throwable?) {
+                            super.onError(t)
+                            mView?.offLoadMore()
                         }
                     })
         }
-
     }
 
 
@@ -49,12 +57,11 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
-                                getOrderDispose()
+                                getOrderDispose("0")
                             }
                         }
                     })
         }
-
     }
 
     /****** 拒绝订单 ******/
@@ -67,12 +74,11 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_REFUSED) {
                                 mContext?.showToast("订单拒绝成功")
-                                getOrderDispose()
+                                getOrderDispose("0")
                             }
                         }
                     })
         }
     }
-
 
 }

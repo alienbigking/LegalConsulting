@@ -18,7 +18,6 @@ import com.gkzxhn.legalconsulting.view.OrderDisposeView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_disposer_fragment.*
 
-
 /**
  * Explanation：我的咨询里面（指定单）
  * @author LSX
@@ -29,10 +28,15 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 
     private var mAdapter: OrderDisposeAdapter? = null
 
-    private var cont: Int = 0
-    private var list: MutableList<String>? = null
-
     lateinit var mPresenter: OrderDisposePresenter
+
+    var loadMore = false
+    var page = 0
+
+    override fun setLastPage(lastPage: Boolean, page: Int) {
+        this.loadMore = !lastPage
+        this.page = page
+    }
 
     override fun provideContentViewId(): Int {
         return R.layout.order_disposer_fragment
@@ -43,16 +47,15 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 
         /****** 认证未通过时显示空状态  ******/
         if (!ProjectUtils.certificationStatus()) {
-            loading_refresh.visibility=View.GONE
-            tv_order_disposer_null.visibility=View.VISIBLE
-        }else{
-            list = ArrayList()
+            loading_refresh.visibility = View.GONE
+            tv_order_disposer_null.visibility = View.VISIBLE
+        } else {
             mAdapter = context?.let { OrderDisposeAdapter(it, null) }
             rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
             rcl_order_disposer.adapter = mAdapter
             val decoration = DisplayUtils.dp2px(App.mContext, 15f)
             rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-            mPresenter.getOrderDispose()
+            mPresenter.getOrderDispose("0")
         }
 
     }
@@ -61,18 +64,19 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         //加载更多
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
-                cont++
-//                mPresenter.getOrderDispose()
-                offLoadMore()
+                if (loadMore) {
+                    mPresenter.getOrderDispose((page + 1).toString())
+                } else {
+                    offLoadMore()
+                }
             }
         })
 
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                list?.clear()
-                cont = 0
-                mPresenter.getOrderDispose()
+
+                mPresenter.getOrderDispose("0")
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -102,7 +106,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 mPresenter.acceptMyOrder(data.id!!)
             }
         })
-
     }
 
     override fun offLoadMore() {
@@ -112,8 +115,17 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         }
     }
 
-    override fun updateData(data: List<OrderDispose.ContentBean>?) {
-        mAdapter?.updateItems(data)
+    override fun updateData(clear: Boolean, data: List<OrderDispose.ContentBean>?) {
+        mAdapter?.updateItems(clear, data)
+    }
+
+    override fun showNullView(show: Boolean, string: String) {
+        if (show) {
+            tv_order_disposer_null.text = string
+            tv_order_disposer_null.visibility = View.VISIBLE
+        } else {
+            tv_order_disposer_null.visibility = View.GONE
+        }
 
     }
 

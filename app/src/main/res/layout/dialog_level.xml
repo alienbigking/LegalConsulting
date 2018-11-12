@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/cl_level_dialog_all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_dialog_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="21dp"
+        android:padding="5dp"
+        android:src="@mipmap/ic_back_gary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择律师等级"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_dialog_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_dialog_back"
+    />
+
+
+    <TextView
+        android:id="@+id/tv_level_dialog_one"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="一级律师 (高级律师)"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_dialog_back"
+    />
+
+    <View
+        android:id="@+id/v_level_dialog_one"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_one"/>
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginEnd="15dp"
+               android:src="@mipmap/ic_checked_false"
+               app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_one"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_one"/>
+
+    <TextView
+        android:id="@+id/tv_level_dialog_two"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="二级律师 (副高级律师)"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_level_dialog_one"
+    />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_two"/>
+
+
+    <View
+        android:id="@+id/v_level_dialog_two"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_two"/>
+
+
+    <TextView
+        android:id="@+id/tv_level_dialog_third"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="三级律师 (中级律师)"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_level_dialog_two"
+    />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_third"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_third"/>
+
+    <View
+        android:id="@+id/v_level_dialog_third"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_third"/>
+
+    <TextView
+        android:id="@+id/tv_level_dialog_four"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="四级律师 (初级律师)"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_level_dialog_third"
+    />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_four"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_four"/>
+
+
+    <View
+        android:id="@+id/v_level_dialog_four"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_four"/>
+
+
+    <TextView android:layout_width="80dp"
+              android:layout_height="27dp"
+              android:layout_marginBottom="20dp"
+              android:layout_marginTop="20dp"
+              android:background="@drawable/shape_level_bg"
+              android:gravity="center"
+              android:text="确定"
+              android:textColor="#FF264C90"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/v_level_dialog_four"/>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -12,5 +12,9 @@ interface OrderReceivingView : BaseView {
 
     fun offLoadMore()
 
-    fun updateData(data: List<OrderReceivingContent>?)
+    fun setLastPage(lastPage: Boolean,page:Int)
+
+    fun updateData(clear: Boolean, data: List<OrderReceivingContent>?)
+
+    fun showNullView(show: Boolean)
 }

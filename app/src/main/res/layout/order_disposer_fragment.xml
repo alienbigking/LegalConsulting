@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+>
 
+    <TextView
+        android:id="@+id/tv_order_disposer_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="未认证不能接单"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        android:visibility="gone"
+    />
 
     <com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
         android:id="@+id/loading_refresh"
@@ -29,15 +39,4 @@
     </com.gkzxhn.legalconsulting.customview.PullToRefreshLayout>
 
 
-    <TextView
-        android:id="@+id/tv_order_disposer_null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="未认证不能接单"
-        android:textColor="#ff666666"
-        android:textSize="14sp"
-    />
-
-</LinearLayout>
+</FrameLayout>

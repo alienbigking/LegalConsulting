@@ -21,32 +21,38 @@ import rx.android.schedulers.AndroidSchedulers
  */
 class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : BasePresenter<IOrderModel, OrderReceivingView>(context, OrderModel(), view) {
 
-    fun getOrderReceiving() {
+    fun getOrderReceiving(page: String) {
         mContext?.let {
-            mModel.getOrderReceiving(it)
+            mModel.getOrderReceiving(it, page, "10")
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderReceiving>(it) {
                         override fun success(t: OrderReceiving) {
-                            if (t.content!!.isNotEmpty()) {
-                                mView?.updateData(t.content)
-                            }
+                            mView?.offLoadMore()
+                            mView?.setLastPage(t.last, t.number)
+                            mView?.showNullView(t.content!!.isEmpty())
+                            mView?.updateData(t.first, t.content)
+                        }
+
+                        override fun onError(t: Throwable?) {
+                            super.onError(t)
+                            mView?.offLoadMore()
                         }
                     })
         }
     }
 
-    fun acceptRushOrder(id:String) {
+    fun acceptRushOrder(id: String) {
         mContext?.let {
-            mModel.acceptRushOrder(it,id)
+            mModel.acceptRushOrder(it, id)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
-                                RxBus.instance.post(RxBusBean.HomePoint(true,1))
-                                getOrderReceiving()
+                                RxBus.instance.post(RxBusBean.HomePoint(true, 1))
+                                getOrderReceiving("0")
                             }
                         }
                     })

@@ -9,7 +9,12 @@ import android.os.Build
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.widget.TextView
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.gkzxhn.legalconsulting.R
@@ -33,51 +38,6 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
  */
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
-    override fun onFinish() {
-        finish()
-    }
-
-
-    override fun getName(): String {
-        return et_qualification_authentication_name.text.trim().toString()
-    }
-
-    override fun getGender(): String {
-        return if (rb_qualification_authentication_sex_man.isChecked)
-            "MALE"
-        else "FEMALE"
-    }
-
-    override fun getDescription(): String {
-        return et_qualification_authentication_personal_profile.text.trim().toString()
-    }
-
-    /****** 执业机构 ******/
-    override fun getLawOffice(): String {
-        return et_qualification_authentication_institution.text.trim().toString()
-    }
-
-    override fun getAddress(): String {
-        val str = tv_qualification_authentication_address_content.text.trim().toString()
-        return if (str == getString(R.string.please_fill_in))
-            "" else str
-    }
-
-    /****** 专业领域 ******/
-    override fun getProfessional(): String {
-        val str = tv_qualification_authentication_professional_list.text.trim().toString()
-        return if (str == getString(R.string.please_select))
-            "" else str
-    }
-
-    override fun getYear(): Int {
-        val year = et_qualification_authentication_year.text.trim().toString()
-        return if (year.isEmpty()) {
-            -1
-        }else{
-            year.toInt()
-        }
-    }
 
 
     private val TAKE_PHOTO_IMAGE_1 = 101       //拍执业证书
@@ -147,11 +107,62 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         /****** 律所地址 ******/
             R.id.v_qualification_authentication_address_bg -> {
                 val intent = Intent(this, EditAddressActivity::class.java)
-                intent.putExtra("address",getAddress())
+                intent.putExtra("address", getAddress())
                 startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
+            }
+        /****** 律师等级 ******/
+            R.id.v_qualification_authentication_level_bg -> {
+                showDialog()
             }
         }
     }
+
+    override fun onFinish() {
+        finish()
+    }
+
+
+    override fun getName(): String {
+        return et_qualification_authentication_name.text.trim().toString()
+    }
+
+    override fun getGender(): String {
+        return if (rb_qualification_authentication_sex_man.isChecked)
+            "MALE"
+        else "FEMALE"
+    }
+
+    override fun getDescription(): String {
+        return et_qualification_authentication_personal_profile.text.trim().toString()
+    }
+
+    /****** 执业机构 ******/
+    override fun getLawOffice(): String {
+        return et_qualification_authentication_institution.text.trim().toString()
+    }
+
+    override fun getAddress(): String {
+        val str = tv_qualification_authentication_address_content.text.trim().toString()
+        return if (str == getString(R.string.please_fill_in))
+            "" else str
+    }
+
+    /****** 专业领域 ******/
+    override fun getProfessional(): String {
+        val str = tv_qualification_authentication_professional_list.text.trim().toString()
+        return if (str == getString(R.string.please_select))
+            "" else str
+    }
+
+    override fun getYear(): Int {
+        val year = et_qualification_authentication_year.text.trim().toString()
+        return if (year.isEmpty()) {
+            -1
+        } else {
+            year.toInt()
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -269,7 +280,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     iv_qualification_authentication_certificate_photos_bg.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
                     iv_qualification_authentication_certificate_photos_bg.setImageBitmap(bitmap)
-                    mPresenter.uploadFiles(File(path),1)
+                    mPresenter.uploadFiles(File(path), 1)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_2 -> {
@@ -277,7 +288,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     iv_qualification_authentication_record_photo_bg.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
                     iv_qualification_authentication_record_photo_bg.setImageBitmap(bitmap)
-                    mPresenter.uploadFiles(File(path),2)
+                    mPresenter.uploadFiles(File(path), 2)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_3 -> {
@@ -285,7 +296,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     iv_qualification_authentication_id11.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
                     iv_qualification_authentication_id11.setImageBitmap(bitmap)
-                    mPresenter.uploadFiles(File(path),3)
+                    mPresenter.uploadFiles(File(path), 3)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_4 -> {
@@ -293,7 +304,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     iv_qualification_authentication_id22.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
                     iv_qualification_authentication_id22.setImageBitmap(bitmap)
-                    mPresenter.uploadFiles(File(path),4)
+                    mPresenter.uploadFiles(File(path), 4)
                 }
                 else -> {
 
@@ -341,7 +352,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                             takePhotoFromCamera(fileName, requestCode, front)
                         } else if (permission.shouldShowRequestPermissionRationale) {
                             // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                            Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.");
+                            Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.")
                             showToast(getString(R.string.please_agree_permission))
                         } else {
                             // 用户拒绝了该权限，并且选中『不再询问』
@@ -374,9 +385,9 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         try {
             if (front) {
                 //打开前置摄像头
-                openCameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1); // 调用前置摄像头
+                openCameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1) // 调用前置摄像头
             } else {
-                openCameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 2); //
+                openCameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 2) //
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -401,7 +412,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                         Log.d(javaClass.simpleName, permission.name + " is granted.")
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                        Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.");
+                        Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.")
                     } else {
                         // 用户拒绝了该权限，并且选中『不再询问』
                         Log.d(javaClass.simpleName, permission.name + " is denied.")
@@ -416,7 +427,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
      */
     private fun chooseAlbum(fileName: String, type: Int) {
         val openAlbumIntent = Intent(Intent.ACTION_PICK)
-        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
             val mGalleryFile = File(File(externalCacheDir, "photo"), "$fileName.jpg")
             val uriForFile = FileProvider.getUriForFile(this, "$packageName.fileprovider", mGalleryFile)
@@ -436,5 +447,47 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         intent.putExtra(Constants.INTENT_CROP_IMAGE_URI, uri)
         startActivityForResult(intent, requestCode)
     }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：显示律师等级的弹窗
+     */
+    private fun showDialog() {
+        var dialog = android.app.Dialog(this)//可以在style中设定dialog的样式
+        dialog.setContentView(R.layout.dialog_level)
+        var lp = dialog.window.attributes
+        lp.gravity = Gravity.BOTTOM
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        dialog.window.attributes = lp
+        //设置该属性，dialog可以铺满屏幕
+        dialog.window.setBackgroundDrawable(null)
+        dialog.show()
+        slideToUp(dialog.window.findViewById(R.id.cl_level_dialog_all))
+
+        val tvOne = dialog.findViewById<TextView>(R.id.tv_level_dialog_one)
+        tvOne.setOnClickListener {
+            showToast("1")
+        }
+
+
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：弹窗的动画
+     */
+    private fun slideToUp(view: View) {
+        var slide = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                1.0f, Animation.RELATIVE_TO_SELF, 0.0f)
+
+        slide.duration = 400
+        slide.fillAfter = true
+        slide.isFillEnabled = true
+        view.startAnimation(slide)
+    }
+
 
 }

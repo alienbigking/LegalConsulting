@@ -15,14 +15,13 @@ import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.item_order_receiving.view.*
 import java.util.*
 
-
 /**
  * Explanation：
  * @author LSX
  * Created on 2018/9/10.
  */
 
-class OrderReceivingAdapter(private val mContext: Context, private val data: List<OrderReceivingContent>?) : RecyclerView.Adapter<OrderReceivingAdapter.ViewHolder>() {
+class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapter<OrderReceivingAdapter.ViewHolder>() {
 
     private var mDatas: ArrayList<OrderReceivingContent> = ArrayList()
     private var onItemClickListener: MultiItemTypeAdapter.OnItemClickListener? = null
@@ -55,10 +54,14 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
     /**
      * 更新数据
      */
-    fun updateItems(mDatas: List<OrderReceivingContent>?) {
-        this.mDatas.clear()
+    fun updateItems(clear: Boolean, mDatas: List<OrderReceivingContent>?) {
+        if (clear) {
+            this.mDatas.clear()
+        }
         if (mDatas != null && mDatas.isNotEmpty()) {
             this.mDatas.addAll(mDatas)
+        }else{
+            this.mDatas.clear()
         }
         notifyDataSetChanged()
     }
@@ -115,6 +118,5 @@ class OrderReceivingAdapter(private val mContext: Context, private val data: Lis
     override fun getItemCount(): Int {
         return mDatas.size
     }
-
 
 }

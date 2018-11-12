@@ -12,5 +12,10 @@ interface OrderDisposeView : BaseView {
 
     fun offLoadMore()
 
-    fun updateData(data: List<OrderDispose.ContentBean>?)
+    fun updateData(clear: Boolean,data: List<OrderDispose.ContentBean>?)
+
+    fun setLastPage(lastPage: Boolean,page:Int)
+
+    fun showNullView(show:Boolean,string: String)
+
 }

@@ -355,6 +355,58 @@
                 style="@style/view_qualification_authentication_line"
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_professional_field"
             />
+            <!--律师等级-->
+
+            <View
+                android:id="@+id/v_qualification_authentication_level_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/selector_item_white_to_gary"
+                android:onClick="onClickQualificationAuthentication"
+                app:layout_constraintBottom_toTopOf="@+id/v_qualification_authentication_level"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_professional_field"/>
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="律师等级"
+                android:textColor="#ff333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/v_qualification_authentication_level_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_level_bg"
+                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_level_bg"/>
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_level_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/please_select"
+                android:textColor="#ff999999"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_level"
+                app:layout_constraintEnd_toStartOf="@id/iv_qualification_authentication_level"
+                app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_level"
+            />
+
+            <ImageView
+                android:id="@+id/iv_qualification_authentication_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_level"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_level"
+                app:srcCompat="@mipmap/ic_arrow_left"/>
+
+            <View
+                android:id="@+id/v_qualification_authentication_level"
+                style="@style/view_qualification_authentication_line"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_level"
+            />
 
 
             <!--职业年限-->
@@ -369,7 +421,7 @@
                 android:textColor="#ff333333"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_professional_field"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_level_bg"
             />
 
             <EditText

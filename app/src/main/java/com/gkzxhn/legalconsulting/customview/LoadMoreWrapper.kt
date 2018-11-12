@@ -1,21 +1,15 @@
 package com.gkzxhn.legalconsulting.customview
 
 import android.content.Context
-import android.support.v4.view.NestedScrollingChild
-import android.support.v4.view.NestedScrollingChildHelper
-import android.support.v4.view.NestedScrollingParent
-import android.support.v4.view.NestedScrollingParentHelper
-import android.support.v4.view.ViewCompat
+import android.support.v4.view.*
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AbsListView
 import android.widget.LinearLayout
-
 import com.gkzxhn.legalconsulting.R
 
 
@@ -72,7 +66,6 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
                     if (view.lastVisiblePosition == view.adapter.count - 1
                             && !isLoading
                             && (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING)) {
-                        Log.e(TAG, "onScrollStateChanged: $scrollState")
                         loadMore()
                     }
                 }
@@ -89,7 +82,6 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
                         if (lm.findLastCompletelyVisibleItemPosition() == lm.itemCount - 1
                                 && !isLoading
                                 && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_SETTLING)) {
-                            Log.e(TAG, "onScrollStateChanged: $newState")
                             loadMore()
                         }
                     } else if (lm is StaggeredGridLayoutManager) {
@@ -97,7 +89,6 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
                         if (lastPosition == lm.itemCount - 1
                                 && !isLoading
                                 && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_SETTLING)) {
-                            Log.e(TAG, "onScrollStateChanged: $newState")
                             loadMore()
                         }
                     }
