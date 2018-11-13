@@ -43,7 +43,10 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
-                            ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+
+                            if (t.attachments!!.isNotEmpty() &&t.attachments!=null) {
+                                ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+                            }
 
                             if (t.attachments!!.size > 1&&t.attachments!=null) {
                                 ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
@@ -78,7 +81,9 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
 
-        ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+        if (t.attachments!!.isNotEmpty() &&t.attachments!=null) {
+            ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
+        }
         if (t.attachments!!.size > 1&&t.attachments!=null) {
             ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
         }

@@ -16,5 +16,6 @@ interface QualificationAuthenticationEditView : BaseView {
     fun getProfessional(): String
     fun getYear(): Int
     fun onFinish()
+    fun setLevel(levelStr: String)
 
 }

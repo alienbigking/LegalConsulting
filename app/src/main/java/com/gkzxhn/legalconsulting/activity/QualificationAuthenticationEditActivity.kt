@@ -9,12 +9,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
-import android.widget.TextView
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.gkzxhn.legalconsulting.R
@@ -38,7 +33,6 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
  */
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
-
 
     private val TAKE_PHOTO_IMAGE_1 = 101       //拍执业证书
     private val CHOOSE_PHOTO_IMAGE_1 = 102      //选择执业证书
@@ -112,7 +106,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             }
         /****** 律师等级 ******/
             R.id.v_qualification_authentication_level_bg -> {
-                showDialog()
+                mPresenter.showDialog()
             }
         }
     }
@@ -161,6 +155,10 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         } else {
             year.toInt()
         }
+    }
+
+    override fun setLevel(levelStr: String) {
+        tv_qualification_authentication_level_list.text = levelStr
     }
 
 
@@ -447,47 +445,5 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         intent.putExtra(Constants.INTENT_CROP_IMAGE_URI, uri)
         startActivityForResult(intent, requestCode)
     }
-
-
-    /**
-     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
-     * @description：显示律师等级的弹窗
-     */
-    private fun showDialog() {
-        var dialog = android.app.Dialog(this)//可以在style中设定dialog的样式
-        dialog.setContentView(R.layout.dialog_level)
-        var lp = dialog.window.attributes
-        lp.gravity = Gravity.BOTTOM
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        dialog.window.attributes = lp
-        //设置该属性，dialog可以铺满屏幕
-        dialog.window.setBackgroundDrawable(null)
-        dialog.show()
-        slideToUp(dialog.window.findViewById(R.id.cl_level_dialog_all))
-
-        val tvOne = dialog.findViewById<TextView>(R.id.tv_level_dialog_one)
-        tvOne.setOnClickListener {
-            showToast("1")
-        }
-
-
-    }
-
-    /**
-     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
-     * @description：弹窗的动画
-     */
-    private fun slideToUp(view: View) {
-        var slide = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                1.0f, Animation.RELATIVE_TO_SELF, 0.0f)
-
-        slide.duration = 400
-        slide.fillAfter = true
-        slide.isFillEnabled = true
-        view.startAnimation(slide)
-    }
-
 
 }

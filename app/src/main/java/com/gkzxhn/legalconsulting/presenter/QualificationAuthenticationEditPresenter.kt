@@ -1,6 +1,14 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
+import android.view.Gravity
+import android.view.View
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.widget.ImageView
+import android.widget.TextView
+import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.*
 import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
@@ -28,6 +36,8 @@ import kotlin.collections.ArrayList
 class QualificationAuthenticationEditPresenter(context: Context, view: QualificationAuthenticationEditView) : BasePresenter<IQualificationAuthenticationModel, QualificationAuthenticationEditView>(context, QualificationAuthenticationModel(), view) {
     val STRING_ID = "id"
     val STRING_64 = "base64"
+    var level = ""
+    var levelStr = ""
     var map = LinkedHashMap<String, String>()
 
     fun send() {
@@ -39,6 +49,7 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
             mView?.getLawOffice()?.isEmpty()!! -> mContext?.showToast("需填写执业机构")
             mView?.getProfessional()?.isEmpty()!! -> mContext?.showToast("请选择专业领域")
             mView?.getYear() == -1 -> mContext?.showToast("需填写职业年限")
+            level.isEmpty() -> mContext?.showToast("需填写律师等级")
             map[STRING_ID + 1] == null -> mContext?.showToast("需上传律师执业证书")
             map[STRING_ID + 2] == null -> mContext?.showToast("需上传律师年度考核")
             map[STRING_ID + 3] == null -> mContext?.showToast("需上传身份证")
@@ -100,7 +111,7 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
         qualificationAuthentication.name = mView?.getName()
         qualificationAuthentication.gender = mView?.getGender()
         qualificationAuthentication.description = mView?.getDescription()
-        qualificationAuthentication.level = "FIRST"
+        qualificationAuthentication.level = level
         qualificationAuthentication.lawOffice = mView?.getLawOffice()
         qualificationAuthentication.workExperience = mView?.getYear()!!
 
@@ -175,6 +186,109 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                     }
                 })
     }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：显示律师等级的弹窗
+     */
+    fun showDialog() {
+        var dialog = android.app.Dialog(mContext)//可以在style中设定dialog的样式
+        dialog.setContentView(R.layout.dialog_level)
+        var lp = dialog.window.attributes
+        lp.gravity = Gravity.BOTTOM
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        dialog.window.attributes = lp
+        //设置该属性，dialog可以铺满屏幕
+        dialog.window.setBackgroundDrawable(null)
+        dialog.show()
+        slideToUp(dialog.window.findViewById(R.id.cl_level_dialog_all))
+
+        val tvOne = dialog.findViewById<TextView>(R.id.tv_level_dialog_one)
+        val tvTwo = dialog.findViewById<TextView>(R.id.tv_level_dialog_two)
+        val tvThird = dialog.findViewById<TextView>(R.id.tv_level_dialog_third)
+        val tvFour = dialog.findViewById<TextView>(R.id.tv_level_dialog_four)
+
+        val ivBack = dialog.findViewById<ImageView>(R.id.iv_dialog_back)
+        val ivOne = dialog.findViewById<ImageView>(R.id.iv_level_one)
+        val ivTwo = dialog.findViewById<ImageView>(R.id.iv_level_two)
+        val ivThird = dialog.findViewById<ImageView>(R.id.iv_level_third)
+        val ivFour = dialog.findViewById<ImageView>(R.id.iv_level_four)
+
+
+        val tvVerify = dialog.findViewById<TextView>(R.id.tv_level_verify)
+        tvOne.setOnClickListener {
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, 1)
+        }
+        tvTwo.setOnClickListener {
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, 2)
+        }
+        tvThird.setOnClickListener {
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, 3)
+        }
+        tvFour.setOnClickListener {
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, 4)
+        }
+        tvVerify.setOnClickListener {
+            dialog.dismiss()
+            mView?.setLevel(levelStr)
+        }
+        ivBack.setOnClickListener {
+            dialog.dismiss()
+        }
+
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/13 9:45 AM.
+     * @description：点击律师 等级条目 切换选择状态并保存律师等级string
+     */
+    private fun checkSelect(ivOne: ImageView, ivTwo: ImageView, ivThird: ImageView, ivFour: ImageView, i: Int) {
+        ivOne.setImageResource(R.mipmap.ic_checked_false)
+        ivTwo.setImageResource(R.mipmap.ic_checked_false)
+        ivThird.setImageResource(R.mipmap.ic_checked_false)
+        ivFour.setImageResource(R.mipmap.ic_checked_false)
+        when (i) {
+            1 -> {
+                ivOne.setImageResource(R.mipmap.ic_checked_true)
+                levelStr = "一级律师 (高级律师)"
+                level = "FIRST"
+            }
+
+            2 -> {
+                ivTwo.setImageResource(R.mipmap.ic_checked_true)
+                levelStr = "二级律师 (副高级律师)"
+                level = "SECOND"
+            }
+            3 -> {
+                ivThird.setImageResource(R.mipmap.ic_checked_true)
+                levelStr = "三级律师 (中级律师)"
+                level = "THIRD"
+            }
+            4 -> {
+                ivFour.setImageResource(R.mipmap.ic_checked_true)
+                levelStr = "四级律师 (初级律师)"
+                level = "FOURTH"
+            }
+        }
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：弹窗的动画
+     */
+    private fun slideToUp(view: View) {
+        var slide = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                1.0f, Animation.RELATIVE_TO_SELF, 0.0f)
+
+        slide.duration = 400
+        slide.fillAfter = true
+        slide.isFillEnabled = true
+        view.startAnimation(slide)
+    }
+
 
 }
 

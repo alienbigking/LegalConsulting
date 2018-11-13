@@ -65,7 +65,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                 when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
                 /****** 已认证 ******/
                     Constants.CERTIFIED -> {
-                        context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                        context?.startActivity(Intent(context, QualificationAuthenticationShowActivity::class.java))
                     }
                     else -> {
                         context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))

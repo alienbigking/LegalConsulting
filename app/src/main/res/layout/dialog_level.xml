@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/iv_dialog_back"
@@ -57,13 +58,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_one"/>
 
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginEnd="15dp"
-               android:src="@mipmap/ic_checked_false"
-               app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_one"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_one"/>
+    <ImageView
+        android:id="@+id/iv_level_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_level_dialog_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_level_dialog_one"/>
 
     <TextView
         android:id="@+id/tv_level_dialog_two"
@@ -80,6 +83,7 @@
     />
 
     <ImageView
+        android:id="@+id/iv_level_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -115,6 +119,7 @@
     />
 
     <ImageView
+        android:id="@+id/iv_level_third"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -149,6 +154,7 @@
     />
 
     <ImageView
+        android:id="@+id/iv_level_four"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -169,18 +175,20 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_level_dialog_four"/>
 
 
-    <TextView android:layout_width="80dp"
-              android:layout_height="27dp"
-              android:layout_marginBottom="20dp"
-              android:layout_marginTop="20dp"
-              android:background="@drawable/shape_level_bg"
-              android:gravity="center"
-              android:text="确定"
-              android:textColor="#FF264C90"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/v_level_dialog_four"/>
+    <TextView
+        android:id="@+id/tv_level_verify"
+        android:layout_width="80dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_level_bg"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#FF264C90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_level_dialog_four"/>
 
 
 </android.support.constraint.ConstraintLayout>

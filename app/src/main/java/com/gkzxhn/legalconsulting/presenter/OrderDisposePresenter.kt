@@ -29,7 +29,7 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                     ?.subscribe(object : HttpObserver<OrderDispose>(it) {
                         override fun success(t: OrderDispose) {
                             mView?.offLoadMore()
-                            mView?.setLastPage(!t.last, t.number)
+                            mView?.setLastPage(t.last, t.number)
                             if (t.content!!.isNotEmpty()) {
                                 mView?.updateData(t.first, t.content)
                                 RxBus.instance.post(RxBusBean.HomePoint(false, 1))
