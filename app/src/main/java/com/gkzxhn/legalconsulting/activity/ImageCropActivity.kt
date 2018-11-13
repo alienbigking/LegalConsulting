@@ -82,7 +82,7 @@ class ImageCropActivity : BaseActivity() {
         iv_crop.setImageURI(uri)
         val bitmap = iv_crop.bitmap
         try {
-            iv_crop.setImageToCrop(MediaStore.Images.Media.getBitmap(contentResolver, uri as Uri))
+            iv_crop.setImageToCrop(MediaStore.Images.Media.getBitmap(contentResolver, uri))
         } catch (e: IOException) {
             e.printStackTrace()
         }

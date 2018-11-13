@@ -136,14 +136,15 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
         qualificationAuthentication.categories = categories
 
         lawOfficeAddress?.id = "000"
-        lawOfficeAddress?.cityName = "000"
-        lawOfficeAddress?.cityCode = "000"
-        lawOfficeAddress?.countryCode = "000"
-        lawOfficeAddress?.countryName = "000"
-        lawOfficeAddress?.provinceCode = "000"
-        lawOfficeAddress?.provinceName = "000"
-        lawOfficeAddress?.countyCode = "000"
-        lawOfficeAddress?.countyName = "000"
+
+        lawOfficeAddress?.countryCode = "86"
+        lawOfficeAddress?.countryName = "中国"
+        lawOfficeAddress?.provinceCode = mView?.getProvincecode()
+        lawOfficeAddress?.provinceName = mView?.getProvincename()
+        lawOfficeAddress?.cityName = mView?.getCityname()
+        lawOfficeAddress?.cityCode = mView?.getCitycode()
+        lawOfficeAddress?.countyCode = mView?.getCountycode()
+        lawOfficeAddress?.countyName = mView?.getCountyname()
         /****** 地址信息 ******/
         lawOfficeAddress?.streetDetail = mView?.getAddress()
 

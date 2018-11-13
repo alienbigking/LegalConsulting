@@ -18,4 +18,10 @@ interface QualificationAuthenticationEditView : BaseView {
     fun onFinish()
     fun setLevel(levelStr: String)
 
+    fun getCityname(): String
+    fun getCitycode(): String
+    fun getCountycode(): String
+    fun getProvincename(): String
+    fun getCountyname(): String
+    fun getProvincecode(): String
 }

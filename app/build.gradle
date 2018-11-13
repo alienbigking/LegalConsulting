@@ -13,6 +13,13 @@ android {
         versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            //网易云信 设置支持的SO库架构
+            abiFilters "armeabi-v7a", "x86"
+//                    "arm64-v8a","x86_64"
+        }
     }
     buildTypes {
         release {
@@ -68,4 +75,24 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //自动裁剪
     implementation 'com.github.pqpo:SmartCropper:v1.2.3@aar'
+//    省市县三级联动
+    implementation 'liji.library.dev:citypickerview:3.1.13'
+//解除65536限制
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // 网易云信 添加依赖。注意，版本号必须一致。
+    // 基础功能 (必需)
+    implementation 'com.netease.nimlib:basesdk:5.7.0'
+    // 音视频和互动白板服务需要
+    implementation 'com.netease.nimlib:nrtc:5.7.0'
+    // 音视频需要
+    implementation 'com.netease.nimlib:avchat:5.7.0'
+    // 聊天室需要
+    implementation 'com.netease.nimlib:chatroom:5.7.0'
+    // 互动白板服务需要
+    implementation 'com.netease.nimlib:rts:5.7.0'
+    // 全文检索服务需要
+    implementation 'com.netease.nimlib:lucene:5.7.0'
+    // 小米、华为、魅族、fcm 推送
+    implementation 'com.netease.nimlib:push:5.7.0'
 }

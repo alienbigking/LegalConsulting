@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.ConversationAdapter
+import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.customview.LoadMoreWrapper
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
+import com.gkzxhn.legalconsulting.presenter.ConversationPresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
 import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.view.ConversationView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.conversation_fragment.*
 
@@ -19,15 +22,17 @@ import kotlinx.android.synthetic.main.conversation_fragment.*
  * @author LSX
  *    -----2018/9/7
  */
-class ConversationFragment : BaseFragment(), View.OnClickListener {
+class ConversationFragment : BaseFragment(), View.OnClickListener, ConversationView {
 
     private var mAdapter: ConversationAdapter? = null
 
+    lateinit var mPresenter:ConversationPresenter
     private var cont: Int = 0
     private var list: MutableList<String>? = null
 
     override fun init() {
         list = ArrayList()
+        mPresenter=ConversationPresenter(App.mContext,this)
         mAdapter = context?.let { ConversationAdapter(it, list) }
         rcl_conversation.layoutManager = LinearLayoutManager(activity, 1, false)
         rcl_conversation.adapter = mAdapter
