@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -57,16 +56,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     lateinit var mPresenter: QualificationAuthenticationEditPresenter
     var selectString: ArrayList<String>? = arrayListOf()
 
-
-    var provinceCode = ""
-    var provinceName = ""
-    var cityName = ""
-    var cityCode = ""
-    var countyCode = ""
-    var countyName = ""
-    /****** 详细地址 ******/
-    var addressContent = ""
-
     override fun provideContentViewId(): Int {
         return R.layout.activity_qualification_authentication_edit
     }
@@ -113,9 +102,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             R.id.v_qualification_authentication_address_bg -> {
                 val intent = Intent(this, EditAddressActivity::class.java)
                 intent.putExtra("address", getAddress())
-                intent.putExtra("cityName", cityName)
-                intent.putExtra("countyName",countyName)
-                intent.putExtra("provinceName", provinceName)
                 startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
             }
         /****** 律师等级 ******/
@@ -150,33 +136,9 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     }
 
     override fun getAddress(): String {
-        val str = addressContent
+        val str = tv_qualification_authentication_address_content.text.trim().toString()
         return if (str == getString(R.string.please_fill_in))
             "" else str
-    }
-
-    override fun getCityname(): String {
-        return cityName
-    }
-
-    override fun getCitycode(): String {
-        return cityCode
-    }
-
-    override fun getCountycode(): String {
-        return countyCode
-    }
-
-    override fun getCountyname(): String {
-        return countyName
-    }
-
-    override fun getProvincecode(): String {
-        return provinceCode
-    }
-
-    override fun getProvincename(): String {
-        return provinceName
     }
 
     /****** 专业领域 ******/
@@ -200,7 +162,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     }
 
 
-    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQUESTCODE_CHOOSE_MAJORS) {
@@ -218,14 +179,8 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                 }
             /****** 律所地址返回 ******/
                 Constants.RESULTCODE_EDIT_ADDRESS -> {
-                    addressContent = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS).toString()
-                    provinceCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_PROVINCECODE).toString()
-                    provinceName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_PROVINCENAME).toString()
-                    cityName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_CITYNAME).toString()
-                    cityCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_CITYCODE).toString()
-                    countyCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_COUNTYCODE).toString()
-                    countyName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_COUNTYNAME).toString()
-                    tv_qualification_authentication_address_content.text = provinceName + cityName + countyName + addressContent
+                    val addressContent = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS)
+                    tv_qualification_authentication_address_content.text = addressContent
                 }
             }
         }
