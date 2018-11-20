@@ -25,7 +25,22 @@ class QualificationAuthenticationPresenter(context: Context, view: Qualification
      */
     fun qualificationAuthentication() {
         var intent = Intent(mContext, QualificationAuthenticationEditActivity::class.java)
+        when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
+        /****** 待认证 ******/
+            Constants.PENDING_CERTIFIED -> {
+                intent.putExtra("again_Authentication",false)
+            }
+        /****** 审核失败 ******/
+            Constants.APPROVAL_FAILURE -> {
+                intent.putExtra("again_Authentication",true)
+            }
+            else -> {
+                intent.putExtra("again_Authentication",false)
+            }
+        }
         mContext?.startActivity(intent)
+
+
         mView?.onFinish()
     }
 

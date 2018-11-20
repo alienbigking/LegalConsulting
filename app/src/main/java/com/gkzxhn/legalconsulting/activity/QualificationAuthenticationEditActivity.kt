@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -34,49 +35,7 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
  */
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
-    override fun setName(string: String) {
-        et_qualification_authentication_name.setText(string)
-    }
 
-    override fun setGender(string: String) {
-        rb_qualification_authentication_sex_man.text=string
-    }
-
-    override fun setDescription(string: String) {
-        et_qualification_authentication_personal_profile.setText(string)
-    }
-
-    override fun setLawOffice(string: String) {
-        et_qualification_authentication_institution.setText(string)
-    }
-
-    override fun setAddress(string: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setProfessional(string: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setYear(string: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setImage1(decodeFile: Bitmap) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setImage2(decodeFile: Bitmap) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setImage3(decodeFile: Bitmap) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setImage4(decodeFile: Bitmap) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private val TAKE_PHOTO_IMAGE_1 = 101       //拍执业证书
     private val CHOOSE_PHOTO_IMAGE_1 = 102      //选择执业证书
@@ -98,7 +57,17 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     var mTakePhotoUri: Uri? = null      //拍照uri
 
     lateinit var mPresenter: QualificationAuthenticationEditPresenter
-    var selectString: ArrayList<String>? = arrayListOf()
+    //    专业领域的集合
+    var selectString: ArrayList<String> = arrayListOf()
+
+    var provinceCode = ""
+    var provinceName = ""
+    var cityName = ""
+    var cityCode = ""
+    var countyCode = ""
+    var countyName = ""
+    /****** 详细地址 ******/
+    var addressContent = ""
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_qualification_authentication_edit
@@ -107,6 +76,13 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     override fun init() {
         mPresenter = QualificationAuthenticationEditPresenter(this, this)
         topTitle.text = "资格认证"
+        if (intent.getBooleanExtra("again_Authentication", false)) {
+            /****** 重新认证时先获取信息 ******/
+            mPresenter.getCertification()
+            tv_qualification_authentication_top.text = "重新认证，直接修改编辑资料提交申请"
+            tv_qualification_authentication_top2.visibility = View.GONE
+        }
+
         back.setOnClickListener {
             finish()
         }
@@ -146,6 +122,9 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             R.id.v_qualification_authentication_address_bg -> {
                 val intent = Intent(this, EditAddressActivity::class.java)
                 intent.putExtra("address", getAddress())
+                intent.putExtra("cityName", cityName)
+                intent.putExtra("countyName", countyName)
+                intent.putExtra("provinceName", provinceName)
                 startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
             }
         /****** 律师等级 ******/
@@ -159,15 +138,74 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         finish()
     }
 
+    override fun setSelectStr(selectStr: ArrayList<String>) {
+        selectString = selectStr
+    }
+    override fun getSelectStr(): ArrayList<String> {
+        return selectString
+    }
+
+    override fun setName(string: String) {
+        et_qualification_authentication_name.setText(string)
+    }
+
+    override fun setGender(string: String) {
+        var isMale = string == "MALE"
+        rb_qualification_authentication_sex_man.isChecked = isMale
+        rb_qualification_authentication_sex_woman.isChecked = !isMale
+    }
+
+    override fun setDescription(string: String) {
+        et_qualification_authentication_personal_profile.setText(string)
+    }
+
+    override fun setLawOffice(string: String) {
+        et_qualification_authentication_institution.setText(string)
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    override fun setAddress(provinceName: String, cityName: String, countyName: String, streetDetail: String) {
+        tv_qualification_authentication_address_content.text = provinceName + cityName + countyName + streetDetail
+        this.provinceName = provinceName
+        this.cityName = cityName
+        this.countyName = countyName
+        this.addressContent = streetDetail
+    }
+
+    override fun setProfessional(string: String) {
+        tv_qualification_authentication_professional_list.text = string
+    }
+
+    override fun setYear(string: String) {
+        et_qualification_authentication_year.setText(string)
+    }
+
+    override fun setImage1(decodeFile: Bitmap) {
+        iv_qualification_authentication_certificate_photos_bg.setImageBitmap(decodeFile)
+    }
+
+    override fun setImage2(decodeFile: Bitmap) {
+        iv_qualification_authentication_record_photo_bg.setImageBitmap(decodeFile)
+    }
+
+    override fun setImage3(decodeFile: Bitmap) {
+        iv_qualification_authentication_id11.setImageBitmap(decodeFile)
+    }
+
+    override fun setImage4(decodeFile: Bitmap) {
+        iv_qualification_authentication_id22.setImageBitmap(decodeFile)
+    }
+
 
     override fun getName(): String {
         return et_qualification_authentication_name.text.trim().toString()
     }
 
     override fun getGender(): String {
-        return if (rb_qualification_authentication_sex_man.isChecked)
+        return if (rb_qualification_authentication_sex_man.isChecked) {
             "MALE"
-        else "FEMALE"
+        } else "FEMALE"
     }
 
     override fun getDescription(): String {
@@ -180,16 +218,43 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     }
 
     override fun getAddress(): String {
-        val str = tv_qualification_authentication_address_content.text.trim().toString()
-        return if (str == getString(R.string.please_fill_in))
-            "" else str
+        val str = addressContent
+        return if (str == getString(R.string.please_fill_in)) {
+            ""
+        } else str
+
+    }
+
+    override fun getCityname(): String {
+        return cityName
+    }
+
+    override fun getCitycode(): String {
+        return cityCode
+    }
+
+    override fun getCountycode(): String {
+        return countyCode
+    }
+
+    override fun getCountyname(): String {
+        return countyName
+    }
+
+    override fun getProvincecode(): String {
+        return provinceCode
+    }
+
+    override fun getProvincename(): String {
+        return provinceName
     }
 
     /****** 专业领域 ******/
     override fun getProfessional(): String {
         val str = tv_qualification_authentication_professional_list.text.trim().toString()
-        return if (str == getString(R.string.please_select))
-            "" else str
+        return if (str == getString(R.string.please_select)) {
+            ""
+        } else str
     }
 
     override fun getYear(): Int {
@@ -206,13 +271,14 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQUESTCODE_CHOOSE_MAJORS) {
             when (resultCode) {
             /****** 专业领域返回 ******/
                 Constants.RESULTCODE_CHOOSE_MAJORS -> {
-                    selectString = data?.getStringArrayListExtra(Constants.RESULT_CHOOSE_MAJORS)
+                    selectString = data?.getStringArrayListExtra(Constants.RESULT_CHOOSE_MAJORS)!!
                     var professionalList = ""
                     if (selectString != null && (selectString as java.util.ArrayList<String>).isNotEmpty()) {
                         for (str: String in selectString as java.util.ArrayList<String>) {
@@ -223,8 +289,14 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                 }
             /****** 律所地址返回 ******/
                 Constants.RESULTCODE_EDIT_ADDRESS -> {
-                    val addressContent = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS)
-                    tv_qualification_authentication_address_content.text = addressContent
+                    provinceCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_PROVINCECODE).toString()
+                    provinceName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_PROVINCENAME).toString()
+                    cityName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_CITYNAME).toString()
+                    cityCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_CITYCODE).toString()
+                    countyCode = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_COUNTYCODE).toString()
+                    countyName = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS_COUNTYNAME).toString()
+                    addressContent = data?.getStringExtra(Constants.RESULT_EDIT_ADDRESS).toString()
+                    setAddress(provinceName, cityName, countyName, addressContent)
                 }
             }
         }
@@ -321,7 +393,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
                     iv_qualification_authentication_certificate_photos_bg.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
-                    iv_qualification_authentication_certificate_photos_bg.setImageBitmap(bitmap)
+                    setImage1(bitmap)
                     mPresenter.uploadFiles(File(path), 1)
                 }
             /****** 智能裁剪 ******/
@@ -329,7 +401,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
                     iv_qualification_authentication_record_photo_bg.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
-                    iv_qualification_authentication_record_photo_bg.setImageBitmap(bitmap)
+                    setImage2(bitmap)
                     mPresenter.uploadFiles(File(path), 2)
                 }
             /****** 智能裁剪 ******/
@@ -337,7 +409,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
                     iv_qualification_authentication_id11.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
-                    iv_qualification_authentication_id11.setImageBitmap(bitmap)
+                    setImage3(bitmap)
                     mPresenter.uploadFiles(File(path), 3)
                 }
             /****** 智能裁剪 ******/
@@ -345,7 +417,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
                     iv_qualification_authentication_id22.setPadding(0, 0, 0, 0)
                     val bitmap = BitmapFactory.decodeFile(path)
-                    iv_qualification_authentication_id22.setImageBitmap(bitmap)
+                    setImage4(bitmap)
                     mPresenter.uploadFiles(File(path), 4)
                 }
                 else -> {

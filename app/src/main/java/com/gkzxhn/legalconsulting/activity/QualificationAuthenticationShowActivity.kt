@@ -1,10 +1,10 @@
 package com.gkzxhn.legalconsulting.activity
 
+import android.content.Intent
 import android.graphics.Bitmap
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.QualificationAuthenticationShowPresenter
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.newIntent
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationShowView
 import kotlinx.android.synthetic.main.activity_qualification_authentication_show.*
 import kotlinx.android.synthetic.main.default_top.iv_default_top_back as back
@@ -34,7 +34,10 @@ class QualificationAuthenticationShowActivity : BaseActivity(), QualificationAut
         }
 
         tv_qualification_authentication_show_send.setOnClickListener {
-            newIntent<QualificationAuthenticationEditActivity>()
+            var intent = Intent(this, QualificationAuthenticationEditActivity::class.java)
+            intent.putExtra("again_Authentication",true)
+            startActivity(intent)
+            finish()
         }
 
         mPresenter.getCertification()

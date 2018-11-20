@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -15,6 +16,7 @@ import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.model.iml.QualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.utils.ImageUtils
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationEditView
 import com.google.gson.Gson
@@ -54,7 +56,8 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
             map[STRING_ID + 2] == null -> mContext?.showToast("需上传律师年度考核")
             map[STRING_ID + 3] == null -> mContext?.showToast("需上传身份证")
             map[STRING_ID + 4] == null -> mContext?.showToast("需上传身份证")
-            else -> certification()
+            else ->
+                certification()
         }
 
 
@@ -115,35 +118,21 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
         qualificationAuthentication.lawOffice = mView?.getLawOffice()
         qualificationAuthentication.workExperience = mView?.getYear()!!
 
-
-        var professional = mView?.getProfessional()
-        for (s in professional.toString().split("、")) {
-            when (s) {
-                "财产纠纷" -> categories?.add("PROPERTY_DISPUTES")
-                "婚姻家庭" -> categories?.add("MARRIAGE_FAMILY")
-                "交通事故" -> categories?.add("TRAFFIC_ACCIDENT")
-                "工伤赔偿" -> categories?.add("WORK_COMPENSATION")
-
-                "合同纠纷" -> categories?.add("CONTRACT_DISPUTE")
-
-                "刑事辩护" -> categories?.add("CRIMINAL_DEFENSE")
-
-                "房产纠纷" -> categories?.add("HOUSING_DISPUTES")
-
-                "劳动就业" -> categories?.add("LABOR_EMPLOYMENT")
-            }
+        for (s in mView?.getSelectStr()!!) {
+            categories?.add(ProjectUtils.categoriesStrToType(s))
         }
         qualificationAuthentication.categories = categories
 
         lawOfficeAddress?.id = "000"
-        lawOfficeAddress?.cityName = "000"
-        lawOfficeAddress?.cityCode = "000"
-        lawOfficeAddress?.countryCode = "000"
-        lawOfficeAddress?.countryName = "000"
-        lawOfficeAddress?.provinceCode = "000"
-        lawOfficeAddress?.provinceName = "000"
-        lawOfficeAddress?.countyCode = "000"
-        lawOfficeAddress?.countyName = "000"
+
+        lawOfficeAddress?.countryCode = "86"
+        lawOfficeAddress?.countryName = "中国"
+        lawOfficeAddress?.provinceCode = mView?.getProvincecode()
+        lawOfficeAddress?.provinceName = mView?.getProvincename()
+        lawOfficeAddress?.cityName = mView?.getCityname()
+        lawOfficeAddress?.cityCode = mView?.getCitycode()
+        lawOfficeAddress?.countyCode = mView?.getCountycode()
+        lawOfficeAddress?.countyName = mView?.getCountyname()
         /****** 地址信息 ******/
         lawOfficeAddress?.streetDetail = mView?.getAddress()
 
@@ -182,9 +171,98 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                                 mContext?.showToast("提交成功")
                                 mView?.onFinish()
                             }
+                            else -> {
+                                mContext?.showToast("错误码："+t.code())
+                            }
                         }
                     }
                 })
+    }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/20 7:13 PM.
+     * @description：获取律师已经的认证信息
+     */
+    fun getCertification() {
+        mContext?.let {
+            mModel.getCertification(it)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<QualificationAuthentication>(it) {
+                        override fun success(t: QualificationAuthentication) {
+                            mView?.setName(t.name!!)
+                            mView?.setGender(t.gender!!)
+                            mView?.setDescription(t.description!!)
+                            mView?.setAddress(t.lawOfficeAddress!!.provinceName!!,
+                                    t.lawOfficeAddress!!.cityName!!,
+                                    t.lawOfficeAddress!!.countyName!!,
+                                    t.lawOfficeAddress!!.streetDetail!!)
+                            mView?.setLevel(levelToStr(t.level!!))
+                            level = t.level!!
+                            mView?.setLawOffice(t.lawOffice!!)
+                            var professional = ""
+                            //    专业领域的集合
+                            val selectString: ArrayList<String>? = arrayListOf()
+                            for (s in t.categories!!) {
+                                val categoriesString = ProjectUtils.categoriesConversion(s)
+                                professional = "$professional、$categoriesString"
+                                selectString?.add(categoriesString)
+                            }
+                            mView?.setSelectStr(selectString!!)
+                            mView?.setProfessional(professional.substring(1))
+                            mView?.setYear(t.workExperience.toString())
+
+                            val file = File(mContext?.cacheDir, "pa_show_1" + ".jpg")
+                            val certificatePictures = t.certificatePictures!![0].thumb.toString()
+                            if (certificatePictures.isNotEmpty()) {
+                                val base64ToFile = ImageUtils.base64ToFile(certificatePictures.substring(Constants.BASE_64_START.length), file.absolutePath)
+                                if (base64ToFile) {
+                                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
+                                    mView?.setImage1(decodeFile)
+                                }
+                            }
+
+                            val file2 = File(mContext?.cacheDir, "pa_show_2" + ".jpg")
+                            val assessmentPictures = t.assessmentPictures!![0].thumb.toString()
+                            if (assessmentPictures.isNotEmpty()) {
+                                val base64ToFile = ImageUtils.base64ToFile(assessmentPictures.substring(Constants.BASE_64_START.length), file2.absolutePath)
+                                if (base64ToFile) {
+                                    val decodeFile = BitmapFactory.decodeFile(file2.absolutePath)
+                                    mView?.setImage2(decodeFile)
+                                }
+                            }
+                            val file3 = File(mContext?.cacheDir, "pa_show_3" + ".jpg")
+                            val identificationPictures1 = t.identificationPictures!![0].thumb.toString()
+                            if (identificationPictures1.isNotEmpty()) {
+                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures1.substring(Constants.BASE_64_START.length), file3.absolutePath)
+                                if (base64ToFile) {
+                                    val decodeFile = BitmapFactory.decodeFile(file3.absolutePath)
+                                    mView?.setImage3(decodeFile)
+                                }
+                            }
+                            val file4 = File(mContext?.cacheDir, "pa_show_4" + ".jpg")
+                            val identificationPictures2 = t.identificationPictures!![1].thumb.toString()
+                            if (identificationPictures2.isNotEmpty()) {
+                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures2.substring(Constants.BASE_64_START.length), file4.absolutePath)
+                                if (base64ToFile) {
+                                    val decodeFile = BitmapFactory.decodeFile(file4.absolutePath)
+                                    mView?.setImage4(decodeFile)
+                                }
+                            }
+
+                            /****** 保存文件ID与base64码 ******/
+                            map[STRING_ID + 1] = t.certificatePictures!![0].fileId.toString()
+                            map[STRING_64 + 1] = t.certificatePictures!![0].thumb.toString()
+                            map[STRING_ID + 2] = t.assessmentPictures!![0].fileId.toString()
+                            map[STRING_64 + 2] = t.assessmentPictures!![0].thumb.toString()
+                            map[STRING_ID + 3] = t.identificationPictures!![0].fileId.toString()
+                            map[STRING_64 + 2] = t.identificationPictures!![0].thumb.toString()
+                            map[STRING_ID + 4] = t.identificationPictures!![1].fileId.toString()
+                            map[STRING_64 + 4] = t.identificationPictures!![1].thumb.toString()
+                        }
+                    })
+        }
     }
 
 
@@ -218,17 +296,18 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
 
 
         val tvVerify = dialog.findViewById<TextView>(R.id.tv_level_verify)
+        checkSelect(ivOne, ivTwo, ivThird, ivFour, level)
         tvOne.setOnClickListener {
-            checkSelect(ivOne, ivTwo, ivThird, ivFour, 1)
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, "FIRST")
         }
         tvTwo.setOnClickListener {
-            checkSelect(ivOne, ivTwo, ivThird, ivFour, 2)
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, "SECOND")
         }
         tvThird.setOnClickListener {
-            checkSelect(ivOne, ivTwo, ivThird, ivFour, 3)
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, "THIRD")
         }
         tvFour.setOnClickListener {
-            checkSelect(ivOne, ivTwo, ivThird, ivFour, 4)
+            checkSelect(ivOne, ivTwo, ivThird, ivFour, "FOURTH")
         }
         tvVerify.setOnClickListener {
             dialog.dismiss()
@@ -244,33 +323,48 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
      * @methodName： created by liushaoxiang on 2018/11/13 9:45 AM.
      * @description：点击律师 等级条目 切换选择状态并保存律师等级string
      */
-    private fun checkSelect(ivOne: ImageView, ivTwo: ImageView, ivThird: ImageView, ivFour: ImageView, i: Int) {
+    private fun checkSelect(ivOne: ImageView, ivTwo: ImageView, ivThird: ImageView, ivFour: ImageView, level: String) {
         ivOne.setImageResource(R.mipmap.ic_checked_false)
         ivTwo.setImageResource(R.mipmap.ic_checked_false)
         ivThird.setImageResource(R.mipmap.ic_checked_false)
         ivFour.setImageResource(R.mipmap.ic_checked_false)
-        when (i) {
-            1 -> {
+        this.level = level
+
+        when (level) {
+            "FIRST" -> {
                 ivOne.setImageResource(R.mipmap.ic_checked_true)
                 levelStr = "一级律师 (高级律师)"
-                level = "FIRST"
             }
-
-            2 -> {
+            "SECOND" -> {
                 ivTwo.setImageResource(R.mipmap.ic_checked_true)
                 levelStr = "二级律师 (副高级律师)"
-                level = "SECOND"
             }
-            3 -> {
+            "THIRD" -> {
                 ivThird.setImageResource(R.mipmap.ic_checked_true)
                 levelStr = "三级律师 (中级律师)"
-                level = "THIRD"
             }
-            4 -> {
+            "FOURTH" -> {
                 ivFour.setImageResource(R.mipmap.ic_checked_true)
                 levelStr = "四级律师 (初级律师)"
-                level = "FOURTH"
             }
+        }
+    }
+
+    private fun levelToStr(level: String): String {
+        return when (level) {
+            "FIRST" -> {
+                "一级律师 (高级律师)"
+            }
+            "SECOND" -> {
+                "二级律师 (副高级律师)"
+            }
+            "THIRD" -> {
+                "三级律师 (中级律师)"
+            }
+            "FOURTH" -> {
+                "四级律师 (初级律师)"
+            }
+            else -> ""
         }
     }
 

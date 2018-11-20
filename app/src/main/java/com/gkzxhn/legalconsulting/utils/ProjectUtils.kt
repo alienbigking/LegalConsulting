@@ -44,6 +44,38 @@ object ProjectUtils {
         return File(cacheDir, uriFile.name)
     }
 
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/9 3:02 PM.
+     * @description：认证是否通过
+     */
+    fun certificationStatus(): Boolean {
+        val certificationStatus = App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")
+        return certificationStatus == Constants.CERTIFIED
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/20 8:56 PM.
+     * @description：专业领域的转换
+     */
+    fun categoriesStrToType(str: String): String {
+        if (str.isEmpty()) {
+            return ""
+        }
+        return when (str) {
+            "财产纠纷" -> "PROPERTY_DISPUTES"
+            "婚姻家庭" -> "MARRIAGE_FAMILY"
+            "交通事故" -> "TRAFFIC_ACCIDENT"
+            "工伤赔偿" -> "WORK_COMPENSATION"
+            "合同纠纷" -> "CONTRACT_DISPUTE"
+            "刑事辩护" -> "CRIMINAL_DEFENSE"
+            "房产纠纷" -> "HOUSING_DISPUTES"
+            "劳动就业" -> "LABOR_EMPLOYMENT"
+            else -> ""
+        }
+    }
+
     /**
      * @methodName： created by liushaoxiang on 2018/11/9 9:57 AM.
      * @description：专业类别的转化
@@ -65,15 +97,6 @@ object ProjectUtils {
                 "其它"
             }
         }
-    }
-
-    /**
-     * @methodName： created by liushaoxiang on 2018/11/9 3:02 PM.
-     * @description：认证是否通过
-     */
-    fun certificationStatus(): Boolean {
-        val certificationStatus = App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")
-        return certificationStatus == Constants.CERTIFIED
     }
 
 }

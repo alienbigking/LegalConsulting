@@ -25,7 +25,7 @@ class ChooseMajorsActivity : BaseActivity() {
     }
 
     private fun initSelect() {
-        var intentSelectString = intent.getStringArrayListExtra(Constants.INTENT_SELECTSTRING) as java.util.ArrayList<String>
+        val intentSelectString = intent.getStringArrayListExtra(Constants.INTENT_SELECTSTRING) ?: return
         for (str: String in intentSelectString) {
             initSelect(str)
         }

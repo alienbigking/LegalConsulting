@@ -20,17 +20,27 @@ interface QualificationAuthenticationEditView : BaseView {
     fun onFinish()
     fun setLevel(levelStr: String)
 
+    fun getCityname(): String
+    fun getCitycode(): String
+    fun getCountycode(): String
+    fun getProvincename(): String
+    fun getCountyname(): String
+    fun getProvincecode(): String
+
 
     fun setName(string: String)
     fun setGender(string: String)
     fun setDescription(string: String)
     fun setLawOffice(string: String)
-    fun setAddress(string: String)
+    fun setAddress(provinceName: String, cityName: String, countyName: String, streetDetail: String)
     fun setProfessional(string: String)
     fun setYear(string: String)
     fun setImage1(decodeFile: Bitmap)
     fun setImage2(decodeFile: Bitmap)
     fun setImage3(decodeFile: Bitmap)
     fun setImage4(decodeFile: Bitmap)
+
+    fun setSelectStr(selectStr: ArrayList<String>)
+    fun getSelectStr():ArrayList<String>
 
 }

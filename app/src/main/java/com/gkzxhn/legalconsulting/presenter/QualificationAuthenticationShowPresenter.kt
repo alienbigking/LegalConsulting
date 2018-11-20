@@ -8,6 +8,7 @@ import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.model.iml.QualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.utils.ImageUtils
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationShowView
 import rx.android.schedulers.AndroidSchedulers
 import java.io.File
@@ -34,16 +35,8 @@ class QualificationAuthenticationShowPresenter(context: Context, view: Qualifica
                             mView?.setLawOffice(t.lawOffice!!)
                             var professional = ""
                             for (s in t.categories!!) {
-                                when (s) {
-                                    "PROPERTY_DISPUTES" -> professional = "$professional、财产纠纷"
-                                    "MARRIAGE_FAMILY" -> professional = "$professional、婚姻家庭"
-                                    "TRAFFIC_ACCIDENT" -> professional = "$professional、交通事故"
-                                    "WORK_COMPENSATION" -> professional = "$professional、工伤赔偿"
-                                    "CONTRACT_DISPUTE" -> professional = "$professional、合同纠纷"
-                                    "CRIMINAL_DEFENSE" -> professional = "$professional、刑事辩护"
-                                    "HOUSING_DISPUTES" -> professional = "$professional、房产纠纷"
-                                    "LABOR_EMPLOYMENT" -> professional = "$professional、劳动就业"
-                                }
+                                val categoriesString = ProjectUtils.categoriesConversion(s)
+                                professional = "$professional、$categoriesString"
                             }
                             mView?.setProfessional(professional.substring(1))
                             mView?.setYear(t.workExperience.toString() + "年")

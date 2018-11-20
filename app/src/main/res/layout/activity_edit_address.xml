@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#FFF9F8FE">
+    android:layout_height="match_parent"
+    android:background="#FFF9F8FE">
 
 
     <!--标题栏-->
@@ -51,13 +52,48 @@
         app:layout_constraintTop_toTopOf="@id/v_edit_top_bg"/>
 
 
+    <TextView
+        android:id="@+id/tv_edit_address"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="所在地区"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_edit_address_back"
+    />
+
+    <ImageView
+        android:id="@+id/iv_qualification_authentication_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_edit_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_edit_address"
+        app:srcCompat="@mipmap/ic_arrow_left"/>
+
+
+    <View android:id="@+id/v_edit_address"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginEnd="15dp"
+          android:layout_marginStart="15dp"
+          android:background="@color/view_line"
+          app:layout_constraintTop_toBottomOf="@+id/tv_edit_address"/>
     <EditText
         android:id="@+id/et_edit_address"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_set_bg"
         android:gravity="start"
         android:hint="请输入地址"
@@ -65,7 +101,7 @@
         android:paddingTop="10dp"
         android:textColor="#ff999999"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/v_edit_top_bg"
+        app:layout_constraintTop_toBottomOf="@+id/v_edit_address"
     />
 
 </android.support.constraint.ConstraintLayout>
