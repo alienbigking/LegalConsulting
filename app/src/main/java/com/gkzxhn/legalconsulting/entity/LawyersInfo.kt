@@ -25,7 +25,7 @@ data class LawyersInfo(
         var certificationStatus: String? ,
         var orderCount: Int? ,
         var score: Int? ,
-        var rewardAmount: Int? ,
+        var rewardAmount: Double? ,
         /****** 接单状态 ******/
         var serviceStatus: String? ,
         var lawOffice: String? ,

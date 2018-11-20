@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/cl_pay_type_dialog_all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_dialog_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="21dp"
+        android:padding="5dp"
+        android:src="@mipmap/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择到账平台"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_dialog_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_dialog_back"
+    />
+
+
+    <TextView
+        android:id="@+id/tv_pay_type_dialog_one"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="55dp"
+        android:text="支付宝"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_dialog_back"
+    />
+
+    <ImageView
+        android:id="@+id/iv_pay_type_dialog_one"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:src="@mipmap/ic_pay_ali"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pay_type_dialog_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_pay_type_dialog_one"
+    />
+
+    <View
+        android:id="@+id/v_pay_type_dialog_one"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pay_type_dialog_one"/>
+
+    <ImageView
+        android:id="@+id/iv_pay_type_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_true"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pay_type_dialog_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_pay_type_dialog_one"/>
+
+    <TextView
+        android:id="@+id/tv_pay_type_dialog_two"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        android:gravity="center_vertical"
+        android:paddingStart="55dp"
+        android:text="微信"
+        android:textColor="#ff666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_pay_type_dialog_one"
+    />
+    <ImageView
+        android:id="@+id/iv_pay_type_dialog_two"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:src="@mipmap/ic_pay_weichat"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pay_type_dialog_two"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_pay_type_dialog_two"
+    />
+
+    <ImageView
+        android:id="@+id/iv_pay_type_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_checked_false"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pay_type_dialog_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_pay_type_dialog_two"/>
+
+
+    <View
+        android:id="@+id/v_pay_type_dialog_two"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="#FFEAEBEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pay_type_dialog_two"/>
+
+    <TextView
+        android:id="@+id/tv_pay_type_verify"
+        android:layout_width="80dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_level_bg"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#FF264C90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_pay_type_dialog_two"/>
+
+
+</android.support.constraint.ConstraintLayout>

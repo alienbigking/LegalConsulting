@@ -3,41 +3,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+>
 
     <include android:id="@+id/in_top"
              layout="@layout/default_top"/>
 
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂无明细"
+        android:visibility="gone"/>
+
     <com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
         android:id="@+id/loading_refresh"
-        android:layout_width="match_parent"
         android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
     >
 
         <com.gkzxhn.legalconsulting.customview.LoadMoreWrapper
             android:id="@+id/loading_more"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcl_all_order"
+                android:id="@+id/rcl_money_list"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+            >
 
             </android.support.v7.widget.RecyclerView>
         </com.gkzxhn.legalconsulting.customview.LoadMoreWrapper>
 
     </com.gkzxhn.legalconsulting.customview.PullToRefreshLayout>
 
-    <TextView
-        android:id="@+id/tv_item_order_receiving_bull"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无订单"
-        android:visibility="visible"/>
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,9 @@
 package com.gkzxhn.legalconsulting.fragment
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationEditActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -13,6 +11,7 @@ import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.utils.logE
+import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.main_fragment.*
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
@@ -70,7 +69,7 @@ class MainFragment : BaseFragment() {
                     } else {
                         View.GONE
                     }
-                    tv_main_red_point.text= it.number.toString()
+                    tv_main_red_point.text = it.number.toString()
 
                 }, {
                     it.message.toString().logE(this)
@@ -116,8 +115,7 @@ class MainFragment : BaseFragment() {
             selectTwoItem()
         }
         ivMessageTop.setOnClickListener {
-
-            startActivity(Intent(context, QualificationAuthenticationEditActivity::class.java))
+            context?.showToast("通知功能开发中，敬请期待")
         }
 
         v_home_top_bg.setOnClickListener {

@@ -33,6 +33,12 @@ interface ApiService {
     fun updatePhoneNumber(@Body requestBody: RequestBody): Observable<Response<Void>>
 
     /**
+     * 支付宝提现
+     */
+    @POST("/lawyer/withdrawal/alipay")
+    fun withdrawAli(@Body requestBody: RequestBody): Observable<Response<Void>>
+
+    /**
      *获取律师详情
      */
     @GET("lawyer/profiles")
@@ -93,7 +99,11 @@ interface ApiService {
 
     //    获取抢单列表
     @GET("lawyer/rush/legal-advice")
-    fun getOrderReceiving(@Query("page") page:String,@Query("size") size:String): Observable<OrderReceiving>
+    fun getOrderReceiving(@Query("page") page: String, @Query("size") size: String): Observable<OrderReceiving>
+
+    //    获取交易明细列表
+    @GET("/lawyer/transaction-logs")
+    fun getTransaction(@Query("page") page: String, @Query("size") size: String): Observable<MoneyList>
 
     //    获取抢单的明细
     @GET("/lawyer/rush/legal-advice/{id}")
@@ -105,7 +115,7 @@ interface ApiService {
 
     //    获取我的咨询列表
     @GET("lawyer/my/legal-advice")
-    fun getOrderDispose(@Query("page") page:String,@Query("size") size:String): Observable<OrderDispose>
+    fun getOrderDispose(@Query("page") page: String, @Query("size") size: String): Observable<OrderDispose>
 
     //    获取我的咨询的明细
     @GET("/lawyer/my/legal-advice/{id}")

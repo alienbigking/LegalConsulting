@@ -40,7 +40,9 @@
         <activity android:name=".activity.AllOrderActivity"/>
         <activity android:name=".activity.IdeaSubmitActivity"/>
         <activity android:name=".activity.ChooseMajorsActivity"/>
-        <activity android:name=".activity.WithdrawFirstActivity"/>
+        <activity android:name=".activity.WithdrawFirstActivity"
+                  android:windowSoftInputMode="stateHidden"
+        />
         <activity android:name=".activity.WithdrawSecondActivity"/>
         <activity android:name=".activity.WithdrawThirdActivity"/>
         <activity android:name=".activity.ChangePhoneFirstActivity"/>
@@ -48,6 +50,7 @@
         <activity android:name=".activity.ImageCropActivity"/>
         <activity android:name=".activity.ClipImageActivity"/>
         <activity android:name=".activity.EditAddressActivity"/>
+        <activity android:name=".activity.MoneyListActivity"/>
 
 
         <provider

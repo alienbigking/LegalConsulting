@@ -3,6 +3,8 @@ package com.gkzxhn.legalconsulting.activity
 import android.graphics.Bitmap
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.QualificationAuthenticationShowPresenter
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.newIntent
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationShowView
 import kotlinx.android.synthetic.main.activity_qualification_authentication_show.*
 import kotlinx.android.synthetic.main.default_top.iv_default_top_back as back
@@ -26,8 +28,13 @@ class QualificationAuthenticationShowActivity : BaseActivity(), QualificationAut
     override fun init() {
         mPresenter = QualificationAuthenticationShowPresenter(this, this)
         topTitle.text = "资格认证"
+        ProjectUtils.addViewTouchChange(tv_qualification_authentication_show_send)
         back.setOnClickListener {
             finish()
+        }
+
+        tv_qualification_authentication_show_send.setOnClickListener {
+            newIntent<QualificationAuthenticationEditActivity>()
         }
 
         mPresenter.getCertification()

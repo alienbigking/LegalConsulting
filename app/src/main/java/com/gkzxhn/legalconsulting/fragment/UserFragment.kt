@@ -124,9 +124,11 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     private fun loadUI(date: LawyersInfo) {
         tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
         tv_user_name.text = date.name
+        tv_user_money.text = "￥"+date.rewardAmount
         tv_user_fragment_get_order_state.text = if (date.serviceStatus == "BUSY") "忙碌" else "接单"
         App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
         App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
+        App.EDIT.putString(Constants.SP_REWARDAMOUNT, date.rewardAmount.toString())?.commit()
         App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
 
         /****** 如果图片和上次一致就不转化了 ******/

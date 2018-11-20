@@ -141,7 +141,6 @@
 
             <!--地域 暂时 不显示-->
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_qualification_authentication_territory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,17 +149,18 @@
                 android:text="地域"
                 android:textColor="#ff333333"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_sex"/>
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="----"
                 android:textColor="#FF333333"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_territory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_territory"
@@ -169,8 +169,8 @@
 
             <View
                 android:id="@+id/v_qualification_authentication_territory"
-                android:visibility="gone"
                 style="@style/view_qualification_authentication_line"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_territory"
             />
 
@@ -440,7 +440,6 @@
                 android:layout_marginTop="15dp"
                 android:background="@mipmap/up_idcard_di"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_qa_show_image4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -457,6 +456,31 @@
                 app:layout_constraintStart_toEndOf="@id/iv_qa_show_image3"
                 app:layout_constraintTop_toTopOf="@+id/iv_qa_show_image3"/>
 
+
+            <!--灰背景-->
+            <View
+                android:id="@+id/v_qualification_authentication_bg_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="89dp"
+                android:background="#ffeae8f1"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_qa_show_image4"
+            />
+            <TextView
+                android:id="@+id/tv_qualification_authentication_show_send"
+                android:layout_width="330dp"
+                android:layout_height="44dp"
+                android:background="@drawable/shape_qualification_authentication_edit_bg_text"
+                android:gravity="center"
+                android:text="重新认证"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_bg_bottom"
+            />
 
         </android.support.constraint.ConstraintLayout>
 

@@ -44,6 +44,7 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:id="@+id/tv_bounty_money"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="5000.00"

@@ -3,6 +3,7 @@ package com.gkzxhn.legalconsulting.activity
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -33,6 +34,49 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
  */
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
+    override fun setName(string: String) {
+        et_qualification_authentication_name.setText(string)
+    }
+
+    override fun setGender(string: String) {
+        rb_qualification_authentication_sex_man.text=string
+    }
+
+    override fun setDescription(string: String) {
+        et_qualification_authentication_personal_profile.setText(string)
+    }
+
+    override fun setLawOffice(string: String) {
+        et_qualification_authentication_institution.setText(string)
+    }
+
+    override fun setAddress(string: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setProfessional(string: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setYear(string: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setImage1(decodeFile: Bitmap) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setImage2(decodeFile: Bitmap) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setImage3(decodeFile: Bitmap) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setImage4(decodeFile: Bitmap) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private val TAKE_PHOTO_IMAGE_1 = 101       //拍执业证书
     private val CHOOSE_PHOTO_IMAGE_1 = 102      //选择执业证书

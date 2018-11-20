@@ -8,15 +8,19 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderDisposeAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
+import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.presenter.OrderDisposePresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.logE
 import com.gkzxhn.legalconsulting.view.OrderDisposeView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_disposer_fragment.*
+import rx.android.schedulers.AndroidSchedulers
 
 /**
  * Explanation：我的咨询里面（指定单）
@@ -57,6 +61,23 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
             mPresenter.getOrderDispose("0")
         }
+
+        /****** 接受更新的律师信息 ******/
+        RxBus.instance.toObserverable(LawyersInfo::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    /****** 认证未通过时显示空状态  ******/
+                    if (!ProjectUtils.certificationStatus()) {
+                        loading_refresh.visibility = View.GONE
+                        tv_order_disposer_null.visibility = View.VISIBLE
+                    } else {
+                        loading_refresh.visibility = View.VISIBLE
+                        tv_order_disposer_null.visibility = View.GONE
+                    }
+                }, {
+                    it.message.toString().logE(this)
+                })
 
     }
 

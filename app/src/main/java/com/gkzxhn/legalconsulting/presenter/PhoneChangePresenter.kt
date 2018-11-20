@@ -46,14 +46,8 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<Response<Void>>(it) {
                         override fun success(t: Response<Void>) {
-                            if (t.code() == 201) {
-                                mView?.startCountDown(60)
-                                it.showToast(it.getString(R.string.have_send).toString())
-                            } else {
-                                mView?.stopCountDown()
-
-                                it.TsDialog(it.getString(R.string.send_failed).toString(), false)
-                            }
+                            mView?.startCountDown(60)
+                            it.showToast(it.getString(R.string.have_send).toString())
                         }
 
                         override fun onError(t: Throwable?) {
@@ -126,7 +120,7 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
      * @methodName： created by liushaoxiang on 2018/10/29 10:57 AM.
      * @description：修改手机号
      */
-     fun updatePhoneNumber() {
+    fun updatePhoneNumber() {
         var map = LinkedHashMap<String, String>()
         map["phoneNumber"] = mView?.getPhone().toString()
         map["verificationCode"] = mView?.getCode().toString()
@@ -143,9 +137,14 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
                                 mView?.onFinish()
                             }
                             else -> {
-
+                                mContext?.showToast(t.code().toString()+t.errorBody())
                             }
                         }
+                    }
+
+                    override fun onError(t: Throwable?) {
+                        super.onError(t)
+                        mContext?.showToast(t?.message.toString())
                     }
                 }
                 )

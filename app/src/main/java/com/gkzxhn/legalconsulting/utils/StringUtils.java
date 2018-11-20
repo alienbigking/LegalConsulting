@@ -3,6 +3,7 @@ package com.gkzxhn.legalconsulting.utils;
 import android.text.TextUtils;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class StringUtils {
         String str = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (!TextUtils.isEmpty(time)) {
-            str = dateFormat.format(Long.parseLong(time) * 1000);
+            str = dateFormat.format(Long.parseLong(time));
         }
         return str;
     }
@@ -107,5 +108,13 @@ public class StringUtils {
         return sdf.format(result);
     }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/20 4:49 PM.
+     * @description： 保留两位小数点
+     */
+    public static String formatStringTwo(double f) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return df.format(f);
 
+    }
 }

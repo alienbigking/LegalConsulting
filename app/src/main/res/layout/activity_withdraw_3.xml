@@ -69,18 +69,19 @@
 
     <!--支付宝-->
     <TextView
+        android:id="@+id/tv_withdraw_3_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:text="支付宝"
         android:textColor="#ff666666"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_withdraw_3_alipay"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_withdraw_3_acount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_withdraw_3_alipay"
+        app:layout_constraintTop_toTopOf="@+id/tv_withdraw_3_acount"
     />
     <TextView
-        android:id="@+id/tv_withdraw_3_alipay"
+        android:id="@+id/tv_withdraw_3_acount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -116,7 +117,7 @@
         android:textColor="#ff333333"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_withdraw_3_alipay"
+        app:layout_constraintTop_toBottomOf="@id/tv_withdraw_3_acount"
     />
 
     <View

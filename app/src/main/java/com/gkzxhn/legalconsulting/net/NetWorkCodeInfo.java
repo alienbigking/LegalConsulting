@@ -7,8 +7,8 @@ package com.gkzxhn.legalconsulting.net;
 public interface NetWorkCodeInfo {
 
     /***** 开发环境 *****/
-        String BASE_URL ="http://10.10.10.17:8081";
-        String BASE_URL_PROJECT ="http://10.10.10.17:8086";
+//        String BASE_URL ="http://10.10.10.17:8081";
+//        String BASE_URL_PROJECT ="http://10.10.10.17:8086";
 
     /***** 测试请求的网址 *****/
 //    String BASE_URL = "http://10.10.10.16:8081";
@@ -17,5 +17,11 @@ public interface NetWorkCodeInfo {
     /***** 正试请求的网址 *****/
     //String BASE_URL ="http://api.auth.prisonpublic.com";
     //String BASE_URL_PROJECT ="http://api.legal.prisonpublic.com";
+
+    /***** 外网请求的网址 *****/
+    String BASE_URL ="http://123.57.7.159:8081";
+    String BASE_URL_PROJECT ="http://123.57.7.159:8086";
+
+
 
 }
