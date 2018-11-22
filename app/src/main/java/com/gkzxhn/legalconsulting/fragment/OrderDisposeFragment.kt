@@ -52,7 +52,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         /****** 认证未通过时显示空状态  ******/
         if (!ProjectUtils.certificationStatus()) {
             loading_refresh.visibility = View.GONE
-            tv_order_disposer_null.visibility = View.VISIBLE
+            tv_order_disposer_null_2.visibility = View.VISIBLE
         } else {
             mAdapter = context?.let { OrderDisposeAdapter(it, null) }
             rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
@@ -70,10 +70,10 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                     /****** 认证未通过时显示空状态  ******/
                     if (!ProjectUtils.certificationStatus()) {
                         loading_refresh.visibility = View.GONE
-                        tv_order_disposer_null.visibility = View.VISIBLE
+                        tv_order_disposer_null_2.visibility = View.VISIBLE
                     } else {
                         loading_refresh.visibility = View.VISIBLE
-                        tv_order_disposer_null.visibility = View.GONE
+                        tv_order_disposer_null_2.visibility = View.GONE
                     }
                 }, {
                     it.message.toString().logE(this)

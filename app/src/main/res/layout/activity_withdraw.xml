@@ -78,12 +78,12 @@
 
             <EditText
                 android:id="@+id/et_withdraw_1_alipay"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lines="1"
                 android:layout_marginTop="16dp"
                 android:background="@null"
                 android:hint="请输入账号"
-                android:inputType="number"
                 android:textColor="#ff999999"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/tv_withdraw_1_start"
@@ -102,7 +102,7 @@
                   app:layout_constraintTop_toBottomOf="@id/et_withdraw_1_alipay"/>
             <EditText
                 android:id="@+id/et_withdraw_1_name"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@null"

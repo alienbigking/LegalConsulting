@@ -113,7 +113,7 @@ public class StringUtils {
      * @description： 保留两位小数点
      */
     public static String formatStringTwo(double f) {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("0.00");
         return df.format(f);
 
     }

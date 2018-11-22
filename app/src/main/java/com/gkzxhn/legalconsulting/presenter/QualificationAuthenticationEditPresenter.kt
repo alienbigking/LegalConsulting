@@ -299,19 +299,31 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
         checkSelect(ivOne, ivTwo, ivThird, ivFour, level)
         tvOne.setOnClickListener {
             checkSelect(ivOne, ivTwo, ivThird, ivFour, "FIRST")
+            mView?.setLevel(levelStr)
+            dialog.dismiss()
+
         }
         tvTwo.setOnClickListener {
             checkSelect(ivOne, ivTwo, ivThird, ivFour, "SECOND")
+            mView?.setLevel(levelStr)
+            dialog.dismiss()
+
         }
         tvThird.setOnClickListener {
             checkSelect(ivOne, ivTwo, ivThird, ivFour, "THIRD")
+            mView?.setLevel(levelStr)
+            dialog.dismiss()
+
         }
         tvFour.setOnClickListener {
             checkSelect(ivOne, ivTwo, ivThird, ivFour, "FOURTH")
+            mView?.setLevel(levelStr)
+            dialog.dismiss()
+
         }
         tvVerify.setOnClickListener {
-            dialog.dismiss()
             mView?.setLevel(levelStr)
+            dialog.dismiss()
         }
         ivBack.setOnClickListener {
             dialog.dismiss()

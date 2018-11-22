@@ -115,6 +115,10 @@ interface ApiService {
 
     //    获取我的咨询列表
     @GET("lawyer/my/legal-advice")
+    fun getOrderDispose(@Query("page") page: String, @Query("size") size: String, @Query("statuses") statuses: String): Observable<OrderDispose>
+
+    //    获取我的咨询列表（所有订单）
+    @GET("lawyer/my/legal-advice")
     fun getOrderDispose(@Query("page") page: String, @Query("size") size: String): Observable<OrderDispose>
 
     //    获取我的咨询的明细

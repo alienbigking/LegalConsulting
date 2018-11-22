@@ -21,7 +21,7 @@ class WithdrawThirdActivity : BaseActivity() {
         ProjectUtils.addViewTouchChange(tv_withdraw_3_send)
 
         val account = intent.getStringExtra("pay_Account")
-        val money = intent.getIntExtra("money", 0)
+        val money = intent.getStringExtra("money")
         val type = intent.getIntExtra("pay_type", 0)
         tv_withdraw_3_time.text = StringUtils.MstoDate((System.currentTimeMillis()+7200000).toString())
         tv_withdraw_3_acount.text = account

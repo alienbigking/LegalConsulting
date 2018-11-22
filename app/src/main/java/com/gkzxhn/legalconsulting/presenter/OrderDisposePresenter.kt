@@ -1,6 +1,8 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
+import android.content.Intent
+import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.OrderDispose
@@ -33,9 +35,8 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                             if (t.content!!.isNotEmpty()) {
                                 mView?.updateData(t.first, t.content)
                                 RxBus.instance.post(RxBusBean.HomePoint(false, 1))
-                            } else {
-                                mView?.showNullView(true, "您还没有咨询订单")
                             }
+                            mView?.showNullView(t.content!!.isEmpty(),"您还没有咨询订单")
                         }
 
                         override fun onError(t: Throwable?) {
@@ -58,6 +59,10 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                             if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
                                 getOrderDispose("0")
+                                val intent = Intent(it, OrderActivity::class.java)
+                                intent.putExtra("orderId",id)
+                                intent.putExtra("orderState", 2)
+                                it.startActivity(intent)
                             }
                         }
                     })

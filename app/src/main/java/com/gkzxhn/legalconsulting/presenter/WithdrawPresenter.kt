@@ -57,6 +57,11 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
 
     fun withdraw() {
         if (mView?.getMoney()!!.isNotEmpty() && mView?.getName()!!.isNotEmpty() && mView?.getAccount()!!.isNotEmpty() && mView?.getCode()!!.isNotEmpty()) {
+            /****** 服务器没做限制  会报错 所以这里加一个限制 保险 ******/
+            if (mView?.getMoney()!!.toDouble() < 0.1) {
+                mContext?.showToast("提现金额不能小于0.1")
+                return
+            }
 
             var map = LinkedHashMap<String, Any>()
             map["payeeAccount"] = mView?.getAccount().toString()
@@ -76,7 +81,7 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
                                     val intent = Intent(mContext, WithdrawThirdActivity::class.java)
                                     intent.putExtra("pay_type", 1)
                                     intent.putExtra("pay_Account", mView?.getAccount().toString())
-                                    intent.putExtra("money", mView?.getMoney()!!.toDouble())
+                                    intent.putExtra("money", mView?.getMoney()!!.toDouble().toString())
                                     mContext?.startActivity(intent)
                                     mView?.onFinish()
 
@@ -86,22 +91,20 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
                                     when (codeStr) {
                                         "lawyer.CanNotWithdrawalBalanceInsufficient" -> {
                                             mContext?.TsDialog("余额不足，不能提现。", false)
-
+                                        }
+                                        "sms.verification-code.Error" -> {
+                                            mContext?.TsDialog("验证码错误！", false)
                                         }
                                         else -> {
-                                            it.showToast(codeStr)
+                                            mContext?.showToast("服务异常")
                                         }
                                     }
                                 } else {
-                                    it.showToast(t.code().toString() + t.message())
+                                    mContext?.showToast(t.code().toString() + t.message())
 
                                 }
                             }
 
-
-                            override fun onError(t: Throwable?) {
-                                it.showToast(t?.message!!)
-                            }
                         })
             }
         } else {
@@ -141,11 +144,13 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
         }
         tvTwo.setOnClickListener {
             mContext!!.showToast("暂不支持微信,敬请期待")
+            dialog.dismiss()
 //            checkSelect(ivOne, ivTwo, 2)
         }
         tvVerify.setOnClickListener {
             dialog.dismiss()
-            mView?.setPayType(0)
+            mView?.setPayType(payType)
+            dialog.dismiss()
         }
         ivBack.setOnClickListener {
             dialog.dismiss()

@@ -44,7 +44,6 @@
         <activity android:name=".activity.WithdrawFirstActivity"
                   android:windowSoftInputMode="stateHidden"
         />
-        <activity android:name=".activity.WithdrawSecondActivity"/>
         <activity android:name=".activity.WithdrawThirdActivity"/>
         <activity android:name=".activity.ChangePhoneFirstActivity"/>
         <activity android:name=".activity.ChangePhoneSecondActivity"/>

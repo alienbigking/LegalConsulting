@@ -40,6 +40,7 @@ class BountyActivity : BaseActivity() {
             R.id.v_bounty_get_money
             -> {
                 startActivity(Intent(this, WithdrawFirstActivity::class.java))
+                finish()
             }
             R.id.v_bounty_money_list
             -> {

@@ -61,7 +61,7 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
                     tv_withdraw_1_money_end.visibility = View.VISIBLE
                     val money = s.toString().toDouble() * 0.75
                     val format = StringUtils.formatStringTwo(money)
-                    tv_withdraw_1_money_end.text = "实际到账($format)"
+                    tv_withdraw_1_money_end.text = "实际到账$format"
                 }
 
             }

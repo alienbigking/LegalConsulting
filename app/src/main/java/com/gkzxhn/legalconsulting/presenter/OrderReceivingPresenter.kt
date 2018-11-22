@@ -1,6 +1,8 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
+import android.content.Intent
+import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
@@ -53,6 +55,11 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                                 mContext?.showToast("接单成功")
                                 RxBus.instance.post(RxBusBean.HomePoint(true, 1))
                                 getOrderReceiving("0")
+
+                                val intent = Intent(it, OrderActivity::class.java)
+                                intent.putExtra("orderId",id)
+                                intent.putExtra("orderState", 1)
+                                it.startActivity(intent)
                             }
                         }
                     })

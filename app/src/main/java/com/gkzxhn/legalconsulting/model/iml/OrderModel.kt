@@ -41,7 +41,7 @@ class OrderModel : BaseModel(), IOrderModel {
 
     override fun getOrderDispose(context: Context, page: String, size: String): Observable<OrderDispose> {
         return RetrofitClient.Companion.getInstance(context).mApi
-                ?.getOrderDispose(page,size)
+                ?.getOrderDispose(page,size,"PENDING_ACCEPT,ACCEPTED")
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderDispose>
 
     }
@@ -57,7 +57,6 @@ class OrderModel : BaseModel(), IOrderModel {
         return RetrofitClient.Companion.getInstance(context).mApi
                 ?.rejectMyOrder(id)
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderMyInfo>
-
     }
 
     override fun acceptRushOrder(context: Context, id: String): Observable<OrderMyInfo> {

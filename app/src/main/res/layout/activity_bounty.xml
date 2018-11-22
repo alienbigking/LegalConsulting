@@ -47,7 +47,7 @@
         android:id="@+id/tv_bounty_money"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="5000.00"
+        android:text="00.00"
         android:textColor="#ffffffff"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="@id/iv_bounty_top"
