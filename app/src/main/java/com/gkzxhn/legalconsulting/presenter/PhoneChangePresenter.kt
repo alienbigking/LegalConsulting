@@ -40,6 +40,10 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
 
 
     fun sendCode() {
+        if (!StringUtils.isMobileNO(mView?.getPhone())) {
+            mContext?.showToast("手机号格式不正确")
+            return
+        }
         mContext?.let {
             mModel.getCode(it, mView?.getPhone()!!)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
@@ -121,6 +125,13 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
      * @description：修改手机号
      */
     fun updatePhoneNumber() {
+        if (mView?.getCode()?.isEmpty()!!) {
+            mContext?.showToast("请填写完成后操作！")
+            return
+        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+            mContext?.showToast("手机号格式不正确")
+            return
+        }
         var map = LinkedHashMap<String, String>()
         map["phoneNumber"] = mView?.getPhone().toString()
         map["verificationCode"] = mView?.getCode().toString()
