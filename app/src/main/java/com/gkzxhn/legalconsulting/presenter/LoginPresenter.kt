@@ -40,8 +40,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
         } else {
             requestLogin()
         }
-
-
     }
 
 
@@ -61,7 +59,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
 
                             override fun onError(t: Throwable?) {
                                 mView?.stopCountDown()
-
                             }
                         })
             }

@@ -20,6 +20,7 @@ import java.util.*
 
 class ConversationAdapter(private val mContext: Context, private val data: List<String>?) : RecyclerView.Adapter<ConversationAdapter.ViewHolder>() {
 
+
     private var mDatas: ArrayList<String> = ArrayList()
     private var onItemClickListener: MultiItemTypeAdapter.OnItemClickListener? = null
     private var mCurrentIndex = -1
@@ -46,13 +47,14 @@ class ConversationAdapter(private val mContext: Context, private val data: List<
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.item_conversation, null)
         view.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         return ViewHolder(view)
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

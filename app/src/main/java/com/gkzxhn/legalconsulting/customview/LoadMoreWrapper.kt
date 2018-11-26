@@ -40,7 +40,7 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
                             absListView!!.setSelection(absListView.count)
                         } else if (mTarget is RecyclerView) {
                             val recyclerView = mTarget as RecyclerView?
-                            recyclerView!!.smoothScrollToPosition(recyclerView.layoutManager.itemCount)
+                            recyclerView!!.smoothScrollToPosition(recyclerView.layoutManager?.itemCount!!)
                         }
                     }, 10)
                 } else {
@@ -76,8 +76,8 @@ class LoadMoreWrapper(context: Context, attrs: AttributeSet) : LinearLayout(cont
             })
         } else if (mTarget is RecyclerView) {
             (mTarget as RecyclerView).addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                    val lm = recyclerView!!.layoutManager
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    val lm = recyclerView.layoutManager
                     if (lm is LinearLayoutManager) {
                         if (lm.findLastCompletelyVisibleItemPosition() == lm.itemCount - 1
                                 && !isLoading
