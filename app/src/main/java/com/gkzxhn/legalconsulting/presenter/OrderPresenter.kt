@@ -15,6 +15,7 @@ import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderView
+import com.netease.nim.uikit.api.NimUIKit
 import rx.android.schedulers.AndroidSchedulers
 
 
@@ -178,7 +179,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
     }
 
     fun sendMessage() {
-        mContext?.showToast("限时通讯开发中")
+        NimUIKit.startP2PSession(mContext, "gkzxhn001");
     }
 
 }

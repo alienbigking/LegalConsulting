@@ -11,15 +11,14 @@ import java.util.TimeZone;
 
 /**
  * Explanation：
- *
  * @author LSX
  * Created on 2018/1/31.
  */
+
 public class StringUtils {
 
     /**
      * 自1970年至今将秒数转化为日期
-     *
      * @param time
      * @return
      */
@@ -75,7 +74,6 @@ public class StringUtils {
         }
     }
 
-
     /**
      * 验证手机格式
      */
@@ -115,6 +113,6 @@ public class StringUtils {
     public static String formatStringTwo(double f) {
         DecimalFormat df = new DecimalFormat("0.00");
         return df.format(f);
-
     }
+
 }

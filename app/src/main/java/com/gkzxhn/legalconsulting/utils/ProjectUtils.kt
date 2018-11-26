@@ -15,6 +15,7 @@ import java.io.File
  */
 
 object ProjectUtils {
+
     /**
      * @methodName： created by liushaoxiang on 2018/10/12 11:13 AM.
      * @description：给view设置触摸透明度变化
@@ -43,8 +44,6 @@ object ProjectUtils {
         val uriFile = File(uri.path)
         return File(cacheDir, uriFile.name)
     }
-
-
 
     /**
      * @methodName： created by liushaoxiang on 2018/11/9 3:02 PM.

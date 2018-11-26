@@ -65,13 +65,13 @@ class MoneyListAdapter(private val mContext: Context) : RecyclerView.Adapter<Mon
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
+    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.item_money_list, null)
         view.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         return ViewHolder(view)
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
 
 
     @SuppressLint("SetTextI18n")

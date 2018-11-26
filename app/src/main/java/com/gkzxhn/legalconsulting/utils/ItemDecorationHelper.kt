@@ -20,15 +20,15 @@ class ItemDecorationHelper(left: Int, top: Int, right: Int, bottom: Int, firstTo
     private var top: Int = top
     private var firstTop: Int = firstTop
 
-
-    override fun getItemOffsets(outRect: Rect?, itemPosition: Int, parent: RecyclerView?) {
-        outRect?.left = left
-        outRect?.right = right
-        outRect?.bottom = bottom
+    override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
+        super.getItemOffsets(outRect, itemPosition, parent)
+        outRect.left = left
+        outRect.right = right
+        outRect.bottom = bottom
         if (itemPosition == 0) {
-            outRect?.top = firstTop
+            outRect.top = firstTop
         } else {
-            outRect?.top = top
+            outRect.top = top
         }
     }
 }
