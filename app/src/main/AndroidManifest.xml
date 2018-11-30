@@ -44,9 +44,11 @@
         android:protectionLevel="signature"/>
     <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
     <uses-permission android:name="com.gkzxhn.legalconsulting.permission.RECEIVE_MSG"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- 定位相关 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
 
     <application
@@ -93,6 +95,20 @@
         <activity android:name=".activity.MoneyListActivity"/>
 
 
+        <!-- map -->
+        <activity
+            android:name=".utils.location.activity.LocationAmapActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/location_map"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".utils.location.activity.NavigationAmapActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/location_navigate"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.gkzxhn.legalconsulting.fileprovider"
@@ -108,6 +124,11 @@
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="87dae6933488de4bab789054a3a5c720" />
+
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="09fd4efd3e28e9bf1f449ecec7d34bfe" />
 
 
         <!-- 云信后台服务，请使用独立进程。 -->

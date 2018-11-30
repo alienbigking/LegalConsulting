@@ -257,7 +257,7 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                             map[STRING_ID + 2] = t.assessmentPictures!![0].fileId.toString()
                             map[STRING_64 + 2] = t.assessmentPictures!![0].thumb.toString()
                             map[STRING_ID + 3] = t.identificationPictures!![0].fileId.toString()
-                            map[STRING_64 + 2] = t.identificationPictures!![0].thumb.toString()
+                            map[STRING_64 + 3] = t.identificationPictures!![0].thumb.toString()
                             map[STRING_ID + 4] = t.identificationPictures!![1].fileId.toString()
                             map[STRING_64 + 4] = t.identificationPictures!![1].thumb.toString()
                         }
@@ -394,7 +394,6 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
         slide.isFillEnabled = true
         view.startAnimation(slide)
     }
-
 
 }
 

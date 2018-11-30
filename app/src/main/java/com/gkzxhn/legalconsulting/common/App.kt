@@ -12,6 +12,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.net.ApiService
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.utils.location.helper.MLocationProvider
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nim.uikit.common.util.sys.ScreenUtil
 import com.netease.nimlib.sdk.NIMClient
@@ -51,7 +52,7 @@ class App : Application() {
         if (NIMUtil.isMainProcess(this)) {
             NimUIKit.init(this);
             // 设置地理位置提供者。如果需要发送地理位置消息，该参数必须提供。如果不需要，可以忽略。
-            NimUIKit.setLocationProvider(NimDemoLocationProvider())
+            NimUIKit.setLocationProvider(MLocationProvider())
 
         }
 

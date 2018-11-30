@@ -1,4 +1,4 @@
-package com.gkzxhn.legalconsulting.common
+package com.gkzxhn.legalconsulting.utils.location.helper
 
 import android.content.Context
 import android.content.Intent
@@ -6,11 +6,14 @@ import android.location.Criteria
 import android.location.LocationManager
 import android.provider.Settings
 import android.text.TextUtils
+import com.gkzxhn.legalconsulting.utils.location.activity.LocationAmapActivity
+import com.gkzxhn.legalconsulting.utils.location.activity.LocationExtras
+import com.gkzxhn.legalconsulting.utils.location.activity.NavigationAmapActivity
 import com.netease.nim.uikit.api.model.location.LocationProvider
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialog
 import com.netease.nim.uikit.common.util.log.LogUtil
 
-class NimDemoLocationProvider : LocationProvider {
+class MLocationProvider : LocationProvider {
     override fun requestLocation(context: Context?, callback: LocationProvider.Callback?) {
         if (!isLocationEnable(context!!)) {
             val alertDialog = EasyAlertDialog(context)
@@ -31,9 +34,15 @@ class NimDemoLocationProvider : LocationProvider {
             return
         }
 
+        LocationAmapActivity.start(context, callback)
     }
 
     override fun openMap(context: Context?, longitude: Double, latitude: Double, address: String?) {
+        val intent = Intent(context, NavigationAmapActivity::class.java)
+        intent.putExtra(LocationExtras.LONGITUDE, longitude)
+        intent.putExtra(LocationExtras.LATITUDE, latitude)
+        intent.putExtra(LocationExtras.ADDRESS, address)
+        context?.startActivity(intent)
     }
 
 
