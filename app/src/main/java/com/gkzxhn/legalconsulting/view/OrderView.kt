@@ -24,4 +24,5 @@ interface OrderView : BaseView {
     fun setOrderType(str1: String, str2: String, str3: String)
     fun setImage1(bitmap: Bitmap)
     fun setImage2(bitmap: Bitmap)
+    fun setOrderNumber(time: String)
 }

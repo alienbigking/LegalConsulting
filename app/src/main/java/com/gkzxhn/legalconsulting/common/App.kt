@@ -50,6 +50,9 @@ class App : Application() {
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
             NimUIKit.init(this);
+            // 设置地理位置提供者。如果需要发送地理位置消息，该参数必须提供。如果不需要，可以忽略。
+            NimUIKit.setLocationProvider(NimDemoLocationProvider())
+
         }
 
     }
@@ -71,18 +74,15 @@ class App : Application() {
      */
     private fun loginInfo(): LoginInfo? {
         // 从本地读取上次登录成功时保存的用户登录信息
-//        val account = SPUtil.get(this, SharedPreferenceConstants.USER_YXACCESS, "") as String
-//        val token = SPUtil.get(this, SharedPreferenceConstants.USER_YXTOKEN, "") as String
-
-        val account = "gkzxhn002"
-        val token = "123456"
+        val account = App.SP.getString(Constants.SP_IM_ACCOUNT,"")
+        val token =App.SP.getString(Constants.SP_IM_TOKEN,"")
+        NimUIKit.setAccount(account)
 
         return if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
             LoginInfo(account, token)
         } else {
             null
         }
-
     }
 
 

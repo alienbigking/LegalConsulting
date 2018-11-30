@@ -27,6 +27,9 @@ import rx.android.schedulers.AndroidSchedulers
  */
 class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderModel, OrderView>(context, OrderModel(), view) {
 
+    /****** 客户的网易ID ******/
+    var userName = ""
+
     /****** 1，获取 抢单的明细 ******/
     fun getOrderRushInfo(id: String) {
         mContext?.let {
@@ -39,17 +42,18 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setName(t.customer?.name!!)
                             mView?.setReward("￥" + t.reward)
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
+                            mView?.setOrderNumber(t.number.toString())
                             mView?.setNextText("抢单")
 
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
 
-                            if (t.attachments!!.isNotEmpty() &&t.attachments!=null) {
+                            if (t.attachments!!.isNotEmpty() && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
                             }
 
-                            if (t.attachments!!.size > 1&&t.attachments!=null) {
+                            if (t.attachments!!.size > 1 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
                             }
                             val str1 = ProjectUtils.categoriesConversion(t.categories!![0])
@@ -81,11 +85,12 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setReward("￥" + t.reward)
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
-
-        if (t.attachments!!.isNotEmpty() &&t.attachments!=null) {
+        mView?.setOrderNumber(t.number.toString())
+        userName = t.customer?.username!!
+        if (t.attachments!!.isNotEmpty() && t.attachments != null) {
             ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
         }
-        if (t.attachments!!.size > 1&&t.attachments!=null) {
+        if (t.attachments!!.size > 1 && t.attachments != null) {
             ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
         }
 
@@ -179,7 +184,10 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
     }
 
     fun sendMessage() {
-        NimUIKit.startP2PSession(mContext, "gkzxhn001");
+        NimUIKit.startP2PSession(mContext, userName);
+
+        NimUIKit.setMsgForwardFilter { false }
+        NimUIKit.setMsgRevokeFilter { false }
     }
 
 }

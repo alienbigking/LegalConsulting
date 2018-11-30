@@ -122,7 +122,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
      * @description：处理UI数据
      */
     private fun loadUI(date: LawyersInfo) {
-        tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber)
+        tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber!!)
         tv_user_name.text = date.name
         tv_user_money.text = "￥"+date.rewardAmount
         tv_user_fragment_get_order_state.text = if (date.serviceStatus == "BUSY") "忙碌" else "接单"

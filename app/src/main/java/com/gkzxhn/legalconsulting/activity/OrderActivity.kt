@@ -47,7 +47,7 @@ class OrderActivity : BaseActivity(), OrderView {
                 if (ProjectUtils.certificationStatus()) {
                     /****** 抢单 ******/
                     mPresenter.acceptRushOrder(orderID)
-                }else{
+                } else {
                     showToast("您认证尚未通过，不能进行此操作！")
                 }
             }
@@ -77,6 +77,10 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setTime(time: String) {
         tv_order_time.text = time
+    }
+
+    override fun setOrderNumber(time: String) {
+        tv_order_number.text = "编号：$time"
     }
 
     override fun setOrderType(str1: String, str2: String, str3: String) {

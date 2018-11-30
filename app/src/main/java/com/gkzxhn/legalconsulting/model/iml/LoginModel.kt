@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.model.iml
 
 import android.content.Context
+import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.net.RetrofitClient
@@ -48,6 +49,13 @@ class LoginModel : BaseModel(), ILoginModel {
                 ?.uploadCrash(body)
                 ?.subscribeOn(Schedulers.io())
                 as Observable<Response<Void>>
+    }
+
+    override fun getIMInfo(context: Context): Observable<ImInfo> {
+        return RetrofitClientLogin.Companion.getInstance(context).mApi
+                ?.getImInfo()
+                ?.subscribeOn(Schedulers.io())
+                as Observable<ImInfo>
     }
 
 

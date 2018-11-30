@@ -8,7 +8,6 @@ package com.gkzxhn.legalconsulting.entity
  */
 
 data class LawyersInfo(
-        val id: String?,
         val number: String?,
         val username: String?,
         val name: String?,

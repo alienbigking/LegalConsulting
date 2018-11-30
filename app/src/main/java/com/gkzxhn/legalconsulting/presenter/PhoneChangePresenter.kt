@@ -31,7 +31,7 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
     fun login() {
         if (mView?.getCode()?.isEmpty()!!) {
             mContext?.showToast("请填写完成后操作！")
-        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+        } else if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
         } else {
             requestLogin()
@@ -40,7 +40,7 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
 
 
     fun sendCode() {
-        if (!StringUtils.isMobileNO(mView?.getPhone())) {
+        if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
             return
         }
@@ -128,7 +128,7 @@ class PhoneChangePresenter(context: Context, view: PhoneChangeView) : BasePresen
         if (mView?.getCode()?.isEmpty()!!) {
             mContext?.showToast("请填写完成后操作！")
             return
-        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+        } else if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
             return
         }

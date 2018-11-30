@@ -26,6 +26,10 @@ interface ApiService {
     @Headers("Content-Type:application/json;charset=utf-8")
     fun login(@Body map: RequestBody): Observable<Response<Void>>
 
+    //    获取网易云信的账号
+    @GET("im/users/me")
+    fun getImInfo(): Observable<ImInfo>
+
     /**
      * 修改我的手机号码
      */
@@ -110,7 +114,7 @@ interface ApiService {
     fun getOrderRushInfo(@Path("id") id: String): Observable<OrderRushInfo>
 
     //    接单
-    @POST("lawyer/rush/legal-advice/{id}/receiving")
+    @POST("lawyer/rush/legal-advice/{id}/accepted")
     fun acceptRushOrder(@Path("id") id: String): Observable<OrderMyInfo>
 
     //    获取我的咨询列表

@@ -112,7 +112,6 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
         }
     }
 
-
     /**
      * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
      * @description：
@@ -141,6 +140,7 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
         val tvVerify = dialog.findViewById<TextView>(R.id.tv_pay_type_verify)
         tvOne.setOnClickListener {
             checkSelect(ivOne, ivTwo, 1)
+            dialog.dismiss()
         }
         tvTwo.setOnClickListener {
             mContext!!.showToast("暂不支持微信,敬请期待")
@@ -148,14 +148,12 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
 //            checkSelect(ivOne, ivTwo, 2)
         }
         tvVerify.setOnClickListener {
-            dialog.dismiss()
             mView?.setPayType(payType)
             dialog.dismiss()
         }
         ivBack.setOnClickListener {
             dialog.dismiss()
         }
-
     }
 
     var payType = 1

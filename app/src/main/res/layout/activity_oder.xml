@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginTop="10dp"
-                android:text="¥00.0"
+                android:text="¥0.0"
                 android:textColor="#ffff6600"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,6 +158,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
             />
 
+            <TextView
+                android:id="@+id/tv_order_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="编号："
+                android:textColor="#ff999999"
+                android:textSize="10sp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_oder_image1"
+            />
+
             <View
                 android:id="@+id/v_order_line"
                 android:layout_width="match_parent"
@@ -166,7 +180,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="#FFD9D9D9"
-                app:layout_constraintTop_toBottomOf="@+id/iv_oder_image1"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_number"/>
 
             <TextView
                 android:id="@+id/tv_order_state"

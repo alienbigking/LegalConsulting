@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.model
 
 import android.content.Context
+import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -25,4 +26,6 @@ interface ILoginModel : IBaseModel {
     fun getToken(context: Context, phoneNumber: String, code: String): Observable<ResponseBody>?
 
     fun uploadCrash(context: Context, body: RequestBody): Observable<Response<Void>>
+
+    fun getIMInfo(context: Context): Observable<ImInfo>
 }

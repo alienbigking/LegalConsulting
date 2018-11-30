@@ -29,34 +29,9 @@ class SplashActivity : BaseActivity() {
     override fun init() {
 
         handler.sendEmptyMessageDelayed(0, 1000)
-        val account = "gkzxhn002"
-        val token = "123456"
-        loginNim(account, token)
-
     }
 
-    /**
-     * 登录云信
-     * @param account
-     * @param pwd
-     */
-    private fun loginNim(account: String, pwd: String) {
 
-        val loginInfo = LoginInfo(account, pwd)
-
-        NIMClient.getService(AuthService::class.java).login(loginInfo).setCallback(object : RequestCallback<LoginInfo> {
-            override fun onSuccess(param: LoginInfo) {
-                NimUIKit.setAccount(account)
-            }
-
-            override fun onFailed(code: Int) {
-            }
-
-            override fun onException(exception: Throwable) {
-
-            }
-        })
-    }
 
     val handler = Handler(Handler.Callback {
         if (App.SP.getString(Constants.SP_TOKEN, "")?.isNotBlank()!!) {

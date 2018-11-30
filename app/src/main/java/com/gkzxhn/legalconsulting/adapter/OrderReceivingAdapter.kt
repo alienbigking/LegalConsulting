@@ -89,6 +89,8 @@ class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapte
             if (!ProjectUtils.certificationStatus()) {
                 /****** 认证未通过 按扭变成灰色 ******/
                 tv_item_order_receiving_rush.setBackgroundResource(R.drawable.shape_order_bg_select_gary)
+            }else{
+                tv_item_order_receiving_rush.setBackgroundResource(R.drawable.selector_shape_order_bg)
             }
 
             holder.itemView.setOnClickListener({

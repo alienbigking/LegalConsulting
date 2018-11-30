@@ -44,6 +44,9 @@
         android:protectionLevel="signature"/>
     <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
     <uses-permission android:name="com.gkzxhn.legalconsulting.permission.RECEIVE_MSG"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 
     <application
@@ -104,7 +107,8 @@
            如果 SDKOptions 中提供了，取 SDKOptions 中的值。 -->
         <meta-data
             android:name="com.netease.nim.appKey"
-            android:value="03e35f55651d43cce6e260ec6d3d99d8" />
+            android:value="87dae6933488de4bab789054a3a5c720" />
+
 
         <!-- 云信后台服务，请使用独立进程。 -->
         <service

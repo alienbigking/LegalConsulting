@@ -35,6 +35,8 @@ object Constants {
     val SP_AVATARFILE = "sp_avatarFile"
     //    头像的base64码
     val SP_AVATAR_THUMB = "sp_avatar_thumb"
+    val SP_IM_ACCOUNT = "SP_IM_ACCOUNT"
+    val SP_IM_TOKEN = "SP_IM_TOKEN"
 
     /**
      *PENDING_CERTIFIED("待认证"),

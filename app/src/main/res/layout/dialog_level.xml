@@ -177,6 +177,7 @@
 
     <TextView
         android:id="@+id/tv_level_verify"
+        android:visibility="gone"
         android:layout_width="80dp"
         android:layout_height="27dp"
         android:layout_marginBottom="20dp"

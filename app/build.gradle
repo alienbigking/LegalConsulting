@@ -17,7 +17,7 @@ android {
 
         ndk {
             //网易云信 设置支持的SO库架构
-//            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86"
 //                    "arm64-v8a","x86_64"
         }
 

@@ -7,6 +7,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
@@ -16,6 +17,11 @@ import com.gkzxhn.legalconsulting.utils.TsDialog
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.LoginView
 import com.google.gson.Gson
+import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nimlib.sdk.NIMClient
+import com.netease.nimlib.sdk.RequestCallback
+import com.netease.nimlib.sdk.auth.AuthService
+import com.netease.nimlib.sdk.auth.LoginInfo
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -35,7 +41,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     fun login() {
         if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
             mContext?.showToast("请填写完成后操作！")
-        } else if (!StringUtils.isMobileNO(mView?.getPhone())) {
+        } else if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
         } else {
             requestLogin()
@@ -44,7 +50,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
 
 
     fun sendCode() {
-        if (!StringUtils.isMobileNO(mView?.getPhone())) {
+        if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
         } else {
             mContext?.let {
@@ -53,8 +59,8 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                         ?.observeOn(AndroidSchedulers.mainThread())
                         ?.subscribe(object : HttpObserver<Response<Void>>(it) {
                             override fun success(t: Response<Void>) {
-                                    mView?.startCountDown(60)
-                                    it.showToast(it.getString(R.string.have_send).toString())
+                                mView?.startCountDown(60)
+                                it.showToast(it.getString(R.string.have_send).toString())
                             }
 
                             override fun onError(t: Throwable?) {
@@ -145,7 +151,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                 App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
                                 App.EDIT.putString("refreshToken", refreshToken)?.commit()
                                 getLawyersInfo()
-
+                                getImInfo()
                             }
                         }
                     })
@@ -167,7 +173,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
                             App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
                             App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
-
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
                             mView?.onFinish()
                         }
@@ -180,6 +185,50 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     })
         }
 
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
+     * @description：获取网易信息
+     */
+    private fun getImInfo() {
+        mContext?.let {
+            mModel.getIMInfo(it)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
+                        override fun success(t: ImInfo) {
+                            loginNim(t.username!!, t.token!!)
+                        }
+
+                    })
+        }
+
+    }
+
+    /**
+     * 登录云信
+     * @param account
+     * @param pwd
+     */
+    private fun loginNim(account: String, pwd: String) {
+
+        val loginInfo = LoginInfo(account, pwd)
+
+        NIMClient.getService(AuthService::class.java).login(loginInfo).setCallback(object : RequestCallback<LoginInfo> {
+            override fun onSuccess(param: LoginInfo) {
+                App.EDIT.putString(Constants.SP_IM_ACCOUNT,param.account).commit()
+                App.EDIT.putString(Constants.SP_IM_TOKEN,param.token).commit()
+                NimUIKit.setAccount(account)
+            }
+
+            override fun onFailed(code: Int) {
+            }
+
+            override fun onException(exception: Throwable) {
+
+            }
+        })
     }
 
 }

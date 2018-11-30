@@ -39,7 +39,6 @@ class AllOrderActivity : BaseActivity() {
 
     override fun init() {
         initTopTitle()
-        initListener()
 
         mAdapter = AllOrderAdapter(this)
         rcl_all_order.layoutManager = LinearLayoutManager(this, 1, false)
@@ -47,6 +46,9 @@ class AllOrderActivity : BaseActivity() {
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_all_order.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
         getOrderDispose("0")
+
+        initListener()
+
     }
 
     private fun initTopTitle() {
