@@ -58,8 +58,7 @@ object ImageUtils {
         options.inJustDecodeBounds = false
         return BitmapFactory.decodeFile(imagePath, options)
     }
-//    /storage/emulated/0/DCIM/Camera/IMG_20180523_173706.jpg
-//    /mnt/sdcard/
+
     /**
      * base64编码字符集转化成图片文件。
      * @param base64Str
@@ -68,7 +67,6 @@ object ImageUtils {
      */
 
     fun base64ToFile(base64Str: String, path: String): Boolean {
-//        var base64Str="ClTVOTtCN3TyPo5HVNZiM1Wys6PvIVzS5pOAr18f039cxLvj7z+S2trlWG/HaXUgMIHK3Jlkr0XL6n3GVyzu0B0DAQ4hX5Xs/oYwV9+5hSl5QkAlG6agXbcgv4q3Tq2Kzmcko834l8F28NdzRO6kThYqbFfKI4HMtTqsDavsheuO9XwZxG/4PikVYZ2bWymlCjeIbojTq4cAvV0L5RSjuUaZSR1Ulh+P6L8gllLVCEJKOhUbG9wBgZBNkJNJ4wxN3VaNLVBx/GeuO7h/rwo6nCqGYGsDgjHMaR36npRz7zKT330nVd3Ruo3y9069abFmswPJ7r1gcLG2iur65qMNiQc/ZoXvLw8TKDkKwkEHRhpAmLYs3TcHRfO9t11clbJti8zBQvmYzOTTYgd6pGg0UBnxP0DLJeXtSqXUl9Z4sCGTGAW0z6NWYXidIaedaAg5sqU3ZwJNfscJwaFdwXGQZ/kRCKNdOpUTOiqI3l5pRedfN9sNjSbKJ4MTWZSbzINJ8kWkxTJYtSBw9OdfhwamK1bquuvb0rWr+Ebqit/oAUzqHC+JTbheFmaBrwEnMiWK6DtX9tM7uArEEvh4BX3TuMLUV7lMsprsWLRQEOiK5VSaFsnbSafSacpGHCgM5XFnWtRp5Mkcb3dXrcULLY02iS6ntv/rle/0Jfr/3oqgZr2FpHanaRSiTmICtrLIq6cjIzaixQV15GihIhJkQa982jS2wBg1ALjUmYvbDR7cotCJaBLjg1MjoxWC7NCYchZWj3C/K8Z7OZkoi7Z6iW76iFgJNc7wtkKR0iAlpg1hrIIAH25pvFFa0Zmxvduv93UdCVdO1u9f9fFChuOYW4W8ipazTNVW/s6fDY17e/9VDf/OaRjo5K1et9kA7m++6s13XjmW195We+aLO089GB5vNTjc6OFEczPbo9Ujx2tbV1yaoklAv/By5v0GO2misKAAAAAElFTkSuQmCC"
         val data = Base64.decode(base64Str, Base64.DEFAULT)
         for (i in data.indices) {
             //调整异常数据

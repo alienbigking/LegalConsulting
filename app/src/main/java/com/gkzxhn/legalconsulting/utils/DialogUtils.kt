@@ -35,7 +35,9 @@ fun Context.TsDialog(msg: String, flag: Boolean) {
 fun Context.TsClickDialog(msg: String, flag: Boolean): Dialog {
     val progressDialog = Dialog(this, R.style.progress_dialog)
     progressDialog.setContentView(R.layout.dialog_ts)
-    progressDialog.setCancelable(true)
+    /****** 物理返回 ******/
+    progressDialog.setCancelable(false)
+    /****** 点击其它范围 ******/
     progressDialog.setCanceledOnTouchOutside(flag)
     progressDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
     val tv_msg = progressDialog.findViewById<TextView>(R.id.id_tv_loadingmsg)

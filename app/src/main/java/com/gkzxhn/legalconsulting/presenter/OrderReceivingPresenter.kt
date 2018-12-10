@@ -63,7 +63,6 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                         }
                     })
         }
-
     }
 
 }

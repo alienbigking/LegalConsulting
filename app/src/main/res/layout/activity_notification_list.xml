@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white"
+    android:layout_height="match_parent"
 >
 
     <include android:id="@+id/in_top"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="暂无明细"
+        android:text="暂无消息"
         android:visibility="gone"/>
 
     <com.gkzxhn.legalconsulting.customview.PullToRefreshLayout

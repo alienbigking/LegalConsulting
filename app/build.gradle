@@ -4,14 +4,16 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 1
-        versionName "0.1.0"
+        versionCode 4
+        versionName "0.1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -93,6 +95,8 @@ dependencies {
     //自动裁剪
     implementation 'com.github.pqpo:SmartCropper:v1.2.3@aar'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    //数据库
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
 
     // 网易云信 添加依赖。注意，版本号必须一致。
 
@@ -126,3 +130,14 @@ dependencies {
     implementation project(path: ':uikit')
     implementation files('src/main/libs/AMap2DMap_3.0.0_AMapSearch_3.6.1_AMapLocation_3.2.1_20161228.jar')
 }
+
+
+greendao {
+    //数据库schema版本，也可以理解为数据库版本号
+    schemaVersion 1
+    //设置DaoMaster、DaoSession、Dao包名
+    daoPackage "com.gkzxhn.legalconsulting.greendao.dao"
+    //设置DaoMaster、DaoSession、Dao目录
+    targetGenDir 'src/main/java'
+}
+

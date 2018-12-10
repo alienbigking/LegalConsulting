@@ -58,8 +58,8 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
     fun withdraw() {
         if (mView?.getMoney()!!.isNotEmpty() && mView?.getName()!!.isNotEmpty() && mView?.getAccount()!!.isNotEmpty() && mView?.getCode()!!.isNotEmpty()) {
             /****** 服务器没做限制  会报错 所以这里加一个限制 保险 ******/
-            if (mView?.getMoney()!!.toDouble() < 0.1) {
-                mContext?.showToast("提现金额不能小于0.1")
+            if (mView?.getMoney()!!.toDouble() < 1) {
+                mContext?.showToast("提现金额不能小于1")
                 return
             }
 

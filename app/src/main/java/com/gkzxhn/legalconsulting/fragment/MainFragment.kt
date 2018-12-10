@@ -1,9 +1,11 @@
 package com.gkzxhn.legalconsulting.fragment
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.NotificationActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -11,7 +13,6 @@ import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.utils.logE
-import com.gkzxhn.legalconsulting.utils.showToast
 import kotlinx.android.synthetic.main.main_fragment.*
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
@@ -101,7 +102,10 @@ class MainFragment : BaseFragment() {
                 tvCertification.text = "未认证"
                 tvCertification.setTextColor(resources.getColor(R.color.home_top_red))
             }
-            Constants.CERTIFIED -> tvCertification.text = "已认证"
+            Constants.CERTIFIED -> {
+                tvCertification.text = "已认证"
+                tvCertification.setTextColor(resources.getColor(R.color.home_top_green))
+            }
         }
     }
 
@@ -115,7 +119,7 @@ class MainFragment : BaseFragment() {
             selectTwoItem()
         }
         ivMessageTop.setOnClickListener {
-            context?.showToast("通知功能开发中，敬请期待")
+            startActivity(Intent(context,NotificationActivity::class.java))
         }
 
         v_home_top_bg.setOnClickListener {

@@ -19,6 +19,9 @@ import kotlinx.android.synthetic.main.default_top.*
 class OrderActivity : BaseActivity(), OrderView {
 
     lateinit var mPresenter: OrderPresenter
+    var bitmap1: Bitmap? = null
+    var bitmap2: Bitmap? = null
+
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_oder
@@ -60,6 +63,21 @@ class OrderActivity : BaseActivity(), OrderView {
         /****** 接受订单 ******/
         tv_order_accept.setOnClickListener {
             mPresenter.acceptMyOrder(orderID)
+        }
+
+        iv_oder_image1.setOnClickListener {
+            iv_order_big.visibility = View.VISIBLE
+            iv_order_big.setImageBitmap(bitmap1)
+        }
+
+        iv_oder_image2.setOnClickListener {
+            iv_order_big.visibility = View.VISIBLE
+            iv_order_big.setImageBitmap(bitmap2)
+        }
+
+        /****** 大图 ******/
+        iv_order_big.setOnClickListener {
+            iv_order_big.visibility = View.GONE
         }
     }
 
@@ -110,11 +128,13 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setImage1(bitmap: Bitmap) {
         iv_oder_image1.visibility = View.VISIBLE
+        bitmap1 = bitmap
         iv_oder_image1.setImageBitmap(bitmap)
     }
 
     override fun setImage2(bitmap: Bitmap) {
         iv_oder_image2.visibility = View.VISIBLE
+        bitmap2 = bitmap
         iv_oder_image2.setImageBitmap(bitmap)
     }
 

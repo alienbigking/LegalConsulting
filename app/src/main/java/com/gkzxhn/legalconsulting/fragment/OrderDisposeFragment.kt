@@ -54,12 +54,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             loading_refresh.visibility = View.GONE
             tv_order_disposer_null_2.visibility = View.VISIBLE
         } else {
-            mAdapter = context?.let { OrderDisposeAdapter(it, null) }
-            rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
-            rcl_order_disposer.adapter = mAdapter
-            val decoration = DisplayUtils.dp2px(App.mContext, 15f)
-            rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-            mPresenter.getOrderDispose("0")
+            initRecyclerView()
         }
 
         /****** 接受更新的律师信息 ******/
@@ -74,11 +69,23 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                     } else {
                         loading_refresh.visibility = View.VISIBLE
                         tv_order_disposer_null_2.visibility = View.GONE
+                        initRecyclerView()
                     }
                 }, {
                     it.message.toString().logE(this)
                 })
 
+    }
+
+    private fun initRecyclerView() {
+        if (mAdapter == null) {
+            mAdapter = context?.let { OrderDisposeAdapter(it, null) }
+            rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
+            rcl_order_disposer.adapter = mAdapter
+            val decoration = DisplayUtils.dp2px(App.mContext, 15f)
+            rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
+            mPresenter.getOrderDispose("0")
+        }
     }
 
     override fun initListener() {

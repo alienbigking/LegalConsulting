@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,12 +21,15 @@ allprojects {
         jcenter()
 //        裁剪用到的地址
         maven { url 'https://jitpack.io' }
+//        greendao要用到
+        mavenCentral() // add repository
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 
 
 ext {
@@ -42,6 +45,7 @@ ext {
     appSourceCompatibility = 1.7
     appTargetCompatibility = 1.7
 }
+
 
 
 

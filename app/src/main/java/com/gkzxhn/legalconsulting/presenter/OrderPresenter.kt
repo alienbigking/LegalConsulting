@@ -48,7 +48,6 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
-
                             if (t.attachments!!.isNotEmpty() && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
                             }
@@ -107,6 +106,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         /****** 已接单 ******/
             Constants.ORDER_STATE_ACCEPTED -> {
                 mView?.setShowOrderInfo(View.VISIBLE, "接单时间：" + StringUtils.parseDate(t.acceptedTime), "已接单（" + t.lawyer?.name!! + "律师）")
+                mView?.setBottomSelectVisibility(View.GONE)
+
                 mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
             }
         /****** 已完成 ******/
@@ -185,7 +186,6 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
 
     fun sendMessage() {
         NimUIKit.startP2PSession(mContext, userName);
-
         NimUIKit.setMsgForwardFilter { false }
         NimUIKit.setMsgRevokeFilter { false }
     }

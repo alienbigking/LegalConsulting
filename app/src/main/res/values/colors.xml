@@ -44,6 +44,7 @@
     <color name="dark_blue">#FF5159A2</color>
     <color name="text_gray">#666666</color>
     <color name="home_top_red">#FFB52020</color>
+    <color name="home_top_green">#FF5159A2</color>
     <color name="order_red">#FFCB0101</color>
     <color name="g_child_page_bg_color">#FFFFFF</color>
 

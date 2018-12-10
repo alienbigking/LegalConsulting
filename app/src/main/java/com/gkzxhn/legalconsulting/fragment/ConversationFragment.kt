@@ -3,6 +3,8 @@ package com.gkzxhn.legalconsulting.fragment
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.entity.NotificationInfo
+import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.presenter.ConversationPresenter
 import com.gkzxhn.legalconsulting.view.ConversationView
 import com.netease.nim.uikit.api.NimUIKit
@@ -29,11 +31,12 @@ class ConversationFragment : BaseFragment(), ConversationView {
 
     override fun initListener() {
         tv_user_title.setOnClickListener {
-//            loginNim("106ce735677e44f382e955bc9fe02968","9a7dc1a29268455db5d75b5f4d94ca47")
+            //            loginNim("106ce735677e44f382e955bc9fe02968","9a7dc1a29268455db5d75b5f4d94ca47")
 //            NimUIKit.startP2PSession(context, "106ce735677e44f382e955bc9fe02968");
 //            NimUIKit.startP2PSession(context, "b56d5db58b824fe2b2a51c1956a51b63");
 //            NimUIKit.setMsgForwardFilter { false }
 //            NimUIKit.setMsgRevokeFilter { false }
+            GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,"ddd","ddd", 143,"就是这么帅"))
         }
 
     }
@@ -49,8 +52,8 @@ class ConversationFragment : BaseFragment(), ConversationView {
 
         NIMClient.getService(AuthService::class.java).login(loginInfo).setCallback(object : RequestCallback<LoginInfo> {
             override fun onSuccess(param: LoginInfo) {
-                App.EDIT.putString(Constants.SP_IM_ACCOUNT,param.account).commit()
-                App.EDIT.putString(Constants.SP_IM_TOKEN,param.token).commit()
+                App.EDIT.putString(Constants.SP_IM_ACCOUNT, param.account).commit()
+                App.EDIT.putString(Constants.SP_IM_TOKEN, param.token).commit()
                 NimUIKit.setAccount(account)
             }
 
@@ -62,9 +65,6 @@ class ConversationFragment : BaseFragment(), ConversationView {
             }
         })
     }
-
-
-
 
 
     override fun provideContentViewId(): Int {

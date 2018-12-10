@@ -8,7 +8,6 @@ package com.gkzxhn.legalconsulting.entity
  */
 class ImInfo {
 
-
     /**
      * id : 41b477a4-0ced-4dc5-bba5-0becd8155990
      * username : 2d34563-f436632-4432-0o4645t21

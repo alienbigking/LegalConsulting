@@ -46,7 +46,6 @@ class UserSettingActivity : BaseActivity() {
 
     private val TAKE_PHOTO_IMAGE = 101       //拍头像
     private val CHOOSE_PHOTO_IMAGE = 102      //选择头像
-    private val CROP_IMAGE = 103     //智能裁剪头像
     private val REQUEST_CROP_PHOTO = 104     //简单裁剪头像
     lateinit var photoDir: File
     var mTakePhotoUri: Uri? = null      //拍照uri
@@ -242,7 +241,6 @@ class UserSettingActivity : BaseActivity() {
                     /****** 部分机型会自动旋转 这里旋转恢复 ******/
                     val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
                     SystemUtil.rotateBitmap(bitmap, readPictureDegree)
-
                     gotoClipActivity(Uri.fromFile(file))
                 }
             /****** 选择图片返回 ******/
@@ -254,14 +252,6 @@ class UserSettingActivity : BaseActivity() {
                     }
                     gotoClipActivity(data.data)
 
-                }
-            /****** 智能裁剪 ******/
-                CROP_IMAGE -> {
-                    val path = data!!.getStringExtra(Constants.CROP_PATH)
-                    iv_user_setting_image.setPadding(0, 0, 0, 0)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    iv_user_setting_image.setImageBitmap(bitmap)
-//                    idFrontFile = bitmap.compressImage(File(path), 1000)
                 }
             /****** 裁剪后返回 ******/
                 REQUEST_CROP_PHOTO -> {
@@ -283,17 +273,6 @@ class UserSettingActivity : BaseActivity() {
             }
         }
     }
-
-    /**
-     * @methodName： created by liushaoxiang on 2018/10/24 1:58 PM.
-     * @description：跳转到智能裁剪页面
-     */
-    private fun cropImage(uri: Uri?, requestCode: Int) {
-        val intent = Intent(this, ImageCropActivity::class.java)
-        intent.putExtra(Constants.INTENT_CROP_IMAGE_URI, uri)
-        startActivityForResult(intent, requestCode)
-    }
-
 
     private fun uri2File(cacheDir: File, uri: Uri): File {
         val uriFile = File(uri.path)
@@ -356,7 +335,8 @@ class UserSettingActivity : BaseActivity() {
                 ?.subscribe(object : HttpObserver<UploadFile>(this) {
                     override fun success(date: UploadFile) {
                         date.id?.let {
-                            //                            downloadFile(it)
+                            val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 360, 360)
+                            bitmap.compressImage(file, 2000)!!
                             val fileBase64Str = ImageUtils.imageToBase64(file.path)
                             if (fileBase64Str != null) {
                                 uploadAvatar(date.id, fileBase64Str)
@@ -365,22 +345,6 @@ class UserSettingActivity : BaseActivity() {
                     }
                 })
     }
-
-//    /**
-//     * @methodName： created by liushaoxiang on 2018/10/26 2:06 PM.
-//     * @description： 下载文件
-//     */
-//    private fun downloadFile(id: String) {
-//        RetrofitClientLogin.getInstance(this).mApi?.downloadFile(id)
-//                ?.subscribeOn(Schedulers.io())
-//                ?.unsubscribeOn(AndroidSchedulers.mainThread())
-//                ?.observeOn(AndroidSchedulers.mainThread())
-//                ?.subscribe(object : HttpObserver<ResponseBody>(this) {
-//                    override fun success(date: ResponseBody) {
-//
-//                    }
-//                })
-//    }
 
 }
 

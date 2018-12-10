@@ -8,6 +8,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
+import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.*
@@ -89,6 +90,8 @@ class SettingActivity : BaseActivity() {
         val selectDialog = selectDialog("确认退出账号吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+            /****** 清空数消息数据库 ******/
+            GreenDaoManager.getInstance().newSession.notificationInfoDao.deleteAll()
 
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
