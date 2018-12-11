@@ -185,7 +185,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
     }
 
     fun sendMessage() {
-        NimUIKit.startP2PSession(mContext, userName);
+        NimUIKit.startP2PSession(mContext, userName)
         NimUIKit.setMsgForwardFilter { false }
         NimUIKit.setMsgRevokeFilter { false }
     }

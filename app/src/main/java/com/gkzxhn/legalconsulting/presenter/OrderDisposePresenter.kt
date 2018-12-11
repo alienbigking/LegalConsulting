@@ -4,10 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
-import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -34,7 +32,6 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                             mView?.setLastPage(t.last, t.number)
                             if (t.content!!.isNotEmpty()) {
                                 mView?.updateData(t.first, t.content)
-                                RxBus.instance.post(RxBusBean.HomePoint(false, 1))
                             }
                             mView?.showNullView(t.content!!.isEmpty(),"您还没有咨询订单")
                         }

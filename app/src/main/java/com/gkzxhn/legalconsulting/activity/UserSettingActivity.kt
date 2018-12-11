@@ -237,7 +237,7 @@ class UserSettingActivity : BaseActivity() {
                 TAKE_PHOTO_IMAGE -> {
                     val file = uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
                     val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
+                    ImageUtils.compressImage(bitmap,file, 2000)!!
                     /****** 部分机型会自动旋转 这里旋转恢复 ******/
                     val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
                     SystemUtil.rotateBitmap(bitmap, readPictureDegree)
@@ -248,7 +248,7 @@ class UserSettingActivity : BaseActivity() {
                     val file = FileUtils.getFileByUri(data!!.data, this)
                     if (file?.exists()!!) {
                         val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        bitmap.compressImage(file, 2000)!!
+                        ImageUtils.compressImage(bitmap,file, 2000)!!
                     }
                     gotoClipActivity(data.data)
 
@@ -336,7 +336,7 @@ class UserSettingActivity : BaseActivity() {
                     override fun success(date: UploadFile) {
                         date.id?.let {
                             val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 360, 360)
-                            bitmap.compressImage(file, 2000)!!
+                            ImageUtils.compressImage(bitmap,file, 2000)!!
                             val fileBase64Str = ImageUtils.imageToBase64(file.path)
                             if (fileBase64Str != null) {
                                 uploadAvatar(date.id, fileBase64Str)

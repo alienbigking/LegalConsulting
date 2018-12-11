@@ -20,5 +20,6 @@ class ImInfo {
     var username: String? = null
     var token: String? = null
     var createdTime: String? = null
+    var account: String? = null
     var lastUpdatedTime: String? = null
 }

@@ -51,6 +51,8 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
             mView?.getLawOffice()?.isEmpty()!! -> mContext?.showToast("需填写执业机构")
             mView?.getProfessional()?.isEmpty()!! -> mContext?.showToast("请选择专业领域")
             mView?.getYear() == -1 -> mContext?.showToast("需填写职业年限")
+            mView?.getYear()!! >= 90 -> mContext?.showToast("年限只能在0-90之间")
+            mView?.getYear()!! < 0 -> mContext?.showToast("年限只能在0-90之间")
             level.isEmpty() -> mContext?.showToast("需填写律师等级")
             map[STRING_ID + 1] == null -> mContext?.showToast("需上传律师执业证书")
             map[STRING_ID + 2] == null -> mContext?.showToast("需上传律师年度考核")
@@ -59,8 +61,6 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
             else ->
                 certification()
         }
-
-
     }
 
     /**
@@ -77,6 +77,8 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                     ?.subscribe(object : HttpObserver<UploadFile>(it) {
                         override fun success(t: UploadFile) {
                             t.id?.let {
+                                val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 360, 360)
+                                ImageUtils.compressImage(bitmap, file, 2000)!!
                                 val fileBase64Str = ImageUtils.imageToBase64(file.path)
                                 if (fileBase64Str != null) {
                                     map[STRING_ID + position] = t.id
@@ -172,7 +174,7 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                                 mView?.onFinish()
                             }
                             else -> {
-                                mContext?.showToast("错误码："+t.code())
+                                mContext?.showToast("错误码：" + t.code())
                             }
                         }
                     }

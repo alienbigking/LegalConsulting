@@ -10,7 +10,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.utils.compressImage
+import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.utils.logE
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -56,7 +56,7 @@ class ImageCropActivity : BaseActivity() {
                     val uriFile = File(uri.path)
                     val cacheDir = File(externalCacheDir, "photo")
                     val file = File(cacheDir, "${uriFile.nameWithoutExtension}_crop.jpg")
-                    crop.compressImage(file, 1000)
+                    ImageUtils.compressImage(crop,file, 1000)
                     it.onNext(file)
                 } catch (e: Exception) {
                     e.message!!.logE(this)

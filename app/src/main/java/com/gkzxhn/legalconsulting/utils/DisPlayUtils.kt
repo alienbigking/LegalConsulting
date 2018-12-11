@@ -29,7 +29,7 @@ object DisplayUtils {
      * 将dp转换为与之相等的px
      */
     fun dp2px(context: Context, dipValue: Float): Int {
-        val scale = context.getResources().getDisplayMetrics().density
+        val scale = context.resources.displayMetrics.density
         return (dipValue * scale + 0.5f).toInt()
     }
 
@@ -40,7 +40,7 @@ object DisplayUtils {
      * 将px转换为sp
      */
     fun px2sp(context: Context, pxValue: Float): Int {
-        val fontScale = context.getResources().getDisplayMetrics().scaledDensity
+        val fontScale = context.resources.displayMetrics.scaledDensity
         return (pxValue / fontScale + 0.5f).toInt()
     }
 
@@ -51,7 +51,7 @@ object DisplayUtils {
      * 将sp转换为px
      */
     fun sp2px(context: Context, spValue: Float): Int {
-        val fontScale = context.getResources().getDisplayMetrics().scaledDensity
+        val fontScale = context.resources.displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
     }
 }

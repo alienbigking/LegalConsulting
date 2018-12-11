@@ -12,6 +12,7 @@ import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.OrderDispose
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.presenter.OrderDisposePresenter
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
@@ -75,6 +76,16 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                     it.message.toString().logE(this)
                 })
 
+        /****** 收到接单成功的消息 ******/
+        RxBus.instance.toObserverable(RxBusBean.HomePoint::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter.getOrderDispose("0")
+                }, {
+                    it.message.toString().logE(this)
+                })
+
     }
 
     private fun initRecyclerView() {
@@ -86,6 +97,8 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
             mPresenter.getOrderDispose("0")
         }
+        recyclerViewListener()
+
     }
 
     override fun initListener() {
@@ -103,12 +116,15 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-
                 mPresenter.getOrderDispose("0")
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
+        recyclerViewListener()
 
+    }
+
+    fun recyclerViewListener() {
         mAdapter?.setOnItemClickListener(object : MultiItemTypeAdapter.OnItemClickListener {
             override fun onItemLongClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int): Boolean {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

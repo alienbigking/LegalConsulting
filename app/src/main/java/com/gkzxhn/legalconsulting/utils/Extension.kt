@@ -13,7 +13,6 @@ import rx.schedulers.Schedulers
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.text.DecimalFormat
 import java.util.regex.Pattern
 
 
@@ -25,7 +24,6 @@ import java.util.regex.Pattern
 //强大的Toast
 fun Context.showToast(message: String): Toast {
     var toast: Toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-//    toast.setGravity(Gravity.CENTER,0,0)
     toast.show()
     return toast
 }
@@ -40,15 +38,6 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
     return subscribeOn(Schedulers.io()).
             unsubscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
-}
-
-//判断手机号格式是否正确
-fun Context.isMobileNO(mobiles: String): Boolean {
-    var telRegex = "[1][345678]\\d{9}"
-    return when (mobiles.isEmpty()) {
-        true -> false
-        else -> mobiles.matches(telRegex)
-    }
 }
 
 fun String.logE(t: Any) {
@@ -72,38 +61,6 @@ fun Context.px2dp(pxValue: Float): Int {
 private fun String.matches(regex: String): Boolean {
     return Pattern.matches(regex, this)
 }
-
-/**
- * 格式化数字，保留两位小数
- */
-fun Context.df(double: Double): String {
-    return DecimalFormat("#0.00").format(double)
-}
-
-fun Context.stringBank(string: String): String {
-    if ("" == string){
-        return ""
-    }
-    var sb = StringBuilder()
-    var b = 0
-    for (i in 0 until string.length) {
-        if (i == 0) {
-            sb.append(string[i])
-        } else {
-            b = i + 1
-            if (b % 4 == 0) {
-                sb.append(string[i])
-                if (i != string.length){
-                    sb.append(" ")
-                }
-            }else{
-                sb.append(string[i])
-            }
-        }
-    }
-    return sb.toString()
-}
-
 
 
 /**

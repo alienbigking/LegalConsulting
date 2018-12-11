@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.common.Constants.REQUESTCODE_CHOOSE_MAJORS
 import com.gkzxhn.legalconsulting.presenter.QualificationAuthenticationEditPresenter
 import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationEditView
@@ -116,7 +115,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             R.id.v_qualification_authentication_professional_field_bg -> {
                 val intent = Intent(this, ChooseMajorsActivity::class.java)
                 intent.putStringArrayListExtra(Constants.INTENT_SELECTSTRING, selectString)
-                startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
+                startActivityForResult(intent, Constants.REQUESTCODE_CHOOSE_MAJORS)
             }
         /****** 律所地址 ******/
             R.id.v_qualification_authentication_address_bg -> {
@@ -125,7 +124,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
                 intent.putExtra("cityName", cityName)
                 intent.putExtra("countyName", countyName)
                 intent.putExtra("provinceName", provinceName)
-                startActivityForResult(intent, REQUESTCODE_CHOOSE_MAJORS)
+                startActivityForResult(intent, Constants.REQUESTCODE_CHOOSE_MAJORS)
             }
         /****** 律师等级 ******/
             R.id.v_qualification_authentication_level_bg -> {
@@ -141,6 +140,7 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     override fun setSelectStr(selectStr: ArrayList<String>) {
         selectString = selectStr
     }
+
     override fun getSelectStr(): ArrayList<String> {
         return selectString
     }
@@ -162,7 +162,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     override fun setLawOffice(string: String) {
         et_qualification_authentication_institution.setText(string)
     }
-
 
     @SuppressLint("SetTextI18n")
     override fun setAddress(provinceName: String, cityName: String, countyName: String, streetDetail: String) {
@@ -306,119 +305,56 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
             when (requestCode) {
             /****** 拍照返回 ******/
                 TAKE_PHOTO_IMAGE_1 -> {
-                    val file = ProjectUtils.uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
-                    val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
-                    /****** 部分机型会自动旋转 这里旋转恢复 ******/
-                    val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
-                    SystemUtil.rotateBitmap(bitmap, readPictureDegree)
-
-                    cropImage(mTakePhotoUri, CROP_IMAGE_1)
-
+//                    处理返回数据
+                    mTakePhotoUri?.let { handleReturnData(it, CROP_IMAGE_1) }
                 }
             /****** 拍照返回 ******/
                 TAKE_PHOTO_IMAGE_2 -> {
-                    val file = ProjectUtils.uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
-                    val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
-                    /****** 部分机型会自动旋转 这里旋转恢复 ******/
-                    val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
-                    SystemUtil.rotateBitmap(bitmap, readPictureDegree)
-
-                    cropImage(mTakePhotoUri, CROP_IMAGE_2)
-
+                    mTakePhotoUri?.let { handleReturnData(it, CROP_IMAGE_2) }
                 }
             /****** 拍照返回 ******/
                 TAKE_PHOTO_IMAGE_3 -> {
-                    val file = ProjectUtils.uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
-                    val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
-                    /****** 部分机型会自动旋转 这里旋转恢复 ******/
-                    val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
-                    SystemUtil.rotateBitmap(bitmap, readPictureDegree)
-
-                    cropImage(mTakePhotoUri, CROP_IMAGE_3)
-
+                    mTakePhotoUri?.let { handleReturnData(it, CROP_IMAGE_3) }
                 }
             /****** 拍照返回 ******/
                 TAKE_PHOTO_IMAGE_4 -> {
-                    val file = ProjectUtils.uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
-                    val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    bitmap.compressImage(file, 2000)!!
-                    /****** 部分机型会自动旋转 这里旋转恢复 ******/
-                    val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
-                    SystemUtil.rotateBitmap(bitmap, readPictureDegree)
-
-                    cropImage(mTakePhotoUri, CROP_IMAGE_4)
-
+                    mTakePhotoUri?.let { handleReturnData(it, CROP_IMAGE_4) }
                 }
             /****** 选择图片返回 ******/
                 CHOOSE_PHOTO_IMAGE_1 -> {
-                    val file = FileUtils.getFileByUri(data!!.data, this)
-                    if (file?.exists()!!) {
-                        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        bitmap.compressImage(file, 2000)!!
-                    }
-                    cropImage(data.data, CROP_IMAGE_1)
+                    handleReturnData(data, CROP_IMAGE_1)
                 }
             /****** 选择图片返回 ******/
                 CHOOSE_PHOTO_IMAGE_2 -> {
-                    val file = FileUtils.getFileByUri(data!!.data, this)
-                    if (file?.exists()!!) {
-                        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        bitmap.compressImage(file, 2000)!!
-                    }
-                    cropImage(data.data, CROP_IMAGE_2)
+                    handleReturnData(data, CROP_IMAGE_2)
                 }
             /****** 选择图片返回 ******/
                 CHOOSE_PHOTO_IMAGE_3 -> {
-                    val file = FileUtils.getFileByUri(data!!.data, this)
-                    if (file?.exists()!!) {
-                        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        bitmap.compressImage(file, 2000)!!
-                    }
-                    cropImage(data.data, CROP_IMAGE_3)
+                    handleReturnData(data, CROP_IMAGE_3)
                 }
             /****** 选择图片返回 ******/
                 CHOOSE_PHOTO_IMAGE_4 -> {
-                    val file = FileUtils.getFileByUri(data!!.data, this)
-                    if (file?.exists()!!) {
-                        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        bitmap.compressImage(file, 2000)!!
-                    }
-                    cropImage(data.data, CROP_IMAGE_4)
+                    handleReturnData(data, CROP_IMAGE_4)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_1 -> {
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
-                    iv_qualification_authentication_certificate_photos_bg.setPadding(0, 0, 0, 0)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    setImage1(bitmap)
-                    mPresenter.uploadFiles(File(path), 1)
+                    handleReturnData(path, 1)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_2 -> {
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
-                    iv_qualification_authentication_record_photo_bg.setPadding(0, 0, 0, 0)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    setImage2(bitmap)
-                    mPresenter.uploadFiles(File(path), 2)
+                    handleReturnData(path, 2)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_3 -> {
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
-                    iv_qualification_authentication_id11.setPadding(0, 0, 0, 0)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    setImage3(bitmap)
-                    mPresenter.uploadFiles(File(path), 3)
+                    handleReturnData(path, 3)
                 }
             /****** 智能裁剪 ******/
                 CROP_IMAGE_4 -> {
                     val path = data!!.getStringExtra(Constants.CROP_PATH)
-                    iv_qualification_authentication_id22.setPadding(0, 0, 0, 0)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    setImage4(bitmap)
-                    mPresenter.uploadFiles(File(path), 4)
+                    handleReturnData(path, 4)
                 }
                 else -> {
 
@@ -427,6 +363,60 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         }
 
 
+    }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/12/10 11:58 AM.
+     * @description：裁剪返回后的数据处理
+     */
+    private fun handleReturnData(path: String?, position: Int) {
+        iv_qualification_authentication_certificate_photos_bg.setPadding(0, 0, 0, 0)
+        val bitmap = BitmapFactory.decodeFile(path)
+        when (position) {
+            1 -> {
+                setImage1(bitmap)
+            }
+            2 -> {
+                setImage2(bitmap)
+            }
+            3 -> {
+                setImage3(bitmap)
+            }
+            4 -> {
+                setImage4(bitmap)
+            }
+
+        }
+
+        mPresenter.uploadFiles(File(path), position)
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/12/10 11:58 AM.
+     * @description：选择图片返回后的数据处理
+     */
+    private fun handleReturnData(data: Intent?, image: Int) {
+        val file = FileUtils.getFileByUri(data!!.data, this)
+        if (file?.exists()!!) {
+            val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
+            ImageUtils.compressImage(bitmap, file, 2000)!!
+        }
+        cropImage(data.data, image)
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/12/10 11:58 AM.
+     * @description：拍照返回的数据处理
+     */
+    private fun handleReturnData(mTakePhotoUri: Uri, image: Int) {
+        val file = ProjectUtils.uri2File(File(externalCacheDir, "photo"), mTakePhotoUri)
+        val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
+        ImageUtils.compressImage(bitmap, file, 2000)!!
+        /****** 部分机型会自动旋转 这里旋转恢复 ******/
+        val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
+        SystemUtil.rotateBitmap(bitmap, readPictureDegree)
+        cropImage(mTakePhotoUri, image)
     }
 
     /**

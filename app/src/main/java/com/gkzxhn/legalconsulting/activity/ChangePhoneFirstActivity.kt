@@ -27,7 +27,6 @@ class ChangePhoneFirstActivity : BaseActivity(), PhoneChangeView {
         finish()
     }
 
-
     var timeDisposable: Disposable? = null      //倒计时任务
     private var sendClick: Boolean = false  //是否已经点击发送验证码
     var phoneNumber: String = ""

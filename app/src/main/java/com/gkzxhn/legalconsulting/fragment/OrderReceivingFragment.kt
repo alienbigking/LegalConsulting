@@ -8,16 +8,16 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.adapter.OrderReceivingAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.presenter.OrderReceivingPresenter
-import com.gkzxhn.legalconsulting.utils.DisplayUtils
-import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.OrderReceivingView
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.order_receiving_fragment.*
+import rx.android.schedulers.AndroidSchedulers
 
 /**
  * Explanation：抢单
@@ -52,6 +52,17 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_order_receiving.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
         mPresenter.getOrderReceiving("0")
+
+
+        /****** 收到抢单成功的消息 ******/
+        RxBus.instance.toObserverable(RxBusBean.HomePoint::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter.getOrderReceiving("0")
+                }, {
+                    it.message.toString().logE(this)
+                })
     }
 
     override fun initListener() {
@@ -59,8 +70,8 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 if (loadMore) {
-                    mPresenter.getOrderReceiving((page+1).toString())
-                }else{
+                    mPresenter.getOrderReceiving((page + 1).toString())
+                } else {
                     offLoadMore()
                 }
             }
@@ -111,8 +122,8 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         }
     }
 
-    override fun showNullView(show:Boolean) {
-        tv_item_order_receiving_bull.visibility=if (show)View.VISIBLE else View.GONE
+    override fun showNullView(show: Boolean) {
+        tv_item_order_receiving_bull.visibility = if (show) View.VISIBLE else View.GONE
     }
 
 }

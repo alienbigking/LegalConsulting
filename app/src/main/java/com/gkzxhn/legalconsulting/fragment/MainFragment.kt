@@ -11,7 +11,6 @@ import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
-import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.utils.logE
 import kotlinx.android.synthetic.main.main_fragment.*
 import rx.android.schedulers.AndroidSchedulers
@@ -60,21 +59,21 @@ class MainFragment : BaseFragment() {
                     it.message.toString().logE(this)
                 })
 
-        /****** 接受控件小红点的消息 ******/
-        RxBus.instance.toObserverable(RxBusBean.HomePoint::class.java)
-                .cache()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    tv_main_red_point.visibility = if (it.show) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
-                    tv_main_red_point.text = it.number.toString()
-
-                }, {
-                    it.message.toString().logE(this)
-                })
+//        /****** 接受控件小红点的消息 ******/
+//        RxBus.instance.toObserverable(RxBusBean.HomePoint::class.java)
+//                .cache()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    tv_main_red_point.visibility = if (it.show) {
+//                        View.VISIBLE
+//                    } else {
+//                        View.GONE
+//                    }
+//                    tv_main_red_point.text = it.number.toString()
+//
+//                }, {
+//                    it.message.toString().logE(this)
+//                })
     }
 
     private fun loadTopUI() {
@@ -156,7 +155,6 @@ class MainFragment : BaseFragment() {
         vSelectLine1.visibility = View.VISIBLE
         vSelectLine2.visibility = View.INVISIBLE
     }
-
 
     override fun onResume() {
         super.onResume()

@@ -198,12 +198,10 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
                         override fun success(t: ImInfo) {
-                            loginNim(t.username!!, t.token!!)
+                            loginNim(t.account!!, t.token!!)
                         }
-
                     })
         }
-
     }
 
     /**

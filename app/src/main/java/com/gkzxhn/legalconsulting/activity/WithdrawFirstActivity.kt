@@ -60,8 +60,12 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
                 } else {
                     tv_withdraw_1_money_end.visibility = View.VISIBLE
                     val money = s.toString().toDouble() * 0.75
-                    val format = StringUtils.formatStringTwo(money)
-                    tv_withdraw_1_money_end.text = "实际到账$format"
+                    if (s.toString().toDouble() < 1) {
+                        tv_withdraw_1_money_end.text = "提现金额不能小于1"
+                    }else{
+                        val format = StringUtils.formatStringTwo(money)
+                        tv_withdraw_1_money_end.text = "实际到账$format"
+                    }
                 }
 
             }

@@ -16,14 +16,12 @@ import kotlinx.android.synthetic.main.default_top.*
  */
 class BountyActivity : BaseActivity() {
 
-
     override fun provideContentViewId(): Int {
         return R.layout.activity_bounty
     }
 
     override fun init() {
         initTopTitle()
-
     }
 
     private fun initTopTitle() {
