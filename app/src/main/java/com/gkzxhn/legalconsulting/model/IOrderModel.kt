@@ -16,7 +16,6 @@ import rx.Observable
  */
 
 interface IOrderModel : IBaseModel {
-
     fun getOrderDispose(context: Context ,page: String, size: String): Observable<OrderDispose>
     fun getOrderRushInfo(context: Context, id: String): Observable<OrderRushInfo>
     fun getOrderMyInfo(context: Context, id: String): Observable<OrderMyInfo>
