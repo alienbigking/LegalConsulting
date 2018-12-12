@@ -5,6 +5,7 @@ import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
 import com.gkzxhn.legalconsulting.entity.OrderRushInfo
 import com.gkzxhn.legalconsulting.model.IOrderModel
@@ -185,9 +186,26 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
     }
 
     fun sendMessage() {
-        NimUIKit.startP2PSession(mContext, userName)
-        NimUIKit.setMsgForwardFilter { false }
-        NimUIKit.setMsgRevokeFilter { false }
+        getImAccount(userName)
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
+     * @description：获取网易信息
+     */
+    private fun getImAccount(userName:String) {
+        mContext?.let {
+            mModel.getImAccount(it,userName)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
+                        override fun success(t: ImInfo) {
+                            NimUIKit.startP2PSession(mContext, t.account)
+                            NimUIKit.setMsgForwardFilter { false }
+                            NimUIKit.setMsgRevokeFilter { false }
+                        }
+                    })
+        }
     }
 
 }

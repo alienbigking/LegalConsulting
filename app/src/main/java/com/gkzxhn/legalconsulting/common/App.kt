@@ -11,10 +11,12 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Environment
+import android.support.multidex.MultiDex
 import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
+import com.gkzxhn.legalconsulting.activity.NotificationActivity
 import com.gkzxhn.legalconsulting.entity.NotificationInfo
 import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.ApiService
@@ -50,6 +52,9 @@ class App : Application() {
         SP = getSharedPreferences("config", Context.MODE_PRIVATE)
         EDIT = SP.edit()
         mApi = RetrofitClient.getInstance(this).mApi!!
+//        初始化数据库
+        //解决greendao android5.0一下版本就会报错的问题
+        MultiDex.install(this)
         GreenDaoManager.getInstance()
 
         /****** 崩溃日志初始化 ******/
@@ -85,7 +90,7 @@ class App : Application() {
 
         val mNotificationManager = getSystemService(Application.NOTIFICATION_SERVICE) as NotificationManager
 
-        val intent = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent = PendingIntent.getActivity(this, 0, Intent(this, NotificationActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(App.mContext)
                 .setContentTitle("通知")
                 .setContentText(data.content)

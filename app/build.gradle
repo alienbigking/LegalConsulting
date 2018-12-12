@@ -12,8 +12,8 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 4
-        versionName "0.1.4"
+        versionCode 5
+        versionName "0.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -97,36 +97,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2' // add library
-
+    implementation 'com.android.support:multidex:1.0.3'
     // 网易云信 添加依赖。注意，版本号必须一致。
-
-    // 基础功能 (必需)
-
-    //    implementation 'com.netease.nimlib:basesdk:5.7.0'
-
-    //    // 音视频和互动白板服务需要
-
-    //    implementation 'com.netease.nimlib:nrtc:5.7.0'
-
-    //    // 音视频需要
-
-    //    implementation 'com.netease.nimlib:avchat:5.7.0'
-
-    //    // 聊天室需要
-
-    //    implementation 'com.netease.nimlib:chatroom:5.7.0'
-
-    //    // 互动白板服务需要
-
-    //    implementation 'com.netease.nimlib:rts:5.7.0'
-
-    //    // 全文检索服务需要
-
-    //    implementation 'com.netease.nimlib:lucene:5.7.0'
-
-    //    小米、华为、魅族、fcm 推送
-
-    //    implementation 'com.netease.nimlib:push:5.7.0'
     implementation project(path: ':uikit')
     implementation files('src/main/libs/AMap2DMap_3.0.0_AMapSearch_3.6.1_AMapLocation_3.2.1_20161228.jar')
 }

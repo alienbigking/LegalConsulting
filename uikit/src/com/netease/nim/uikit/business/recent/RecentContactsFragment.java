@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
+import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
 import com.netease.nim.uikit.common.ToastHelper;
 
 import com.netease.nim.uikit.R;
@@ -184,6 +186,19 @@ public class RecentContactsFragment extends TFragment {
                     NimUIKit.startTeamSession(getActivity(), recent.getContactId());
                 } else if (recent.getSessionType() == SessionTypeEnum.P2P) {
                     NimUIKit.startP2PSession(getActivity(), recent.getContactId());
+                    NimUIKit.setMsgForwardFilter(new MsgForwardFilter() {
+                        @Override
+                        public boolean shouldIgnore(IMMessage message) {
+                            return false;
+                        }
+                    });
+
+                    NimUIKit.setMsgRevokeFilter(new MsgRevokeFilter() {
+                        @Override
+                        public boolean shouldIgnore(IMMessage message) {
+                            return false;
+                        }
+                    });
                 }
             }
 

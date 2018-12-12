@@ -59,6 +59,10 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
                     tv_withdraw_1_money_end.visibility = View.GONE
                 } else {
                     tv_withdraw_1_money_end.visibility = View.VISIBLE
+                    if (s?.startsWith(".")!!) {
+                        tv_withdraw_1_money_end.text = "该输入不合法"
+                        return
+                    }
                     val money = s.toString().toDouble() * 0.75
                     if (s.toString().toDouble() < 1) {
                         tv_withdraw_1_money_end.text = "提现金额不能小于1"

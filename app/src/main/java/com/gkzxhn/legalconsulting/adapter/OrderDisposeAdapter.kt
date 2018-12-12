@@ -93,7 +93,7 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
                 tv_order_dispose_accept.visibility = View.GONE
                 v_order_dispose_description.visibility = View.GONE
             }
-            holder.itemView.setOnClickListener(android.view.View.OnClickListener {
+            holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
             })

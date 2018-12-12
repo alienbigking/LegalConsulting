@@ -1,7 +1,9 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.view.inputmethod.InputMethodManager
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.utils.showToast
@@ -63,8 +65,16 @@ class EditAddressActivity : BaseActivity() {
         }
         iv_edit_address_back.setOnClickListener { onBackPressed() }
         tv_edit_address.setOnClickListener {
+            /****** 如果键盘没有关掉 执行关掉代码 ******/
+            val view = window.peekDecorView()
+            if (view != null) {
+                val inputManger =  getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManger.hideSoftInputFromWindow(view.windowToken, 0);
+            }
+
             //显示
-            cityPicker.showCityPicker();
+            cityPicker.showCityPicker()
+
         }
 
         cityPicker.setOnCityItemClickListener(object : OnCityItemClickListener() {
@@ -94,9 +104,6 @@ class EditAddressActivity : BaseActivity() {
                 tv_edit_address.text = provinceName + cityName + countyName
             }
 
-            override fun onCancel() {
-                super.onCancel()
-            }
         })
     }
 

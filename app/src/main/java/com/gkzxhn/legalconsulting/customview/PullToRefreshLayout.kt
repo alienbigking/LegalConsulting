@@ -1,15 +1,11 @@
 package com.gkzxhn.legalconsulting.customview
 
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.support.annotation.IntDef
-import android.support.v4.view.MotionEventCompat
-import android.support.v4.view.NestedScrollingChild
-import android.support.v4.view.NestedScrollingChildHelper
-import android.support.v4.view.NestedScrollingParent
-import android.support.v4.view.NestedScrollingParentHelper
-import android.support.v4.view.ViewCompat
+import android.support.v4.view.*
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
@@ -18,23 +14,15 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
 import android.view.animation.Transformation
-import android.widget.AbsListView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-
-
+import android.widget.*
 import com.gkzxhn.legalconsulting.R
-
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 
-
- /**
+/**
  * Explanation: 下拉刷新
  * @author LSX
  *    -----2018/9/12
@@ -675,7 +663,7 @@ class PullToRefreshLayout(context: Context, attrs: AttributeSet) : LinearLayout(
         /**
          * 下拉-释放不可刷新状态
          */
-       const val DRAGGING_NOT_REFRESHABLE = 0
+        const val DRAGGING_NOT_REFRESHABLE = 0
 
         /**
          * 下拉-释放可刷新状态
@@ -690,7 +678,7 @@ class PullToRefreshLayout(context: Context, attrs: AttributeSet) : LinearLayout(
         /**
          * 刷新完成或未刷新状态
          */
-        const  val REFRESH_FINISHED = 3
+        const val REFRESH_FINISHED = 3
 
         /**
          * 一天的毫秒值

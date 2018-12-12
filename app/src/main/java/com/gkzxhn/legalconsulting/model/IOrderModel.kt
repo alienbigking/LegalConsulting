@@ -1,10 +1,7 @@
 package com.gkzxhn.legalconsulting.model
 
 import android.content.Context
-import com.gkzxhn.legalconsulting.entity.OrderDispose
-import com.gkzxhn.legalconsulting.entity.OrderMyInfo
-import com.gkzxhn.legalconsulting.entity.OrderReceiving
-import com.gkzxhn.legalconsulting.entity.OrderRushInfo
+import com.gkzxhn.legalconsulting.entity.*
 import rx.Observable
 
 
@@ -23,4 +20,5 @@ interface IOrderModel : IBaseModel {
     fun acceptRushOrder(context: Context, id: String): Observable<OrderMyInfo>
     fun acceptMyOrder(context: Context, id: String): Observable<OrderMyInfo>
     fun getOrderReceiving(context: Context, page: String, size: String): Observable<OrderReceiving>
+    fun getImAccount(context: Context, account: String): Observable<ImInfo>
 }

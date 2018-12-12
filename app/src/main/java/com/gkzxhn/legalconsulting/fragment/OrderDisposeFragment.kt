@@ -54,6 +54,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         if (!ProjectUtils.certificationStatus()) {
             loading_refresh.visibility = View.GONE
             tv_order_disposer_null_2.visibility = View.VISIBLE
+            tv_order_disposer_null.visibility = View.GONE
         } else {
             initRecyclerView()
         }
@@ -167,6 +168,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         if (show) {
             tv_order_disposer_null.text = string
             tv_order_disposer_null.visibility = View.VISIBLE
+            tv_order_disposer_null_2.visibility = View.GONE
         } else {
             tv_order_disposer_null.visibility = View.GONE
         }

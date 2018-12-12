@@ -30,6 +30,10 @@ interface ApiService {
     @GET("im/users/me")
     fun getImInfo(): Observable<ImInfo>
 
+      //    获取网易云信的账号
+    @GET("/im/users/getAccount/{username}")
+    fun getImAccount(@Path("username") username: String): Observable<ImInfo>
+
     /**
      * 修改我的手机号码
      */

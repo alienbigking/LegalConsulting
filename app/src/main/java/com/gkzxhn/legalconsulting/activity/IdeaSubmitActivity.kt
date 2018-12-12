@@ -36,7 +36,13 @@ class IdeaSubmitActivity : BaseActivity() {
                 finish()
             }
             R.id.tv_idea_submit_send -> {
-                submitSend(et_idea_submit_title.text.trim().toString(), et_idea_submit_content.text.trim().toString())
+                val titile = et_idea_submit_title.text.trim().toString()
+                val content = et_idea_submit_content.text.trim().toString()
+                if (titile.isNotEmpty() && content.isNotEmpty()) {
+                    submitSend(titile, content)
+                } else {
+                    showToast("请完成输入再提交")
+                }
             }
         }
     }

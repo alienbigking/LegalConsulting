@@ -872,12 +872,12 @@ public class MessageListPanelEx {
             // 5 trans
             longClickItemVoidToText(selectedItem, alertDialog, msgType);
 
-            if (!NimUIKitImpl.getMsgForwardFilter().shouldIgnore(selectedItem) && !recordOnly) {
-                // 6 forward to person
-                longClickItemForwardToPerson(selectedItem, alertDialog);
-                // 7 forward to team
-                longClickItemForwardToTeam(selectedItem, alertDialog);
-            }
+//            if (!NimUIKitImpl.getMsgForwardFilter().shouldIgnore(selectedItem) && !recordOnly) {
+//                // 6 forward to person
+//                longClickItemForwardToPerson(selectedItem, alertDialog);
+//                // 7 forward to team
+//                longClickItemForwardToTeam(selectedItem, alertDialog);
+//            }
         }
 
         private boolean enableRevokeButton(IMMessage selectedItem) {

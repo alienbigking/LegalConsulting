@@ -13,16 +13,14 @@ public class GreenDaoManager {
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
 
-    private GreenDaoManager()
-    {
+    private GreenDaoManager() {
         init();
     }
 
     /**
      * 静态内部类，实例化对象使用
      */
-    private static class SingleInstanceHolder
-    {
+    private static class SingleInstanceHolder {
         private static final GreenDaoManager INSTANCE = new GreenDaoManager();
     }
 
@@ -31,8 +29,7 @@ public class GreenDaoManager {
      *
      * @return
      */
-    public static GreenDaoManager getInstance()
-    {
+    public static GreenDaoManager getInstance() {
         return SingleInstanceHolder.INSTANCE;
     }
 
@@ -40,23 +37,22 @@ public class GreenDaoManager {
     /**
      * 初始化数据
      */
-    private void init()
-    {
+    private void init() {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(App.mContext,
-                "shopping_guide");
+                "legalConsulting");
         mDaoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
     }
-    public DaoMaster getmDaoMaster()
-    {
+
+    public DaoMaster getmDaoMaster() {
         return mDaoMaster;
     }
-    public DaoSession getmDaoSession()
-    {
+
+    public DaoSession getmDaoSession() {
         return mDaoSession;
     }
-    public DaoSession getNewSession()
-    {
+
+    public DaoSession getNewSession() {
         mDaoSession = mDaoMaster.newSession();
         return mDaoSession;
     }

@@ -1,12 +1,10 @@
 package com.gkzxhn.legalconsulting.model.iml
 
 import android.content.Context
-import com.gkzxhn.legalconsulting.entity.OrderDispose
-import com.gkzxhn.legalconsulting.entity.OrderMyInfo
-import com.gkzxhn.legalconsulting.entity.OrderReceiving
-import com.gkzxhn.legalconsulting.entity.OrderRushInfo
+import com.gkzxhn.legalconsulting.entity.*
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
 import rx.Observable
 import rx.schedulers.Schedulers
 
@@ -64,6 +62,12 @@ class OrderModel : BaseModel(), IOrderModel {
                 ?.acceptRushOrder(id)
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderMyInfo>
 
+    }
+    override fun getImAccount(context: Context,account:String): Observable<ImInfo> {
+        return RetrofitClientLogin.Companion.getInstance(context).mApi
+                ?.getImAccount(account)
+                ?.subscribeOn(Schedulers.io())
+                as Observable<ImInfo>
     }
 
 }

@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-
     <!-- 权限声明 -->
     <!-- 访问网络状态-->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -49,7 +48,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-
 
     <application
         android:name=".common.App"
@@ -94,7 +92,6 @@
         <activity android:name=".activity.EditAddressActivity"/>
         <activity android:name=".activity.MoneyListActivity"/>
         <activity android:name=".activity.NotificationActivity"/>
-
 
         <!-- map -->
         <activity
@@ -168,7 +165,6 @@
         <!-- 云信进程间通信provider -->
         <!-- android:authorities="{包名}.ipc.provider", 请将com.netease.nim.demo替换为自己的包名 -->
 
-
     </application>
 
     <supports-screens
@@ -179,6 +175,5 @@
         android:smallScreens="true"
         android:xlargeScreens="true"
         tools:ignore="ManifestOrder"/>
-
 
 </manifest>
