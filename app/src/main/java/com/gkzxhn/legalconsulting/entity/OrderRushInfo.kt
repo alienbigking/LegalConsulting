@@ -39,6 +39,7 @@ class OrderRushInfo {
         var id: String? = null
         var name: String? = null
         var phoneNumber: String? = null
+        var avatarURL: String? = null
     }
 
     class AttachmentsBean {

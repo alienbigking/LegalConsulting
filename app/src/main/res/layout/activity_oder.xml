@@ -33,12 +33,11 @@
                 android:paddingTop="21dp"
             >
 
-                <com.gkzxhn.legalconsulting.customview.CircleImageView
+                <ImageView
                     android:id="@+id/iv_oder_icon"
                     android:layout_width="84dp"
                     android:layout_height="84dp"
                     android:layout_marginStart="15dp"
-                    android:src="@mipmap/ic_ls_icon"
                     app:layout_constraintStart_toStartOf="parent"
                 />
 

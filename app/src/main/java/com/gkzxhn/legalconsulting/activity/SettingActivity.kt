@@ -90,6 +90,8 @@ class SettingActivity : BaseActivity() {
         val selectDialog = selectDialog("确认退出账号吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
+
             /****** 清空数消息数据库 ******/
             GreenDaoManager.getInstance().newSession.notificationInfoDao.deleteAll()
 

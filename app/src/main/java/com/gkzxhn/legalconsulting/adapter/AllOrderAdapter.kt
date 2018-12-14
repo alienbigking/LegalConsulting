@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.OrderDispose
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.item_order_all_dispose.view.*
@@ -66,6 +67,7 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
         with(holder.itemView) {
             val entity = mDatas[position]
             tv_order_dispose_name.text = entity.customer!!.name
+            ProjectUtils.loadImage(context, entity.customer!!.avatarURL, iv_order_dispose_item)
             /****** 价格 ******/
             tv_order_price.text = "￥" + entity.reward
             tv_order_dispose_description.text = entity.description

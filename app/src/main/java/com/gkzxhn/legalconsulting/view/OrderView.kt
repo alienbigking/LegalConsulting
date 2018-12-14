@@ -25,4 +25,5 @@ interface OrderView : BaseView {
     fun setImage1(bitmap: Bitmap)
     fun setImage2(bitmap: Bitmap)
     fun setOrderNumber(time: String)
+    fun setOrderImage(avatarURL: String)
 }

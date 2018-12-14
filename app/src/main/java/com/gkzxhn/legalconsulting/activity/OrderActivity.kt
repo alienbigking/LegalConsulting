@@ -93,6 +93,11 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_name.text = name
     }
 
+    override fun setOrderImage(avatarURL: String) {
+        ProjectUtils.loadImage(this, avatarURL, iv_oder_icon)
+    }
+
+
     override fun setTime(time: String) {
         tv_order_time.text = time
     }

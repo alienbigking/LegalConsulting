@@ -63,6 +63,7 @@ package com.gkzxhn.legalconsulting.entity
             var id: String? = null
             var name: String? = null
             var username: String? = null
+            var avatarURL: String? = null
         }
     }
 

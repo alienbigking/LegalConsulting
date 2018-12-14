@@ -47,6 +47,7 @@ class OrderMyInfo {
         var id: String? = null
         var name: String? = null
         var username: String? = null
+        var avatarURL: String? = null
     }
 
     class LawyerBean {

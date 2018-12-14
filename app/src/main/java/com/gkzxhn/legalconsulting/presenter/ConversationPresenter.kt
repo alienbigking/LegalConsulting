@@ -1,10 +1,6 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import android.content.Intent
-import com.gkzxhn.legalconsulting.activity.MainActivity
-import com.gkzxhn.legalconsulting.common.App
-import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.IConversationModel
 import com.gkzxhn.legalconsulting.model.iml.ConversationModel
@@ -30,18 +26,11 @@ class ConversationPresenter(context: Context, view: ConversationView) : BasePres
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
-                        override fun success(date: LawyersInfo) {
-                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, date.certificationStatus)?.commit()
-                            App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
-                            App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
-                            App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
-
-                            mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                        override fun success(t: LawyersInfo) {
                         }
 
                         override fun onError(t: Throwable?) {
                             super.onError(t)
-                            mContext?.startActivity(Intent(mContext, MainActivity::class.java))
                         }
                     })
         }

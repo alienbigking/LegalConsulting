@@ -81,6 +81,7 @@ class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapte
             val entity = mDatas[position]
             /****** 姓名 ******/
             tv_item_order_receiving_name.text = entity.customer!!.name
+            ProjectUtils.loadImage(context,entity.customer!!.avatarURL,iv_item_order_receiving)
             /****** 赏金  ******/
             tv_main_top_end.text = "￥" + entity.reward.toString()
             tv_item_order_receiving_time.text = StringUtils.parseDate(entity.createdTime!!)

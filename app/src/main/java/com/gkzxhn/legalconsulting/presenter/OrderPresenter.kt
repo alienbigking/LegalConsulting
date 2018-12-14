@@ -45,7 +45,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
                             mView?.setNextText("抢单")
-
+                            mView?.setOrderImage(t.customer?.avatarURL!!)
                             mView?.setOrderState("已支付")
                             mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
@@ -86,6 +86,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
         mView?.setOrderNumber(t.number.toString())
+        mView?.setOrderImage(t.customer?.avatarURL!!)
+
         userName = t.customer?.username!!
         if (t.attachments!!.isNotEmpty() && t.attachments != null) {
             ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
@@ -193,9 +195,9 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
      * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
      * @description：获取网易信息
      */
-    private fun getImAccount(userName:String) {
+    private fun getImAccount(userName: String) {
         mContext?.let {
-            mModel.getImAccount(it,userName)
+            mModel.getImAccount(it, userName)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/selector_item_shape_order">
 
-    <ImageView
+    <com.gkzxhn.legalconsulting.customview.CircleImageView
         android:id="@+id/iv_order_dispose_item"
         android:layout_width="37dp"
         android:layout_height="37dp"

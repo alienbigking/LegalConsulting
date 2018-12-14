@@ -2,11 +2,15 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.AppOpsManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
@@ -207,24 +211,46 @@ class UserSettingActivity : BaseActivity() {
         RxPermissions(this)
                 .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe({ permission: Permission ->
-                    if (permission.granted) {
-                        // 用户已经同意该权限
-                        if (++storageFlag == 2) {
-                            chooseAlbum()
+                    when {
+                        permission.granted -> {
+                            // 用户已经同意该权限
+                            if (++storageFlag == 2) {
+                                chooseAlbum()
+                            }
+                            Log.d(javaClass.simpleName, permission.name + " is granted.")
                         }
-                        Log.d(javaClass.simpleName, permission.name + " is granted.")
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                        Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.");
-//                        showMessage(getString(R.string.please_agree_permission))
-                    } else {
-                        // 用户拒绝了该权限，并且选中『不再询问』
-                        Log.d(javaClass.simpleName, permission.name + " is denied.")
-//                        showMessage(getString(R.string.please_agree_permission))
+                        permission.shouldShowRequestPermissionRationale -> // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                            Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.")
+                    //                        showMessage(getString(R.string.please_agree_permission))
+                        else -> // 用户拒绝了该权限，并且选中『不再询问』
+                            Log.d(javaClass.simpleName, permission.name + " is denied.")
+                    //                        showMessage(getString(R.string.please_agree_permission))
                     }
                 }, {
                     it.message.toString().logE(this)
                 })
+
+        // 缺少权限时, 进入权限配置页面
+        if (Build.VERSION.SDK_INT >= 23) {
+            val arrayOfNulls = arrayOfNulls<String>(2)
+
+            var checkLocalPhonePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (checkLocalPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                arrayOfNulls[0]=Manifest.permission.WRITE_EXTERNAL_STORAGE
+                arrayOfNulls[1]= Manifest.permission.READ_EXTERNAL_STORAGE
+                ActivityCompat.requestPermissions(this, arrayOfNulls
+                       , 101);
+                return;
+            }
+            //适配小米机型
+            var appOpsManager = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+            var checkOp = appOpsManager.checkOp(AppOpsManager.OPSTR_FINE_LOCATION, android.os.Process.myUid(), getPackageName());
+            if (checkOp == AppOpsManager.MODE_IGNORED) {
+                ActivityCompat.requestPermissions(this,
+                        arrayOfNulls, 101);
+                return;
+            }
+        }
     }
 
 
@@ -265,7 +291,6 @@ class UserSettingActivity : BaseActivity() {
                         iv_user_setting_image.setImageBitmap(bitMap)
                         //此处后面可以将bitMap转为二进制上传后台网络
                         uploadFiles(File(cropImagePath))
-
                     }
                 }
                 else -> {

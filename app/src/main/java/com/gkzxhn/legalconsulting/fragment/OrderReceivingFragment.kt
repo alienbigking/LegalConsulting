@@ -75,7 +75,6 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                     offLoadMore()
                 }
             }
-
         })
 
         //下啦刷新
@@ -92,11 +91,16 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
             }
 
             override fun onItemClick(view: View?, holder: RecyclerView.ViewHolder?, position: Int) {
-                val intent = Intent(context, OrderActivity::class.java)
-                val data = mAdapter!!.getCurrentItem()
-                intent.putExtra("orderId", data.id)
-                intent.putExtra("orderState", 1)
-                startActivity(intent)
+                /****** 认证通过才能进入  ******/
+                if (ProjectUtils.certificationStatus()) {
+                    val intent = Intent(context, OrderActivity::class.java)
+                    val data = mAdapter!!.getCurrentItem()
+                    intent.putExtra("orderId", data.id)
+                    intent.putExtra("orderState", 1)
+                    startActivity(intent)
+                }else{
+                    context?.showToast("您认证尚未通过，不能进行此操作！")
+                }
             }
         })
 

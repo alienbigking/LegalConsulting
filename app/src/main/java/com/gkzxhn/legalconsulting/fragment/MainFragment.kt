@@ -103,6 +103,7 @@ class MainFragment : BaseFragment() {
             }
             Constants.CERTIFIED -> {
                 tvCertification.text = "已认证"
+                tv_home_address.visibility = View.VISIBLE
                 tvCertification.setTextColor(resources.getColor(R.color.home_top_green))
             }
         }

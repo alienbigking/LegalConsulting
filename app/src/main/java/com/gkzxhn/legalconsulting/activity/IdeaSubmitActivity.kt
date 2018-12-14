@@ -22,6 +22,7 @@ import java.util.*
  * @description：意见 反馈
  */
 class IdeaSubmitActivity : BaseActivity() {
+
     override fun provideContentViewId(): Int {
         return R.layout.activity_idea_submit
     }

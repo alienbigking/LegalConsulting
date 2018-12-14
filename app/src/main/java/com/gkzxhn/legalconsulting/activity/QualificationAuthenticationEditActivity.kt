@@ -508,18 +508,18 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         RxPermissions(this)
                 .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe({ permission: Permission ->
-                    if (permission.granted) {
-                        // 用户已经同意该权限
-                        if (++storageFlag == 2) {
-                            chooseAlbum(fileName, type)
+                    when {
+                        permission.granted -> {
+                            // 用户已经同意该权限
+                            if (++storageFlag == 2) {
+                                chooseAlbum(fileName, type)
+                            }
+                            Log.d(javaClass.simpleName, permission.name + " is granted.")
                         }
-                        Log.d(javaClass.simpleName, permission.name + " is granted.")
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                        Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.")
-                    } else {
-                        // 用户拒绝了该权限，并且选中『不再询问』
-                        Log.d(javaClass.simpleName, permission.name + " is denied.")
+                        permission.shouldShowRequestPermissionRationale -> // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                            Log.d(javaClass.simpleName, permission.name + " is denied. More info should be provided.")
+                        else -> // 用户拒绝了该权限，并且选中『不再询问』
+                            Log.d(javaClass.simpleName, permission.name + " is denied.")
                     }
                 }, {
                     it.message.toString().logE(this)
