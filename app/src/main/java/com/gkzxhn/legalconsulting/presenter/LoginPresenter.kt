@@ -12,6 +12,7 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.utils.NetworkUtils
 import com.gkzxhn.legalconsulting.utils.StringUtils
 import com.gkzxhn.legalconsulting.utils.TsDialog
 import com.gkzxhn.legalconsulting.utils.showToast
@@ -52,6 +53,9 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     fun sendCode() {
         if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
+        }else if (!NetworkUtils.isNetConneted(mContext!!)) {
+            mContext?.showToast("暂无网络")
+
         } else {
             mContext?.let {
                 mModel.getCode(it, mView?.getPhone()!!)

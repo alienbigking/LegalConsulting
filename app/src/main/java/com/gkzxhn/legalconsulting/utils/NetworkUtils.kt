@@ -23,11 +23,7 @@ object NetworkUtils {
         }
         val connectManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo: NetworkInfo = connectManager.getNetworkInfo(typeMoblie)
-        if (networkInfo == null) {
-            return false
-        } else {
-            return networkInfo.isConnected && networkInfo.isAvailable
-        }
+        return networkInfo.isConnected && networkInfo.isAvailable
     }
 
     fun isPhoneNetConnected(context: Context): Boolean {
@@ -39,6 +35,5 @@ object NetworkUtils {
         val typeMobile = ConnectivityManager.TYPE_WIFI
         return isNetworkConnected(context, typeMobile)
     }
-
 
 }

@@ -45,9 +45,7 @@ class ProgressDownSubscriber<T> : MySubscriber<T>, DownloadProgressListener {
     override fun onStart() {
         super.onStart()
         "onStart onSubscribe-----".logE(this)
-        if (mSubscriberOnNextListener != null) {
-            mSubscriberOnNextListener.onStart()
-        }
+        mSubscriberOnNextListener.onStart()
         downInfo.state = DownState.START
     }
 

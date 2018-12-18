@@ -5,8 +5,10 @@ import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.NotificationInfoAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.entity.NotificationInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.utils.DisplayUtils
 import com.gkzxhn.legalconsulting.utils.ItemDecorationHelper
@@ -83,5 +85,13 @@ class NotificationActivity : BaseActivity() {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        RxBus.instance.post(RxBusBean.HomeTopRedPoint(false))
+
+    }
+
+
 
 }

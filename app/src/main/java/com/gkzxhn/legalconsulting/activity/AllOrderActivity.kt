@@ -123,7 +123,7 @@ class AllOrderActivity : BaseActivity() {
 
     fun getOrderDispose(page: String) {
         RetrofitClient.Companion.getInstance(this).mApi
-                ?.getOrderDispose(page, "10")
+                ?.getAllOrderDispose(page, "10")
                 ?.subscribeOn(Schedulers.io())
                 ?.unsubscribeOn(AndroidSchedulers.mainThread())
                 ?.observeOn(AndroidSchedulers.mainThread())

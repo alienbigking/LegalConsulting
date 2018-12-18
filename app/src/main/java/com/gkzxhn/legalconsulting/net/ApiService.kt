@@ -122,12 +122,12 @@ interface ApiService {
     fun acceptRushOrder(@Path("id") id: String): Observable<OrderMyInfo>
 
     //    获取我的咨询列表
-    @GET("lawyer/my/legal-advice")
-    fun getOrderDispose(@Query("page") page: String, @Query("size") size: String, @Query("statuses") statuses: String): Observable<OrderDispose>
+    @GET("lawyer/my/legal-advice/latest")
+    fun getOrderDispose(@Query("page") page: String, @Query("size") size:  String): Observable<OrderDispose>
 
     //    获取我的咨询列表（所有订单）
     @GET("lawyer/my/legal-advice")
-    fun getOrderDispose(@Query("page") page: String, @Query("size") size: String): Observable<OrderDispose>
+    fun getAllOrderDispose(@Query("page") page: String, @Query("size") size: String): Observable<OrderDispose>
 
     //    获取我的咨询的明细
     @GET("/lawyer/my/legal-advice/{id}")

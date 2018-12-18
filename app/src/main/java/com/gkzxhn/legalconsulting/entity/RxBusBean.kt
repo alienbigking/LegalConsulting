@@ -11,5 +11,6 @@ class RxBusBean {
     var id: String? = null
 
     class HomePoint(var show: Boolean,var number: Number)
+    class HomeTopRedPoint(var show: Boolean)
 
 }

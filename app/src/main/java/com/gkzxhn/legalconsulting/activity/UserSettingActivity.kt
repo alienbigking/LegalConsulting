@@ -2,15 +2,11 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.Manifest
 import android.app.Activity
-import android.app.AppOpsManager
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
@@ -230,27 +226,6 @@ class UserSettingActivity : BaseActivity() {
                     it.message.toString().logE(this)
                 })
 
-        // 缺少权限时, 进入权限配置页面
-        if (Build.VERSION.SDK_INT >= 23) {
-            val arrayOfNulls = arrayOfNulls<String>(2)
-
-            var checkLocalPhonePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (checkLocalPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                arrayOfNulls[0]=Manifest.permission.WRITE_EXTERNAL_STORAGE
-                arrayOfNulls[1]= Manifest.permission.READ_EXTERNAL_STORAGE
-                ActivityCompat.requestPermissions(this, arrayOfNulls
-                       , 101);
-                return;
-            }
-            //适配小米机型
-            var appOpsManager = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-            var checkOp = appOpsManager.checkOp(AppOpsManager.OPSTR_FINE_LOCATION, android.os.Process.myUid(), getPackageName());
-            if (checkOp == AppOpsManager.MODE_IGNORED) {
-                ActivityCompat.requestPermissions(this,
-                        arrayOfNulls, 101);
-                return;
-            }
-        }
     }
 
 

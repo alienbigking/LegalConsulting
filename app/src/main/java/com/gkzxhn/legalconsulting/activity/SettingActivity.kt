@@ -94,6 +94,8 @@ class SettingActivity : BaseActivity() {
 
             /****** 清空数消息数据库 ******/
             GreenDaoManager.getInstance().newSession.notificationInfoDao.deleteAll()
+            /****** 清除缓存 ******/
+            SystemUtil.clearAllCache(this)
 
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

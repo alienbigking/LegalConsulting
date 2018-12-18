@@ -18,6 +18,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
 import com.gkzxhn.legalconsulting.entity.NotificationInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.ApiService
 import com.gkzxhn.legalconsulting.net.RetrofitClient
@@ -76,8 +77,10 @@ class App : Application() {
                     initNotification(p0!!)
                     /****** 保存数据到数据库 ******/
                     GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,p0?.sessionId,p0?.fromAccount, p0?.time!!,p0.content))
+                    RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
+
                 }
-            }, true);
+            }, true)
         }
 
     }

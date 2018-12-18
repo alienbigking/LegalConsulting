@@ -1,9 +1,7 @@
 package com.gkzxhn.legalconsulting.utils
 
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-import android.provider.MediaStore
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -107,49 +105,6 @@ object ProjectUtils {
         }
     }
 
-
-    /**
-     * 解决小米手机上获取图片路径为null的情况
-     * @param intent
-     * @return
-     */
-    fun geturi(urI: Uri, type: String): Uri {
-        var uri=urI
-//        Uri uri = intent.getData();
-//        String type = intent.getType();
-        if (uri.getScheme().equals("file") && (type.contains("image/"))) {
-            var path = uri.getEncodedPath()
-            if (path != null) {
-                path = Uri.decode(path);
-                val cr = App.mContext.getContentResolver();
-                val buff = StringBuffer()
-                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=").append("'" + path + "'").append(")")
-                val array1 = arrayOfNulls<String>(1)
-                array1[0]=MediaStore.Images.ImageColumns._ID
-                val mCursor :Cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,array1, buff.toString(), null, null)
-                var index = 0
-                mCursor.moveToFirst()
-                while (!mCursor.isAfterLast) {
-                    index = mCursor.getColumnIndex(MediaStore.Images.ImageColumns._ID)
-                    index = mCursor.getInt(index)
-                    mCursor.moveToNext()
-                }
-
-                if (index == 0) {
-                } else {
-                    val uri_temp = Uri
-                            .parse("content://media/external/images/media/"
-                            + index);
-                    if (uri_temp != null) {
-                        uri = uri_temp
-                    }
-                }
-
-                mCursor.close()
-            }
-        }
-        return uri
-    }
 
     fun loadImage(context: Context?, avatarURL: String?, imageview: ImageView?) {
         if (avatarURL != null) {

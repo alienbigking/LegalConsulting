@@ -75,7 +75,6 @@ class OrderGetSettingActivity : BaseActivity() {
 
     private fun setOrderState(OrderState: String) {
         val Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),  Gson().toJson(OrderState))
-
         RetrofitClient.getInstance(this).mApi?.setOrderState(Body)
                 ?.subscribeOn(Schedulers.io())
                 ?.unsubscribeOn(AndroidSchedulers.mainThread())

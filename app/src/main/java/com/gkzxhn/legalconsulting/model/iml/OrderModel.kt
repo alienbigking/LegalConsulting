@@ -39,7 +39,7 @@ class OrderModel : BaseModel(), IOrderModel {
 
     override fun getOrderDispose(context: Context, page: String, size: String): Observable<OrderDispose> {
         return RetrofitClient.Companion.getInstance(context).mApi
-                ?.getOrderDispose(page,size,"PENDING_ACCEPT,ACCEPTED")
+                ?.getOrderDispose(page,size)
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderDispose>
 
     }
