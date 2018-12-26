@@ -188,7 +188,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                         }
                     })
         }
-
     }
 
     /**

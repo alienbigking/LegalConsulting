@@ -25,13 +25,15 @@ class OrderMyInfo {
     var id: String? = null
     var number: String? = null
     var status: String? = null
+//    所属类型（指定单/抢单）
+    var type: String? = null
     var customer: CustomerBean? = null
     var lawyer: LawyerBean? = null
     var description: String? = null
     var reward: Double = 0.0
     var createdTime: String? = null
     var acceptedTime: String? = null
-    var categories: List<String>? = null
+    var category: String? = null
     var attachments: List<AttachmentsBean>? = null
 
 

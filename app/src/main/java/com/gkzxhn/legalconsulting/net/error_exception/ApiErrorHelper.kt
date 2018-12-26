@@ -26,7 +26,7 @@ object ApiErrorHelper {
         print("网络异常：" + e::javaClass)
 
         when (e) {
-            is ConnectException -> context.TsDialog("没有网络，请检查你的网络", false)
+            is ConnectException -> context.TsDialog("服务器异常", false)
             is HttpException -> {
                 if (e.code() == 401) {
                     context.TsClickDialog("token已过期", false).dialog_save.setOnClickListener {
@@ -36,7 +36,7 @@ object ApiErrorHelper {
                         context.startActivity(intent)
                     }
                 } else {
-                    context.TsDialog("网络异常请重试", false)
+                    context.TsDialog("服务器异常，请重试", false)
 
                 }
 
@@ -45,15 +45,12 @@ object ApiErrorHelper {
         //后台返回的message
             is ApiException -> {
                 context.TsDialog(e.message!!, false)
-//                context.showToast(e.message!!)
                 Log.e("ApiErrorHelper", e.message, e)
             }
             else -> {
-//                context.TsDialog(e.message!!,false)
                 context.showToast("数据异常")
                 Log.e("ApiErrorHelper", e.message, e)
             }
         }
-        //App.mContext?.showToast(e.message!!)
     }
 }

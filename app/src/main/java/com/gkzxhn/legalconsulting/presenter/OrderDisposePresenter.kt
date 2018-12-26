@@ -1,11 +1,11 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import android.content.Intent
-import com.gkzxhn.legalconsulting.activity.OrderActivity
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -30,37 +30,13 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                         override fun success(t: OrderDispose) {
                             mView?.offLoadMore()
                             mView?.setLastPage(t.last, t.number)
-                            if (t.content!!.isNotEmpty()) {
-                                mView?.updateData(t.first, t.content)
-                            }
-                            mView?.showNullView(t.content!!.isEmpty(),"您还没有咨询订单")
+                            mView?.updateData(t.first, t.content)
+                            mView?.showNullView(t.content!!.isEmpty(), "您还没有咨询订单")
                         }
 
                         override fun onError(t: Throwable?) {
                             super.onError(t)
                             mView?.offLoadMore()
-                        }
-                    })
-        }
-    }
-
-
-    /****** 接受订单 ******/
-    fun acceptMyOrder(id: String) {
-        mContext?.let {
-            mModel.acceptMyOrder(it, id)
-                    .unsubscribeOn(AndroidSchedulers.mainThread())
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
-                        override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_ACCEPTED) {
-                                mContext?.showToast("接单成功")
-                                getOrderDispose("0")
-                                val intent = Intent(it, OrderActivity::class.java)
-                                intent.putExtra("orderId",id)
-                                intent.putExtra("orderState", 2)
-                                it.startActivity(intent)
-                            }
                         }
                     })
         }
@@ -76,6 +52,7 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_REFUSED) {
                                 mContext?.showToast("订单拒绝成功")
+                                RxBus.instance.post(RxBusBean.AcceptOrder(false))
                                 getOrderDispose("0")
                             }
                         }

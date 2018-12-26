@@ -68,6 +68,13 @@ class App : Application() {
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
             NimUIKit.init(this);
+//            NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
+//
+//
+//            NimUIKit.registerMsgItemViewHolder(SnapChatAttachment::class.java, MsgViewHolderCrops::class.java)
+//            Log.e("xiaowu", "注册自定义消息")
+
+
             // 设置地理位置提供者。如果需要发送地理位置消息，该参数必须提供。如果不需要，可以忽略。
             NimUIKit.setLocationProvider(MLocationProvider())
 
@@ -82,6 +89,7 @@ class App : Application() {
                 }
             }, true)
         }
+
 
     }
 

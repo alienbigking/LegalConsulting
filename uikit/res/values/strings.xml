@@ -49,7 +49,7 @@
     <string name="normal_team_invalid_tip">您已退出该讨论组</string>
     <string name="team_send_message_not_allow">您已不在该群，不能发送消息</string>
     <string name="send">发送</string>
-    <string name="unsupport_title">无法显示该内容</string>
+    <string name="unsupport_title">无法显示该内容-----</string>
     <string name="unsupport_desc">客户端版本不支持该内容</string>
     <string name="revoke_failed">发送时间超过2分钟的消息，不能被撤回</string>
     <string name="pic_and_video">图片和视频</string>

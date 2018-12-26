@@ -29,7 +29,6 @@ class AllOrderActivity : BaseActivity() {
 
     private var mAdapter: AllOrderAdapter? = null
 
-
     var loadMore = false
     var page = 0
 
@@ -48,7 +47,6 @@ class AllOrderActivity : BaseActivity() {
         getOrderDispose("0")
 
         initListener()
-
     }
 
     private fun initTopTitle() {

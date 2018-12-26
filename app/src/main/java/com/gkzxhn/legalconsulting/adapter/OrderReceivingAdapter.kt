@@ -87,6 +87,8 @@ class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapte
             tv_item_order_receiving_time.text = StringUtils.parseDate(entity.createdTime!!)
             tv_item_order_receiving_context.text = entity.description
 
+            v_item_order_receiving_type.text= ProjectUtils.categoriesConversion(entity.category!!)
+
             if (!ProjectUtils.certificationStatus()) {
                 /****** 认证未通过 按扭变成灰色 ******/
                 tv_item_order_receiving_rush.setBackgroundResource(R.drawable.shape_order_bg_select_gary)
@@ -98,17 +100,6 @@ class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapte
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
             })
-            tv_item_order_receiving_context.setLines(2)
-            tv_order_dispose_open.text = "展开"
-            tv_order_dispose_open.setOnClickListener {
-                if (tv_item_order_receiving_context.maxLines != 5) {
-                    tv_item_order_receiving_context.setLines(5)
-                    tv_order_dispose_open.text = "收起"
-                } else {
-                    tv_item_order_receiving_context.setLines(2)
-                    tv_order_dispose_open.text = "展开"
-                }
-            }
 
             tv_item_order_receiving_rush.setOnClickListener {
                 mCurrentIndex = position

@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
-import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
-import com.netease.nim.uikit.common.ToastHelper;
-
 import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.contact.ContactChangedObserver;
@@ -21,6 +17,8 @@ import com.netease.nim.uikit.api.model.team.TeamDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
 import com.netease.nim.uikit.api.model.user.UserInfoObserver;
 import com.netease.nim.uikit.business.recent.adapter.RecentContactAdapter;
+import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
+import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.CommonUtil;
 import com.netease.nim.uikit.common.badger.Badger;
@@ -32,7 +30,6 @@ import com.netease.nim.uikit.common.ui.recyclerview.listener.SimpleClickListener
 import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.msg.MsgService;
@@ -257,22 +254,22 @@ public class RecentContactsFragment extends TFragment {
         CustomAlertDialog alertDialog = new CustomAlertDialog(getActivity());
         alertDialog.setTitle(UserInfoHelper.getUserTitleName(recent.getContactId(), recent.getSessionType()));
         String title = getString(R.string.main_msg_list_delete_chatting);
-        alertDialog.addItem(title, new onSeparateItemClickListener() {
-            @Override
-            public void onClick() {
-                // 删除会话，删除后，消息历史被一起删除
-                NIMClient.getService(MsgService.class).deleteRecentContact(recent);
-                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
-                adapter.remove(position);
-
-                postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshMessages(true);
-                    }
-                });
-            }
-        });
+//        alertDialog.addItem(title, new onSeparateItemClickListener() {
+//            @Override
+//            public void onClick() {
+//                // 删除会话，删除后，消息历史被一起删除
+//                NIMClient.getService(MsgService.class).deleteRecentContact(recent);
+//                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
+//                adapter.remove(position);
+//
+//                postRunnable(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshMessages(true);
+//                    }
+//                });
+//            }
+//        });
 
         title = (CommonUtil.isTagSet(recent, RECENT_TAG_STICKY) ? getString(R.string.main_msg_list_clear_sticky_on_top) : getString(R.string.main_msg_list_sticky_on_top));
         alertDialog.addItem(title, new onSeparateItemClickListener() {
@@ -289,29 +286,29 @@ public class RecentContactsFragment extends TFragment {
             }
         });
 
-        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
-            @Override
-            public void onClick() {
-                NIMClient.getService(MsgService.class)
-                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
-                        .setCallback(new RequestCallback<Void>() {
-                            @Override
-                            public void onSuccess(Void param) {
-                                ToastHelper.showToast(getActivity(), "delete success");
-                            }
-
-                            @Override
-                            public void onFailed(int code) {
-                                ToastHelper.showToast(getActivity(), "delete failed, code:" + code);
-                            }
-
-                            @Override
-                            public void onException(Throwable exception) {
-
-                            }
-                        });
-            }
-        });
+//        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
+//            @Override
+//            public void onClick() {
+//                NIMClient.getService(MsgService.class)
+//                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
+//                        .setCallback(new RequestCallback<Void>() {
+//                            @Override
+//                            public void onSuccess(Void param) {
+//                                ToastHelper.showToast(getActivity(), "delete success");
+//                            }
+//
+//                            @Override
+//                            public void onFailed(int code) {
+//                                ToastHelper.showToast(getActivity(), "delete failed, code:" + code);
+//                            }
+//
+//                            @Override
+//                            public void onException(Throwable exception) {
+//
+//                            }
+//                        });
+//            }
+//        });
         alertDialog.show();
     }
 

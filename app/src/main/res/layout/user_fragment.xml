@@ -73,70 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_user_top_bg"/>
 
-    <!--接单设置-->
-    <View
-        android:id="@+id/v_user_get_order_bg"
-        android:layout_width="0dp"
-        android:layout_height="43dp"
-        android:background="@drawable/selector_item_white_to_gary"
-        app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
-        app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
-        app:layout_constraintTop_toTopOf="@+id/v_user_list_bg"/>
-
-
-    <ImageView
-        android:id="@+id/iv_user_get_order"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="15dp"
-        android:src="@mipmap/ic_set_jd"
-        app:layout_constraintBottom_toBottomOf="@+id/v_user_get_order_bg"
-        app:layout_constraintStart_toStartOf="@id/v_user_get_order_bg"
-        app:layout_constraintTop_toTopOf="@id/v_user_get_order_bg"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="接单设置"
-        android:textColor="#ff333333"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/v_user_get_order_bg"
-        app:layout_constraintStart_toEndOf="@id/iv_user_get_order"
-        app:layout_constraintTop_toTopOf="@id/v_user_get_order_bg"
-    />
-
-    <TextView
-        android:id="@+id/tv_user_fragment_get_order_state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_weight="1"
-        android:gravity="end"
-        android:text="接单"
-        android:textColor="#ff666666"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/v_user_get_order_bg"
-        app:layout_constraintEnd_toStartOf="@id/iv_user_get_order_end"
-        app:layout_constraintTop_toTopOf="@id/v_user_get_order_bg"
-    />
-
-    <ImageView
-        android:id="@+id/iv_user_get_order_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:src="@mipmap/ic_arrow_left"
-        app:layout_constraintBottom_toBottomOf="@+id/v_user_get_order_bg"
-        app:layout_constraintEnd_toEndOf="@id/v_user_get_order_bg"
-        app:layout_constraintTop_toTopOf="@id/v_user_get_order_bg"/>
-
-    <View
-        android:id="@+id/v_user_get_order"
-        style="@style/view_user_line"
-        app:layout_constraintTop_toBottomOf="@+id/v_user_get_order_bg"/>
-
+    <!--我的赏金-->
     <View
         android:id="@+id/v_user_my_money_bg"
         android:layout_width="0dp"
@@ -146,8 +83,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
         app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
-        app:layout_constraintTop_toBottomOf="@+id/v_user_get_order"/>
-
+        app:layout_constraintTop_toTopOf="@+id/v_user_list_bg"
+    />
 
     <ImageView
         android:id="@+id/iv_user_get_money_start"

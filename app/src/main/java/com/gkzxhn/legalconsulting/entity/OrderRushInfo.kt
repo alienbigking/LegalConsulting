@@ -25,7 +25,7 @@ class OrderRushInfo {
     var description: String? = null
     var reward: Double = 0.0
     var createdTime: String? = null
-    var categories: List<String>? = null
+    var category: String? = null
     var attachments: List<AttachmentsBean>? = null
 
 

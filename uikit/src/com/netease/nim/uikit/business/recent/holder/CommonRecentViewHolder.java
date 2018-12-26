@@ -40,6 +40,8 @@ public class CommonRecentViewHolder extends RecentViewHolder {
             }
 
             return digest;
+        } else if (recent.getMsgType() == MsgTypeEnum.custom) {
+            return "[自定义消息]";
         } else if (recent.getAttachment() != null) {
             String digest = null;
             if (getCallback() != null) {

@@ -16,9 +16,8 @@ import com.zhy.adapter.recyclerview.MultiItemTypeAdapter
 import kotlinx.android.synthetic.main.item_order_dispose.view.*
 import java.util.*
 
-
 /**
- * Explanation：
+ * Explanation： 我的 （指定单）
  * @author LSX
  * Created on 2018/9/10.
  */
@@ -49,7 +48,6 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
 
     interface ItemOrderListener {
         fun onRefusedListener()
-        fun onAcceptListener()
     }
 
     /**
@@ -80,20 +78,27 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
             val entity = mDatas[position]
             tv_order_dispose_name.text = entity.customer!!.name
             ProjectUtils.loadImage(context,entity.customer!!.avatarURL,iv_order_dispose_item)
-
+            v_item_order_receiving_type.text= ProjectUtils.categoriesConversion(entity.category!!)
             /****** 价格 ******/
             tv_main_top_end.text = "￥" + entity.reward
             tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
+            if (entity.type!="RUSH") {
+                /****** 指定单 ******/
+                tv_order_dispose_top_type.visibility=View.VISIBLE
+                tv_main_top_end.text = ""
+            }else{
+                tv_order_dispose_top_type.visibility=View.GONE
+            }
+
+
             /****** 待接单的时候 显示按扭 ******/
             if (entity.status == Constants.ORDER_STATE_PENDING_RECEIVING) {
                 tv_order_dispose_refused.visibility = View.VISIBLE
-                tv_order_dispose_accept.visibility = View.VISIBLE
                 v_order_dispose_description.visibility = View.VISIBLE
             } else {
                 tv_order_dispose_refused.visibility = View.GONE
-                tv_order_dispose_accept.visibility = View.GONE
                 v_order_dispose_description.visibility = View.GONE
             }
             holder.itemView.setOnClickListener({
@@ -105,13 +110,6 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
             tv_order_dispose_refused.setOnClickListener {
                 mCurrentIndex = position
                 onItemOrderListener?.onRefusedListener()
-            }
-
-            /****** 接单 ******/
-            tv_order_dispose_accept.setOnClickListener {
-                mCurrentIndex = position
-                onItemOrderListener?.onAcceptListener()
-
             }
         }
     }

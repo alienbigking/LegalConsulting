@@ -73,6 +73,12 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
+
+            if (entity.type != "RUSH") {
+                /****** 指定单 ******/
+                tv_order_price.text = ""
+            }
+
             when (entity.status) {
             /******  ******/
                 Constants.ORDER_STATE_PENDING_RECEIVING -> {
@@ -93,6 +99,14 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             /******  已取消 ******/
                 Constants.ORDER_STATE_CANCELLED -> {
                     tv_order_dispose_state.text = "已取消"
+                }
+            /******  待审核 ******/
+                Constants.ORDER_STATE_PENDING_APPROVAL -> {
+                    tv_order_dispose_state.text = "待审核"
+                }
+            /******  待付款 ******/
+                Constants.ORDER_STATE_PENDING_PAYMENT -> {
+                    tv_order_dispose_state.text = "待付款"
                 }
             }
             holder.itemView.setOnClickListener(android.view.View.OnClickListener {

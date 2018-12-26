@@ -44,9 +44,9 @@ class OrderModel : BaseModel(), IOrderModel {
 
     }
 
-    override fun acceptMyOrder(context: Context, id: String): Observable<OrderMyInfo> {
+    override fun acceptMyOrder(context: Context, id: String,reward:String): Observable<OrderMyInfo> {
         return RetrofitClient.Companion.getInstance(context).mApi
-                ?.acceptMyOrder(id)
+                ?.acceptMyOrder(id,reward)
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderMyInfo>
 
     }

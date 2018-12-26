@@ -9,6 +9,7 @@ import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ImageUtils
@@ -38,7 +39,6 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun initListener() {
-        v_user_get_order_bg.setOnClickListener(this)
         v_user_my_money_bg.setOnClickListener(this)
         v_user_rz_bg.setOnClickListener(this)
         v_user_all_order_bg.setOnClickListener(this)
@@ -52,12 +52,6 @@ class UserFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.v_user_get_order_bg -> {
-                val intent = Intent(context, OrderGetSettingActivity::class.java)
-                val state = if (tv_user_fragment_get_order_state.text == "忙碌") "1" else "2"
-                intent.putExtra(Constants.ORDER_GET_STATE, state)
-                context?.startActivity(intent)
-            }
             R.id.v_user_my_money_bg -> {
                 context?.startActivity(Intent(context, BountyActivity::class.java))
             }
@@ -124,8 +118,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     private fun loadUI(date: LawyersInfo) {
         tv_user_phone.text = StringUtils.phoneChange(date.phoneNumber!!)
         tv_user_name.text = date.name
-        tv_user_money.text = "￥"+date.rewardAmount
-        tv_user_fragment_get_order_state.text = if (date.serviceStatus == "BUSY") "忙碌" else "接单"
+        tv_user_money.text = "￥" + date.rewardAmount
         App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
         App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
         App.EDIT.putString(Constants.SP_REWARDAMOUNT, date.rewardAmount.toString())?.commit()
@@ -153,7 +146,8 @@ class UserFragment : BaseFragment(), View.OnClickListener {
             }
         }
 
-        RxBus.instance.post(date)
+        RxBus.instance.post(RxBusBean.HomeUserInfo(date))
+
     }
 
 }

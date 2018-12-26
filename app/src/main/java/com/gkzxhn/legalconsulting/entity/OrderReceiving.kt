@@ -30,7 +30,7 @@ class OrderReceivingContent {
     var id: String? = null
     var number: String? = null
     var customer: OrderReceivingCustomer? = null
-    var categories: List<String>? = null
+    var category: String ?= null
     var description: String? = null
     var reward: Double = 0.0
     var createdTime: String? = null

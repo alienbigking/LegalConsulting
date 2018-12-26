@@ -3,26 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
->
+    android:layout_height="match_parent">
 
     <LinearLayout
-
         android:id="@+id/ll_order_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_gary_bg"
-        android:orientation="vertical"
-    >
-
+        android:orientation="vertical">
 
         <include
             layout="@layout/default_top"/>
 
-        <ScrollView android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/main_gary_bg">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/main_gary_bg">
 
 
             <android.support.constraint.ConstraintLayout
@@ -38,6 +35,7 @@
                     android:layout_width="84dp"
                     android:layout_height="84dp"
                     android:layout_marginStart="15dp"
+                    android:src="@mipmap/ic_user_icon"
                     app:layout_constraintStart_toStartOf="parent"
                 />
 
@@ -93,39 +91,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
                     app:layout_constraintVertical_chainStyle="spread_inside"
                 />
-                <TextView
-                    android:id="@+id/tv_order_type2"
-                    android:layout_width="69dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="9dp"
-                    android:background="@drawable/shape_order_type_bg"
-                    android:gravity="center"
-                    android:text="一 一"
-                    android:textColor="#ffff6600"
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toEndOf="@id/tv_order_type1"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
-                />
-                <TextView
-                    android:id="@+id/tv_order_type3"
-                    android:layout_width="69dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="9dp"
-                    android:background="@drawable/shape_order_type_bg"
-                    android:gravity="center"
-                    android:text="一 一"
-                    android:textColor="#ffff6600"
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_order_type2"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
-                />
-
 
                 <TextView
                     android:id="@+id/tv_order_context"
@@ -208,6 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
+                    android:visibility="gone"
                     android:text="＊三天内无人接单，系统自动取消;\n   无人接单／律师拒单后，付款金额将于7个工作日内原路返回。"
                     android:textColor="#ff999999"
                     android:textSize="10sp"
@@ -222,7 +188,6 @@
                       android:background="@color/main_gary_bg"
                       app:layout_constraintBottom_toBottomOf="@id/cl_order_all"
                       app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
-
 
                 <!--白色的背影-->
                 <View android:id="@+id/v_order_white_bg"
@@ -275,6 +240,139 @@
                     app:layout_constraintTop_toBottomOf="@+id/v_order_state_name"
                 />
 
+                <!--接受指定订单的白色的背影-->
+                <View android:id="@+id/v_order_money_white_bg"
+                      android:layout_width="match_parent"
+                      android:layout_height="0dp"
+                      android:layout_marginTop="24dp"
+                      android:background="@color/white"
+                      android:visibility="gone"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
+
+                <TextView
+                    android:id="@+id/tv_order_money_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="咨询费用"
+                    android:textColor="#ff264c90"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/v_order_money_white_bg"
+                />
+
+                <View
+                    android:id="@+id/v_order_money_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFD9D9D9"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_order_money_title"/>
+
+                <TextView
+                    android:id="@+id/tv_order_money_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="指定订单由律师输入咨询费用！"
+                    android:textColor="#ff666666"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/v_order_money_title"
+                />
+
+
+                <TextView
+                    android:id="@+id/tv_order_money_title3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginBottom="100dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:text="输入金额："
+                    android:textColor="#ff333333"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/v_order_money_white_bg"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_order_money_title2"
+                />
+                <EditText
+                    android:id="@+id/et_order_money"
+                    android:layout_width="239dp"
+                    android:layout_height="34dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/shape_order_money_bg"
+                    android:gravity="center_vertical"
+                    android:hint="最低金额不低于20"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="15dp"
+                    android:textColor="#ff333333"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/tv_order_money_title3"
+                    app:layout_constraintTop_toTopOf="@+id/tv_order_money_title3"
+                />
+
+
+                <!--指定单的选择-->
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/cl_order_bottom_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/main_gary_bg"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/et_order_money"
+                >
+                    <TextView
+                        android:id="@+id/tv_order_reject"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="25dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="36dp"
+                        android:background="@drawable/shape_order_bottom_bg"
+                        android:gravity="center"
+                        android:text="取消订单"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_order_accept"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="spread"
+                    />
+
+                    <TextView
+                        android:id="@+id/tv_order_accept"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/shape_order_bottom_bg"
+                        android:gravity="center"
+                        android:text="接受咨询"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_order_reject"
+                        app:layout_constraintTop_toTopOf="@+id/tv_order_reject"
+                    />
+
+                </android.support.constraint.ConstraintLayout>
+
 
             </android.support.constraint.ConstraintLayout>
 
@@ -295,53 +393,15 @@
             android:textSize="14sp"
             android:visibility="gone"
         />
-
-        <!--指定单的选择-->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/cl_order_bottom_select"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/main_gary_bg"
-            android:visibility="gone"
-        >
-            <TextView
-                android:id="@+id/tv_order_reject"
-                android:layout_width="100dp"
-                android:layout_height="44dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/shape_order_bottom_bg"
-                android:gravity="center"
-                android:text="拒绝"
-                android:textColor="#FF666666"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_order_accept"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_chainStyle="spread"
-            />
-
-            <TextView
-                android:id="@+id/tv_order_accept"
-                android:layout_width="100dp"
-                android:layout_height="44dp"
-                android:background="@drawable/shape_order_bottom_bg2"
-                android:gravity="center"
-                android:text="接受"
-                android:textColor="#FF525BA3"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_order_reject"
-            />
-
-        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
     <!--大图-->
-    <ImageView android:id="@+id/iv_order_big"
-               android:background="@color/black"
-               android:visibility="gone"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
+    <ImageView
+        android:id="@+id/iv_order_big"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone"
     />
 
 </FrameLayout>

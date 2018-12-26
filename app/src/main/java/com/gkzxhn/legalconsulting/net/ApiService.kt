@@ -31,7 +31,7 @@ interface ApiService {
     fun getImInfo(): Observable<ImInfo>
 
       //    获取网易云信的账号
-    @GET("/im/users/getAccount/{username}")
+    @GET("im/users/{username}/account")
     fun getImAccount(@Path("username") username: String): Observable<ImInfo>
 
     /**
@@ -135,7 +135,7 @@ interface ApiService {
 
     //  接单
     @POST("lawyer/my/legal-advice/{id}/accepted")
-    fun acceptMyOrder(@Path("id") id: String): Observable<OrderMyInfo>
+    fun acceptMyOrder(@Path("id") id: String, @Query("reward") reward: String): Observable<OrderMyInfo>
 
     //  拒绝单
     @POST("lawyer/my/legal-advice/{id}/refused")

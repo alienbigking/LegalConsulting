@@ -50,8 +50,9 @@ package com.gkzxhn.legalconsulting.entity
         var description: String? = null
         var reward: Double = 0.0
         var createdTime: String? = null
+        var type: String? = null
         var receivingTime: Any? = null
-        var categories: List<String>? = null
+        var category: String?= null
 
         class CustomerBean {
             /**

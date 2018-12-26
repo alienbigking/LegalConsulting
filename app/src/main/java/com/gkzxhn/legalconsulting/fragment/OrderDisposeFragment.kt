@@ -10,7 +10,6 @@ import com.gkzxhn.legalconsulting.adapter.OrderDisposeAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
-import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.OrderDispose
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.presenter.OrderDisposePresenter
@@ -60,7 +59,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         }
 
         /****** 接受更新的律师信息 ******/
-        RxBus.instance.toObserverable(LawyersInfo::class.java)
+        RxBus.instance.toObserverable(RxBusBean.HomeUserInfo::class.java)
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -85,6 +84,17 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     mPresenter.getOrderDispose("0")
+                }, {
+                    it.message.toString().logE(this)
+                })
+
+        /****** 收到抢单成功的消息 ******/
+        RxBus.instance.toObserverable(RxBusBean.AcceptOrder::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter.getOrderDispose("0")
+
                 }, {
                     it.message.toString().logE(this)
                 })
@@ -148,10 +158,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 mPresenter.rejectMyOrder(data.id!!)
             }
 
-            override fun onAcceptListener() {
-                val data = mAdapter!!.getCurrentItem()
-                mPresenter.acceptMyOrder(data.id!!)
-            }
         })
     }
 
@@ -174,7 +180,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         } else {
             tv_order_disposer_null.visibility = View.GONE
         }
-
     }
 
 

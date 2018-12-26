@@ -21,9 +21,10 @@ interface OrderView : BaseView {
     fun setOrderStateColor(color: Int)
     fun setBottomSelectVisibility(visibility: Int)
     fun setShowOrderInfo(visibility: Int, time: String, name: String)
-    fun setOrderType(str1: String, str2: String, str3: String)
+    fun setOrderType(str1: String)
     fun setImage1(bitmap: Bitmap)
     fun setImage2(bitmap: Bitmap)
     fun setOrderNumber(time: String)
-    fun setOrderImage(avatarURL: String)
+    fun setOrderImage(avatarURL: String?)
+    fun getOrderMoeny(): String
 }

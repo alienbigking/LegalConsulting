@@ -5,9 +5,11 @@ import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.OrderMyInfo
 import com.gkzxhn.legalconsulting.entity.OrderRushInfo
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -45,9 +47,9 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
                             mView?.setNextText("抢单")
-                            mView?.setOrderImage(t.customer?.avatarURL!!)
+                            mView?.setOrderImage(t.customer?.avatarURL)
                             mView?.setOrderState("已支付")
-                            mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
+//                            mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
                             if (t.attachments!!.isNotEmpty() && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image1" + ".jpg", t.attachments!![0].thumb!!.toString())?.let { it1 -> mView?.setImage1(it1) }
@@ -56,10 +58,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             if (t.attachments!!.size > 1 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
                             }
-                            val str1 = ProjectUtils.categoriesConversion(t.categories!![0])
-                            val str2 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 1) t.categories!![1] else "")
-                            val str3 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 2) t.categories!![2] else "")
-                            mView?.setOrderType(str1, str2, str3)
+                            val str1 = ProjectUtils.categoriesConversion(t.category!!)
+                            mView?.setOrderType(str1)
                         }
                     })
         }
@@ -86,7 +86,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
         mView?.setOrderNumber(t.number.toString())
-        mView?.setOrderImage(t.customer?.avatarURL!!)
+        mView?.setOrderImage(t.customer?.avatarURL)
 
         userName = t.customer?.username!!
         if (t.attachments!!.isNotEmpty() && t.attachments != null) {
@@ -96,13 +96,17 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
             ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
         }
 
-        val str1 = ProjectUtils.categoriesConversion(t.categories!![0])
-        val str2 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 1) t.categories!![1] else "")
-        val str3 = ProjectUtils.categoriesConversion(if (t.categories!!.size > 2) t.categories!![2] else "")
-        mView?.setOrderType(str1, str2, str3)
+        if (t.type == "ASSIGN") {
+            /****** 指定单 ******/
+            mView?.setReward("")
+        }
+
+        val str1 = ProjectUtils.categoriesConversion(t.category!!)
+        mView?.setOrderType(str1)
         when (t.status) {
         /****** 待接单 ******/
             Constants.ORDER_STATE_PENDING_RECEIVING -> {
+                mView?.setOrderState("待接单")
                 mView?.setShowOrderInfo(View.GONE, "", "")
                 mView?.setBottomSelectVisibility(View.VISIBLE)
             }
@@ -110,7 +114,6 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
             Constants.ORDER_STATE_ACCEPTED -> {
                 mView?.setShowOrderInfo(View.VISIBLE, "接单时间：" + StringUtils.parseDate(t.acceptedTime), "已接单（" + t.lawyer?.name!! + "律师）")
                 mView?.setBottomSelectVisibility(View.GONE)
-
                 mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
             }
         /****** 已完成 ******/
@@ -120,14 +123,27 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
             }
         /******  已拒绝 ******/
             Constants.ORDER_STATE_REFUSED -> {
-                mView?.setOrderState("已退款")
+                mView?.setOrderState("已拒绝")
+                mView?.setBottomSelectVisibility(View.GONE)
                 mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
-                mView?.setShowOrderInfo(View.VISIBLE, "拒单时间" + StringUtils.parseDate(t.acceptedTime), "拒接单" + t.lawyer?.name!!)
-
+                mView?.setShowOrderInfo(View.GONE, "拒单时间" + StringUtils.parseDate(t.acceptedTime), "拒接单(" + t.lawyer?.name!!+ "律师）")
             }
         /******  已取消 ******/
             Constants.ORDER_STATE_CANCELLED -> {
                 mView?.setOrderState("已取消")
+                mView?.setShowOrderInfo(View.GONE, "", "")
+                mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
+            }
+        /******  待付款 ******/
+            Constants.ORDER_STATE_PENDING_PAYMENT -> {
+                mView?.setOrderState("待付款")
+                mView?.setBottomSelectVisibility(View.GONE)
+                mView?.setShowOrderInfo(View.GONE, "", "")
+                mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
+            }
+        /******  待审核 ******/
+            Constants.ORDER_STATE_PENDING_APPROVAL -> {
+                mView?.setOrderState("待审核")
                 mView?.setShowOrderInfo(View.GONE, "", "")
                 mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
             }
@@ -155,14 +171,31 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
 
     /****** 接受订单 ******/
     fun acceptMyOrder(id: String) {
+        val orderMoeny = mView?.getOrderMoeny()
+        if (orderMoeny?.isEmpty()!!) {
+            mContext?.showToast("请输入金额再操作")
+            return
+        }
+
+        if (orderMoeny.startsWith(".")) {
+            mContext?.showToast("该金额输入不合法")
+            return
+        }
+
+        if (orderMoeny.toDouble() < 20) {
+            mContext?.showToast("金额不能少于20")
+            return
+        }
+
         mContext?.let {
-            mModel.acceptMyOrder(it, id)
+            mModel.acceptMyOrder(it, id,orderMoeny)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
                         override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_ACCEPTED) {
+                            if (t.status == Constants.ORDER_STATE_PENDING_PAYMENT) {
                                 mContext?.showToast("接单成功")
+                                RxBus.instance.post(RxBusBean.AcceptOrder(true))
                                 initOrderInfo(t)
                             }
                         }
@@ -180,6 +213,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_REFUSED) {
                                 initOrderInfo(t)
+                                RxBus.instance.post(RxBusBean.AcceptOrder(false))
                                 mContext?.showToast("订单拒绝成功")
                             }
                         }

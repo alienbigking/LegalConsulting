@@ -12,8 +12,8 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 5
-        versionName "0.1.5"
+        versionCode 6
+        versionName "0.1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -100,6 +100,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     // 网易云信 添加依赖。注意，版本号必须一致。
     implementation project(path: ':uikit')
+    implementation files('src/main/libs/alipaySdk-15.5.9-20181123210601.aar')
     implementation files('src/main/libs/AMap2DMap_3.0.0_AMapSearch_3.6.1_AMapLocation_3.2.1_20161228.jar')
 }
 

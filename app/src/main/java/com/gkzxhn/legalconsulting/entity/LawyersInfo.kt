@@ -29,5 +29,6 @@ data class LawyersInfo(
         var serviceStatus: String? ,
         var lawOffice: String? ,
         var level: String? ,
-        var description: String?
+        var description: String?,
+        var categories: List<String>?
 )

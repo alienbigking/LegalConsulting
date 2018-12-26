@@ -22,7 +22,6 @@ class OrderActivity : BaseActivity(), OrderView {
     var bitmap1: Bitmap? = null
     var bitmap2: Bitmap? = null
 
-
     override fun provideContentViewId(): Int {
         return R.layout.activity_oder
     }
@@ -93,8 +92,10 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_name.text = name
     }
 
-    override fun setOrderImage(avatarURL: String) {
-        ProjectUtils.loadImage(this, avatarURL, iv_oder_icon)
+    override fun setOrderImage(avatarURL: String?) {
+        if (avatarURL != null) {
+            ProjectUtils.loadImage(this, avatarURL, iv_oder_icon)
+        }
     }
 
 
@@ -102,20 +103,16 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_time.text = time
     }
 
+    override fun getOrderMoeny(): String {
+        return et_order_money.text.trim().toString()
+    }
+
     override fun setOrderNumber(time: String) {
         tv_order_number.text = "编号：$time"
     }
 
-    override fun setOrderType(str1: String, str2: String, str3: String) {
+    override fun setOrderType(str1: String) {
         tv_order_type1.text = str1
-        if (str2.isNotEmpty()) {
-            tv_order_type2.visibility = View.VISIBLE
-            tv_order_type2.text = str2
-        }
-        if (str3.isNotEmpty()) {
-            tv_order_type3.visibility = View.VISIBLE
-            tv_order_type3.text = str3
-        }
     }
 
     override fun setReward(reward: String) {
@@ -153,6 +150,12 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setBottomSelectVisibility(visibility: Int) {
         cl_order_bottom_select.visibility = visibility
+        v_order_money_white_bg.visibility = visibility
+        et_order_money.visibility = visibility
+        tv_order_money_title3.visibility = visibility
+        tv_order_money_title2.visibility = visibility
+        v_order_money_title.visibility = visibility
+        tv_order_money_title.visibility = visibility
     }
 
     override fun setShowOrderInfo(visibility: Int, time: String, name: String) {
