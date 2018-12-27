@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.model.iml
 
 import android.content.Context
+import com.gkzxhn.legalconsulting.entity.AlipayInfo
 import com.gkzxhn.legalconsulting.model.IWithdrawModel
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
@@ -23,6 +24,12 @@ class WithdrawModel : BaseModel(), IWithdrawModel {
         return RetrofitClientLogin.Companion.getInstance(context).mApi
                 ?.getCode(phone)
                 ?.subscribeOn(Schedulers.io()) as Observable<Response<Void>>
+    }
+
+    override fun getAlipayInfo(context: Context): Observable<AlipayInfo> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.getAlipayInfo()
+                ?.subscribeOn(Schedulers.io()) as Observable<AlipayInfo>
     }
 
     override fun withdrawAli(context: Context, body: RequestBody): Observable<Response<Void>> {

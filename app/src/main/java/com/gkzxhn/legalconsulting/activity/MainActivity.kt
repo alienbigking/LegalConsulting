@@ -1,9 +1,12 @@
 package com.gkzxhn.legalconsulting.activity
 
+import android.content.Intent
+import android.util.Log
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.App.Companion.mContext
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.fragment.BaseFragment
 import com.gkzxhn.legalconsulting.fragment.ConversationFragment
@@ -12,6 +15,10 @@ import com.gkzxhn.legalconsulting.fragment.UserFragment
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.ObtainVersion
+import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nimlib.sdk.NimIntent
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
+import com.netease.nimlib.sdk.msg.model.IMMessage
 import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 import kotlinx.android.synthetic.main.activity_main.tv_main_conversation as mainConversation
@@ -46,6 +53,7 @@ class MainActivity : BaseActivity() {
         vpMain.offscreenPageLimit = 3
 
         updateApp()
+        onParseIntent()
 
     }
 
@@ -116,5 +124,32 @@ class MainActivity : BaseActivity() {
                     }
                 })
     }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        onParseIntent()
+    }
+
+
+    fun onParseIntent() {
+        Log.e("xiaowu", "onParseIntent")
+        if (intent.hasExtra(NimIntent.EXTRA_NOTIFY_CONTENT)) {
+            Log.e("xiaowu", "onParseIntent2")
+            var message = intent.getSerializableExtra(NimIntent.EXTRA_NOTIFY_CONTENT) as IMMessage
+            Log.e("xiaowu", "sessionType:" + message.sessionType)
+            when (message.sessionType) {
+
+                SessionTypeEnum.P2P -> {
+                    Log.e("xiaowu", "3333333")
+                    NimUIKit.startP2PSession(mContext, message.sessionId)
+
+                }
+                else -> {
+
+                }
+            }
+        }
+    }
+
 
 }

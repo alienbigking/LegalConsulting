@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.WithdrawThirdActivity
+import com.gkzxhn.legalconsulting.entity.AlipayInfo
 import com.gkzxhn.legalconsulting.model.IWithdrawModel
 import com.gkzxhn.legalconsulting.model.iml.WithdrawModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
@@ -34,7 +35,7 @@ import java.util.*
 class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IWithdrawModel, WithdrawView>(context, WithdrawModel(), view) {
 
     fun sendCode() {
-        if (mView?.getMoney()!!.isNotEmpty() && mView?.getName()!!.isNotEmpty() && mView?.getAccount()!!.isNotEmpty()) {
+        if (mView?.getMoney()!!.isNotEmpty()) {
             mContext?.let {
                 mModel.getCode(it, mView?.getPhone()!!)
                         .unsubscribeOn(AndroidSchedulers.mainThread())
@@ -55,8 +56,23 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
         }
     }
 
+
+    fun getAlipayInfo() {
+            mContext?.let {
+                mModel.getAlipayInfo(it)
+                        .unsubscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe(object : HttpObserver<AlipayInfo>(it) {
+                            override fun success(t: AlipayInfo) {
+                                mView?.setPayInfo(t.nickName!!)
+                            }
+
+                        })
+            }
+    }
+
     fun withdraw() {
-        if (mView?.getMoney()!!.isNotEmpty() && mView?.getName()!!.isNotEmpty() && mView?.getAccount()!!.isNotEmpty() && mView?.getCode()!!.isNotEmpty()) {
+        if (mView?.getMoney()!!.isNotEmpty() && mView?.getCode()!!.isNotEmpty()) {
             /****** 服务器没做限制  会报错 所以这里加一个限制 保险 ******/
             if (mView?.getMoney()!!.toDouble() < 1) {
                 mContext?.showToast("提现金额不能小于1")
@@ -64,8 +80,6 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
             }
 
             var map = LinkedHashMap<String, Any>()
-            map["payeeAccount"] = mView?.getAccount().toString()
-            map["payeeRealName"] = mView?.getName().toString()
             map["amount"] = mView?.getMoney()!!.toDouble()
             map["verificationCode"] = mView?.getCode().toString()
             var body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
@@ -80,7 +94,7 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
                                     it.showToast("提现成功")
                                     val intent = Intent(mContext, WithdrawThirdActivity::class.java)
                                     intent.putExtra("pay_type", 1)
-                                    intent.putExtra("pay_Account", mView?.getAccount().toString())
+                                    intent.putExtra("pay_Account", mView?.getName().toString())
                                     intent.putExtra("money", mView?.getMoney()!!.toDouble().toString())
                                     mContext?.startActivity(intent)
                                     mView?.onFinish()
@@ -148,7 +162,6 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
 //            checkSelect(ivOne, ivTwo, 2)
         }
         tvVerify.setOnClickListener {
-            mView?.setPayType(payType)
             dialog.dismiss()
         }
         ivBack.setOnClickListener {

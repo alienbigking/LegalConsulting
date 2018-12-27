@@ -305,6 +305,20 @@ public class NimUIKit {
      */
     public static void startP2PSession(Context context, String account) {
         NimUIKitImpl.startP2PSession(context, account);
+
+        NimUIKit.setMsgForwardFilter(new MsgForwardFilter() {
+            @Override
+            public boolean shouldIgnore(IMMessage message) {
+                return false;
+            }
+        });
+
+        NimUIKit.setMsgRevokeFilter(new MsgRevokeFilter() {
+            @Override
+            public boolean shouldIgnore(IMMessage message) {
+                return false;
+            }
+        });
     }
 
     /**

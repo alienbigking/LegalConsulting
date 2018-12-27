@@ -30,7 +30,7 @@ interface ApiService {
     @GET("im/users/me")
     fun getImInfo(): Observable<ImInfo>
 
-      //    获取网易云信的账号
+    //    获取网易云信的账号
     @GET("im/users/{username}/account")
     fun getImAccount(@Path("username") username: String): Observable<ImInfo>
 
@@ -123,7 +123,7 @@ interface ApiService {
 
     //    获取我的咨询列表
     @GET("lawyer/my/legal-advice/latest")
-    fun getOrderDispose(@Query("page") page: String, @Query("size") size:  String): Observable<OrderDispose>
+    fun getOrderDispose(@Query("page") page: String, @Query("size") size: String): Observable<OrderDispose>
 
     //    获取我的咨询列表（所有订单）
     @GET("lawyer/my/legal-advice")
@@ -140,5 +140,17 @@ interface ApiService {
     //  拒绝单
     @POST("lawyer/my/legal-advice/{id}/refused")
     fun rejectMyOrder(@Path("id") id: String): Observable<OrderMyInfo>
+
+    //  查询我的支付宝绑定
+    @GET("/lawyer/alipay")
+    fun getAlipayInfo(): Observable<AlipayInfo>
+
+    //  获取支付宝授权参数信息的签名
+    @GET("/lawyer/alipay/auth/sign")
+    fun getAlipaySign(): Observable<AlipaySign>
+
+    // 绑定支付宝
+    @POST("/lawyer/alipay/bind")
+    fun bingAlipay( @Query("authCode") authCode: String): Observable<Response<Void>>
 
 }

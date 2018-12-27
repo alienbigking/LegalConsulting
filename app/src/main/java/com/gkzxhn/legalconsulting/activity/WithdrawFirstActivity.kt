@@ -27,16 +27,6 @@ import java.util.concurrent.TimeUnit
 
 class WithdrawFirstActivity : BaseActivity(), WithdrawView {
 
-    override fun setPayType(i: Int) {
-        if (i == 1) {
-            tv_withdraw_pay.text = "支付宝"
-            iv_withdraw_pay_ic.setImageDrawable(resources.getDrawable(R.mipmap.ic_pay_ali))
-        } else {
-            iv_withdraw_pay_ic.setImageDrawable(resources.getDrawable(R.mipmap.ic_pay_weichat))
-            tv_withdraw_pay.text = "微信"
-        }
-
-    }
 
 
     lateinit var mPresenter: WithdrawPresenter
@@ -46,7 +36,7 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_withdraw_send)
         mPresenter = WithdrawPresenter(this, this)
-
+        mPresenter.getAlipayInfo()
         et_withdraw_1_money.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -66,14 +56,12 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
                     val money = s.toString().toDouble() * 0.75
                     if (s.toString().toDouble() < 1) {
                         tv_withdraw_1_money_end.text = "提现金额不能小于1"
-                    }else{
+                    } else {
                         val format = StringUtils.formatStringTwo(money)
                         tv_withdraw_1_money_end.text = "实际到账$format"
                     }
                 }
-
             }
-
         })
     }
 
@@ -101,23 +89,19 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
             R.id.tv_withdraw_get_code -> {
                 mPresenter.sendCode()
             }
-            R.id.tv_withdraw_pay -> {
-                mPresenter.showDialog()
-            }
         }
     }
 
-    override fun getAccount(): String {
-        return et_withdraw_1_alipay.text.trim().toString()
-    }
-
     override fun getName(): String {
-        return et_withdraw_1_name.text.trim().toString()
-
+        return tv_withdraw_1_name.text.trim().toString()
     }
 
     override fun getMoney(): String {
         return et_withdraw_1_money.text.trim().toString()
+    }
+
+    override fun setPayInfo(name: String) {
+        tv_withdraw_1_name.text = name
     }
 
     override fun getCode(): String {

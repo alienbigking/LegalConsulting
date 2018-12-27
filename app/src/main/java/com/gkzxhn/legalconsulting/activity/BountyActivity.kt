@@ -1,18 +1,12 @@
 package com.gkzxhn.legalconsulting.activity
 
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.os.Handler
-import android.os.Message
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import com.alipay.sdk.app.AuthTask
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.common.App
-import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.entity.AuthResult
+import com.gkzxhn.legalconsulting.presenter.BountyPresenter
 import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.view.BountyView
 import kotlinx.android.synthetic.main.activity_bounty.*
 import kotlinx.android.synthetic.main.default_top.*
 
@@ -22,7 +16,14 @@ import kotlinx.android.synthetic.main.default_top.*
  * @date：2018/10/11 1:39 PM
  * @description：我的赏金
  */
-class BountyActivity : BaseActivity() {
+class BountyActivity : BaseActivity(), BountyView {
+
+
+    override fun finishActivity() {
+        finish()
+    }
+
+    lateinit var mPresenter: BountyPresenter
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_bounty
@@ -30,11 +31,12 @@ class BountyActivity : BaseActivity() {
 
     override fun init() {
         initTopTitle()
+        mPresenter = BountyPresenter(this, this)
+        mPresenter.getLawyersInfo()
     }
 
     private fun initTopTitle() {
         tv_default_top_title.text = "我的赏金"
-        tv_bounty_money.text = App.SP.getString(Constants.SP_REWARDAMOUNT, "").toString()
 
         iv_default_top_back.setOnClickListener {
             finish()
@@ -43,59 +45,41 @@ class BountyActivity : BaseActivity() {
 
     fun onClickBounty(view: View) {
         when (view.id) {
+        /****** 提现 ******/
             R.id.v_bounty_get_money -> {
-                startActivity(Intent(this, WithdrawFirstActivity::class.java))
-                finish()
+                mPresenter.getMoney()
+
             }
             R.id.v_bounty_money_list -> {
                 startActivity(Intent(this, MoneyListActivity::class.java))
             }
+        /****** 绑定支付宝 ******/
             R.id.v_bounty_get_alipay -> {
-                bindAlipay()
+                mPresenter.getAlipaySign()
             }
         }
     }
 
-    private fun bindAlipay() {
-        val authInfo = "ZqboZsfW079b5RU%2BaLyo0QVMGWCj6EIzz0vnrVemPuHbRGesPefRL1l2rMfdwG2YvVNw7%2B%2FgwCzpXbznHvUmms05EkCf3VQ%2Bw5SA5SIPp9E49eKzoaK1vYISkIrXr5FNcTm7w%2FV4Mf2TTT3yI5n%2BNxUvkbI8cRSQgeyS1atdLfw%3D"
-        val authRunnable = Runnable {
-            // 构造AuthTask 对象
-            val authTask = AuthTask(this)
-            // 调用授权接口，获取授权结果
-            val result = authTask.authV2(authInfo, true)
-            val msg = Message()
-            msg.what = 100
-            msg.obj = result
-            mHandler.sendMessage(msg)
-        }
-        // 必须异步调用
-        val authThread = Thread(authRunnable)
-        authThread.start()
+    override fun getActivity(): Activity {
+        return this
     }
 
-    @SuppressLint("HandlerLeak")
-    private val mHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                100 -> {
-                    val authResult = AuthResult(msg.obj as Map<String, String>, true)
-                    val resultStatus = authResult.getResultStatus()
-                    Log.e("xiaowu", authResult.toString() + "__" + resultStatus)
-                    // 判断resultStatus 为“9000”且result_code
-                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
-                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
-                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
-                        // 传入，则支付账户为该授权账户
-                        showToast("OK")
-                    } else {
-                        // 其他状态值则为授权失败
-                        showToast("error")
-                    }
-                }
-                else -> {
-                }
-            }
-        }
+    override fun setMoney(money: String) {
+        tv_bounty_money.text = money
+
     }
+
+    override fun setBindState(bindState: String) {
+        tv_bounty_bind_state.text=bindState
+    }
+     override fun getsign():String {
+         if (sign.text.trim().toString().isEmpty()) {
+             showToast("别为空")
+             return "9999"
+         }
+         return sign.text.trim().toString()
+    }
+
+
 
 }

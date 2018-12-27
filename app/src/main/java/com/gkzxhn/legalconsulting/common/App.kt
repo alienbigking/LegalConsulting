@@ -26,7 +26,6 @@ import com.gkzxhn.legalconsulting.utils.location.helper.MLocationProvider
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nim.uikit.common.util.sys.ScreenUtil
 import com.netease.nimlib.sdk.NIMClient
-import com.netease.nimlib.sdk.Observer
 import com.netease.nimlib.sdk.SDKOptions
 import com.netease.nimlib.sdk.StatusBarNotificationConfig
 import com.netease.nimlib.sdk.auth.LoginInfo
@@ -79,14 +78,12 @@ class App : Application() {
             NimUIKit.setLocationProvider(MLocationProvider())
 
             // 如果有自定义通知是作用于全局的，不依赖某个特定的 Activity，那么这段代码应该在 Application 的 onCreate 中就调用
-            NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification(object : Observer<CustomNotification> {
-                override fun onEvent(p0: CustomNotification?) {
-                    initNotification(p0!!)
-                    /****** 保存数据到数据库 ******/
-                    GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,p0?.sessionId,p0?.fromAccount, p0?.time!!,p0.content))
-                    RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
-
-                }
+            NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification({ p0 ->
+                initNotification(p0!!)
+                /****** 保存数据到数据库 ******/
+                /****** 保存数据到数据库 ******/
+                GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,p0.sessionId,p0.fromAccount, p0.time,p0.content))
+                RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
             }, true)
         }
 
@@ -153,7 +150,7 @@ class App : Application() {
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         val config = StatusBarNotificationConfig()
         config.notificationEntrance = MainActivity::class.java // 点击通知栏跳转到该Activity
-        config.notificationSmallIconId = R.drawable.notification_icon_background
+//        config.notificationSmallIconId = R.drawable.notification_icon_background
         // 呼吸灯配置
         config.ledARGB = Color.GREEN
         config.ledOnMs = 1000
@@ -183,7 +180,7 @@ class App : Application() {
             }
 
             override fun getUserInfo(account: String): UserInfo? {
-                return null
+                return NimUIKit.getUserInfoProvider().getUserInfo(account)
             }
 
             fun getTeamIcon(tid: String): Bitmap? {

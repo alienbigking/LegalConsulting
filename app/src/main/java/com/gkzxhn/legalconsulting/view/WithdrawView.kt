@@ -7,7 +7,6 @@ package com.gkzxhn.legalconsulting.view
  */
 
 interface WithdrawView : BaseView {
-    fun getAccount(): String
     fun getName(): String
     fun getMoney(): String
     fun getCode(): String
@@ -15,5 +14,5 @@ interface WithdrawView : BaseView {
     fun startCountDown(int: Int)
     fun onFinish()
     fun getPhone(): String
-    fun setPayType(i: Int)
+    fun setPayInfo(name: String)
 }

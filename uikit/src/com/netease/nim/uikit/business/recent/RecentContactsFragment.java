@@ -17,8 +17,6 @@ import com.netease.nim.uikit.api.model.team.TeamDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
 import com.netease.nim.uikit.api.model.user.UserInfoObserver;
 import com.netease.nim.uikit.business.recent.adapter.RecentContactAdapter;
-import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
-import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.CommonUtil;
 import com.netease.nim.uikit.common.badger.Badger;
@@ -183,19 +181,8 @@ public class RecentContactsFragment extends TFragment {
                     NimUIKit.startTeamSession(getActivity(), recent.getContactId());
                 } else if (recent.getSessionType() == SessionTypeEnum.P2P) {
                     NimUIKit.startP2PSession(getActivity(), recent.getContactId());
-                    NimUIKit.setMsgForwardFilter(new MsgForwardFilter() {
-                        @Override
-                        public boolean shouldIgnore(IMMessage message) {
-                            return false;
-                        }
-                    });
 
-                    NimUIKit.setMsgRevokeFilter(new MsgRevokeFilter() {
-                        @Override
-                        public boolean shouldIgnore(IMMessage message) {
-                            return false;
-                        }
-                    });
+                    
                 }
             }
 

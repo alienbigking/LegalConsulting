@@ -121,7 +121,6 @@ class UserFragment : BaseFragment(), View.OnClickListener {
         tv_user_money.text = "￥" + date.rewardAmount
         App.EDIT.putString(Constants.SP_PHONE, date.phoneNumber)?.commit()
         App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
-        App.EDIT.putString(Constants.SP_REWARDAMOUNT, date.rewardAmount.toString())?.commit()
         App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
 
         /****** 如果图片和上次一致就不转化了 ******/

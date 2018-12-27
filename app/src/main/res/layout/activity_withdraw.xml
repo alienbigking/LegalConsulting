@@ -28,104 +28,30 @@
                   app:layout_constraintTop_toTopOf="parent"
             />
 
-
-            <TextView
-                android:id="@+id/tv_withdraw_1_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
-                android:text="到账平台"
-                android:textColor="#FF333333"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@id/v_withdraw_1_bg"
-                app:layout_constraintTop_toTopOf="@id/v_withdraw_1_bg"
-                app:layout_goneMarginStart="20dp"
-            />
-
-
             <ImageView
                 android:id="@+id/iv_withdraw_pay_ic"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="5dp"
-                android:src="@mipmap/ic_pay_ali"
-                app:layout_constraintBottom_toBottomOf="@id/tv_withdraw_1_start"
-                app:layout_constraintEnd_toStartOf="@id/tv_withdraw_pay"
-                app:layout_constraintTop_toTopOf="@id/tv_withdraw_1_start"/>
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/ic_user_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/v_withdraw_1_bg"/>
+
 
             <TextView
-                android:id="@+id/tv_withdraw_pay"
+                android:id="@+id/tv_withdraw_1_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:onClick="onClickWithdraw"
-                android:src="@mipmap/ic_arrow_left"
-                android:text="支付宝"
-                app:layout_constraintBottom_toBottomOf="@id/tv_withdraw_1_start"
-                app:layout_constraintEnd_toStartOf="@id/iv_withdraw_pay"
-                app:layout_constraintTop_toTopOf="@id/tv_withdraw_1_start"/>
-            <ImageView
-
-                android:id="@+id/iv_withdraw_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@mipmap/ic_arrow_left"
-                app:layout_constraintBottom_toBottomOf="@id/tv_withdraw_1_start"
-                app:layout_constraintEnd_toEndOf="@id/v_withdraw_1_bg"
-                app:layout_constraintTop_toTopOf="@id/tv_withdraw_1_start"/>
-
-            <EditText
-                android:id="@+id/et_withdraw_1_alipay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@null"
-                android:hint="请输入账号"
-                android:lines="1"
-                android:maxLength="25"
+                android:layout_marginTop="26dp"
+                android:text="---"
                 android:textColor="#ff999999"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/tv_withdraw_1_start"
-                app:layout_constraintTop_toBottomOf="@id/tv_withdraw_1_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_withdraw_pay_ic"
             />
 
-            <View android:id="@+id/v_withdraw_1_alipay"
-                  android:layout_width="0dp"
-                  android:layout_height="1dp"
-                  android:layout_marginEnd="20dp"
-                  android:layout_marginStart="20dp"
-                  android:layout_marginTop="15dp"
-                  android:background="#FFEAEBEE"
-                  app:layout_constraintEnd_toEndOf="@id/v_withdraw_1_bg"
-                  app:layout_constraintStart_toStartOf="@id/v_withdraw_1_bg"
-                  app:layout_constraintTop_toBottomOf="@id/et_withdraw_1_alipay"/>
-            <EditText
-                android:id="@+id/et_withdraw_1_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@null"
-                android:hint="请输入姓名"
-                android:lines="1"
-                android:maxLength="15"
-                android:textColor="#ff999999"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/tv_withdraw_1_start"
-                app:layout_constraintTop_toBottomOf="@id/v_withdraw_1_alipay"
-            />
-
-            <View android:id="@+id/v_withdraw_1_name"
-                  android:layout_width="0dp"
-                  android:layout_height="1dp"
-                  android:layout_marginEnd="20dp"
-                  android:layout_marginStart="20dp"
-                  android:layout_marginTop="15dp"
-                  android:background="#FFEAEBEE"
-                  app:layout_constraintEnd_toEndOf="@id/v_withdraw_1_bg"
-                  app:layout_constraintStart_toStartOf="@id/v_withdraw_1_bg"
-                  app:layout_constraintTop_toBottomOf="@id/et_withdraw_1_name"/>
 
             <!--提现金额-->
 
@@ -139,7 +65,7 @@
                 android:textColor="#FF333333"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@id/v_withdraw_1_bg"
-                app:layout_constraintTop_toBottomOf="@id/v_withdraw_1_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_withdraw_1_name"
                 app:layout_goneMarginStart="20dp"
             />
 

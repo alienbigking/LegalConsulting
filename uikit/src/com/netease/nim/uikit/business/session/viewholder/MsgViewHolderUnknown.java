@@ -1,6 +1,5 @@
 package com.netease.nim.uikit.business.session.viewholder;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import com.netease.nim.uikit.R;
@@ -53,8 +52,7 @@ public class MsgViewHolderUnknown extends MsgViewHolderBase {
         message.getPushContent();
         message.getRemoteExtension();
         message.getAttachment();
-        message.getTeamMsgUnAckCount();
-        Log.e("xiaowu", message.toString());
+        message.getRemoteExtension();
         message.getRemoteExtension();
     }
 }
