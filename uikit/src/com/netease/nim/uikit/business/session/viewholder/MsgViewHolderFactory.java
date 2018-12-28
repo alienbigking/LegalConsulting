@@ -1,5 +1,6 @@
 package com.netease.nim.uikit.business.session.viewholder;
 
+import com.netease.nim.uikit.business.session.viewholder.robot.myselfeAttachment;
 import com.netease.nimlib.sdk.msg.attachment.AudioAttachment;
 import com.netease.nimlib.sdk.msg.attachment.ImageAttachment;
 import com.netease.nimlib.sdk.msg.attachment.LocationAttachment;
@@ -31,6 +32,7 @@ public class MsgViewHolderFactory {
         register(LocationAttachment.class, MsgViewHolderLocation.class);
         register(NotificationAttachment.class, MsgViewHolderNotification.class);
         register(RobotAttachment.class, MsgViewHolderRobot.class);
+        register(myselfeAttachment.class, MsgViewHolderUnknown2.class);
     }
 
     public static void register(Class<? extends MsgAttachment> attach, Class<? extends MsgViewHolderBase> viewHolder) {
@@ -48,6 +50,7 @@ public class MsgViewHolderFactory {
             return tipMsgViewHolder == null ? MsgViewHolderUnknown.class : tipMsgViewHolder;
         } else {
             Class<? extends MsgViewHolderBase> viewHolder = null;
+            message.getMsgType();
             if (message.getAttachment() != null) {
                 Class<? extends MsgAttachment> clazz = message.getAttachment().getClass();
                 while (viewHolder == null && clazz != null) {

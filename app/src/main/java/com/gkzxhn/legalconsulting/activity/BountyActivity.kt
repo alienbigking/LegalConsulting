@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.BountyPresenter
-import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.BountyView
 import kotlinx.android.synthetic.main.activity_bounty.*
 import kotlinx.android.synthetic.main.default_top.*
@@ -17,7 +16,6 @@ import kotlinx.android.synthetic.main.default_top.*
  * @description：我的赏金
  */
 class BountyActivity : BaseActivity(), BountyView {
-
 
     override fun finishActivity() {
         finish()
@@ -66,20 +64,20 @@ class BountyActivity : BaseActivity(), BountyView {
 
     override fun setMoney(money: String) {
         tv_bounty_money.text = money
-
     }
 
     override fun setBindState(bindState: String) {
-        tv_bounty_bind_state.text=bindState
-    }
-     override fun getsign():String {
-         if (sign.text.trim().toString().isEmpty()) {
-             showToast("别为空")
-             return "9999"
-         }
-         return sign.text.trim().toString()
+        tv_bounty_bind_state.text = bindState
     }
 
-
+    override fun changeBingState(bindState: Boolean) {
+        if (bindState) {
+            tv_bounty_bind_state.text = "已绑定"
+            tv_bounty_bind_state.setTextColor(resources.getColor(R.color.bind_blue))
+        } else {
+            tv_bounty_bind_state.text = "未绑定"
+            tv_bounty_bind_state.setTextColor(resources.getColor(R.color.bind_gary))
+        }
+    }
 
 }

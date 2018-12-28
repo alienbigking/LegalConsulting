@@ -160,6 +160,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                         override fun success(t: OrderMyInfo) {
                             if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("抢单成功")
+                                RxBus.instance.post(RxBusBean.HomePoint(true))
                                 initOrderInfo(t)
                             } else {
                                 mContext?.showToast("抢单失败")

@@ -9,11 +9,11 @@ import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseMultiItemFetchLo
 /**
  * Created by zhoujianghua on 2015/8/6.
  */
-public class MsgViewHolderUnknown extends MsgViewHolderBase {
+public class MsgViewHolderUnknown2 extends MsgViewHolderBase {
 
     protected TextView title;
 
-    public MsgViewHolderUnknown(BaseMultiItemFetchLoadAdapter adapter) {
+    public MsgViewHolderUnknown2(BaseMultiItemFetchLoadAdapter adapter) {
         super(adapter);
     }
 
@@ -29,10 +29,7 @@ public class MsgViewHolderUnknown extends MsgViewHolderBase {
 
     @Override
     protected void bindContentView() {
-        message.getAttachStatus();
         myselfeAttachment attachment = (myselfeAttachment) message.getAttachment();
-
-        message.getAttachment();
         message.getPushContent();
     }
 }

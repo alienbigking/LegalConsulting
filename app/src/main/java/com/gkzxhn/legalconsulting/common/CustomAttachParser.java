@@ -28,11 +28,7 @@ public class CustomAttachParser implements MsgAttachmentParser {
 //                    attachment = new GuessAttachment();
 //                    break;
                 case CustomAttachmentType.xiaowu:
-
                     return new SnapChatAttachment(data);
-//                case CustomAttachmentType.Sticker:
-//                    attachment = new StickerAttachment();
-//                    break;
 //                case CustomAttachmentType.RTS:
 //                    attachment = new RTSAttachment();
 //                    break;

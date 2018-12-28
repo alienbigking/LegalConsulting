@@ -182,7 +182,7 @@ public class RecentContactsFragment extends TFragment {
                 } else if (recent.getSessionType() == SessionTypeEnum.P2P) {
                     NimUIKit.startP2PSession(getActivity(), recent.getContactId());
 
-                    
+
                 }
             }
 

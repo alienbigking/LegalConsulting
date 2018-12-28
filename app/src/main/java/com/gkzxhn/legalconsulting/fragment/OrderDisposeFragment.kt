@@ -32,7 +32,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 
     private var mAdapter: OrderDisposeAdapter? = null
 
-    lateinit var mPresenter: OrderDisposePresenter
+     var mPresenter: OrderDisposePresenter?=null
 
     var loadMore = false
     var page = 0
@@ -83,7 +83,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    mPresenter.getOrderDispose("0")
+                    mPresenter?.getOrderDispose("0")
                 }, {
                     it.message.toString().logE(this)
                 })
@@ -93,7 +93,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    mPresenter.getOrderDispose("0")
+                    mPresenter?.getOrderDispose("0")
 
                 }, {
                     it.message.toString().logE(this)
@@ -108,7 +108,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             rcl_order_disposer.adapter = mAdapter
             val decoration = DisplayUtils.dp2px(App.mContext, 15f)
             rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-            mPresenter.getOrderDispose("0")
+            mPresenter?.getOrderDispose("0")
         }
         recyclerViewListener()
 
@@ -119,7 +119,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 if (loadMore) {
-                    mPresenter.getOrderDispose((page + 1).toString())
+                    mPresenter?.getOrderDispose((page + 1).toString())
                 } else {
                     offLoadMore()
                 }
@@ -129,7 +129,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                mPresenter.getOrderDispose("0")
+                mPresenter?.getOrderDispose("0")
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -155,7 +155,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         mAdapter?.setOnItemOrderListener(object : OrderDisposeAdapter.ItemOrderListener {
             override fun onRefusedListener() {
                 val data = mAdapter!!.getCurrentItem()
-                mPresenter.rejectMyOrder(data.id!!)
+                mPresenter?.rejectMyOrder(data.id!!)
             }
 
         })
@@ -180,6 +180,14 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         } else {
             tv_order_disposer_null.visibility = View.GONE
         }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            mPresenter?.getOrderDispose("0")
+        }
+
     }
 
 

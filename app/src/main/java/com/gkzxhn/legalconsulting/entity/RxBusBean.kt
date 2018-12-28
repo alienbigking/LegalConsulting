@@ -10,7 +10,7 @@ class RxBusBean {
 
     var id: String? = null
 
-    class HomePoint(var show: Boolean,var number: Number)
+    class HomePoint(var show: Boolean)
     /****** 拒绝订单 true为接受 false为拒绝 ******/
     class AcceptOrder(var show: Boolean)
     class HomeTopRedPoint(var show: Boolean)

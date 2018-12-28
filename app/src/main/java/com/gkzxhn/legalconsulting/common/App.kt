@@ -24,11 +24,15 @@ import com.gkzxhn.legalconsulting.net.ApiService
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.location.helper.MLocationProvider
 import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderUnknown
+import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderUnknown2
+import com.netease.nim.uikit.business.session.viewholder.robot.myselfeAttachment
 import com.netease.nim.uikit.common.util.sys.ScreenUtil
 import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.SDKOptions
 import com.netease.nimlib.sdk.StatusBarNotificationConfig
 import com.netease.nimlib.sdk.auth.LoginInfo
+import com.netease.nimlib.sdk.msg.MsgService
 import com.netease.nimlib.sdk.msg.MsgServiceObserve
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.CustomNotification
@@ -67,10 +71,10 @@ class App : Application() {
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
             NimUIKit.init(this);
-//            NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
-//
-//
-//            NimUIKit.registerMsgItemViewHolder(SnapChatAttachment::class.java, MsgViewHolderCrops::class.java)
+            /****** 注册自定义消息 ******/
+            NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
+            NimUIKit.registerMsgItemViewHolder(myselfeAttachment::class.java, MsgViewHolderUnknown2::class.java)
+            NimUIKit.registerMsgItemViewHolder(myselfeAttachment::class.java, MsgViewHolderUnknown::class.java)
 //            Log.e("xiaowu", "注册自定义消息")
 
 
@@ -80,7 +84,6 @@ class App : Application() {
             // 如果有自定义通知是作用于全局的，不依赖某个特定的 Activity，那么这段代码应该在 Application 的 onCreate 中就调用
             NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification({ p0 ->
                 initNotification(p0!!)
-                /****** 保存数据到数据库 ******/
                 /****** 保存数据到数据库 ******/
                 GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,p0.sessionId,p0.fromAccount, p0.time,p0.content))
                 RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))

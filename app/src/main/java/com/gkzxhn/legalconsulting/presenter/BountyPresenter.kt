@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.alipay.sdk.app.AuthTask
 import com.gkzxhn.legalconsulting.activity.WithdrawFirstActivity
+import com.gkzxhn.legalconsulting.entity.AlipaySign
 import com.gkzxhn.legalconsulting.entity.AuthResult
 import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.IBountyModel
@@ -26,30 +27,27 @@ import rx.android.schedulers.AndroidSchedulers
  */
 
 class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBountyModel, BountyView>(context, BountyModel(), view) {
-    var isBind: Boolean = true
 
+    var isBind: Boolean = true
     /**
      * @methodName： created by liushaoxiang on 2018/12/27 9:30 AM.
      * @description：
      */
     fun getAlipaySign() {
-        if (mView?.getsign()!!.isEmpty()) {
-            mContext?.showToast("别为空")
-            return
+        if (isBind) {
+            unbingAlipay()
+        } else {
+            mContext?.let {
+                mModel.getAlipaySign(it)
+                        .unsubscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe(object : HttpObserver<AlipaySign>(mContext!!) {
+                            override fun success(t: AlipaySign) {
+                                bindAlipay(t.sign!!)
+                            }
+                        })
+            }
         }
-        bindAlipay(mView?.getsign()!!)
-//        mContext?.let {
-//            mModel.getAlipaySign(it)
-//                    .unsubscribeOn(AndroidSchedulers.mainThread())
-//                    ?.observeOn(AndroidSchedulers.mainThread())
-//                    ?.subscribe(object : HttpObserver<AlipaySign>(mContext!!) {
-//                        override fun success(t: AlipaySign) {
-////                            mContext?.showToast("sign:"+t.sign)
-////                            bindAlipay(t.sign!!)
-//                            bindAlipay("apiname=com.alipay.account.auth&;app_id=2018122562681680&;app_name=%E6%B3%95%E5%BE%8B%E5%92%A8%E8%AF%A2&;auth_type=LOGIN&;biz_type=%E6%94%AF%E4%BB%98%E5%AE%9D%E7%BB%91%E5%AE%9A&;method=alipay.open.auth.sdk.code.get&;pid=2088121417397335&;product_id=APP_FAST_LOGIN&;scope=auth_user&;sign=K8a14WkhEa0KeMMo4vBWnYafTTHRIfLSSDZ1zGDJdH5jB1PkmglQHYvc1Be7ehBIH6yFPxU6yDGmo%2FMLE57I6KWSPi4KLNPyIgrMAkdW1ASJVtg2KwNNRn4b2MFPbPXdq2VDs08xhM3CzKAv7C3rfEyuXPTS%2FpKXXjDKgHBGYZOqquuCGWw7Ydpqz4qVtiXsbKhOKDFFjWV2b%2FtpInS%2FXdonTp60uNF6BzhXx8m0aQhweMXKvOwQBEKftUuM8WjkQHsVdPSiNwxadSqTeRG9DroQxD3uZNUpXWAGmhldyegEuYt2YD%2FqdLjMtFfKDJ%2FSnt7C8qnaddlsT5S4voVhxg%3D%3D&;sign_type=RSA&;target_id=989989bd73a74850a10646045231b428")
-//                        }
-//                    })
-//        }
     }
 
     /**
@@ -65,9 +63,33 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
                         override fun success(t: Response<Void>) {
                             if (t.code() == 204) {
                                 mContext?.showToast("绑定成功")
+                                getLawyersInfo()
+                            } else {
+                                mContext?.showToast("服务器异常 code:" + t.code())
                             }
                         }
+                    })
+        }
+    }
 
+    /**
+     * @methodName： created by liushaoxiang on 2018/12/27 9:30 AM.
+     * @description：解绑支付宝
+     */
+    fun unbingAlipay() {
+        mContext?.let {
+            mModel.unbingAlipay(it)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<Response<Void>>(mContext!!) {
+                        override fun success(t: Response<Void>) {
+                            if (t.code() == 204) {
+                                mContext?.showToast("解绑成功")
+                                getLawyersInfo()
+                            } else {
+                                mContext?.showToast("服务器异常 code:" + t.code())
+                            }
+                        }
                     })
         }
     }
@@ -84,6 +106,8 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<LawyersInfo>(mContext!!) {
                         override fun success(t: LawyersInfo) {
+                            isBind = t.alipayBind!!
+                            mView?.changeBingState(isBind)
                             mView?.setMoney(t.rewardAmount.toString())
                         }
                     })
@@ -112,7 +136,6 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
         } else {
             mContext?.showToast("请先绑定支付宝")
         }
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -121,19 +144,17 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
             when (msg.what) {
                 100 -> {
                     val authResult = AuthResult(msg.obj as Map<String, String>, true)
-                    val resultStatus = authResult.getResultStatus()
-                    Log.e("xiaowu", authResult.toString() + "__" + resultStatus)
+                    val resultStatus = authResult.resultStatus
+                    Log.e("xiaowu", authResult.toString())
                     // 判断resultStatus 为“9000”且result_code
                     // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
                     if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
                         // 获取alipay_open_id，调支付时作为参数extern_token 的value
                         // 传入，则支付账户为该授权账户
-                        mContext?.showToast("成功" + authResult.authCode)
                         bingAlipay(authResult.authCode)
                     } else {
                         // 其他状态值则为授权失败
-                        mContext?.showToast("失败代码：" + resultStatus)
-                        bingAlipay(resultStatus)
+                        mContext?.showToast("授权失败：$resultStatus")
                     }
                 }
                 else -> {
@@ -142,6 +163,4 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
             }
         }
     }
-
-
 }

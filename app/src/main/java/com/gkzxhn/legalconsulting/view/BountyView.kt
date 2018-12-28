@@ -11,8 +11,7 @@ import android.app.Activity
 interface BountyView : BaseView {
     fun getActivity():Activity
     fun finishActivity()
-
     fun setMoney(money: String)
     fun setBindState(bindState: String)
-    fun getsign(): String
+    fun changeBingState(bindState: Boolean)
 }

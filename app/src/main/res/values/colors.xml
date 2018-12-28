@@ -47,5 +47,7 @@
     <color name="home_top_green">#FF5159A2</color>
     <color name="order_red">#FFCB0101</color>
     <color name="g_child_page_bg_color">#FFFFFF</color>
+    <color name="bind_blue">#ff5159a2</color>
+    <color name="bind_gary">#ff666666</color>
 
 </resources>

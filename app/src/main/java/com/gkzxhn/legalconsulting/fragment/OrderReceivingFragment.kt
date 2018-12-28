@@ -29,7 +29,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
 
     private var mAdapter: OrderReceivingAdapter? = null
 
-    lateinit var mPresenter: OrderReceivingPresenter
+    var mPresenter: OrderReceivingPresenter? = null
 
 
     var loadMore = false
@@ -51,7 +51,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         rcl_order_receiving.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_order_receiving.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
-        mPresenter.getOrderReceiving("0")
+        mPresenter?.getOrderReceiving("0")
 
 
         /****** 收到抢单成功的消息 ******/
@@ -59,7 +59,9 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    mPresenter.getOrderReceiving("0")
+                    if (ProjectUtils.certificationStatus()) {
+                        mPresenter?.getOrderReceiving("0")
+                    }
                 }, {
                     it.message.toString().logE(this)
                 })
@@ -70,7 +72,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 if (loadMore) {
-                    mPresenter.getOrderReceiving((page + 1).toString())
+                    mPresenter?.getOrderReceiving((page + 1).toString())
                 } else {
                     offLoadMore()
                 }
@@ -80,7 +82,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                mPresenter.getOrderReceiving("0")
+                mPresenter?.getOrderReceiving("0")
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -98,7 +100,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                     intent.putExtra("orderId", data.id)
                     intent.putExtra("orderState", 1)
                     startActivity(intent)
-                }else{
+                } else {
                     context?.showToast("您认证尚未通过，不能进行此操作！")
                 }
             }
@@ -108,7 +110,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         mAdapter?.setOnItemRushListener(object : OrderReceivingAdapter.ItemRushListener {
             override fun onRushListener() {
                 if (ProjectUtils.certificationStatus()) {
-                    mPresenter.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
+                    mPresenter?.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
                 } else {
                     context?.showToast("您认证尚未通过，不能进行此操作！")
                 }
@@ -128,6 +130,15 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
 
     override fun showNullView(show: Boolean) {
         tv_item_order_receiving_bull.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+
+            mPresenter?.getOrderReceiving("0")
+        }
+
     }
 
 }

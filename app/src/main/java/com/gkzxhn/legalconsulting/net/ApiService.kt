@@ -151,6 +151,10 @@ interface ApiService {
 
     // 绑定支付宝
     @POST("/lawyer/alipay/bind")
-    fun bingAlipay( @Query("authCode") authCode: String): Observable<Response<Void>>
+    fun bingAlipay(@Query("authCode") authCode: String): Observable<Response<Void>>
+
+    // 绑定支付宝
+    @POST("/lawyer/alipay/unbind")
+    fun unbingAlipay(): Observable<Response<Void>>
 
 }

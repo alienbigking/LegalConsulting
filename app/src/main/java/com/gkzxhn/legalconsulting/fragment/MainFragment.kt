@@ -199,6 +199,9 @@ class MainFragment : BaseFragment() {
         resources.getColor(R.color.main_top_blue).let { it1 -> tvEditOrder.setTextColor(it1) }
         vSelectLine1.visibility = View.INVISIBLE
         vSelectLine2.visibility = View.VISIBLE
+        /****** 通知订单刷新 ******/
+//        RxBus.instance.post(RxBusBean.HomePoint(true))
+
     }
 
     private fun selectOneItem() {
@@ -206,6 +209,10 @@ class MainFragment : BaseFragment() {
         resources.getColor(R.color.main_top_gary).let { it1 -> tvEditOrder.setTextColor(it1) }
         vSelectLine1.visibility = View.VISIBLE
         vSelectLine2.visibility = View.INVISIBLE
+
+        /****** 通知订单刷新 ******/
+//        RxBus.instance.post(RxBusBean.HomePoint(true))
+
     }
 
     override fun onResume() {

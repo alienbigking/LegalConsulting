@@ -30,5 +30,6 @@ data class LawyersInfo(
         var lawOffice: String? ,
         var level: String? ,
         var description: String?,
+        var alipayBind: Boolean?,
         var categories: List<String>?
 )

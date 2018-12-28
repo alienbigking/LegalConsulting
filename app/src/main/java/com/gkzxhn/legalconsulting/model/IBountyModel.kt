@@ -19,4 +19,5 @@ interface IBountyModel : IBaseModel {
     fun getAlipaySign(context: Context): Observable<AlipaySign>
     fun bingAlipay(context: Context, authCode: String): Observable<Response<Void>>
     fun getLawyersInfo(context: Context): Observable<LawyersInfo>
+    fun unbingAlipay(context: Context): Observable<Response<Void>>
 }

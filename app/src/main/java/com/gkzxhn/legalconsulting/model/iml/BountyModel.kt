@@ -32,6 +32,13 @@ class BountyModel : BaseModel(), IBountyModel {
                 as Observable<Response<Void>>
     }
 
+    override fun unbingAlipay(context: Context): Observable<Response<Void>> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.unbingAlipay()
+                ?.subscribeOn(Schedulers.io())
+                as Observable<Response<Void>>
+    }
+
     override fun getLawyersInfo(context: Context): Observable<LawyersInfo> {
         return RetrofitClient.getInstance(context).mApi?.getLawyersInfo()
                 ?.subscribeOn(Schedulers.io()) as Observable<LawyersInfo>
