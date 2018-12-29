@@ -144,6 +144,49 @@ object ImageUtils {
     }
 
     /**
+     * base64转为bitmap
+     * @param base64Data
+     * @return
+     */
+    fun base64ToBitmap(base64Data: String): Bitmap {
+
+        val bytes = Base64.decode(base64Data, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    }
+
+    fun bitmapToBase64(bitmap: Bitmap?): String? {
+
+        var result: String? = null
+        var baos: ByteArrayOutputStream? = null
+        try {
+            if (bitmap != null) {
+                baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+                baos.flush()
+                baos.close()
+
+                val bitmapBytes = baos.toByteArray()
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush()
+                    baos.close()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+        return result
+    }
+
+
+    /**
      * 质量压缩图片，图片占用内存减小，像素数不变，常用于上传
      * @param size 期望图片的大小，单位为kb
      * @param file

@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.utils
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.view.MotionEvent
 import android.view.View
@@ -10,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
@@ -108,9 +110,20 @@ object ProjectUtils {
 
     fun loadImage(context: Context?, avatarURL: String?, imageview: ImageView?) {
         if (avatarURL != null) {
-            Glide.with(context).load("$avatarURL?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a")
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
-                    .into(imageview)
+            if (avatarURL.length < 200) {
+                Glide.with(context).load("$avatarURL?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a")
+                        .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
+                        .into(imageview)
+            } else {
+                val base64Bitmap = ImageUtils.base64ToBitmap(avatarURL.substring(Constants.BASE_64_START.length))
+                var baos = ByteArrayOutputStream()
+                base64Bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                var bytes = baos.toByteArray()
+                Glide.with(context).load(bytes)
+                        .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
+                        .into(imageview)
+            }
+
         }
     }
 }

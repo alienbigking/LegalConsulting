@@ -33,7 +33,10 @@ class NotificationActivity : BaseActivity() {
     override fun init() {
         initTopTitle()
         mAdapter = NotificationInfoAdapter(this)
-        rcl_money_list.layoutManager = LinearLayoutManager(this, 1, false)
+        val linearLayoutManager = LinearLayoutManager(this, 1, false)
+        linearLayoutManager.stackFromEnd = true;//列表再底部开始展示，反转后由上面开始展示
+        linearLayoutManager.reverseLayout = true;//列表翻转
+        rcl_money_list.layoutManager = linearLayoutManager
         rcl_money_list.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 0f)
         rcl_money_list.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))

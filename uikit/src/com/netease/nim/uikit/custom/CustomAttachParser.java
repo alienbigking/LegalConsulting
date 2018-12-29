@@ -1,4 +1,4 @@
-package com.gkzxhn.legalconsulting.common;
+package com.netease.nim.uikit.custom;
 
 import android.util.Log;
 
@@ -22,33 +22,23 @@ public class CustomAttachParser implements MsgAttachmentParser {
             JSONObject object = JSON.parseObject(json);
             int type = object.getInteger(KEY_TYPE);
             JSONObject data = object.getJSONObject(KEY_DATA);
-            Log.e("xiaowu", type + "___" + data);
+            Log.e("xiaowu type：", type + "___" + object);
             switch (type) {
-//                case CustomAttachmentType.Guess:
-//                    attachment = new GuessAttachment();
-//                    break;
-                case CustomAttachmentType.xiaowu:
-                    return new SnapChatAttachment(data);
-//                case CustomAttachmentType.RTS:
-//                    attachment = new RTSAttachment();
-//                    break;
-//                case CustomAttachmentType.RedPacket:
-//                    attachment = new RedPacketAttachment();
-//                    break;
-//                case CustomAttachmentType.OpenedRedPacket:
-//                    attachment = new RedPacketOpenedAttachment();
+                case CustomAttachmentType.mysafe:
+                    attachment = new MySafeAttachment();
+                    break;
                 default:
                     attachment = new DefaultCustomAttachment();
                     break;
             }
-
-            if (attachment != null) {
+            if (data != null) {
                 attachment.fromJson(data);
+            }else {
+                attachment.fromJson(object);
             }
         } catch (Exception e) {
 
         }
-
         return attachment;
     }
 

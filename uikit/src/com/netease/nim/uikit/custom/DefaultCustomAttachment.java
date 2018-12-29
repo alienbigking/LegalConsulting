@@ -1,4 +1,4 @@
-package com.gkzxhn.legalconsulting.common;
+package com.netease.nim.uikit.custom;
 
 import com.alibaba.fastjson.JSONObject;
 

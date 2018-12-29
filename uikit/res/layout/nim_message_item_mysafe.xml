@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/message_item_myself_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nim_message_item_round_bg2"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/message_item_image_safe"
+        android:layout_width="38dp"
+        android:background="#D7E3F9FF"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/nim_unsupport_mime_type"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dip"
+        android:layout_marginEnd="4dip"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/message_item_image_safe"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_item_title_myself"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="240dp"
+            android:gravity="left"
+            android:lines="2"
+            android:layout_marginEnd="6dp"
+            android:text="----------------------------------------------"
+            android:textColor="#ff666666"
+            android:textSize="12sp"
+            tools:ignore="RtlHardcoded"/>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -47,7 +47,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
                             mView?.setNextText("抢单")
-                            mView?.setOrderImage(t.customer?.avatarURL)
+                            mView?.setOrderImage(t.customer?.avatarThumb)
                             mView?.setOrderState("已支付")
 //                            mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
@@ -86,7 +86,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
         mView?.setOrderNumber(t.number.toString())
-        mView?.setOrderImage(t.customer?.avatarURL)
+        mView?.setOrderImage(t.customer?.avatarThumb)
 
         userName = t.customer?.username!!
         if (t.attachments!!.isNotEmpty() && t.attachments != null) {
@@ -96,7 +96,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
             ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
         }
 
-        if (t.type == "ASSIGN") {
+        if (t.type == Constants.ASSIGN) {
             /****** 指定单 ******/
             mView?.setReward("")
         }

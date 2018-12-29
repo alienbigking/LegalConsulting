@@ -50,6 +50,7 @@ class OrderMyInfo {
         var name: String? = null
         var username: String? = null
         var avatarURL: String? = null
+        var avatarThumb: String? = null
     }
 
     class LawyerBean {

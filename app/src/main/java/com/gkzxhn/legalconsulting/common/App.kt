@@ -24,10 +24,10 @@ import com.gkzxhn.legalconsulting.net.ApiService
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.utils.location.helper.MLocationProvider
 import com.netease.nim.uikit.api.NimUIKit
-import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderUnknown
-import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderUnknown2
-import com.netease.nim.uikit.business.session.viewholder.robot.myselfeAttachment
 import com.netease.nim.uikit.common.util.sys.ScreenUtil
+import com.netease.nim.uikit.custom.CustomAttachParser
+import com.netease.nim.uikit.custom.MsgViewHolderMySafe
+import com.netease.nim.uikit.custom.MySafeAttachment
 import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.SDKOptions
 import com.netease.nimlib.sdk.StatusBarNotificationConfig
@@ -73,8 +73,7 @@ class App : Application() {
             NimUIKit.init(this);
             /****** 注册自定义消息 ******/
             NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
-            NimUIKit.registerMsgItemViewHolder(myselfeAttachment::class.java, MsgViewHolderUnknown2::class.java)
-            NimUIKit.registerMsgItemViewHolder(myselfeAttachment::class.java, MsgViewHolderUnknown::class.java)
+            NimUIKit.registerMsgItemViewHolder(MySafeAttachment::class.java, MsgViewHolderMySafe::class.java)
 //            Log.e("xiaowu", "注册自定义消息")
 
 

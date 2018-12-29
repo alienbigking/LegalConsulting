@@ -3,7 +3,6 @@ package com.netease.nim.uikit.business.session.viewholder;
 import android.widget.TextView;
 
 import com.netease.nim.uikit.R;
-import com.netease.nim.uikit.business.session.viewholder.robot.myselfeAttachment;
 import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseMultiItemFetchLoadAdapter;
 
 /**
@@ -30,10 +29,6 @@ public class MsgViewHolderUnknown extends MsgViewHolderBase {
     @Override
     protected void bindContentView() {
         message.getAttachStatus();
-        myselfeAttachment attachment = (myselfeAttachment) message.getAttachment();
-
-        message.getAttachment();
-        message.getPushContent();
     }
 }
 

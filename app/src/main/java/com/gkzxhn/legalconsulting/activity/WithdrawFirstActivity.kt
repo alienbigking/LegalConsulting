@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -100,8 +103,11 @@ class WithdrawFirstActivity : BaseActivity(), WithdrawView {
         return et_withdraw_1_money.text.trim().toString()
     }
 
-    override fun setPayInfo(name: String) {
+    override fun setPayInfo(name: String, avatar: String?) {
         tv_withdraw_1_name.text = name
+        Glide.with(this).load(avatar)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
+                .into(iv_withdraw_pay_ic)
     }
 
     override fun getCode(): String {

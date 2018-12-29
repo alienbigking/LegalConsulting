@@ -1,4 +1,4 @@
-package com.gkzxhn.legalconsulting.common;
+package com.netease.nim.uikit.custom;
 
 /**
  * Created by zhoujianghua on 2015/4/9.
@@ -11,5 +11,5 @@ public interface CustomAttachmentType {
     int RTS = 4;
     int RedPacket = 5;
     int OpenedRedPacket = 6;
-    int xiaowu = 100;
+    int mysafe = 111;
 }

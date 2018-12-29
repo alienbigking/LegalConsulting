@@ -53,7 +53,7 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
     /**
      * 更新数据
      */
-    fun updateItems(clear:Boolean,mDatas: List<OrderDispose.ContentBean>?) {
+    fun updateItems(clear: Boolean, mDatas: List<OrderDispose.ContentBean>?) {
         if (clear) {
             this.mDatas.clear()
         }
@@ -77,19 +77,19 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
         with(holder.itemView) {
             val entity = mDatas[position]
             tv_order_dispose_name.text = entity.customer!!.name
-            ProjectUtils.loadImage(context,entity.customer!!.avatarURL,iv_order_dispose_item)
-            v_item_order_receiving_type.text= ProjectUtils.categoriesConversion(entity.category!!)
+            ProjectUtils.loadImage(context, entity.customer!!.avatarThumb, iv_order_dispose_item)
+            v_item_order_receiving_type.text = ProjectUtils.categoriesConversion(entity.category!!)
             /****** 价格 ******/
             tv_main_top_end.text = "￥" + entity.reward
             tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
-            if (entity.type!="RUSH") {
+            if (entity.type != Constants.RUSH) {
                 /****** 指定单 ******/
-                tv_order_dispose_top_type.visibility=View.VISIBLE
+                tv_order_dispose_top_type.visibility = View.VISIBLE
                 tv_main_top_end.text = ""
-            }else{
-                tv_order_dispose_top_type.visibility=View.GONE
+            } else {
+                tv_order_dispose_top_type.visibility = View.GONE
             }
 
 

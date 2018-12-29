@@ -14,5 +14,5 @@ interface WithdrawView : BaseView {
     fun startCountDown(int: Int)
     fun onFinish()
     fun getPhone(): String
-    fun setPayInfo(name: String)
+    fun setPayInfo(name: String, avatar: String?)
 }

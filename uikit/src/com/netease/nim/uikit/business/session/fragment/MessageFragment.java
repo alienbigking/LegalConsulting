@@ -15,6 +15,7 @@ import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.business.ait.AitManager;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
 import com.netease.nim.uikit.business.session.actions.ImageAction;
+import com.netease.nim.uikit.business.session.actions.MySelfAction;
 import com.netease.nim.uikit.business.session.actions.VideoAction;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.module.Container;
@@ -380,6 +381,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
         List<BaseAction> actions = new ArrayList<>();
         actions.add(new ImageAction());
         actions.add(new VideoAction());
+        actions.add(new MySelfAction());
 //        位置暂时关闭
 //        actions.add(new LocationAction());
 

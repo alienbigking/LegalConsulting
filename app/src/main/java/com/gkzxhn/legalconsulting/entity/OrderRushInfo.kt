@@ -40,6 +40,7 @@ class OrderRushInfo {
         var name: String? = null
         var phoneNumber: String? = null
         var avatarURL: String? = null
+        var avatarThumb: String? = null
     }
 
     class AttachmentsBean {

@@ -64,7 +64,7 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
                         ?.observeOn(AndroidSchedulers.mainThread())
                         ?.subscribe(object : HttpObserver<AlipayInfo>(it) {
                             override fun success(t: AlipayInfo) {
-                                mView?.setPayInfo(t.nickName!!)
+                                mView?.setPayInfo(t.nickName!!,t.avatar)
                             }
 
                         })
