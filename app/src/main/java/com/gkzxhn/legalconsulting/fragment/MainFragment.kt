@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.RadioGroup
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
@@ -19,6 +18,7 @@ import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.logE
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.google.gson.Gson
+import com.netease.nim.uikit.common.ui.widget.SwitchButton
 import kotlinx.android.synthetic.main.main_fragment.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -90,6 +90,18 @@ class MainFragment : BaseFragment() {
                 }, {
                     it.message.toString().logE(this)
                 })
+
+
+//        st_main_order_state.setChecked(false)
+//        st_main_order_state.setSwitchTextAppearance(context, R.style.s_true)
+//        st_main_order_state.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+//            //控制开关字体颜色
+//            if (b) {
+//                st_main_order_state.setSwitchTextAppearance(context, R.style.s_true)
+//            } else {
+//                st_main_order_state.setSwitchTextAppearance(context, R.style.s_false)
+//            }
+//        })
     }
 
     private fun loadTopUI() {
@@ -109,8 +121,20 @@ class MainFragment : BaseFragment() {
         }
 
         var busy = serviceStatus == "BUSY"
-        rb_home_line.isChecked = !busy
-        rb_home_line_no.isChecked = busy
+        st_home_get_order_state.isChecked = !busy
+        st_home_get_order_state.setOnCheckedChangeListener(object : SwitchButton.OnChangedListener, CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    setOrderState("RECEIVING")
+                } else {
+                    setOrderState("BUSY")
+                }
+            }
+
+            override fun OnChanged(v: View?, checkState: Boolean) {
+            }
+
+        })
 
         val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
@@ -173,24 +197,6 @@ class MainFragment : BaseFragment() {
             }
         })
 
-        rg_home_get_order_state.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when (checkedId) {
-                    R.id.rb_home_line -> {
-                        setOrderState("RECEIVING")
-                    }
-                    R.id.rb_home_line_no -> {
-                        setOrderState("BUSY")
-                    }
-                }
-            }
-
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-
-        })
 
     }
 

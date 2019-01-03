@@ -202,42 +202,20 @@
         app:layout_constraintTop_toTopOf="@id/v_home_get_order_bg"
     />
 
-
-    <RadioGroup
-        android:id="@+id/rg_home_get_order_state"
+    <Switch
+        android:id="@+id/st_home_get_order_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:orientation="horizontal"
+        android:checked="true"
+        android:layout_marginEnd="16dp"
+        android:switchMinWidth="20dp"
+        android:thumb="@drawable/thumb"
+        android:track="@drawable/track"
         app:layout_constraintBottom_toBottomOf="@id/v_home_get_order_bg"
         app:layout_constraintEnd_toEndOf="@id/v_home_get_order_bg"
         app:layout_constraintTop_toTopOf="@id/v_home_get_order_bg"
-    >
 
-        <RadioButton
-            android:id="@+id/rb_home_line"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:button="@drawable/selector_sex_check"
-            android:checked="true"
-            android:paddingStart="5dp"
-            android:text="在线"
-            android:textSize="12sp"/>
-
-        <RadioButton
-            android:id="@+id/rb_home_line_no"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="26dp"
-            android:layout_weight="1"
-            android:button="@drawable/selector_sex_check"
-            android:paddingStart="5dp"
-            android:text="忙碌"
-            android:textSize="12sp"/>
-
-    </RadioGroup>
+    />
     <!--切换tab-->
 
     <View
@@ -341,5 +319,6 @@
     >
 
     </android.support.v4.view.ViewPager>
+
 
 </android.support.constraint.ConstraintLayout>

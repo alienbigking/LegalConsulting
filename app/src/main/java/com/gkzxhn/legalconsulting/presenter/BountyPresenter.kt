@@ -7,7 +7,15 @@ import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.widget.ImageView
+import android.widget.TextView
 import com.alipay.sdk.app.AuthTask
+import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.WithdrawFirstActivity
 import com.gkzxhn.legalconsulting.entity.AlipaySign
 import com.gkzxhn.legalconsulting.entity.AuthResult
@@ -35,7 +43,7 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
      */
     fun getAlipaySign() {
         if (isBind) {
-            unbingAlipay()
+            showDialog()
         } else {
             mContext?.let {
                 mModel.getAlipaySign(it)
@@ -163,4 +171,59 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
             }
         }
     }
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：
+     */
+    fun showDialog() {
+        var dialog = android.app.Dialog(mContext)//可以在style中设定dialog的样式
+        dialog.setContentView(R.layout.dialog_bind)
+        var lp = dialog.window.attributes
+        lp.gravity = Gravity.BOTTOM
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        dialog.window.attributes = lp
+        //设置该属性，dialog可以铺满屏幕
+        dialog.window.setBackgroundDrawable(null)
+        dialog.show()
+        slideToUp(dialog.window.findViewById(R.id.cl_bind_all))
+
+        val tvOne = dialog.findViewById<TextView>(R.id.tv_bind_one)
+        val tvTwo = dialog.findViewById<TextView>(R.id.tv_bind_two)
+
+        val ivBack = dialog.findViewById<ImageView>(R.id.iv_dialog_back)
+
+
+        tvOne.setOnClickListener {
+            unbingAlipay()
+            dialog.dismiss()
+        }
+        tvTwo.setOnClickListener {
+            dialog.dismiss()
+        }
+        ivBack.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/11/12 5:34 PM.
+     * @description：弹窗的动画
+     */
+    private fun slideToUp(view: View) {
+        var slide = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                1.0f, Animation.RELATIVE_TO_SELF, 0.0f)
+
+        slide.duration = 200
+        slide.fillAfter = true
+        slide.isFillEnabled = true
+        view.startAnimation(slide)
+    }
+
+
 }
