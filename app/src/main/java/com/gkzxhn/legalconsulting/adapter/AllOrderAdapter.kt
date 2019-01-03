@@ -61,7 +61,6 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
 
-
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {

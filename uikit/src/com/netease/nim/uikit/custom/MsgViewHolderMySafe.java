@@ -1,5 +1,7 @@
 package com.netease.nim.uikit.custom;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +38,7 @@ public class MsgViewHolderMySafe extends MsgViewHolderBase {
 
     @Override
     protected void bindContentView() {
-        MySafeAttachment attachment = (MySafeAttachment) message.getAttachment();
+        final MySafeAttachment attachment = (MySafeAttachment) message.getAttachment();
         title.setText(attachment.getTitle());
         if (attachment.getCategory() != null) {
             switch (attachment.getCategory()) {
@@ -70,17 +72,20 @@ public class MsgViewHolderMySafe extends MsgViewHolderBase {
             }
         }
 
-//        all.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.startActivity(new Intent(context,OrderActivity));
-//                val intent = Intent(this@AllOrderActivity, OrderActivity::class.java)
-//                val data = mAdapter!!.getCurrentItem()
-//                intent.putExtra("orderId", data.id)
-//                intent.putExtra("orderState", 2)
-//                startActivity(intent)
-//            }
-//        });
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            /****** 隐式调用 打开订单页 ******/
+                // 实例化Intent
+                Intent intent = new Intent();
+                //设置Intent的Action属性
+                intent.setAction("android.intent.action.OrderActivity");
+                intent.putExtra("orderId", attachment.getCid());
+                intent.putExtra("orderState", 2);
+                context.startActivity(intent);
+
+            }
+        });
     }
 }
 

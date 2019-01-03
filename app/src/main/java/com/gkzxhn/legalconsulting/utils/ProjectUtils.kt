@@ -9,6 +9,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import java.io.ByteArrayOutputStream
@@ -102,14 +103,12 @@ object ProjectUtils {
             else -> {
                 "其它"
             }
-
-
         }
     }
 
 
     fun loadImage(context: Context?, avatarURL: String?, imageview: ImageView?) {
-        if (avatarURL != null) {
+        if (avatarURL != null&&avatarURL.isNotEmpty()) {
             if (avatarURL.length < 200) {
                 Glide.with(context).load("$avatarURL?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a")
                         .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
@@ -123,7 +122,8 @@ object ProjectUtils {
                         .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
                         .into(imageview)
             }
-
+        }else{
+            imageview?.setImageResource(R.mipmap.ic_user_icon)
         }
     }
 }

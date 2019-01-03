@@ -80,4 +80,8 @@ class BountyActivity : BaseActivity(), BountyView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.getLawyersInfo()
+    }
 }

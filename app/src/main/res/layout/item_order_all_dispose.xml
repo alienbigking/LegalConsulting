@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/selector_item_shape_order">
 
-    <com.gkzxhn.legalconsulting.customview.CircleImageView
+    <ImageView
         android:id="@+id/iv_order_dispose_item"
         android:layout_width="37dp"
         android:layout_height="37dp"
@@ -26,7 +26,6 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/iv_order_dispose_item"
         app:layout_constraintTop_toTopOf="@id/iv_order_dispose_item"/>
-
 
     <TextView
         android:id="@+id/tv_order_dispose_state"

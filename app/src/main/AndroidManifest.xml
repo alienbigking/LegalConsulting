@@ -68,7 +68,12 @@
         <activity android:name=".activity.QualificationAuthenticationEditActivity"/>
         <activity android:name=".activity.QualificationAuthenticationShowActivity"/>
         <activity android:name=".activity.OrderActivity"
-                  android:windowSoftInputMode="stateHidden"/>
+                  android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.OrderActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.MainActivity" android:launchMode="singleTop"/>
         <activity android:name=".activity.OrderGetSettingActivity"/>
         <activity android:name=".activity.BountyActivity"/>
@@ -160,7 +165,6 @@
 
         <!-- 云信进程间通信provider -->
         <!-- android:authorities="{包名}.ipc.provider", 请将com.netease.nim.demo替换为自己的包名 -->
-
     </application>
 
     <supports-screens

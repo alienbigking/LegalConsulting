@@ -29,7 +29,7 @@ object ApiErrorHelper {
             is ConnectException -> context.TsDialog("服务器异常", false)
             is HttpException -> {
                 if (e.code() == 401) {
-                    context.TsClickDialog("token已过期", false).dialog_save.setOnClickListener {
+                    context.TsClickDialog("登录已过期", false).dialog_save.setOnClickListener {
                         App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
                         val intent = Intent(context, LoginActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -37,9 +37,7 @@ object ApiErrorHelper {
                     }
                 } else {
                     context.TsDialog("服务器异常，请重试", false)
-
                 }
-
             }
             is IOException -> context.TsDialog("数据加载失败，请检查您的网络", false)
         //后台返回的message
@@ -53,4 +51,5 @@ object ApiErrorHelper {
             }
         }
     }
+
 }

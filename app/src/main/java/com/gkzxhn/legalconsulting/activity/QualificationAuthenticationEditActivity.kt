@@ -35,7 +35,6 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as topTit
 
 class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAuthenticationEditView {
 
-
     private val TAKE_PHOTO_IMAGE_1 = 101       //拍执业证书
     private val CHOOSE_PHOTO_IMAGE_1 = 102      //选择执业证书
     private val CROP_IMAGE_1 = 103     //智能裁剪执业证书
@@ -53,9 +52,11 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     private val CROP_IMAGE_4 = 112     //智能裁剪身份证背面
 
     lateinit var photoDir: File
+
     var mTakePhotoUri: Uri? = null      //拍照uri
 
     lateinit var mPresenter: QualificationAuthenticationEditPresenter
+
     //    专业领域的集合
     var selectString: ArrayList<String> = arrayListOf()
 

@@ -56,7 +56,6 @@ class WithdrawPresenter(context: Context, view: WithdrawView) : BasePresenter<IW
         }
     }
 
-
     fun getAlipayInfo() {
             mContext?.let {
                 mModel.getAlipayInfo(it)

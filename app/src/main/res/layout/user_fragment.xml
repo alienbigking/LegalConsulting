@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg">
 
@@ -277,6 +277,5 @@
         app:layout_constraintBottom_toBottomOf="@id/v_user_set_bg"
         app:layout_constraintEnd_toEndOf="@id/v_user_set_bg"
         app:layout_constraintTop_toTopOf="@id/v_user_set_bg"/>
-
 
 </android.support.constraint.ConstraintLayout>

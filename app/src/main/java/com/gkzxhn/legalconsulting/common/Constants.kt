@@ -21,8 +21,6 @@ object Constants {
     //地址填写返回值
     val RESULT_EDIT_ADDRESS = "RESULT_eidt_address"
     val RESULTCODE_EDIT_ADDRESS = 23
-
-
     /****** SharedPreferences 相关******/
 
 //    存储项目验证Token的状态
@@ -54,8 +52,6 @@ object Constants {
      * 裁剪过后的绝对路径
      */
     val CROP_PATH = "crop_path"
-
-
     /****** 字符常量 ******/
 
     /****** 待认证 ******/
@@ -66,7 +62,6 @@ object Constants {
     val APPROVAL_FAILURE = "APPROVAL_FAILURE"
     /****** 已认证 ******/
     val CERTIFIED = "CERTIFIED"
-
 
     // ("待付款")
     val ORDER_STATE_PENDING_PAYMENT = "PENDING_PAYMENT"
@@ -90,7 +85,6 @@ object Constants {
     /****** 指定单的标识 ******/
     val ASSIGN = "ASSIGN"
     val RUSH = "RUSH"
-
 
     val RESULT_EDIT_ADDRESS_PROVINCECODE = "RESULT_EDIT_ADDRESS_PROVINCECODE"
     val RESULT_EDIT_ADDRESS_PROVINCENAME = "RESULT_EDIT_ADDRESS_PROVINCENAME"

@@ -23,7 +23,7 @@ class WithdrawThirdActivity : BaseActivity() {
         val account = intent.getStringExtra("pay_Account")
         val money = intent.getStringExtra("money")
         val type = intent.getIntExtra("pay_type", 0)
-        tv_withdraw_3_time.text = StringUtils.MstoDate((System.currentTimeMillis()+7200000).toString())
+        tv_withdraw_3_time.text = StringUtils.MstoDate((System.currentTimeMillis() + 7200000).toString())
         tv_withdraw_3_acount.text = account
         tv_withdraw_3_money.text = "￥$money"
         tv_withdraw_3_type.text = if (type == 1) {
@@ -31,10 +31,6 @@ class WithdrawThirdActivity : BaseActivity() {
         } else {
             "微信"
         }
-
-
-
-
     }
 
     override fun provideContentViewId(): Int {
@@ -46,7 +42,6 @@ class WithdrawThirdActivity : BaseActivity() {
         iv_default_top_back.setOnClickListener {
             finish()
         }
-
     }
 
     fun onClickWithdraw(view: View) {

@@ -12,8 +12,8 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 6
-        versionName "0.1.6"
+        versionCode 7
+        versionName "0.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -103,7 +103,6 @@ dependencies {
     implementation files('src/main/libs/alipaySdk-15.5.9-20181123210601.aar')
     implementation files('src/main/libs/AMap2DMap_3.0.0_AMapSearch_3.6.1_AMapLocation_3.2.1_20161228.jar')
 }
-
 
 greendao {
     //数据库schema版本，也可以理解为数据库版本号
