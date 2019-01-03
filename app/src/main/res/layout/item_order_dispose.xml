@@ -8,43 +8,28 @@
 
 
     <TextView
-        android:id="@+id/tv_order_dispose_top_type"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="1dp"
-        android:background="@drawable/shape_order_dispose_top_type_bg"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="指定订单"
-        android:textColor="#ffb67234"
-        android:textSize="12sp"
-    />
-    <TextView
         android:id="@+id/tv_order_dispose_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:text="--"
         android:textColor="#ff333333"
+        app:layout_constraintTop_toTopOf="parent"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_order_dispose_top_type"/>
+        />
 
     <TextView
         android:id="@+id/tv_main_top_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="¥--.--"
         android:textColor="#FFF34800"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_order_dispose_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_order_dispose_text"
+        app:layout_constraintEnd_toStartOf="@id/iv_order_dispose_state"
         app:layout_constraintTop_toTopOf="@id/tv_order_dispose_name"
     />
 
@@ -86,20 +71,10 @@
     />
 
     <ImageView
-        android:id="@+id/iv_order_dispose_text"
+        android:id="@+id/iv_order_dispose_state"
         android:layout_width="59dp"
         android:layout_height="47dp"
-        android:src="@mipmap/ic_order_dispose_text_bg"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:src="@mipmap/ic_order_dispose_text"
-        android:visibility="gone"
+        android:src="@mipmap/ic_assign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
     />

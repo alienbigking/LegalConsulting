@@ -76,6 +76,9 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             if (entity.type == Constants.ASSIGN) {
                 /****** 指定单 ******/
                 tv_order_price.text = ""
+                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign)
+            } else {
+                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)
             }
 
             when (entity.status) {

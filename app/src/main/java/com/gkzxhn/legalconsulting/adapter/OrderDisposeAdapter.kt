@@ -86,12 +86,11 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
 
             if (entity.type != Constants.RUSH) {
                 /****** 指定单 ******/
-                tv_order_dispose_top_type.visibility = View.VISIBLE
-                tv_main_top_end.text = ""
+                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign)
+                tv_main_top_end.text=""
             } else {
-                tv_order_dispose_top_type.visibility = View.GONE
+                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)
             }
-
 
             /****** 待接单的时候 显示按扭 ******/
             if (entity.status == Constants.ORDER_STATE_PENDING_RECEIVING) {
