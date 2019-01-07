@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Environment
 import android.support.multidex.MultiDex
@@ -34,10 +33,7 @@ import com.netease.nimlib.sdk.StatusBarNotificationConfig
 import com.netease.nimlib.sdk.auth.LoginInfo
 import com.netease.nimlib.sdk.msg.MsgService
 import com.netease.nimlib.sdk.msg.MsgServiceObserve
-import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.CustomNotification
-import com.netease.nimlib.sdk.uinfo.UserInfoProvider
-import com.netease.nimlib.sdk.uinfo.model.UserInfo
 import com.netease.nimlib.sdk.util.NIMUtil
 
 
@@ -70,7 +66,7 @@ class App : Application() {
         NIMClient.init(this, loginInfo(), options(this))
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
-            NimUIKit.init(this);
+            NimUIKit.init(this)
             /****** 注册自定义消息 ******/
             NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
             NimUIKit.registerMsgItemViewHolder(MySafeAttachment::class.java, MsgViewHolderMySafe::class.java)
@@ -174,29 +170,28 @@ class App : Application() {
         // 该值一般应根据屏幕尺寸来确定， 默认值为 Screen.width / 2
         options.thumbnailSize = ScreenUtil.screenWidth / 2
 
-        // 用户资料提供者, 目前主要用于提供用户资料，用于新消息通知栏中显示消息来源的头像和昵称
-        options.userInfoProvider = object : UserInfoProvider {
-            override fun getAvatarForMessageNotifier(p0: SessionTypeEnum?, p1: String?): Bitmap? {
-                return null
-
-            }
-
-            override fun getUserInfo(account: String): UserInfo? {
-                return NimUIKit.getUserInfoProvider().getUserInfo(account)
-            }
-
-            fun getTeamIcon(tid: String): Bitmap? {
-                return null
-            }
-
-            fun getAvatarForMessageNotifier(account: String): Bitmap? {
-                return null
-            }
-
-            override fun getDisplayNameForMessageNotifier(account: String, sessionId: String, sessionType: SessionTypeEnum): String? {
-                return null
-            }
-        }
+//        // 用户资料提供者, 目前主要用于提供用户资料，用于新消息通知栏中显示消息来源的头像和昵称
+//        options.userInfoProvider = object : UserInfoProvider {
+//            override fun getAvatarForMessageNotifier(p0: SessionTypeEnum?, p1: String?): Bitmap? {
+//                return null
+//            }
+//
+//            override fun getUserInfo(account: String): UserInfo? {
+//                return NimUIKit.getUserInfoProvider().getUserInfo(account)
+//            }
+//
+//            fun getTeamIcon(tid: String): Bitmap? {
+//                return null
+//            }
+//
+//            fun getAvatarForMessageNotifier(account: String): Bitmap? {
+//                return null
+//            }
+//
+//            override fun getDisplayNameForMessageNotifier(account: String, sessionId: String, sessionType: SessionTypeEnum): String? {
+//                return null
+//            }
+//        }
         return options
     }
 

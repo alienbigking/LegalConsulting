@@ -105,6 +105,10 @@ interface ApiService {
     @GET("/files/{id}")
     fun downloadFile(@Header("Range") range: String, @Path("id") id: String): Observable<ResponseBody>
 
+      // 下载文件
+    @GET("/files/{id}")
+    fun downloadImage(@Path("id") id: String): Observable<ResponseBody>
+
     //    获取抢单列表
     @GET("lawyer/rush/legal-advice")
     fun getOrderReceiving(@Query("page") page: String, @Query("size") size: String): Observable<OrderReceiving>

@@ -7,43 +7,40 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/iv_dialog_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="21dp"
-        android:padding="5dp"
-        android:src="@mipmap/ic_close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    />
 
     <TextView
+        android:id="@+id/tv_bind_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
         android:text="支付宝账号"
         android:textColor="#ff666666"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_dialog_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_dialog_back"
     />
 
+    <View android:id="@+id/v_bind_title"
+          android:layout_width="match_parent"
+          android:layout_height="4dp"
+          android:background="@color/main_gary_bg"
+          app:layout_constraintTop_toBottomOf="@+id/tv_bind_title"
+    />
+
     <TextView
         android:id="@+id/tv_bind_one"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/selector_item_white_to_gary"
         android:gravity="center"
         android:text="解绑"
         android:textColor="#ff666666"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_dialog_back"
+        app:layout_constraintTop_toBottomOf="@id/v_bind_title"
     />
 
     <View

@@ -92,16 +92,6 @@ class MainFragment : BaseFragment() {
                 })
 
 
-//        st_main_order_state.setChecked(false)
-//        st_main_order_state.setSwitchTextAppearance(context, R.style.s_true)
-//        st_main_order_state.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-//            //控制开关字体颜色
-//            if (b) {
-//                st_main_order_state.setSwitchTextAppearance(context, R.style.s_true)
-//            } else {
-//                st_main_order_state.setSwitchTextAppearance(context, R.style.s_false)
-//            }
-//        })
     }
 
     private fun loadTopUI() {
@@ -122,19 +112,7 @@ class MainFragment : BaseFragment() {
 
         var busy = serviceStatus == "BUSY"
         st_home_get_order_state.isChecked = !busy
-        st_home_get_order_state.setOnCheckedChangeListener(object : SwitchButton.OnChangedListener, CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if (isChecked) {
-                    setOrderState("RECEIVING")
-                } else {
-                    setOrderState("BUSY")
-                }
-            }
 
-            override fun OnChanged(v: View?, checkState: Boolean) {
-            }
-
-        })
 
         val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
         if (avatarStr?.isNotEmpty()!!) {
@@ -197,6 +175,19 @@ class MainFragment : BaseFragment() {
             }
         })
 
+        st_home_get_order_state.setOnCheckedChangeListener(object : SwitchButton.OnChangedListener, CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    setOrderState("RECEIVING")
+                } else {
+                    setOrderState("BUSY")
+                }
+            }
+
+            override fun OnChanged(v: View?, checkState: Boolean) {
+            }
+
+        })
 
     }
 

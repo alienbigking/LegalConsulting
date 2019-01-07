@@ -124,9 +124,32 @@
                     android:layout_height="44dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="#54b6e167"
+                    android:background="#54f0f4e9"
                     android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@id/iv_oder_image1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
+                />
+                <ImageView
+                    android:id="@+id/iv_oder_image3"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#54f0f4e9"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/iv_oder_image2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
+                />
+
+                <ImageView
+                    android:id="@+id/iv_oder_image4"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#54f0f4e9"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/iv_oder_image3"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_context"
                 />
 

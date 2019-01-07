@@ -12,7 +12,6 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.widget.ImageView
 import android.widget.TextView
 import com.alipay.sdk.app.AuthTask
 import com.gkzxhn.legalconsulting.R
@@ -41,20 +40,20 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
      * @methodName： created by liushaoxiang on 2018/12/27 9:30 AM.
      * @description：
      */
+    fun bindOrUnbind() {
+        showDialog()
+    }
+
     fun getAlipaySign() {
-        if (isBind) {
-            showDialog()
-        } else {
-            mContext?.let {
-                mModel.getAlipaySign(it)
-                        .unsubscribeOn(AndroidSchedulers.mainThread())
-                        ?.observeOn(AndroidSchedulers.mainThread())
-                        ?.subscribe(object : HttpObserver<AlipaySign>(mContext!!) {
-                            override fun success(t: AlipaySign) {
-                                bindAlipay(t.sign!!)
-                            }
-                        })
-            }
+        mContext?.let {
+            mModel.getAlipaySign(it)
+                    .unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<AlipaySign>(mContext!!) {
+                        override fun success(t: AlipaySign) {
+                            bindAlipay(t.sign!!)
+                        }
+                    })
         }
     }
 
@@ -162,7 +161,7 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
                         bingAlipay(authResult.authCode)
                     } else {
                         // 其他状态值则为授权失败
-                        mContext?.showToast("授权失败：$resultStatus")
+                        mContext?.showToast("授权取消")
                     }
                 }
                 else -> {
@@ -192,22 +191,24 @@ class BountyPresenter(context: Context, view: BountyView) : BasePresenter<IBount
 
         val tvOne = dialog.findViewById<TextView>(R.id.tv_bind_one)
         val tvTwo = dialog.findViewById<TextView>(R.id.tv_bind_two)
-
-        val ivBack = dialog.findViewById<ImageView>(R.id.iv_dialog_back)
-
-
+        if (isBind) {
+            tvOne.text = "解绑"
+        } else {
+            tvOne.text = "绑定"
+        }
         tvOne.setOnClickListener {
-            unbingAlipay()
+
+            if (isBind) {
+                unbingAlipay()
+            } else {
+                getAlipaySign()
+            }
             dialog.dismiss()
         }
         tvTwo.setOnClickListener {
             dialog.dismiss()
         }
-        ivBack.setOnClickListener {
-            dialog.dismiss()
-        }
     }
-
 
 
     /**

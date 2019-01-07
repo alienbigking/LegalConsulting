@@ -53,7 +53,7 @@ class BountyActivity : BaseActivity(), BountyView {
             }
         /****** 绑定支付宝 ******/
             R.id.v_bounty_get_alipay -> {
-                mPresenter.getAlipaySign()
+                mPresenter.bindOrUnbind()
             }
         }
     }

@@ -23,8 +23,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.netease.nim.uikit.common.ToastHelper;
-
 import com.alibaba.fastjson.JSONObject;
 import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -36,16 +34,15 @@ import com.netease.nim.uikit.business.session.emoji.EmoticonPickerView;
 import com.netease.nim.uikit.business.session.emoji.IEmoticonSelectedListener;
 import com.netease.nim.uikit.business.session.emoji.MoonUtil;
 import com.netease.nim.uikit.business.session.module.Container;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.string.StringUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
-import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.media.record.AudioRecorder;
 import com.netease.nimlib.sdk.media.record.IAudioRecordCallback;
 import com.netease.nimlib.sdk.media.record.RecordType;
 import com.netease.nimlib.sdk.msg.MessageBuilder;
-import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
@@ -309,7 +306,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
             json.put("id", "1");
             command.setContent(json.toString());
 
-            NIMClient.getService(MsgService.class).sendCustomNotification(command);
+            /****** 业务 不需要 暂时去掉 ******/
+//            NIMClient.getService(MsgService.class).sendCustomNotification(command);
         }
     }
 

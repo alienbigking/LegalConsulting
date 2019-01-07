@@ -70,7 +70,7 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.0'
 
     //引入Log拦截器，方便DEBUG模式输出log信息
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     //rxjava权限管理
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'

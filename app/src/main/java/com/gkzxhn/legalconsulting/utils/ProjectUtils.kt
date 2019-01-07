@@ -12,8 +12,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
+import com.gkzxhn.legalconsulting.net.HttpObserverNoDialog
+import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
+import okhttp3.ResponseBody
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * @classname：ProjectUtils
@@ -108,7 +115,7 @@ object ProjectUtils {
 
 
     fun loadImage(context: Context?, avatarURL: String?, imageview: ImageView?) {
-        if (avatarURL != null&&avatarURL.isNotEmpty()) {
+        if (avatarURL != null && avatarURL.isNotEmpty()) {
             if (avatarURL.length < 200) {
                 Glide.with(context).load("$avatarURL?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a")
                         .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
@@ -122,8 +129,40 @@ object ProjectUtils {
                         .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
                         .into(imageview)
             }
-        }else{
+        } else {
             imageview?.setImageResource(R.mipmap.ic_user_icon)
         }
+        var isFileID = false
+        if (isFileID) {
+            var fileid = "b3465135-9a02-4ecc-84a5-c02e5dfa497f"
+            context?.let {
+                RetrofitClientLogin.getInstance(context).mApi?.downloadImage(fileid)
+                        ?.subscribeOn(Schedulers.io())
+                        ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe(object : HttpObserverNoDialog<ResponseBody>(it) {
+                            override fun success(t: ResponseBody) {
+                                var body = input2byte(t.byteStream())
+                                Glide.with(context).load(body)
+                                        .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
+                                        .into(imageview)
+                            }
+                        })
+            }
+        }
     }
+
+    // 将输入流解析成字节数组
+    @Throws(IOException::class)
+    fun input2byte(inStream: InputStream): ByteArray {
+        val swapStream = ByteArrayOutputStream()
+        val buff = ByteArray(100)
+        var rc = inStream.read(buff, 0, 100)
+        while (rc  > 0) {
+            swapStream.write(buff, 0, rc)
+            rc = inStream.read(buff, 0, 100)
+        }
+        return swapStream.toByteArray()
+    }
+
 }

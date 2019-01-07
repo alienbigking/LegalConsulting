@@ -138,11 +138,9 @@ class MainActivity : BaseActivity() {
             var message = intent.getSerializableExtra(NimIntent.EXTRA_NOTIFY_CONTENT) as IMMessage
             Log.e("xiaowu", "sessionType:" + message.sessionType)
             when (message.sessionType) {
-
                 SessionTypeEnum.P2P -> {
                     Log.e("xiaowu", "3333333")
                     NimUIKit.startP2PSession(mContext, message.sessionId)
-
                 }
                 else -> {
 

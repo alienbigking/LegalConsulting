@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSONObject;
 import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.api.UIKitOptions;
 import com.netease.nim.uikit.api.model.main.CustomPushContentProvider;
@@ -35,6 +36,8 @@ import com.netease.nimlib.sdk.msg.constant.MsgStatusEnum;
 import com.netease.nimlib.sdk.msg.constant.MsgTypeEnum;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomMessageConfig;
+import com.netease.nimlib.sdk.msg.model.CustomNotification;
+import com.netease.nimlib.sdk.msg.model.CustomNotificationConfig;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.MemberPushOption;
 import com.netease.nimlib.sdk.msg.model.MessageReceipt;
@@ -241,6 +244,23 @@ public class MessageFragment extends TFragment implements ModuleProxy {
 
                 }
             });
+
+            /****** 给ios发送自定义消息通知 ******/
+            CustomNotification command = new CustomNotification();
+            command.setSessionId(message.getSessionId());
+            command.setSessionType(message.getSessionType());
+            CustomNotificationConfig config = new CustomNotificationConfig();
+            config.enablePush = false;
+            config.enableUnreadCount = false;
+            command.setConfig(config);
+
+            JSONObject json = new JSONObject();
+            json.put("setSessionId", message.getSessionId());
+            json.put("formAccount", message.getFromAccount());
+            json.put("content", message.getContent());
+            command.setContent(json.toString());
+
+            NIMClient.getService(MsgService.class).sendCustomNotification(command);
 
         } else {
             // 替换成tip

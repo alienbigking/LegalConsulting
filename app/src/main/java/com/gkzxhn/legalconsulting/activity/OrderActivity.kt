@@ -21,6 +21,8 @@ class OrderActivity : BaseActivity(), OrderView {
     lateinit var mPresenter: OrderPresenter
     var bitmap1: Bitmap? = null
     var bitmap2: Bitmap? = null
+    var bitmap3: Bitmap? = null
+    var bitmap4: Bitmap? = null
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_oder
@@ -72,6 +74,14 @@ class OrderActivity : BaseActivity(), OrderView {
         iv_oder_image2.setOnClickListener {
             iv_order_big.visibility = View.VISIBLE
             iv_order_big.setImageBitmap(bitmap2)
+        }
+        iv_oder_image3.setOnClickListener {
+            iv_order_big.visibility = View.VISIBLE
+            iv_order_big.setImageBitmap(bitmap3)
+        }
+        iv_oder_image4.setOnClickListener {
+            iv_order_big.visibility = View.VISIBLE
+            iv_order_big.setImageBitmap(bitmap4)
         }
 
         /****** 大图 ******/
@@ -139,6 +149,16 @@ class OrderActivity : BaseActivity(), OrderView {
         bitmap2 = bitmap
         iv_oder_image2.setImageBitmap(bitmap)
     }
+    override fun setImage3(bitmap: Bitmap) {
+        iv_oder_image3.visibility = View.VISIBLE
+        bitmap3 = bitmap
+        iv_oder_image3.setImageBitmap(bitmap)
+    }
+    override fun setImage4(bitmap: Bitmap) {
+        iv_oder_image4.visibility = View.VISIBLE
+        bitmap4 = bitmap
+        iv_oder_image4.setImageBitmap(bitmap)
+    }
 
     override fun setAllbgColor(color: Int) {
         ll_order_all.setBackgroundColor(color)
@@ -165,6 +185,14 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_state_name.text = name
         v_order_state_name.visibility = visibility
         v_order_white_bg.visibility = visibility
+    }
+
+    override fun onBackPressed() {
+        if (iv_order_big.visibility == View.GONE) {
+            super.onBackPressed()
+        }else{
+            iv_order_big.visibility = View.GONE
+        }
     }
 
 }

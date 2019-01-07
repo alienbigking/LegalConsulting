@@ -72,7 +72,6 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
-
             if (entity.type == Constants.ASSIGN) {
                 /****** 指定单 ******/
                 tv_order_price.text = ""

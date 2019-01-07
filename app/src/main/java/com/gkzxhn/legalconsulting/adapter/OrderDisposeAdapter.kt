@@ -71,7 +71,6 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
 
-
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {

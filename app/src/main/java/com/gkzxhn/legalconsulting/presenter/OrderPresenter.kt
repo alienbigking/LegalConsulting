@@ -58,6 +58,12 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             if (t.attachments!!.size > 1 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
                             }
+                            if (t.attachments!!.size > 2 && t.attachments != null) {
+                                ImageUtils.base64ToBitmap("order_image3" + ".jpg", t.attachments!![2].thumb!!.toString())?.let { it1 -> mView?.setImage3(it1) }
+                            }
+                            if (t.attachments!!.size > 3 && t.attachments != null) {
+                                ImageUtils.base64ToBitmap("order_image4" + ".jpg", t.attachments!![3].thumb!!.toString())?.let { it1 -> mView?.setImage4(it1) }
+                            }
                             val str1 = ProjectUtils.categoriesConversion(t.category!!)
                             mView?.setOrderType(str1)
                         }
@@ -94,6 +100,13 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         }
         if (t.attachments!!.size > 1 && t.attachments != null) {
             ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
+        }
+
+        if (t.attachments!!.size > 2 && t.attachments != null) {
+            ImageUtils.base64ToBitmap("order_image3" + ".jpg", t.attachments!![2].thumb!!.toString())?.let { it1 -> mView?.setImage3(it1) }
+        }
+        if (t.attachments!!.size > 3 && t.attachments != null) {
+            ImageUtils.base64ToBitmap("order_image4" + ".jpg", t.attachments!![3].thumb!!.toString())?.let { it1 -> mView?.setImage4(it1) }
         }
 
         if (t.type == Constants.ASSIGN) {
