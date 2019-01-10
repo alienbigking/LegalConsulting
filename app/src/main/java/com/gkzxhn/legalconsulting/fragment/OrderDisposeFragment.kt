@@ -98,7 +98,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 }, {
                     it.message.toString().logE(this)
                 })
-
     }
 
     private fun initRecyclerView() {
@@ -187,8 +186,6 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         if (isVisibleToUser) {
             mPresenter?.getOrderDispose("0")
         }
-
     }
-
 
 }

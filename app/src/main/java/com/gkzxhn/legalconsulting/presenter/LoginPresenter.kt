@@ -49,7 +49,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
         }
     }
 
-
     fun sendCode() {
         if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
@@ -153,7 +152,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
 
                                 }
                                 App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
-                                App.EDIT.putString("refreshToken", refreshToken)?.commit()
+                                App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
                                 getLawyersInfo()
                                 getImInfo()
                             }
@@ -213,9 +212,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
      * @param pwd
      */
     private fun loginNim(account: String, pwd: String) {
-
         val loginInfo = LoginInfo(account, pwd)
-
         NIMClient.getService(AuthService::class.java).login(loginInfo).setCallback(object : RequestCallback<LoginInfo> {
             override fun onSuccess(param: LoginInfo) {
                 App.EDIT.putString(Constants.SP_IM_ACCOUNT,param.account).commit()

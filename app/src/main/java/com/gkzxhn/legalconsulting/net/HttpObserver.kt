@@ -36,11 +36,4 @@ abstract class HttpObserver<T>(context: Context) : MySubscriber<T>(), OnRequestL
         ApiErrorHelper.handleCommonError(contexts!!,t!!)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun unsubscribe() {
-        super.unsubscribe()
-    }
 }

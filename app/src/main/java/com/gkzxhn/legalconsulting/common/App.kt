@@ -66,13 +66,12 @@ class App : Application() {
         NIMClient.init(this, loginInfo(), options(this))
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
+
             NimUIKit.init(this)
             /****** 注册自定义消息 ******/
             NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
             NimUIKit.registerMsgItemViewHolder(MySafeAttachment::class.java, MsgViewHolderMySafe::class.java)
 //            Log.e("xiaowu", "注册自定义消息")
-
-
             // 设置地理位置提供者。如果需要发送地理位置消息，该参数必须提供。如果不需要，可以忽略。
             NimUIKit.setLocationProvider(MLocationProvider())
 
@@ -84,8 +83,6 @@ class App : Application() {
                 RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
             }, true)
         }
-
-
     }
 
     /**
@@ -148,6 +145,7 @@ class App : Application() {
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         val config = StatusBarNotificationConfig()
         config.notificationEntrance = MainActivity::class.java // 点击通知栏跳转到该Activity
+
 //        config.notificationSmallIconId = R.drawable.notification_icon_background
         // 呼吸灯配置
         config.ledARGB = Color.GREEN
@@ -155,6 +153,8 @@ class App : Application() {
         config.ledOffMs = 1500
         // 通知铃声的uri字符串
         config.notificationSound = "android.resource://com.netease.nim.demo/raw/msg"
+        config.ring = false
+
         options.statusBarNotificationConfig = config
 
         // 配置保存图片，文件，log 等数据的目录
@@ -177,7 +177,7 @@ class App : Application() {
 //            }
 //
 //            override fun getUserInfo(account: String): UserInfo? {
-//                return NimUIKit.getUserInfoProvider().getUserInfo(account)
+//                return null
 //            }
 //
 //            fun getTeamIcon(tid: String): Bitmap? {

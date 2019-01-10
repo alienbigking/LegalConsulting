@@ -25,6 +25,7 @@ object Constants {
 
 //    存储项目验证Token的状态
     val SP_TOKEN = "SP_Token"
+    val SP_REFRESH_TOKEN = "refreshToken"
     val SP_PHONE = "SP_PHONE"
     val SP_NAME = "sp_user_name"
     val SP_LAWOFFICE = "sp_user_lawOffice"

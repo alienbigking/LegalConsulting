@@ -58,7 +58,6 @@ class OrderGetSettingActivity : BaseActivity() {
         }
     }
 
-
     /**
      * @methodName： created by liushaoxiang on 2018/10/11 10:50 AM.
      * @description：根据状态值改变选择的状态
@@ -93,9 +92,6 @@ class OrderGetSettingActivity : BaseActivity() {
                         }
                     }
                 })
-
-
     }
-
 
 }

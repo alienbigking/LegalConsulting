@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <View
@@ -206,7 +206,7 @@
         android:id="@+id/st_home_get_order_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="true"
+        android:checked="false"
         android:layout_marginEnd="16dp"
         android:switchMinWidth="20dp"
         android:thumb="@drawable/thumb"
@@ -319,6 +319,5 @@
     >
 
     </android.support.v4.view.ViewPager>
-
 
 </android.support.constraint.ConstraintLayout>

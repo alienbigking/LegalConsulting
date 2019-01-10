@@ -17,13 +17,15 @@ import java.util.concurrent.TimeUnit
  * @author LSX
  *    -----2018/9/6
  */
-class RetrofitClientLogin private constructor(context: Context, baseUrl:String){
+
+class RetrofitClientLogin private constructor(context: Context, baseUrl: String){
+
     var httpCacheDirectory : File? = null
     val mContext : Context = context
     var cache : Cache? = null
     var okHttpClient : OkHttpClient? = null
     var retrofit : Retrofit? = null
-    val DEFAULT_TIMEOUT : Long = 60
+    val DEFAULT_TIMEOUT : Long = 6
     val url = baseUrl
     var mApi : ApiService? = null
 

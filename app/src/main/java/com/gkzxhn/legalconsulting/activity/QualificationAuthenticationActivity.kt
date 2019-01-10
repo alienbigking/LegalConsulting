@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.default_top.tv_default_top_title as top_ti
  */
 
 class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthenticationView {
+
     override fun onFinish() {
         finish()
     }
@@ -68,7 +69,6 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
      */
     override fun changeQualificationAuthenticationVisibility(visibility: Int) {
         qualificationAuthentication.visibility = visibility
-
     }
 
 }

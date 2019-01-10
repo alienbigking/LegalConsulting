@@ -22,7 +22,8 @@ class RetrofitClient private constructor(context: Context, baseUrl: String) {
     var cache: Cache? = null
     var okHttpClient: OkHttpClient? = null
     var retrofit: Retrofit? = null
-    val DEFAULT_TIMEOUT: Long = 60
+    /****** 超时时间（秒） ******/
+    val DEFAULT_TIMEOUT: Long = 3
     val url = baseUrl
     var mApi: ApiService? = null
 

@@ -2,6 +2,8 @@ package com.gkzxhn.legalconsulting.fragment
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.*
@@ -12,13 +14,18 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
-import com.gkzxhn.legalconsulting.utils.ImageUtils
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.StringUtils
+import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
+import com.gkzxhn.legalconsulting.net.error_exception.ApiException
+import com.gkzxhn.legalconsulting.utils.*
 import kotlinx.android.synthetic.main.user_fragment.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.io.File
+import java.io.IOException
+import java.net.ConnectException
 
 
 /**
@@ -90,6 +97,36 @@ class UserFragment : BaseFragment(), View.OnClickListener {
         init()
     }
 
+    /****** 刷新新的token ******/
+    private fun getRefreshToken(refresh_token: String) {
+        context?.let {
+            RetrofitClientLogin.Companion.getInstance(it)
+                    .mApi?.getToken("refresh_token", refreshToken = refresh_token)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<ResponseBody>(it) {
+                        override fun success(t: ResponseBody) {
+                            val string = t.string()
+                            if (!TextUtils.isEmpty(string)) {
+                                var token: String? = null
+                                var refreshToken: String? = null
+                                try {
+                                    token = JSONObject(string).getString("access_token")
+                                    refreshToken = JSONObject(string).getString("refresh_token")
+                                } catch (e: Exception) {
+
+                                }
+                                App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
+                                App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
+                                getLawyersInfo()
+                            }
+                        }
+
+                    })
+        }
+    }
+
     /**
      * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
      * @description：获取律师信息
@@ -105,6 +142,30 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                             App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, t.certificationStatus)?.commit()
                             lawyersInfo = t
                             loadUI(t)
+                        }
+
+                        override fun onError(e: Throwable?) {
+                            loadDialog?.dismiss()
+                            when (e) {
+                                is ConnectException -> context?.TsDialog("服务器异常", false)
+                                is HttpException -> {
+                                    if (e.code() == 401) {
+                                        getRefreshToken(App.SP.getString(Constants.SP_REFRESH_TOKEN, ""))
+                                    } else {
+                                        context?.TsDialog("服务器异常，请重试", false)
+                                    }
+                                }
+                                is IOException -> context?.TsDialog("数据加载失败，请检查您的网络", false)
+                            //后台返回的message
+                                is ApiException -> {
+                                    context?.TsDialog(e.message!!, false)
+                                    Log.e("ApiErrorHelper", e.message, e)
+                                }
+                                else -> {
+                                    context?.showToast("数据异常")
+                                    Log.e("ApiErrorHelper", e?.message, e)
+                                }
+                            }
                         }
 
                     })

@@ -2,15 +2,17 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.content.Intent
 import android.os.Handler
+import android.text.TextUtils
 import android.view.WindowManager
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
-import com.netease.nim.uikit.api.NimUIKit
-import com.netease.nimlib.sdk.NIMClient
-import com.netease.nimlib.sdk.RequestCallback
-import com.netease.nimlib.sdk.auth.AuthService
-import com.netease.nimlib.sdk.auth.LoginInfo
+import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * @classname：SplashActivity
@@ -27,8 +29,11 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun init() {
-
-        handler.sendEmptyMessageDelayed(0, 1000)
+        if (App.SP.getString(Constants.SP_REFRESH_TOKEN, "")?.isNotBlank()!!) {
+            getRefreshToken(App.SP.getString(Constants.SP_REFRESH_TOKEN, ""))
+        }else{
+            handler.sendEmptyMessageDelayed(0, 1000)
+        }
     }
 
 
@@ -42,4 +47,33 @@ class SplashActivity : BaseActivity() {
         finish()
         false
     })
+
+
+    /****** 刷新新的token ******/
+    private fun getRefreshToken(refresh_token: String) {
+            RetrofitClientLogin.Companion.getInstance(this)
+                    .mApi?.getToken("refresh_token", refreshToken = refresh_token)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(object : HttpObserver<ResponseBody>(this) {
+                        override fun success(t: ResponseBody) {
+                            val string = t.string()
+                            if (!TextUtils.isEmpty(string)) {
+                                var token: String? = null
+                                var refreshToken: String? = null
+                                try {
+                                    token = JSONObject(string).getString("access_token")
+                                    refreshToken = JSONObject(string).getString("refresh_token")
+                                } catch (e: Exception) {
+
+                                }
+                                App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
+                                App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
+                                handler.sendEmptyMessageDelayed(0, 1000)
+                            }
+                        }
+                    })
+        }
+
 }

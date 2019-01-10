@@ -38,7 +38,6 @@ class LoginModel : BaseModel(), ILoginModel {
     }
 
     override fun getToken(context: Context, phoneNumber: String, code: String): Observable<ResponseBody>? {
-
         return RetrofitClientLogin.Companion.getInstance(context)
                 .mApi?.getToken("password", phoneNumber, code)
                 ?.subscribeOn(Schedulers.io())
@@ -57,7 +56,5 @@ class LoginModel : BaseModel(), ILoginModel {
                 ?.subscribeOn(Schedulers.io())
                 as Observable<ImInfo>
     }
-
-
 
 }

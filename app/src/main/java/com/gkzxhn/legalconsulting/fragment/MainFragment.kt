@@ -5,8 +5,10 @@ import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
+import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -14,11 +16,8 @@ import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
-import com.gkzxhn.legalconsulting.utils.logE
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.utils.*
 import com.google.gson.Gson
-import com.netease.nim.uikit.common.ui.widget.SwitchButton
 import kotlinx.android.synthetic.main.main_fragment.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -40,7 +39,27 @@ import kotlinx.android.synthetic.main.main_fragment.vp_home as VpHome
  * @author LSX
  *    -----2018/9/7
  */
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        /****** 没有认证通过的时候 跳转认证页面 ******/
+        if (ProjectUtils.certificationStatus()) {
+            if (isChecked) {
+                setOrderState("RECEIVING")
+            } else {
+                setOrderState("BUSY")
+            }
+        } else {
+            st_home_get_order_state.isChecked=!isChecked
+            val tsClickDialog = context?.TsClickDialog("您尚未认证", true)
+            val send = tsClickDialog?.findViewById<TextView>(R.id.dialog_save)
+            send?.text = "认证"
+            send?.setOnClickListener {
+                context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                tsClickDialog.dismiss()
+            }
+        }
+    }
 
     var tbList: MutableList<BaseFragment>? = null
     private var mainAdapter: MainAdapter? = null
@@ -51,7 +70,6 @@ class MainFragment : BaseFragment() {
     override fun provideContentViewId(): Int {
         return R.layout.main_fragment
     }
-
 
     override fun init() {
         loadTopUI()
@@ -86,12 +104,9 @@ class MainFragment : BaseFragment() {
                     } else {
                         View.GONE
                     }
-
                 }, {
                     it.message.toString().logE(this)
                 })
-
-
     }
 
     private fun loadTopUI() {
@@ -109,9 +124,12 @@ class MainFragment : BaseFragment() {
                 tv_home_type3.text = ProjectUtils.categoriesConversion(categories!![2])
             }
         }
-
+        /****** 在设置前把监听设空  ******/
+        st_home_get_order_state.setOnCheckedChangeListener(null)
         var busy = serviceStatus == "BUSY"
         st_home_get_order_state.isChecked = !busy
+        /****** 恢复监听 ******/
+        st_home_get_order_state.setOnCheckedChangeListener(this)
 
 
         val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
@@ -174,21 +192,6 @@ class MainFragment : BaseFragment() {
             override fun onPageScrollStateChanged(p0: Int) {
             }
         })
-
-        st_home_get_order_state.setOnCheckedChangeListener(object : SwitchButton.OnChangedListener, CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if (isChecked) {
-                    setOrderState("RECEIVING")
-                } else {
-                    setOrderState("BUSY")
-                }
-            }
-
-            override fun OnChanged(v: View?, checkState: Boolean) {
-            }
-
-        })
-
     }
 
     private fun selectTwoItem() {
@@ -196,9 +199,6 @@ class MainFragment : BaseFragment() {
         resources.getColor(R.color.main_top_blue).let { it1 -> tvEditOrder.setTextColor(it1) }
         vSelectLine1.visibility = View.INVISIBLE
         vSelectLine2.visibility = View.VISIBLE
-        /****** 通知订单刷新 ******/
-//        RxBus.instance.post(RxBusBean.HomePoint(true))
-
     }
 
     private fun selectOneItem() {
@@ -206,10 +206,6 @@ class MainFragment : BaseFragment() {
         resources.getColor(R.color.main_top_gary).let { it1 -> tvEditOrder.setTextColor(it1) }
         vSelectLine1.visibility = View.VISIBLE
         vSelectLine2.visibility = View.INVISIBLE
-
-        /****** 通知订单刷新 ******/
-//        RxBus.instance.post(RxBusBean.HomePoint(true))
-
     }
 
     override fun onResume() {
@@ -228,7 +224,11 @@ class MainFragment : BaseFragment() {
                         override fun success(t: Response<Void>) {
                             when (t.code()) {
                                 204 -> {
-                                    it.showToast("设置成功")
+                                    if (OrderState == "BUSY") {
+                                        it.TsDialog("已设置为忙碌状态", true)
+                                    } else {
+                                        it.TsDialog("已设置为接单状态", true)
+                                    }
                                 }
                                 else -> {
                                     it.showToast(t.code().toString() + t.message())
@@ -237,8 +237,6 @@ class MainFragment : BaseFragment() {
                         }
                     })
         }
-
-
     }
 
 }
