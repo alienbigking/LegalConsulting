@@ -25,15 +25,14 @@
         app:layout_constraintStart_toStartOf="@id/v_login_bg"
         app:layout_constraintTop_toTopOf="@id/v_login_bg"/>
 
-
     <ImageView
         android:id="@+id/iv_login_phone_start"
         android:layout_width="wrap_content"
-        app:layout_constraintHorizontal_chainStyle="packed"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/et_login_phone"
         android:layout_marginTop="56dp"
         android:src="@mipmap/ic_login_phone"
+        app:layout_constraintEnd_toStartOf="@id/et_login_phone"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_login_bg"/>
 
@@ -47,8 +46,8 @@
         android:inputType="number"
         android:textColor="@color/login_edit_tv"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/iv_login_phone_start"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_login_phone_start"
         app:layout_constraintTop_toTopOf="@+id/iv_login_phone_start"/>
 
@@ -58,12 +57,10 @@
         android:layout_height="1dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="11dp"
-
         android:background="@color/line_login"
         app:layout_constraintStart_toEndOf="@id/iv_login_phone_start"
         app:layout_constraintTop_toBottomOf="@+id/iv_login_phone_start"
     />
-
 
     <ImageView
         android:id="@+id/iv_login_code_start"
@@ -114,7 +111,6 @@
         app:layout_constraintTop_toTopOf="@+id/v_login_code_v"
     />
 
-
     <View
         android:id="@+id/v_login_code"
         android:layout_width="230dp"
@@ -125,7 +121,6 @@
         app:layout_constraintStart_toEndOf="@id/iv_login_code_start"
         app:layout_constraintTop_toBottomOf="@+id/et_login_code"
     />
-
 
     <TextView
         android:id="@+id/tv_login_login"
@@ -139,6 +134,22 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_login_code"/>
+        app:layout_constraintTop_toBottomOf="@+id/cb_remember"/>
+
+    <CheckBox
+        android:id="@+id/cb_remember"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="15dp"
+        android:button="@drawable/selector_login_check"
+        android:checked="false"
+        android:paddingStart="30dp"
+        android:text="记住账号"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/iv_login_code_start"
+        app:layout_constraintTop_toBottomOf="@+id/v_login_code"
+    />
 
 </android.support.constraint.ConstraintLayout>

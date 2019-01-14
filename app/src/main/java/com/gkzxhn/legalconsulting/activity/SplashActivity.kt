@@ -29,17 +29,15 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun init() {
-        if (App.SP.getString(Constants.SP_REFRESH_TOKEN, "")?.isNotBlank()!!) {
+        if (App.SP.getString(Constants.SP_TOKEN, "")?.isNotEmpty()!!) {
             getRefreshToken(App.SP.getString(Constants.SP_REFRESH_TOKEN, ""))
         }else{
             handler.sendEmptyMessageDelayed(0, 1000)
         }
     }
 
-
-
     val handler = Handler(Handler.Callback {
-        if (App.SP.getString(Constants.SP_TOKEN, "")?.isNotBlank()!!) {
+        if (App.SP.getString(Constants.SP_TOKEN, "")?.isNotEmpty()!!) {
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         } else {
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))

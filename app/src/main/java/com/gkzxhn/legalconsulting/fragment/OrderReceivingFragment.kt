@@ -4,10 +4,13 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.OrderActivity
+import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationActivity
 import com.gkzxhn.legalconsulting.adapter.OrderReceivingAdapter
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.customview.PullToRefreshLayout
 import com.gkzxhn.legalconsulting.entity.OrderReceivingContent
@@ -101,7 +104,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                     intent.putExtra("orderState", 1)
                     startActivity(intent)
                 } else {
-                    context?.showToast("您认证尚未通过，不能进行此操作！")
+                    showTsDialog()
                 }
             }
         })
@@ -112,10 +115,46 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                 if (ProjectUtils.certificationStatus()) {
                     mPresenter?.acceptRushOrder(mAdapter!!.getCurrentItem().id!!)
                 } else {
-                    context?.showToast("您认证尚未通过，不能进行此操作！")
+                    showTsDialog()
                 }
             }
         })
+    }
+
+    private fun showTsDialog() {
+        when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
+        /****** 待认证 ******/
+            Constants.PENDING_CERTIFIED -> {
+                val tsClickDialog = context?.TsClickDialog("您尚未认证", true)
+                val send = tsClickDialog?.findViewById<TextView>(R.id.dialog_save)
+                send?.text = "认证"
+                send?.setOnClickListener {
+                    context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                    tsClickDialog.dismiss()
+                }
+            }
+        /****** 待审核 ******/
+            Constants.PENDING_APPROVAL -> {
+                val tsClickDialog = context?.TsClickDialog("认证正在审核中", true)
+                val send = tsClickDialog?.findViewById<TextView>(R.id.dialog_save)
+                send?.text = "查看"
+                send?.setOnClickListener {
+                    context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                    tsClickDialog.dismiss()
+                }
+            }
+        /****** 审核失败 ******/
+            Constants.APPROVAL_FAILURE -> {
+                val tsClickDialog = context?.TsClickDialog("您尚未认证", true)
+                val send = tsClickDialog?.findViewById<TextView>(R.id.dialog_save)
+                send?.text = "认证"
+                send?.setOnClickListener {
+                    context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
+                    tsClickDialog.dismiss()
+                }
+            }
+        }
+
     }
 
     override fun updateData(clear: Boolean, data: List<OrderReceivingContent>?) {
@@ -140,5 +179,6 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         }
 
     }
+
 
 }

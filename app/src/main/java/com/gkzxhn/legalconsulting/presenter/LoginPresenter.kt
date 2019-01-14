@@ -97,6 +97,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             201 -> {
                                 //注册成功 sms.verification-code.NotMatched user.Existed
                                 getToken(map["phoneNumber"].toString(), map["verificationCode"].toString())
+                                rememberPhone()
                             }
                             400 -> {
                                 try {
@@ -104,16 +105,14 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                     when (JSONObject(errorBody).getString("code")) {
                                         "sms.verification-code.NotMatched" -> {
                                             mContext?.TsDialog(mContext?.getString(R.string.verify_number_error).toString(), false)
-
                                         }
                                         "user.Existed" -> {
                                             getToken(map["phoneNumber"].toString(), map["verificationCode"].toString())
-
+                                            rememberPhone()
                                         }
                                     //user.password.NotMatched=账号密码不匹配。
                                         "user.password.NotMatched" -> {
                                             mContext?.TsDialog(mContext?.getString(R.string.password_error).toString(), false)
-
                                         }
                                         else -> {
 
@@ -129,6 +128,15 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                     }
                 }
                 )
+    }
+
+    /****** 记住账号 ******/
+    private fun rememberPhone() {
+        if (mView?.getRememberState()!!) {
+            App.EDIT.putString(Constants.SP_REMEMBER_PHONE, mView?.getPhone()).commit()
+        } else {
+            App.EDIT.putString(Constants.SP_REMEMBER_PHONE, "").commit()
+        }
     }
 
 
@@ -224,7 +232,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
             }
 
             override fun onException(exception: Throwable) {
-
             }
         })
     }

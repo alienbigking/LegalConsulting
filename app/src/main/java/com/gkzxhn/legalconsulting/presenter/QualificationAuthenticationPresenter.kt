@@ -39,8 +39,6 @@ class QualificationAuthenticationPresenter(context: Context, view: Qualification
             }
         }
         mContext?.startActivity(intent)
-
-
         mView?.onFinish()
     }
 
@@ -60,9 +58,6 @@ class QualificationAuthenticationPresenter(context: Context, view: Qualification
             Constants.APPROVAL_FAILURE -> {
                 mView?.changeMessage(mContext?.getString(R.string.certified_fail).toString())
                 mView?.changeQualificationAuthentication(mContext?.getString(R.string.certified_fail_send).toString())
-            }
-            else -> {
-
             }
         }
 

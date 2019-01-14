@@ -52,6 +52,7 @@ class App : Application() {
         SP = getSharedPreferences("config", Context.MODE_PRIVATE)
         EDIT = SP.edit()
         mApi = RetrofitClient.getInstance(this).mApi!!
+
 //        初始化数据库
         //解决greendao android5.0一下版本就会报错的问题
         MultiDex.install(this)

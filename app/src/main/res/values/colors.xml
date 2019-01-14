@@ -9,7 +9,7 @@
     <color name="red">#ff0000</color>
 
     <color name="line_login">#EBEBEB</color>
-    <color name="login_edit_tv">#999999</color>
+    <color name="login_edit_tv">#333333</color>
     <color name="login_line_blue">#5159A2</color>
 
     <!--主页-->
@@ -43,7 +43,7 @@
 
     <color name="dark_blue">#FF5159A2</color>
     <color name="text_gray">#666666</color>
-    <color name="home_top_red">#FFB52020</color>
+    <color name="home_top_red">#ffb52020</color>
     <color name="home_top_green">#FF5159A2</color>
     <color name="order_red">#FFCB0101</color>
     <color name="g_child_page_bg_color">#FFFFFF</color>

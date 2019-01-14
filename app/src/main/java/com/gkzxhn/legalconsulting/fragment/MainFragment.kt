@@ -5,10 +5,8 @@ import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
-import com.gkzxhn.legalconsulting.activity.QualificationAuthenticationActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -16,7 +14,10 @@ import com.gkzxhn.legalconsulting.common.RxBus
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
-import com.gkzxhn.legalconsulting.utils.*
+import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.TsDialog
+import com.gkzxhn.legalconsulting.utils.logE
+import com.gkzxhn.legalconsulting.utils.showToast
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.main_fragment.*
 import okhttp3.MediaType
@@ -28,38 +29,17 @@ import kotlinx.android.synthetic.main.main_fragment.iv_main_message_top as ivMes
 import kotlinx.android.synthetic.main.main_fragment.tv_home_edit_order as tvEditOrder
 import kotlinx.android.synthetic.main.main_fragment.tv_home_get_order as tvGetOrder
 import kotlinx.android.synthetic.main.main_fragment.tv_main_top_end as tvCertification
-import kotlinx.android.synthetic.main.main_fragment.tv_main_top_title as tvTopTitle
 import kotlinx.android.synthetic.main.main_fragment.v_home_select_line1 as vSelectLine1
 import kotlinx.android.synthetic.main.main_fragment.v_home_select_line2 as vSelectLine2
 import kotlinx.android.synthetic.main.main_fragment.vp_home as VpHome
-
 
 /**
  * Explanation: 首页
  * @author LSX
  *    -----2018/9/7
  */
-class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
 
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        /****** 没有认证通过的时候 跳转认证页面 ******/
-        if (ProjectUtils.certificationStatus()) {
-            if (isChecked) {
-                setOrderState("RECEIVING")
-            } else {
-                setOrderState("BUSY")
-            }
-        } else {
-            st_home_get_order_state.isChecked=!isChecked
-            val tsClickDialog = context?.TsClickDialog("您尚未认证", true)
-            val send = tsClickDialog?.findViewById<TextView>(R.id.dialog_save)
-            send?.text = "认证"
-            send?.setOnClickListener {
-                context?.startActivity(Intent(context, QualificationAuthenticationActivity::class.java))
-                tsClickDialog.dismiss()
-            }
-        }
-    }
+class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
 
     var tbList: MutableList<BaseFragment>? = null
     private var mainAdapter: MainAdapter? = null
@@ -112,7 +92,7 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
     private fun loadTopUI() {
         tv_main_name.text = App.SP.getString(Constants.SP_NAME, "- - - -")
         tv_home_address.text = "执业律所：" + App.SP.getString(Constants.SP_LAWOFFICE, "- - - -")
-        if (categories != null && categories!!.isNotEmpty()) {
+        if (categories != null && categories!!.isNotEmpty()&&ProjectUtils.certificationStatus()) {
             tv_home_type1.visibility = View.VISIBLE
             tv_home_type1.text = ProjectUtils.categoriesConversion(categories!![0])
             if (categories!!.size > 1) {
@@ -123,6 +103,10 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
                 tv_home_type3.visibility = View.VISIBLE
                 tv_home_type3.text = ProjectUtils.categoriesConversion(categories!![2])
             }
+        }else{
+            tv_home_type1.visibility = View.INVISIBLE
+            tv_home_type2.visibility = View.INVISIBLE
+            tv_home_type3.visibility = View.INVISIBLE
         }
         /****** 在设置前把监听设空  ******/
         st_home_get_order_state.setOnCheckedChangeListener(null)
@@ -139,26 +123,47 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
         }
         when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
             Constants.PENDING_CERTIFIED -> {
-                tvCertification.text = "未认证"
-                tv_home_address.visibility = View.GONE
-                tvCertification.setTextColor(resources.getColor(R.color.home_top_red))
+                certificationChange("未认证")
+
             }
             Constants.PENDING_APPROVAL -> {
-                tvCertification.text = "待审核"
-                tv_home_address.visibility = View.GONE
-                tvCertification.setTextColor(resources.getColor(R.color.home_top_red))
+                certificationChange("待审核")
+
             }
             Constants.APPROVAL_FAILURE -> {
-                tv_home_address.visibility = View.GONE
-                tvCertification.text = "未认证"
-                tvCertification.setTextColor(resources.getColor(R.color.home_top_red))
+                certificationChange("未认证")
             }
             Constants.CERTIFIED -> {
+                iv_main_rz_top_no.visibility = View.GONE
+                tv_main_top_end_no.visibility = View.GONE
+
+                tvCertification.visibility = View.VISIBLE
+                iv_main_rz_top.visibility = View.VISIBLE
+
+                tv_home_get_order_state.visibility = View.VISIBLE
+                st_home_get_order_state.visibility = View.VISIBLE
+
                 tvCertification.text = "已认证"
+                iv_main_rz_top.setImageResource(R.mipmap.ic_rezen)
                 tv_home_address.visibility = View.VISIBLE
-                tvCertification.setTextColor(resources.getColor(R.color.home_top_green))
+                tvCertification.setTextColor(resources.getColor(R.color.white))
             }
         }
+    }
+
+    /****** 认证通过之外的情况处理 ******/
+    private fun certificationChange(s: String) {
+        iv_main_rz_top_no.visibility = View.VISIBLE
+        tv_main_top_end_no.visibility = View.VISIBLE
+        tvCertification.visibility = View.GONE
+        iv_main_rz_top.visibility = View.GONE
+
+        tv_home_get_order_state.visibility = View.INVISIBLE
+        st_home_get_order_state.visibility = View.INVISIBLE
+
+        tv_home_address.visibility = View.INVISIBLE
+        tv_main_top_end_no.text = s
+
     }
 
     override fun initListener() {
@@ -174,8 +179,6 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
             startActivity(Intent(context, NotificationActivity::class.java))
         }
 
-        v_home_top_bg.setOnClickListener {
-        }
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
@@ -192,6 +195,17 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
         })
+    }
+
+    /****** 接单状态切换监听 ******/
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if (ProjectUtils.certificationStatus()) {
+            if (isChecked) {
+                setOrderState("RECEIVING")
+            } else {
+                setOrderState("BUSY")
+            }
+        }
     }
 
     private fun selectTwoItem() {
@@ -235,6 +249,7 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
                                 }
                             }
                         }
+
                     })
         }
     }

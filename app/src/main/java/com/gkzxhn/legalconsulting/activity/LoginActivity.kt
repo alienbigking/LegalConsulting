@@ -1,9 +1,11 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.WindowManager
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
@@ -14,6 +16,7 @@ import com.gkzxhn.legalconsulting.view.LoginView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_login.*
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.activity_login.et_login_code as code
@@ -48,6 +51,11 @@ class LoginActivity : BaseActivity(), LoginView {
         return code.text.toString().trim()
     }
 
+    override fun getRememberState(): Boolean {
+        return cb_remember.isChecked
+    }
+
+
     override fun provideContentViewId(): Int {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         return R.layout.activity_login
@@ -56,7 +64,15 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun init() {
         mPresenter = LoginPresenter(this, this)
-//        updateApp()
+
+        val phone = App.SP.getString(Constants.SP_REMEMBER_PHONE, "")
+        Log.e("xiaowu","phone"+ phone)
+
+        if (phone.isNotEmpty()) {
+            loginPhone.setText(phone)
+        }
+
+        updateApp()
         login.setOnClickListener {
             mPresenter?.login()
         }

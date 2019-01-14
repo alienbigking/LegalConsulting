@@ -27,7 +27,6 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
     }
 
     override fun init() {
-
         mPresenter = QualificationAuthenticationPresenter(this, this)
 
         qualificationAuthentication.setOnClickListener {
@@ -44,7 +43,6 @@ class QualificationAuthenticationActivity : BaseActivity(), QualificationAuthent
             finish()
         }
         top_title.text = "资格认证"
-
     }
 
     /**

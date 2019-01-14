@@ -139,6 +139,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_sex"
             />
 
+            <TextView
+                android:id="@+id/tv_qualification_authentication_personal_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16dp"
+                android:text="个人简介"
+                android:textColor="#ff333333"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_sex"
+            />
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_personal_profile_context"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:text="--------"
+                android:textColor="#333333"
+                android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_personal_profile"/>
+
+
             <!--地域 暂时 不显示-->
             <TextView
                 android:id="@+id/tv_qualification_authentication_territory"
@@ -174,31 +203,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_territory"
             />
 
-            <TextView
-                android:id="@+id/tv_qualification_authentication_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="16dp"
-                android:text="律所地址"
-                android:textColor="#ff333333"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/v_qualification_authentication_territory"
-            />
-
-            <TextView
-                android:id="@+id/tv_qa_show_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="---"
-                android:textColor="#FF333333"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_address"
-            />
 
 
             <View
@@ -207,7 +211,7 @@
                 android:layout_height="41dp"
                 android:layout_marginTop="16dp"
                 android:background="#ffeae8f1"
-                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_address"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_personal_profile_context"
             />
 
             <TextView
@@ -257,6 +261,37 @@
             />
 
             <TextView
+                android:id="@+id/tv_qualification_authentication_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16dp"
+                android:text="律所地址"
+                android:textColor="#ff333333"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_qualification_authentication_institution"
+            />
+
+            <TextView
+                android:id="@+id/tv_qa_show_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="---"
+                android:textColor="#FF333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_qualification_authentication_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_qualification_authentication_address"
+            />
+            <View
+                android:id="@+id/v_qualification_authentication_address"
+                style="@style/view_qualification_authentication_line"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_address"
+            />
+
+            <TextView
                 android:id="@+id/tv_qualification_authentication_professional_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -266,7 +301,7 @@
                 android:textColor="#ff333333"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_institution"/>
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_address"/>
 
             <TextView
                 android:id="@+id/tv_qa_show_professional"
@@ -321,39 +356,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_year"
             />
 
-            <TextView
-                android:id="@+id/tv_qualification_authentication_personal_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="16dp"
-                android:text="个人简介"
-                android:textColor="#ff333333"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_year"
-            />
-
-            <TextView
-                android:id="@+id/tv_qualification_authentication_personal_profile_context"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:text="--------"
-                android:textColor="#333333"
-                android:textSize="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_personal_profile"/>
-
-            <View
-                android:id="@+id/v_qualification_authentication_personal_profile"
-                style="@style/view_qualification_authentication_line"
-                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_personal_profile_context"
-            />
 
             <TextView
                 android:id="@+id/tv_qualification_authentication_certificate_photos"
@@ -365,7 +367,7 @@
                 android:textColor="#ff333333"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_personal_profile"
+                app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_year"
             />
 
             <ImageView
@@ -462,9 +464,9 @@
                 android:id="@+id/v_qualification_authentication_bg_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
-                android:background="#ffeae8f1"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="25dp"
+                android:background="#ffeae8f1"
                 app:layout_constraintTop_toBottomOf="@+id/iv_qa_show_image4"
             />
             <TextView

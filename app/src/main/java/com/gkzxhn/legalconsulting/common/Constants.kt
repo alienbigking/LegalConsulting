@@ -28,6 +28,7 @@ object Constants {
     val SP_REFRESH_TOKEN = "refreshToken"
     val SP_PHONE = "SP_PHONE"
     val SP_NAME = "sp_user_name"
+    val SP_REMEMBER_PHONE = "SP_remember_phone"
     val SP_LAWOFFICE = "sp_user_lawOffice"
     //    头像的绝对路径
     val SP_AVATARFILE = "sp_avatarFile"

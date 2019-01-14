@@ -102,7 +102,7 @@ interface ApiService {
     fun uploadFiles(@Part file: MultipartBody.Part): Observable<UploadFile>
 
     // 下载文件
-    @GET("/files/{id}")
+    @GET("/files/public/{id}")
     fun downloadFile(@Header("Range") range: String, @Path("id") id: String): Observable<ResponseBody>
 
       // 下载文件

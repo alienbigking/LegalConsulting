@@ -12,4 +12,5 @@ interface LoginView : BaseView {
     fun stopCountDown()
     fun startCountDown(int: Int)
     fun onFinish()
+    fun getRememberState(): Boolean
 }

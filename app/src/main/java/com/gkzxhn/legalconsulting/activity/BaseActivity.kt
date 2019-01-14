@@ -254,9 +254,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun setDownloadDialogClick(tvCancel: TextView, tvConfirm: TextView, updateInfo: UpdateInfo?) {
         tvCancel.setOnClickListener {
-            //            basePresenter.appModel.userSp.edit {
-//                putInt(SPKeyConstants.VERSION_CODE, versionInfo?.versionNumber ?: getVersionCode())
-//            }
             downloadDialog?.dismiss()
         }
 
