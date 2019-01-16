@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -84,7 +83,8 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                                     map[STRING_ID + position] = t.id
                                     /****** 与后台约定的前缀 ******/
                                     var startStr = Constants.BASE_64_START
-                                    map[STRING_64 + position] = startStr + fileBase64Str
+//                                    map[STRING_64 + position] = startStr + fileBase64Str
+                                    map[STRING_64 + position] = t.id
                                 }
                             }
                         }
@@ -142,22 +142,23 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
 
         /****** 证书图片 ******/
         certificatePictures?.fileId = map[STRING_ID + 1]
-        certificatePictures?.thumb = map[STRING_64 + 1]
+        certificatePictures?.thumbFileId = map[STRING_64 + 1]
         certificatePicturesList?.add(certificatePictures!!)
         qualificationAuthentication.certificatePictures = certificatePicturesList
 
         /****** 评估照片 ******/
         assessmentPictures?.fileId = map[STRING_ID + 2]
-        assessmentPictures?.thumb = map[STRING_64 + 2]
+        assessmentPictures?.thumbFileId = map[STRING_64 + 2]
         assessmentPicturesList?.add(assessmentPictures!!)
         qualificationAuthentication.assessmentPictures = assessmentPicturesList
 
         /****** 身份证 ******/
         identificationPictures?.fileId = map[STRING_ID + 3]
-        identificationPictures?.thumb = map[STRING_64 + 3]
+        identificationPictures?.thumbFileId = map[STRING_64 + 3]
         identificationPicturesList?.add(identificationPictures!!)
+
         identificationPictures2?.fileId = map[STRING_ID + 4]
-        identificationPictures2?.thumb = map[STRING_64 + 4]
+        identificationPictures2?.thumbFileId = map[STRING_64 + 4]
         identificationPicturesList?.add(identificationPictures2!!)
         qualificationAuthentication.identificationPictures = identificationPicturesList
 
@@ -215,53 +216,34 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                             mView?.setProfessional(professional.substring(1))
                             mView?.setYear(t.workExperience.toString())
 
-                            val file = File(mContext?.cacheDir, "pa_show_1" + ".jpg")
-                            val certificatePictures = t.certificatePictures!![0].thumb.toString()
+                            val certificatePictures = t.certificatePictures!![0].thumbFileId.toString()
                             if (certificatePictures.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(certificatePictures.substring(Constants.BASE_64_START.length), file.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
-                                    mView?.setImage1(decodeFile)
-                                }
+                                    mView?.setImage1(certificatePictures)
                             }
 
-                            val file2 = File(mContext?.cacheDir, "pa_show_2" + ".jpg")
-                            val assessmentPictures = t.assessmentPictures!![0].thumb.toString()
+                            val assessmentPictures = t.assessmentPictures!![0].thumbFileId.toString()
                             if (assessmentPictures.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(assessmentPictures.substring(Constants.BASE_64_START.length), file2.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file2.absolutePath)
-                                    mView?.setImage2(decodeFile)
-                                }
+                                    mView?.setImage2(assessmentPictures)
                             }
-                            val file3 = File(mContext?.cacheDir, "pa_show_3" + ".jpg")
-                            val identificationPictures1 = t.identificationPictures!![0].thumb.toString()
+
+                            val identificationPictures1 = t.identificationPictures!![0].thumbFileId.toString()
                             if (identificationPictures1.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures1.substring(Constants.BASE_64_START.length), file3.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file3.absolutePath)
-                                    mView?.setImage3(decodeFile)
-                                }
+                                    mView?.setImage3(identificationPictures1)
                             }
-                            val file4 = File(mContext?.cacheDir, "pa_show_4" + ".jpg")
-                            val identificationPictures2 = t.identificationPictures!![1].thumb.toString()
+                            val identificationPictures2 = t.identificationPictures!![1].thumbFileId.toString()
                             if (identificationPictures2.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures2.substring(Constants.BASE_64_START.length), file4.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file4.absolutePath)
-                                    mView?.setImage4(decodeFile)
-                                }
+                                    mView?.setImage4(identificationPictures2)
                             }
 
                             /****** 保存文件ID与base64码 ******/
                             map[STRING_ID + 1] = t.certificatePictures!![0].fileId.toString()
-                            map[STRING_64 + 1] = t.certificatePictures!![0].thumb.toString()
+                            map[STRING_64 + 1] = t.certificatePictures!![0].thumbFileId.toString()
                             map[STRING_ID + 2] = t.assessmentPictures!![0].fileId.toString()
-                            map[STRING_64 + 2] = t.assessmentPictures!![0].thumb.toString()
+                            map[STRING_64 + 2] = t.assessmentPictures!![0].thumbFileId.toString()
                             map[STRING_ID + 3] = t.identificationPictures!![0].fileId.toString()
-                            map[STRING_64 + 3] = t.identificationPictures!![0].thumb.toString()
+                            map[STRING_64 + 3] = t.identificationPictures!![0].thumbFileId.toString()
                             map[STRING_ID + 4] = t.identificationPictures!![1].fileId.toString()
-                            map[STRING_64 + 4] = t.identificationPictures!![1].thumb.toString()
+                            map[STRING_64 + 4] = t.identificationPictures!![1].thumbFileId.toString()
                         }
                     })
         }

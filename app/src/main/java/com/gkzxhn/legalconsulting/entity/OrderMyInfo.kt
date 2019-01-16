@@ -51,6 +51,7 @@ class OrderMyInfo {
         var username: String? = null
         var avatarURL: String? = null
         var avatarThumb: String? = null
+        var avatarFileId: String? = null
     }
 
     class LawyerBean {

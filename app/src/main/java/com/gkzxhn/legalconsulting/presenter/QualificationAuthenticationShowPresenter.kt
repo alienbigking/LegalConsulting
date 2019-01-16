@@ -1,17 +1,13 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import android.graphics.BitmapFactory
-import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.QualificationAuthentication
 import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.model.iml.QualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationShowView
 import rx.android.schedulers.AndroidSchedulers
-import java.io.File
 
 /**
  * @author：liushaoxiang
@@ -41,42 +37,22 @@ class QualificationAuthenticationShowPresenter(context: Context, view: Qualifica
                             mView?.setProfessional(professional.substring(1))
                             mView?.setYear(t.workExperience.toString() + "年")
 
-                            val file = File(mContext?.cacheDir, "pa_show_1" + ".jpg")
-                            val certificatePictures = t.certificatePictures!![0].thumb.toString()
+                            val certificatePictures = t.certificatePictures!![0].thumbFileId.toString()
                             if (certificatePictures.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(certificatePictures.substring(Constants.BASE_64_START.length), file.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
-                                    mView?.setImage1(decodeFile)
-                                }
+                                mView?.setImage1(certificatePictures)
                             }
 
-                            val file2 = File(mContext?.cacheDir, "pa_show_2" + ".jpg")
-                            val assessmentPictures = t.assessmentPictures!![0].thumb.toString()
+                            val assessmentPictures = t.assessmentPictures!![0].thumbFileId.toString()
                             if (assessmentPictures.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(assessmentPictures.substring(Constants.BASE_64_START.length), file2.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file2.absolutePath)
-                                    mView?.setImage2(decodeFile)
-                                }
+                                mView?.setImage2(assessmentPictures)
                             }
-                            val file3 = File(mContext?.cacheDir, "pa_show_3" + ".jpg")
-                            val identificationPictures1 = t.identificationPictures!![0].thumb.toString()
+                            val identificationPictures1 = t.identificationPictures!![0].thumbFileId.toString()
                             if (identificationPictures1.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures1.substring(Constants.BASE_64_START.length), file3.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file3.absolutePath)
-                                    mView?.setImage3(decodeFile)
-                                }
+                                mView?.setImage3(identificationPictures1)
                             }
-                            val file4 = File(mContext?.cacheDir, "pa_show_4" + ".jpg")
-                            val identificationPictures2 = t.identificationPictures!![1].thumb.toString()
+                            val identificationPictures2 = t.identificationPictures!![1].thumbFileId.toString()
                             if (identificationPictures2.isNotEmpty()) {
-                                val base64ToFile = ImageUtils.base64ToFile(identificationPictures2.substring(Constants.BASE_64_START.length), file4.absolutePath)
-                                if (base64ToFile) {
-                                    val decodeFile = BitmapFactory.decodeFile(file4.absolutePath)
-                                    mView?.setImage4(decodeFile)
-                                }
+                                mView?.setImage4(identificationPictures2)
                             }
                         }
                     })

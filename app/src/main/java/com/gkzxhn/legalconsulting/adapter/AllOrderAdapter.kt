@@ -66,7 +66,7 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
         with(holder.itemView) {
             val entity = mDatas[position]
             tv_order_dispose_name.text = entity.customer!!.name
-            ProjectUtils.loadImage(context, entity.customer!!.avatarThumb, iv_order_dispose_item)
+            ProjectUtils.loadRoundImageByFileID(context, entity.customer!!.avatarFileId, iv_order_dispose_item)
             /****** 价格 ******/
             tv_order_price.text = "￥" + entity.reward
             tv_order_dispose_description.text = entity.description

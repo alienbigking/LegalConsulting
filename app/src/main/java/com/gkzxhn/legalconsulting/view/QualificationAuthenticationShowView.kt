@@ -1,7 +1,5 @@
 package com.gkzxhn.legalconsulting.view
 
-import android.graphics.Bitmap
-
 /**
  * Explanation:
  * @author LSX
@@ -17,9 +15,9 @@ interface QualificationAuthenticationShowView : BaseView {
     fun setAddress(string: String)
     fun setProfessional(string: String)
     fun setYear(string: String)
-    fun setImage1(decodeFile: Bitmap)
-    fun setImage2(decodeFile: Bitmap)
-    fun setImage3(decodeFile: Bitmap)
-    fun setImage4(decodeFile: Bitmap)
+    fun setImage1(decodeFile: String)
+    fun setImage2(decodeFile: String)
+    fun setImage3(decodeFile: String)
+    fun setImage4(decodeFile: String)
 
 }

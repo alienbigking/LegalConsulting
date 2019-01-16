@@ -25,6 +25,7 @@ class OrderReceivingCustomer {
     var phoneNumber: String? = null
     var avatarURL: String? = null
     var avatarThumb: String? = null
+    var avatarFileId: String? = null
 }
 
 class OrderReceivingContent {

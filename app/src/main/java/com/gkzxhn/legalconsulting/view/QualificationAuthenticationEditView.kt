@@ -35,12 +35,16 @@ interface QualificationAuthenticationEditView : BaseView {
     fun setAddress(provinceName: String, cityName: String, countyName: String, streetDetail: String)
     fun setProfessional(string: String)
     fun setYear(string: String)
+    fun setImage1(decodeFile: String)
+    fun setImage2(decodeFile: String)
+    fun setImage3(decodeFile: String)
+    fun setImage4(decodeFile: String)
     fun setImage1(decodeFile: Bitmap)
     fun setImage2(decodeFile: Bitmap)
     fun setImage3(decodeFile: Bitmap)
     fun setImage4(decodeFile: Bitmap)
 
     fun setSelectStr(selectStr: ArrayList<String>)
-    fun getSelectStr():ArrayList<String>
+    fun getSelectStr(): ArrayList<String>
 
 }

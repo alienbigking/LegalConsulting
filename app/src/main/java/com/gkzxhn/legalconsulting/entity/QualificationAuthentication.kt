@@ -25,7 +25,7 @@ class QualificationAuthentication {
 class IdentificationPictures {
 
     var fileId: String? = null
-    var thumb: String? = null
+    var thumbFileId: String? = null
 
 }
 
@@ -47,13 +47,13 @@ class LawOfficeAddress {
 class CertificatePictures {
 
     var fileId: String? = null
-    var thumb: String? = null
+    var thumbFileId: String? = null
 
 }
 
 class AssessmentPictures {
 
     var fileId: String? = null
-    var thumb: String? = null
+    var thumbFileId: String? = null
 
 }

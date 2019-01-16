@@ -102,9 +102,9 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_name.text = name
     }
 
-    override fun setOrderImage(avatarThumb: String?) {
-        if (avatarThumb != null) {
-            ProjectUtils.loadImage(this, avatarThumb, iv_oder_icon)
+    override fun setOrderImage(avatarFileId: String?) {
+        if (avatarFileId != null) {
+            ProjectUtils.loadRoundImageByFileID(this, avatarFileId, iv_oder_icon)
         }
     }
 

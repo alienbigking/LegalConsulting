@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.content.Intent
-import android.graphics.Bitmap
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.QualificationAuthenticationShowPresenter
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
@@ -35,7 +34,7 @@ class QualificationAuthenticationShowActivity : BaseActivity(), QualificationAut
 
         tv_qualification_authentication_show_send.setOnClickListener {
             var intent = Intent(this, QualificationAuthenticationEditActivity::class.java)
-            intent.putExtra("again_Authentication",true)
+            intent.putExtra("again_Authentication", true)
             startActivity(intent)
             finish()
         }
@@ -72,22 +71,20 @@ class QualificationAuthenticationShowActivity : BaseActivity(), QualificationAut
         tv_qa_show_year.text = string
     }
 
-    override fun setImage1(decodeFile: Bitmap) {
-        iv_qa_show_image1.setImageBitmap(decodeFile)
+    override fun setImage1(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this, decodeFile, iv_qa_show_image1)
     }
 
-    override fun setImage2(decodeFile: Bitmap) {
-        iv_qa_show_image2.setImageBitmap(decodeFile)
-
+    override fun setImage2(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this, decodeFile, iv_qa_show_image2)
     }
 
-    override fun setImage3(decodeFile: Bitmap) {
-        iv_qa_show_image3.setImageBitmap(decodeFile)
+    override fun setImage3(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this, decodeFile, iv_qa_show_image3)
     }
 
-    override fun setImage4(decodeFile: Bitmap) {
-        iv_qa_show_image4.setImageBitmap(decodeFile)
-
+    override fun setImage4(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this, decodeFile, iv_qa_show_image4)
     }
 
 

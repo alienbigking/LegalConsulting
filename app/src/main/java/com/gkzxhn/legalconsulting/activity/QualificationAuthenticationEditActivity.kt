@@ -181,6 +181,21 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         et_qualification_authentication_year.setText(string)
     }
 
+    override fun setImage1(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this,decodeFile,iv_qualification_authentication_certificate_photos_bg)
+    }
+
+    override fun setImage2(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this,decodeFile,iv_qualification_authentication_record_photo_bg)
+    }
+
+    override fun setImage3(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this,decodeFile,iv_qualification_authentication_id11)
+    }
+
+    override fun setImage4(decodeFile: String) {
+        ProjectUtils.loadImageByFileID(this,decodeFile,iv_qualification_authentication_id22)
+    }
     override fun setImage1(decodeFile: Bitmap) {
         iv_qualification_authentication_certificate_photos_bg.setImageBitmap(decodeFile)
     }
@@ -196,7 +211,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     override fun setImage4(decodeFile: Bitmap) {
         iv_qualification_authentication_id22.setImageBitmap(decodeFile)
     }
-
 
     override fun getName(): String {
         return et_qualification_authentication_name.text.trim().toString()
@@ -222,7 +236,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
         return if (str == getString(R.string.please_fill_in)) {
             ""
         } else str
-
     }
 
     override fun getCityname(): String {

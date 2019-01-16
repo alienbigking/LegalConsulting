@@ -47,7 +47,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
                             mView?.setNextText("抢单")
-                            mView?.setOrderImage(t.customer?.avatarThumb)
+                            mView?.setOrderImage(t.customer?.avatarFileId)
                             mView?.setOrderState("已支付")
 //                            mView?.setAllbgColor(App.mContext.resources.getColor(R.color.main_gary_bg))
 
@@ -58,12 +58,15 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             if (t.attachments!!.size > 1 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image2" + ".jpg", t.attachments!![1].thumb!!.toString())?.let { it1 -> mView?.setImage2(it1) }
                             }
+
                             if (t.attachments!!.size > 2 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image3" + ".jpg", t.attachments!![2].thumb!!.toString())?.let { it1 -> mView?.setImage3(it1) }
                             }
+
                             if (t.attachments!!.size > 3 && t.attachments != null) {
                                 ImageUtils.base64ToBitmap("order_image4" + ".jpg", t.attachments!![3].thumb!!.toString())?.let { it1 -> mView?.setImage4(it1) }
                             }
+
                             val str1 = ProjectUtils.categoriesConversion(t.category!!)
                             mView?.setOrderType(str1)
                         }
@@ -92,7 +95,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
         mView?.setOrderNumber(t.number.toString())
-        mView?.setOrderImage(t.customer?.avatarThumb)
+        mView?.setOrderImage(t.customer?.avatarFileId)
 
         userName = t.customer?.username!!
         if (t.attachments!!.isNotEmpty() && t.attachments != null) {

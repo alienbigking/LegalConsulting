@@ -163,7 +163,6 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
 
         tv_home_address.visibility = View.INVISIBLE
         tv_main_top_end_no.text = s
-
     }
 
     override fun initListener() {
@@ -249,7 +248,6 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
                                 }
                             }
                         }
-
                     })
         }
     }

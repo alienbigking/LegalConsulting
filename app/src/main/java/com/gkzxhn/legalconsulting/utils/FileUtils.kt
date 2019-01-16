@@ -7,8 +7,10 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.TextUtils
+import java.io.ByteArrayOutputStream
 import java.io.File
-
+import java.io.IOException
+import java.io.InputStream
 
 
 object FileUtils{
@@ -90,6 +92,19 @@ object FileUtils{
             dir.mkdirs()
         }
         return dirPath
+    }
+
+    // 将输入流解析成字节数组
+    @Throws(IOException::class)
+    fun input2byte(inStream: InputStream): ByteArray {
+        val swapStream = ByteArrayOutputStream()
+        val buff = ByteArray(100)
+        var rc = inStream.read(buff, 0, 100)
+        while (rc > 0) {
+            swapStream.write(buff, 0, rc)
+            rc = inStream.read(buff, 0, 100)
+        }
+        return swapStream.toByteArray()
     }
 
 

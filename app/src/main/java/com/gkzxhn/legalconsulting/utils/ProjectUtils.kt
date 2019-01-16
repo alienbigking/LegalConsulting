@@ -7,20 +7,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.net.HttpObserverNoDialog
-import com.gkzxhn.legalconsulting.net.RetrofitClientLogin
-import okhttp3.ResponseBody
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import com.gkzxhn.legalconsulting.net.NetWorkCodeInfo
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
 
 /**
  * @classname：ProjectUtils
@@ -132,37 +128,42 @@ object ProjectUtils {
         } else {
             imageview?.setImageResource(R.mipmap.ic_user_icon)
         }
-        var isFileID = false
-        if (isFileID) {
-            var fileid = "b3465135-9a02-4ecc-84a5-c02e5dfa497f"
-            context?.let {
-                RetrofitClientLogin.getInstance(context).mApi?.downloadImage(fileid)
-                        ?.subscribeOn(Schedulers.io())
-                        ?.unsubscribeOn(AndroidSchedulers.mainThread())
-                        ?.observeOn(AndroidSchedulers.mainThread())
-                        ?.subscribe(object : HttpObserverNoDialog<ResponseBody>(it) {
-                            override fun success(t: ResponseBody) {
-                                var body = input2byte(t.byteStream())
-                                Glide.with(context).load(body)
-                                        .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
-                                        .into(imageview)
-                            }
-                        })
+    }
+
+    /****** 通过fileID加载图片 ******/
+    fun loadImageByFileID(context: Context?, fileId: String?, imageview: ImageView?) {
+        if (fileId == null || fileId.isEmpty()) {
+            imageview?.setImageResource(R.mipmap.ic_user_icon)
+            return
+        }
+        val token = App.SP.getString(Constants.SP_TOKEN, "")
+        if (token != null) {
+            if (token.isNotEmpty()) {
+                val mtoken = "Bearer $token"
+                val addHeader = LazyHeaders.Builder().addHeader("Authorization", mtoken)
+                val glideUrl = GlideUrl(NetWorkCodeInfo.BASE_URL + "/files/" + fileId, addHeader.build())
+                Glide.with(context).load(glideUrl).into(imageview)
             }
         }
     }
 
-    // 将输入流解析成字节数组
-    @Throws(IOException::class)
-    fun input2byte(inStream: InputStream): ByteArray {
-        val swapStream = ByteArrayOutputStream()
-        val buff = ByteArray(100)
-        var rc = inStream.read(buff, 0, 100)
-        while (rc  > 0) {
-            swapStream.write(buff, 0, rc)
-            rc = inStream.read(buff, 0, 100)
+    /****** 通过fileID加载圆形图片 ******/
+    fun loadRoundImageByFileID(context: Context?, fileId: String?, imageview: ImageView?) {
+        if (fileId == null || fileId.isEmpty()) {
+            imageview?.setImageResource(R.mipmap.ic_user_icon)
+            return
         }
-        return swapStream.toByteArray()
+        val token = App.SP.getString(Constants.SP_TOKEN, "")
+        if (token != null) {
+            if (token.isNotEmpty()) {
+                val mtoken = "Bearer $token"
+                val addHeader = LazyHeaders.Builder().addHeader("Authorization", mtoken)
+                val glideUrl = GlideUrl(NetWorkCodeInfo.BASE_URL + "/files/" + fileId, addHeader.build())
+                Glide.with(context).load(glideUrl).into(imageview)
+            }
+        }
     }
+
+
 
 }
