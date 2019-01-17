@@ -16,13 +16,21 @@ import android.text.TextUtils
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
+import com.gkzxhn.legalconsulting.activity.SplashActivity
 import com.gkzxhn.legalconsulting.entity.NotificationInfo
 import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.ApiService
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.utils.LogHelper
 import com.gkzxhn.legalconsulting.utils.location.helper.MLocationProvider
+import com.netease.nim.avchatkit.AVChatKit
+import com.netease.nim.avchatkit.config.AVChatOptions
+import com.netease.nim.avchatkit.model.ITeamDataProvider
+import com.netease.nim.avchatkit.model.IUserInfoProvider
 import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nim.uikit.business.team.helper.TeamHelper
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper
 import com.netease.nim.uikit.common.util.sys.ScreenUtil
 import com.netease.nim.uikit.custom.CustomAttachParser
 import com.netease.nim.uikit.custom.MsgViewHolderMySafe
@@ -34,6 +42,7 @@ import com.netease.nimlib.sdk.auth.LoginInfo
 import com.netease.nimlib.sdk.msg.MsgService
 import com.netease.nimlib.sdk.msg.MsgServiceObserve
 import com.netease.nimlib.sdk.msg.model.CustomNotification
+import com.netease.nimlib.sdk.uinfo.model.UserInfo
 import com.netease.nimlib.sdk.util.NIMUtil
 
 
@@ -69,6 +78,8 @@ class App : Application() {
         if (NIMUtil.isMainProcess(this)) {
 
             NimUIKit.init(this)
+            // 初始化音视频模块
+            initAVChatKit()
             /****** 注册自定义消息 ******/
             NIMClient.getService(MsgService::class.java).registerCustomAttachmentParser(CustomAttachParser()) // 监听的注册，必须在主进程中。
             NimUIKit.registerMsgItemViewHolder(MySafeAttachment::class.java, MsgViewHolderMySafe::class.java)
@@ -80,7 +91,7 @@ class App : Application() {
             NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification({ p0 ->
                 initNotification(p0!!)
                 /****** 保存数据到数据库 ******/
-                GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null,p0.sessionId,p0.fromAccount, p0.time,p0.content))
+                GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null, p0.sessionId, p0.fromAccount, p0.time, p0.content))
                 RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
             }, true)
         }
@@ -121,7 +132,6 @@ class App : Application() {
         lateinit var mApi: ApiService
     }
 
-
     /**
      * 登录云信账号
      */
@@ -130,6 +140,7 @@ class App : Application() {
         val account = App.SP.getString(Constants.SP_IM_ACCOUNT, "")
         val token = App.SP.getString(Constants.SP_IM_TOKEN, "")
         NimUIKit.setAccount(account)
+        AVChatKit.setAccount(account)
 
         return if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
             LoginInfo(account, token)
@@ -137,7 +148,6 @@ class App : Application() {
             null
         }
     }
-
 
     // 如果返回值为 null，则全部使用默认参数。
     private fun options(context: Context): SDKOptions {
@@ -194,6 +204,42 @@ class App : Application() {
 //            }
 //        }
         return options
+    }
+
+
+    private fun initAVChatKit() {
+        val avChatOptions = object : AVChatOptions() {
+            override fun logout(context: Context) {
+                /****** 登出 ******/
+//                MainActivity.logout(context, true)
+            }
+        }
+        avChatOptions.entranceActivity = SplashActivity::class.java
+        avChatOptions.notificationIconRes = R.mipmap.logo
+        AVChatKit.init(avChatOptions)
+        AVChatKit.setContext(this)
+        // 初始化日志系统
+        LogHelper.init()
+        // 设置用户相关资料提供者
+        AVChatKit.setUserInfoProvider(object : IUserInfoProvider() {
+            override fun getUserInfo(account: String): UserInfo {
+                return NimUIKit.getUserInfoProvider().getUserInfo(account)
+            }
+
+            override fun getUserDisplayName(account: String): String {
+                return UserInfoHelper.getUserDisplayName(account)
+            }
+        })
+        // 设置群组数据提供者
+        AVChatKit.setTeamDataProvider(object : ITeamDataProvider() {
+            override fun getDisplayNameWithoutMe(teamId: String, account: String): String {
+                return TeamHelper.getDisplayNameWithoutMe(teamId, account)
+            }
+
+            override fun getTeamMemberDisplayName(teamId: String, account: String): String {
+                return TeamHelper.getTeamMemberDisplayName(teamId, account)
+            }
+        })
     }
 
 

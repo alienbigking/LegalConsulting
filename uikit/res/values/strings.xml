@@ -225,4 +225,8 @@
     <string name="msg_search">全文检索</string>
     <string name="msg_search_limit">全文检索显示条数</string>
 
+    <string name="input_panel_audio_call">语音通话</string>
+    <string name="input_panel_video_call">视频通话</string>
+
+
 </resources>

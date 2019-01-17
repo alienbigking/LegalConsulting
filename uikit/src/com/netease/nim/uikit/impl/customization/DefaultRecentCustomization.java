@@ -1,9 +1,15 @@
 package com.netease.nim.uikit.impl.customization;
 
+import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.recent.RecentCustomization;
 import com.netease.nim.uikit.business.session.helper.TeamNotificationHelper;
+import com.netease.nim.uikit.common.util.sys.TimeUtil;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.avchat.constant.AVChatRecordState;
+import com.netease.nimlib.sdk.avchat.constant.AVChatType;
+import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
 import com.netease.nimlib.sdk.msg.attachment.NotificationAttachment;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
@@ -51,6 +57,34 @@ public class DefaultRecentCustomization extends RecentCustomization {
                         (NotificationAttachment) recent.getAttachment());
             case robot:
                 return "[机器人消息]";
+            case avchat:
+                MsgAttachment attachment = recent.getAttachment();
+                AVChatAttachment avchat = (AVChatAttachment) attachment;
+                if (avchat.getState() == AVChatRecordState.Missed && !recent.getFromAccount().equals(NimUIKit.getAccount())) {
+                    // 未接通话请求
+                    StringBuilder sb = new StringBuilder("[未接");
+                    if (avchat.getType() == AVChatType.VIDEO) {
+                        sb.append("视频电话]");
+                    } else {
+                        sb.append("音频电话]");
+                    }
+                    return sb.toString();
+                } else if (avchat.getState() == AVChatRecordState.Success) {
+                    StringBuilder sb = new StringBuilder();
+                    if (avchat.getType() == AVChatType.VIDEO) {
+                        sb.append("[视频电话]: ");
+                    } else {
+                        sb.append("[音频电话]: ");
+                    }
+                    sb.append(TimeUtil.secToTime(avchat.getDuration()));
+                    return sb.toString();
+                } else {
+                    if (avchat.getType() == AVChatType.VIDEO) {
+                        return ("[视频电话]");
+                    } else {
+                        return ("[音频电话]");
+                    }
+                }
             default:
                 return "[自定义消息] ";
         }

@@ -2,6 +2,7 @@ package com.netease.nim.uikit.business.session.viewholder;
 
 import com.netease.nim.uikit.custom.MsgViewHolderMySafe;
 import com.netease.nim.uikit.custom.MySafeAttachment;
+import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
 import com.netease.nimlib.sdk.msg.attachment.AudioAttachment;
 import com.netease.nimlib.sdk.msg.attachment.ImageAttachment;
 import com.netease.nimlib.sdk.msg.attachment.LocationAttachment;
@@ -34,6 +35,7 @@ public class MsgViewHolderFactory {
         register(NotificationAttachment.class, MsgViewHolderNotification.class);
         register(RobotAttachment.class, MsgViewHolderRobot.class);
         register(MySafeAttachment.class, MsgViewHolderMySafe.class);
+        register(AVChatAttachment.class, MsgViewHolderAVChat.class);
     }
 
     public static void register(Class<? extends MsgAttachment> attach, Class<? extends MsgViewHolderBase> viewHolder) {
