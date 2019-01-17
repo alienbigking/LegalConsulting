@@ -13,6 +13,7 @@ import android.os.Environment
 import android.support.multidex.MultiDex
 import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
+import android.util.Log
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
@@ -141,6 +142,7 @@ class App : Application() {
         val token = App.SP.getString(Constants.SP_IM_TOKEN, "")
         NimUIKit.setAccount(account)
         AVChatKit.setAccount(account)
+        Log.e("xiaowu", "account:$account")
 
         return if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
             LoginInfo(account, token)

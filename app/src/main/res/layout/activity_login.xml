@@ -143,7 +143,7 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="15dp"
         android:button="@drawable/selector_login_check"
-        android:checked="false"
+        android:checked="true"
         android:paddingStart="30dp"
         android:text="记住账号"
         android:textColor="#ff333333"

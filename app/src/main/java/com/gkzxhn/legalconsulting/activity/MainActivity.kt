@@ -7,6 +7,7 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.App.Companion.mContext
+import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.fragment.BaseFragment
 import com.gkzxhn.legalconsulting.fragment.ConversationFragment
@@ -14,12 +15,20 @@ import com.gkzxhn.legalconsulting.fragment.MainFragment
 import com.gkzxhn.legalconsulting.fragment.UserFragment
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.net.error_exception.ApiException
 import com.gkzxhn.legalconsulting.utils.ObtainVersion
+import com.gkzxhn.legalconsulting.utils.TsClickDialog
+import com.gkzxhn.legalconsulting.utils.TsDialog
+import com.gkzxhn.legalconsulting.utils.showToast
 import com.netease.nim.uikit.api.NimUIKit
 import com.netease.nimlib.sdk.NimIntent
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.IMMessage
+import kotlinx.android.synthetic.main.dialog_ts.*
+import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
+import java.io.IOException
+import java.net.ConnectException
 import java.util.*
 import kotlinx.android.synthetic.main.activity_main.tv_main_conversation as mainConversation
 import kotlinx.android.synthetic.main.activity_main.tv_main_home as mainHome
@@ -122,6 +131,37 @@ class MainActivity : BaseActivity() {
                             showDownloadDialog(t)
                         }
                     }
+                    override fun onError(e: Throwable?) {
+                        loadDialog?.dismiss()
+                        when (e) {
+                            is ConnectException -> TsDialog("服务器异常，请重试", false)
+                            is HttpException -> {
+                                when {
+                                    e.code() == 401 -> TsClickDialog("登录已过期", false).dialog_save.setOnClickListener {
+                                        App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
+                                    }
+                                    e.code() == 404 -> {
+                                        /****** 不处理 ******/
+                                    }
+                                    else -> TsDialog("服务器异常，请重试", false)
+                                }
+                            }
+                            is IOException -> TsDialog("数据加载失败，请检查您的网络", false)
+                        //后台返回的message
+                            is ApiException -> {
+                                TsDialog(e.message!!, false)
+                                Log.e("ApiErrorHelper", e.message, e)
+                            }
+                            else -> {
+                                showToast("数据异常")
+                                Log.e("ApiErrorHelper", e?.message, e)
+                            }
+                        }
+                    }
+
                 })
     }
 

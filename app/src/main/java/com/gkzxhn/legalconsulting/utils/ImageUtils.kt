@@ -192,7 +192,7 @@ object ImageUtils {
      * @param file
      * @return
      */
-    fun compressImage(bitmap: Bitmap,file: File, size: Int): File? {
+    fun compressImage(bitmap: Bitmap, file: File, size: Int): File? {
         var options = 100
         val baos = ByteArrayOutputStream()
         // 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
@@ -204,11 +204,6 @@ object ImageUtils {
             // 这里压缩options%，把压缩后的数据存放到baos中
             bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos)
         }
-        /*// 把压缩后的数据baos存放到ByteArrayInputStream中
-            ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
-            // 把ByteArrayInputStream数据生成图片
-            Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
-            return bitmap;*/
         try {
             val fos = FileOutputStream(file)
             fos.write(baos.toByteArray())

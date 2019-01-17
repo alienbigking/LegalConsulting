@@ -6,16 +6,15 @@ import android.content.Context
 import com.gkzxhn.legalconsulting.net.error_exception.ApiErrorHelper
 import com.gkzxhn.legalconsulting.utils.loadDialog
 
-
-
- /**
+/**
  * Explanation:
  * @author LSX
  *    -----2018/9/6
  */
+
 abstract class HttpObserver<T>(context: Context) : MySubscriber<T>(), OnRequestListener<T> {
     var loadDialog: Dialog? = null
-    var contexts : Context?  = null
+    var contexts: Context? = null
 
     init {
         contexts = context
@@ -33,7 +32,7 @@ abstract class HttpObserver<T>(context: Context) : MySubscriber<T>(), OnRequestL
 
     override fun onError(t: Throwable?) {
         loadDialog?.dismiss()
-        ApiErrorHelper.handleCommonError(contexts!!,t!!)
+        ApiErrorHelper.handleCommonError(contexts!!, t!!)
     }
 
 }

@@ -38,5 +38,5 @@ dependencies {
     implementation files('libs/nrtc-sdk.jar')
 
     // 音视频需要
-    compile 'com.netease.nimlib:avchat:5.8.0'
+    api 'com.netease.nimlib:avchat:5.8.0'
 }

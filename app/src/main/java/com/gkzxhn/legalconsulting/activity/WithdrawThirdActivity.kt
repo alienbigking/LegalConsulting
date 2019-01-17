@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.default_top.*
  */
 class WithdrawThirdActivity : BaseActivity() {
 
-
     override fun init() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_withdraw_3_send)

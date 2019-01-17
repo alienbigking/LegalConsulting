@@ -26,7 +26,7 @@ object ApiErrorHelper {
         print("网络异常：" + e::javaClass)
 
         when (e) {
-            is ConnectException -> context.TsDialog("服务器异常", false)
+            is ConnectException -> context.TsDialog("服务器异常，请重试", false)
             is HttpException -> {
                 if (e.code() == 401) {
                     context.TsClickDialog("登录已过期", false).dialog_save.setOnClickListener {

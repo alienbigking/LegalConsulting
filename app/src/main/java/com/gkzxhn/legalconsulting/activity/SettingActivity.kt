@@ -2,6 +2,7 @@ package com.gkzxhn.legalconsulting.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
@@ -11,11 +12,16 @@ import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.net.error_exception.ApiException
 import com.gkzxhn.legalconsulting.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
+import kotlinx.android.synthetic.main.dialog_ts.*
+import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.io.IOException
+import java.net.ConnectException
 
 /**
  * @classname：SettingActivtiy
@@ -33,7 +39,7 @@ class SettingActivity : BaseActivity() {
         initTopTitle()
         ProjectUtils.addViewTouchChange(tv_setting_exit)
         tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
-        tv_setting_version.text = "V_"+ObtainVersion.getVersionName(App.mContext)
+        tv_setting_version.text = "V_" + ObtainVersion.getVersionName(App.mContext)
     }
 
     private fun initTopTitle() {
@@ -114,10 +120,42 @@ class SettingActivity : BaseActivity() {
                         val versionCode = ObtainVersion.getVersionCode(App.mContext)
                         if (t.number!! > versionCode) {
                             showDownloadDialog(t)
-                        }else{
-                            TsDialog("已是最新版本",true)
+                        } else {
+                            TsDialog("已是最新版本", true)
                         }
                     }
+
+                    override fun onError(e: Throwable?) {
+                        loadDialog?.dismiss()
+                        when (e) {
+                            is ConnectException -> TsDialog("服务器异常，请重试", false)
+                            is HttpException -> {
+                                when {
+                                    e.code() == 401 -> TsClickDialog("登录已过期", false).dialog_save.setOnClickListener {
+                                        App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                                        val intent = Intent(this@SettingActivity, LoginActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
+                                    }
+                                    e.code() == 404 ->
+                                        /****** 不处理 ******/
+                                        TsDialog("后台尚未上传更新包", false)
+                                    else -> TsDialog("服务器异常，请重试", false)
+                                }
+                            }
+                            is IOException -> TsDialog("数据加载失败，请检查您的网络", false)
+                        //后台返回的message
+                            is ApiException -> {
+                                TsDialog(e.message!!, false)
+                                Log.e("ApiErrorHelper", e.message, e)
+                            }
+                            else -> {
+                                showToast("数据异常")
+                                Log.e("ApiErrorHelper", e?.message, e)
+                            }
+                        }
+                    }
+
                 })
     }
 }

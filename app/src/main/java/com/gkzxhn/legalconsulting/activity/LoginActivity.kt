@@ -1,6 +1,7 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
 import android.view.WindowManager
 import com.gkzxhn.legalconsulting.R
@@ -9,15 +10,19 @@ import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
 import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
+import com.gkzxhn.legalconsulting.net.error_exception.ApiException
 import com.gkzxhn.legalconsulting.presenter.LoginPresenter
-import com.gkzxhn.legalconsulting.utils.ObtainVersion
-import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.LoginView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.dialog_ts.*
+import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
+import java.io.IOException
+import java.net.ConnectException
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.activity_login.et_login_code as code
 import kotlinx.android.synthetic.main.activity_login.et_login_phone as loginPhone
@@ -66,10 +71,12 @@ class LoginActivity : BaseActivity(), LoginView {
         mPresenter = LoginPresenter(this, this)
 
         val phone = App.SP.getString(Constants.SP_REMEMBER_PHONE, "")
-        Log.e("xiaowu","phone"+ phone)
+        Log.e("xiaowu", "phone" + phone)
 
         if (phone.isNotEmpty()) {
             loginPhone.setText(phone)
+            /****** 获取光标到验证码一栏 ******/
+            code.requestFocus()
         }
 
         updateApp()
@@ -140,6 +147,37 @@ class LoginActivity : BaseActivity(), LoginView {
                         val versionCode = ObtainVersion.getVersionCode(App.mContext)
                         if (t.number!! > versionCode) {
                             showDownloadDialog(t)
+                        }
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        loadDialog?.dismiss()
+                        when (e) {
+                            is ConnectException -> TsDialog("服务器异常，请重试", false)
+                            is HttpException -> {
+                                when {
+                                    e.code() == 401 -> TsClickDialog("登录已过期", false).dialog_save.setOnClickListener {
+                                        App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                                        val intent = Intent(this@LoginActivity, LoginActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
+                                    }
+                                    e.code() == 404 -> {
+                                        /****** 不处理 ******/
+                                    }
+                                    else -> TsDialog("服务器异常，请重试", false)
+                                }
+                            }
+                            is IOException -> TsDialog("数据加载失败，请检查您的网络", false)
+                        //后台返回的message
+                            is ApiException -> {
+                                TsDialog(e.message!!, false)
+                                Log.e("ApiErrorHelper", e.message, e)
+                            }
+                            else -> {
+                                showToast("数据异常")
+                                Log.e("ApiErrorHelper", e?.message, e)
+                            }
                         }
                     }
                 })
