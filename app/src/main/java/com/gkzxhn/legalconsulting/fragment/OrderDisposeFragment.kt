@@ -106,7 +106,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             rcl_order_disposer.layoutManager = LinearLayoutManager(activity, 1, false)
             rcl_order_disposer.adapter = mAdapter
             val decoration = DisplayUtils.dp2px(App.mContext, 15f)
-            rcl_order_disposer.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
+            rcl_order_disposer.addItemDecoration(ItemDecorationHelper(0, decoration, 0, 0, decoration))
             mPresenter?.getOrderDispose("0")
         }
         recyclerViewListener()

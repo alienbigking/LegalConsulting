@@ -80,7 +80,6 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
             v_item_order_receiving_type.text = ProjectUtils.categoriesConversion(entity.category!!)
             /****** 价格 ******/
             tv_main_top_end.text = "￥" + entity.reward
-            tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
             if (entity.type != Constants.RUSH) {
@@ -91,24 +90,11 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
                 iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)
             }
 
-            /****** 待接单的时候 显示按扭 ******/
-            if (entity.status == Constants.ORDER_STATE_PENDING_RECEIVING) {
-                tv_order_dispose_refused.visibility = View.VISIBLE
-                v_order_dispose_description.visibility = View.VISIBLE
-            } else {
-                tv_order_dispose_refused.visibility = View.GONE
-                v_order_dispose_description.visibility = View.GONE
-            }
             holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
             })
 
-            /****** 拒绝单 ******/
-            tv_order_dispose_refused.setOnClickListener {
-                mCurrentIndex = position
-                onItemOrderListener?.onRefusedListener()
-            }
         }
     }
 

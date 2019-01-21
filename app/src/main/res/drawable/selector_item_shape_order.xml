@@ -3,5 +3,5 @@
 
     <item android:drawable="@drawable/shape_order_item_bg_gary" android:state_pressed="true"/>
     <item android:drawable="@drawable/shape_order_item_bg_gary" android:state_focused="true"/>
-    <item android:drawable="@drawable/shape_order_item_bg"/>
+    <item android:drawable="@drawable/shape_order_item_bg_1"/>
 </selector>

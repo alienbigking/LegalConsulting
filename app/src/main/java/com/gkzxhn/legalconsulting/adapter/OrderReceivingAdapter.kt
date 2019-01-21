@@ -85,7 +85,6 @@ class OrderReceivingAdapter(private val mContext: Context) : RecyclerView.Adapte
             /****** 赏金  ******/
             tv_main_top_end.text = "￥" + entity.reward.toString()
             tv_item_order_receiving_time.text = StringUtils.parseDate(entity.createdTime!!)
-            tv_item_order_receiving_context.text = entity.description
 
             v_item_order_receiving_type.text= ProjectUtils.categoriesConversion(entity.category!!)
 

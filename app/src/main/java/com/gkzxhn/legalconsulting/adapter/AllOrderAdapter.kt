@@ -69,12 +69,10 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             ProjectUtils.loadRoundImageByFileID(context, entity.customer!!.avatarFileId, iv_order_dispose_item)
             /****** 价格 ******/
             tv_order_price.text = "￥" + entity.reward
-            tv_order_dispose_description.text = entity.description
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
             if (entity.type == Constants.ASSIGN) {
                 /****** 指定单 ******/
-                tv_order_price.text = ""
                 iv_order_dispose_state.setImageResource(R.mipmap.ic_assign)
             } else {
                 iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)

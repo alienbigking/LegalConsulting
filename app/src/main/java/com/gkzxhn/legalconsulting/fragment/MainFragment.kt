@@ -140,8 +140,8 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
                 tvCertification.visibility = View.VISIBLE
                 iv_main_rz_top.visibility = View.VISIBLE
 
-                tv_home_get_order_state.visibility = View.VISIBLE
-                st_home_get_order_state.visibility = View.VISIBLE
+                tv_home_get_order_state.visibility = View.INVISIBLE
+                st_home_get_order_state.visibility = View.INVISIBLE
 
                 tvCertification.text = "已认证"
                 iv_main_rz_top.setImageResource(R.mipmap.ic_rezen)

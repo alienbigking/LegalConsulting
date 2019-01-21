@@ -53,7 +53,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         rcl_order_receiving.layoutManager = LinearLayoutManager(context, 1, false)
         rcl_order_receiving.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
-        rcl_order_receiving.addItemDecoration(ItemDecorationHelper(decoration, decoration, decoration, 0, decoration))
+        rcl_order_receiving.addItemDecoration(ItemDecorationHelper(0, decoration, 0, 0, decoration))
         mPresenter?.getOrderReceiving("0")
 
 

@@ -12,6 +12,8 @@
         android:layout_height="37dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:src="@mipmap/ic_user_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -20,8 +22,8 @@
         android:id="@+id/tv_order_dispose_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="李好"
+        android:layout_marginStart="15dp"
+        android:text="--"
         android:textColor="#ff333333"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/iv_order_dispose_item"
@@ -52,7 +54,7 @@
         android:id="@+id/tv_order_dispose_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:text="2018-08-10 11:15"
         android:textColor="#ff999999"
         android:textSize="10sp"
@@ -71,38 +73,6 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/iv_order_dispose_item"
         app:layout_constraintTop_toBottomOf="@id/tv_order_dispose_name"
-    />
-
-
-    <View
-        android:id="@+id/v_order_dispose_item_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:background="#FFD9D9D9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_order_dispose_item"
-    />
-
-    <TextView
-        android:id="@+id/tv_order_dispose_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:lines="2"
-        android:text="我想咨询个人隐私问题，我对象通过他在派出所的朋友关系私自调出我的微信消费记录聊天记录，侵犯我的权利..."
-        android:textColor="#ff666666"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_order_dispose_item_line"
     />
 
 </android.support.constraint.ConstraintLayout>

@@ -395,7 +395,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             if (faceU != null) {
                 faceU.effect(frame.data, frame.width, frame.height, FaceU.VIDEO_FRAME_FORMAT.I420);
             }
-
             return true;
         }
 
