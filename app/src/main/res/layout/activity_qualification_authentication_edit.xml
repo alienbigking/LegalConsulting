@@ -637,21 +637,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/v_qualification_authentication_id2"
             />
 
-            <CheckBox
-                android:id="@+id/cb_qualification_confirm"
+            <TextView
+                android:id="@+id/tv_qualification_authentication_provisions1"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginStart="9dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
-                android:button="@drawable/selector_login_check"
-                android:checked="true"
-                android:paddingStart="10dp"
-                android:text="法律咨询协议"
-                android:textColor="#ff333333"
+                android:text="点击按钮即同意"
+                android:textColor="#ff666666"
                 android:textSize="12sp"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_qualification_authentication_provisions2"
                 app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_edit_send"
             />
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_provisions2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:autoLink="all"
+                android:text="@string/qualification_authentication_2"
+                android:textColor="#5159A2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_qualification_authentication_provisions1"
+                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_edit_send"
+            />
+
 
             <TextView
                 android:id="@+id/tv_qualification_authentication_edit_send"
@@ -661,13 +674,13 @@
                 android:layout_marginTop="25dp"
                 android:background="@drawable/shape_qualification_authentication_edit_bg_text"
                 android:gravity="center"
-                android:text="提交申请"
+                android:text="同意协议并提交申请"
                 android:textColor="#ffffffff"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cb_qualification_confirm"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_provisions1"
             />
             <Space android:id="@+id/s_qualification_authentication_edit_send"
                    android:layout_width="wrap_content"

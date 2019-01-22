@@ -4,8 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -196,21 +194,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
     override fun setImage4(decodeFile: String) {
         ProjectUtils.loadImageByFileID(this,decodeFile,iv_qualification_authentication_id22)
     }
-    override fun setImage1(decodeFile: Bitmap) {
-        iv_qualification_authentication_certificate_photos_bg.setImageBitmap(decodeFile)
-    }
-
-    override fun setImage2(decodeFile: Bitmap) {
-        iv_qualification_authentication_record_photo_bg.setImageBitmap(decodeFile)
-    }
-
-    override fun setImage3(decodeFile: Bitmap) {
-        iv_qualification_authentication_id11.setImageBitmap(decodeFile)
-    }
-
-    override fun setImage4(decodeFile: Bitmap) {
-        iv_qualification_authentication_id22.setImageBitmap(decodeFile)
-    }
 
     override fun getName(): String {
         return et_qualification_authentication_name.text.trim().toString()
@@ -386,23 +369,6 @@ class QualificationAuthenticationEditActivity : BaseActivity(), QualificationAut
      */
     private fun handleReturnData(path: String?, position: Int) {
         iv_qualification_authentication_certificate_photos_bg.setPadding(0, 0, 0, 0)
-        val bitmap = BitmapFactory.decodeFile(path)
-        when (position) {
-            1 -> {
-                setImage1(bitmap)
-            }
-            2 -> {
-                setImage2(bitmap)
-            }
-            3 -> {
-                setImage3(bitmap)
-            }
-            4 -> {
-                setImage4(bitmap)
-            }
-
-        }
-
         mPresenter.uploadFiles(File(path), position)
     }
 

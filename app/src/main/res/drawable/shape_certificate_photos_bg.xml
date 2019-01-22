@@ -16,8 +16,4 @@ android:shape="rectangle">
         android:dashGap="2dp" />
 
 
-
-
-
-
 </shape>

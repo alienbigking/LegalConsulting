@@ -9,12 +9,10 @@ import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import com.gkzxhn.legalconsulting.R
-import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.entity.*
 import com.gkzxhn.legalconsulting.model.IQualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.model.iml.QualificationAuthenticationModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.utils.ImageUtils
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.QualificationAuthenticationEditView
@@ -76,16 +74,14 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
                     ?.subscribe(object : HttpObserver<UploadFile>(it) {
                         override fun success(t: UploadFile) {
                             t.id?.let {
-                                val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 360, 360)
-                                ImageUtils.compressImage(bitmap, file, 2000)!!
-                                val fileBase64Str = ImageUtils.imageToBase64(file.path)
-                                if (fileBase64Str != null) {
-                                    map[STRING_ID + position] = t.id
-                                    /****** 与后台约定的前缀 ******/
-                                    var startStr = Constants.BASE_64_START
-//                                    map[STRING_64 + position] = startStr + fileBase64Str
-                                    map[STRING_64 + position] = t.id
+                                when (position) {
+                                    1 -> mView?.setImage1(t.id)
+                                    2 -> mView?.setImage2(t.id)
+                                    3 -> mView?.setImage3(t.id)
+                                    4 -> mView?.setImage4(t.id)
                                 }
+                                map[STRING_ID + position] = t.id
+                                map[STRING_64 + position] = t.id
                             }
                         }
                     })
@@ -218,21 +214,21 @@ class QualificationAuthenticationEditPresenter(context: Context, view: Qualifica
 
                             val certificatePictures = t.certificatePictures!![0].thumbFileId.toString()
                             if (certificatePictures.isNotEmpty()) {
-                                    mView?.setImage1(certificatePictures)
+                                mView?.setImage1(certificatePictures)
                             }
 
                             val assessmentPictures = t.assessmentPictures!![0].thumbFileId.toString()
                             if (assessmentPictures.isNotEmpty()) {
-                                    mView?.setImage2(assessmentPictures)
+                                mView?.setImage2(assessmentPictures)
                             }
 
                             val identificationPictures1 = t.identificationPictures!![0].thumbFileId.toString()
                             if (identificationPictures1.isNotEmpty()) {
-                                    mView?.setImage3(identificationPictures1)
+                                mView?.setImage3(identificationPictures1)
                             }
                             val identificationPictures2 = t.identificationPictures!![1].thumbFileId.toString()
                             if (identificationPictures2.isNotEmpty()) {
-                                    mView?.setImage4(identificationPictures2)
+                                mView?.setImage4(identificationPictures2)
                             }
 
                             /****** 保存文件ID与base64码 ******/

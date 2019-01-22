@@ -3,7 +3,9 @@ package com.gkzxhn.legalconsulting.presenter
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import com.gkzxhn.legalconsulting.R
+import com.gkzxhn.legalconsulting.activity.LoginActivity
 import com.gkzxhn.legalconsulting.activity.MainActivity
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -12,10 +14,8 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.utils.NetworkUtils
-import com.gkzxhn.legalconsulting.utils.StringUtils
-import com.gkzxhn.legalconsulting.utils.TsDialog
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.net.error_exception.ApiException
+import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.LoginView
 import com.google.gson.Gson
 import com.netease.nim.uikit.api.NimUIKit
@@ -23,12 +23,16 @@ import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.RequestCallback
 import com.netease.nimlib.sdk.auth.AuthService
 import com.netease.nimlib.sdk.auth.LoginInfo
+import kotlinx.android.synthetic.main.dialog_ts.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
+import java.io.IOException
+import java.net.ConnectException
 import java.util.*
 
 /**
@@ -52,7 +56,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     fun sendCode() {
         if (!StringUtils.isMobileNO(mView?.getPhone()!!)) {
             mContext?.showToast("手机号格式不正确")
-        }else if (!NetworkUtils.isNetConneted(mContext!!)) {
+        } else if (!NetworkUtils.isNetConneted(mContext!!)) {
             mContext?.showToast("暂无网络")
 
         } else {
@@ -114,6 +118,12 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                         "user.password.NotMatched" -> {
                                             mContext?.TsDialog(mContext?.getString(R.string.password_error).toString(), false)
                                         }
+                                        "user.group.NotMatched" -> {
+                                            mContext?.TsDialog(mContext?.getString(R.string.group_error).toString(), false)
+                                        }
+                                        "invalid_grant" -> {
+                                            mContext?.TsDialog(mContext?.getString(R.string.group_error_disable).toString(), false)
+                                        }
                                         else -> {
 
                                         }
@@ -163,6 +173,54 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                 App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
                                 getLawyersInfo()
                                 getImInfo()
+                            }
+                        }
+
+                        override fun onError(e: Throwable?) {
+                            loadDialog?.dismiss()
+                            when (e) {
+                                is ConnectException -> mContext?.TsDialog("服务器异常，请重试", false)
+                                is HttpException -> {
+                                    if (e.code() == 401) {
+                                        mContext?.TsClickDialog("登录已过期", false)?.dialog_save?.setOnClickListener {
+                                            App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                                            val intent = Intent(mContext, LoginActivity::class.java)
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                            mContext?.startActivity(intent)
+                                        }
+                                    } else if (e.code() == 400) {
+                                        try {
+                                            val errorBody = e.response().errorBody().string()
+                                            when (JSONObject(errorBody).getString("code")) {
+                                                "user.password.NotMatched" -> {
+                                                    mContext?.TsDialog(mContext?.getString(R.string.password_error).toString(), false)
+                                                }
+                                                "user.group.NotMatched" -> {
+                                                    mContext?.TsDialog(mContext?.getString(R.string.group_error).toString(), false)
+                                                }
+                                                "invalid_grant" -> {
+                                                    mContext?.TsDialog(mContext?.getString(R.string.group_error_disable).toString(), false)
+                                                }
+                                                else -> {
+
+                                                }
+                                            }
+                                        } catch (e: Exception) {
+                                        }
+                                    } else {
+                                        mContext?.TsDialog("服务器异常，请重试", false)
+                                    }
+                                }
+                                is IOException -> mContext?.TsDialog("数据加载失败，请检查您的网络", false)
+                            //后台返回的message
+                                is ApiException -> {
+                                    mContext?.TsDialog(e.message!!, false)
+                                    Log.e("ApiErrorHelper", e.message, e)
+                                }
+                                else -> {
+                                    mContext?.showToast("数据异常")
+                                    Log.e("ApiErrorHelper", e?.message, e)
+                                }
                             }
                         }
                     })
@@ -223,8 +281,8 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
         val loginInfo = LoginInfo(account, pwd)
         NIMClient.getService(AuthService::class.java).login(loginInfo).setCallback(object : RequestCallback<LoginInfo> {
             override fun onSuccess(param: LoginInfo) {
-                App.EDIT.putString(Constants.SP_IM_ACCOUNT,param.account).commit()
-                App.EDIT.putString(Constants.SP_IM_TOKEN,param.token).commit()
+                App.EDIT.putString(Constants.SP_IM_ACCOUNT, param.account).commit()
+                App.EDIT.putString(Constants.SP_IM_TOKEN, param.token).commit()
                 NimUIKit.setAccount(account)
             }
 

@@ -34,7 +34,7 @@ class QualificationAuthenticationModel : BaseModel(), IQualificationAuthenticati
     }
 
     override fun uploadFiles(context: Context, body: MultipartBody.Part): Observable<UploadFile> {
-        return RetrofitClientLogin.getInstance(context).mApi?.uploadFiles(body)
+        return RetrofitClientLogin.getInstance(context).mApi?.uploadFiles(body,"PROTECTED")
                 ?.subscribeOn(Schedulers.io()) as Observable<UploadFile>
     }
 

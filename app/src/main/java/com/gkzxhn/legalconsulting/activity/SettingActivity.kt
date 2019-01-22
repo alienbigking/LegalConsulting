@@ -139,7 +139,7 @@ class SettingActivity : BaseActivity() {
                                     }
                                     e.code() == 404 ->
                                         /****** 不处理 ******/
-                                        TsDialog("后台尚未上传更新包", false)
+                                        TsDialog("已是最新版本", false)
                                     else -> TsDialog("服务器异常，请重试", false)
                                 }
                             }

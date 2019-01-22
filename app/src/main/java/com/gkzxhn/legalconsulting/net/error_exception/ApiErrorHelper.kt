@@ -35,9 +35,7 @@ object ApiErrorHelper {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         context.startActivity(intent)
                     }
-                }else if (e.code() == 402) {
-                    context.TsDialog("您的手机号码已注册用户版，请使用新号码注册", false)
-                } else {
+                }else {
                     context.TsDialog("服务器异常，请重试", false)
                 }
             }

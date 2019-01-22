@@ -1,7 +1,5 @@
 package com.gkzxhn.legalconsulting.view
 
-import android.graphics.Bitmap
-
 /**
  * Explanation:
  * @author LSX
@@ -39,10 +37,6 @@ interface QualificationAuthenticationEditView : BaseView {
     fun setImage2(decodeFile: String)
     fun setImage3(decodeFile: String)
     fun setImage4(decodeFile: String)
-    fun setImage1(decodeFile: Bitmap)
-    fun setImage2(decodeFile: Bitmap)
-    fun setImage3(decodeFile: Bitmap)
-    fun setImage4(decodeFile: Bitmap)
 
     fun setSelectStr(selectStr: ArrayList<String>)
     fun getSelectStr(): ArrayList<String>

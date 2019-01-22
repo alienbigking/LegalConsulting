@@ -204,7 +204,6 @@
             />
 
 
-
             <View
                 android:id="@+id/v_qualification_authentication_title_bg2"
                 android:layout_width="match_parent"
@@ -463,26 +462,63 @@
             <View
                 android:id="@+id/v_qualification_authentication_bg_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="89dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="25dp"
                 android:background="#ffeae8f1"
+                app:layout_constraintBottom_toBottomOf="@+id/s_qualification_authentication_show_send"
                 app:layout_constraintTop_toBottomOf="@+id/iv_qa_show_image4"
             />
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_provisions1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="点击按钮即同意"
+                android:textColor="#ff666666"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_qualification_authentication_provisions2"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_bg_bottom"
+            />
+
+            <TextView
+                android:id="@+id/tv_qualification_authentication_provisions2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:autoLink="all"
+                android:text="@string/qualification_authentication_2"
+                android:textColor="#5159A2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_qualification_authentication_provisions1"
+                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_bg_bottom"
+            />
+
+
             <TextView
                 android:id="@+id/tv_qualification_authentication_show_send"
                 android:layout_width="330dp"
                 android:layout_height="44dp"
                 android:background="@drawable/shape_qualification_authentication_edit_bg_text"
                 android:gravity="center"
-                android:text="重新认证"
+                android:text="同意协议并重新认证"
+                android:layout_marginTop="17dp"
                 android:textColor="#ffffffff"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/v_qualification_authentication_bg_bottom"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification_authentication_provisions2"
             />
+
+            <Space android:id="@+id/s_qualification_authentication_show_send"
+                   android:layout_width="wrap_content"
+                   android:layout_height="20dp"
+                   app:layout_constraintTop_toBottomOf="@id/tv_qualification_authentication_show_send"/>
+
 
         </android.support.constraint.ConstraintLayout>
 
