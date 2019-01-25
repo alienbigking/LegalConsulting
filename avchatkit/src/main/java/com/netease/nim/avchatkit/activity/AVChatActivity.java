@@ -61,6 +61,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private static final String TAG = "AVChatActivity";
     private static final String KEY_IN_CALLING = "KEY_IN_CALLING";
     private static final String KEY_ACCOUNT = "KEY_ACCOUNT";
+    private static final String KEY_EXTENDMESSAGE = "KEY_EXTENDMESSAGE";
     private static final String KEY_DISPLAY_NAME = "KEY_DISPLAY_NAME";
     private static final String KEY_CALL_TYPE = "KEY_CALL_TYPE";
     private static final String KEY_SOURCE = "source";
@@ -88,6 +89,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private AVChatData avChatData; // config for connect video server
     private int state; // calltype 音频或视频
     private String receiverId; // 对方的account
+    private String extendMessage; // 额外的信息
     private String displayName; // 对方的显示昵称
 
     private AVChatController avChatController;
@@ -101,12 +103,13 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private AVChatNotification notifier;
 
     // 拨打电话
-    public static void outgoingCall(Context context, String account, String displayName, int callType, int source) {
+    public static void outgoingCall(Context context, String account, String displayName, int callType, int source,String extendMessage) {
         needFinish = false;
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setClass(context, AVChatActivity.class);
         intent.putExtra(KEY_ACCOUNT, account);
+        intent.putExtra(KEY_EXTENDMESSAGE, extendMessage);
         intent.putExtra(KEY_DISPLAY_NAME, displayName);
         intent.putExtra(KEY_IN_CALLING, false);
         intent.putExtra(KEY_CALL_TYPE, callType);
@@ -184,7 +187,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         activeCallingNotifier();
     }
 
-
     @Override
     public void onBackPressed() {
         // 禁用返回键
@@ -240,6 +242,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 break;
             case FROM_INTERNAL: // outgoing call
                 receiverId = getIntent().getStringExtra(KEY_ACCOUNT);
+                extendMessage = getIntent().getStringExtra(KEY_EXTENDMESSAGE);
                 state = getIntent().getIntExtra(KEY_CALL_TYPE, -1);
                 break;
             default:
@@ -286,7 +289,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             } else {
                 // 去电
                 AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
-                avChatAudioUI.doOutGoingCall(receiverId);
+                avChatAudioUI.doOutGoingCall(receiverId,extendMessage);
             }
         } else {
             // 视频
@@ -300,7 +303,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
             } else {
                 // 去电
                 AVChatSoundPlayer.instance().play(AVChatSoundPlayer.RingerTypeEnum.CONNECTING);
-                avChatVideoUI.doOutgoingCall(receiverId);
+                avChatVideoUI.doOutgoingCall(receiverId,extendMessage);
             }
         }
 
@@ -494,7 +497,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
                 }
                 break;
             default:
-                Toast.makeText(this, "对方发来指令值：" + notification.getControlCommand(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "对方发来指令值：" + notification.getControlCommand(), Toast.LENGTH_SHORT).show();
                 break;
         }
     }

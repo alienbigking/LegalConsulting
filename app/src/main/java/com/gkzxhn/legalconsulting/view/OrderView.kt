@@ -1,7 +1,5 @@
 package com.gkzxhn.legalconsulting.view
 
-import android.graphics.Bitmap
-
 /**
  * Explanation:
  * @author LSX
@@ -11,7 +9,6 @@ import android.graphics.Bitmap
 interface OrderView : BaseView {
 
     fun onFinish()
-    fun setDescription(description: String)
     fun setName(name: String)
     fun setTime(time: String)
     fun setReward(reward: String)
@@ -19,14 +16,11 @@ interface OrderView : BaseView {
     fun setAllbgColor(color: Int)
     fun setOrderState(str: String)
     fun setOrderStateColor(color: Int)
-    fun setBottomSelectVisibility(visibility: Int)
-    fun setShowOrderInfo(visibility: Int, time: String, name: String)
     fun setOrderType(str1: String)
-    fun setImage1(bitmap: Bitmap)
-    fun setImage2(bitmap: Bitmap)
     fun setOrderNumber(time: String)
-    fun setOrderImage(avatarURL: String?)
-    fun getOrderMoeny(): String
-    fun setImage3(bitmap: Bitmap)
-    fun setImage4(bitmap: Bitmap)
+    fun setOrderImage(avatarFileId: String?)
+    fun setShowOrderState(visibility: Int, stateName: String, getTime: String, completeTime: String)
+    fun setShowGetMoney(visibility: Int, getMoney: String, getMoneyTime: String)
+    fun setOrderStateNameColor(color: Int)
+    fun setShowEvaluation(visibility: Int, ServiceSesults: String, ServiceInfo: String, star: Int)
 }

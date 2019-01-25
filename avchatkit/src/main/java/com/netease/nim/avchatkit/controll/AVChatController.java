@@ -102,7 +102,7 @@ public class AVChatController {
      * *************************** 拨打和接听 ****************************
      */
 
-    public void doCalling(String account, final AVChatType avChatType, final AVChatControllerCallback<AVChatData> callback) {
+    public void doCalling(String account, final AVChatType avChatType, String extendMessage,final AVChatControllerCallback<AVChatData> callback) {
 
         AVChatManager.getInstance().enableRtc();
         AVChatManager.getInstance().setParameters(avChatConfigs.getAvChatParameters());
@@ -119,7 +119,7 @@ public class AVChatController {
         }
 
         AVChatNotifyOption notifyOption = new AVChatNotifyOption();
-        notifyOption.extendMessage = "extra_data";
+        notifyOption.extendMessage = extendMessage;
         // 默认forceKeepCalling为true，开发者如果不需要离线持续呼叫功能可以将forceKeepCalling设为false
         // notifyOption.forceKeepCalling = false;
         AVChatManager.getInstance().call2(account, avChatType, notifyOption, new AVChatCallback<AVChatData>() {

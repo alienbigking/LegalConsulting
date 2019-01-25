@@ -81,11 +81,11 @@ class MoneyListAdapter(private val mContext: Context) : RecyclerView.Adapter<Mon
             val type = entity.type.toString()
             var typeStr = when (type) {
                 "REWARD" -> {
-                    tv_money_list_money.text = "+" + entity.amount.toString()
+                    tv_money_list_money.text = entity.amount.toString()
                     "赏金"
                 }
                 "WITHDRAWAL" -> {
-                    tv_money_list_money.text = "-" + entity.amount.toString()
+                    tv_money_list_money.text = entity.amount.toString()
                     tv_money_list_money.setTextColor(resources.getColor(R.color.main_bottom_black))
                     "提现"
                 }

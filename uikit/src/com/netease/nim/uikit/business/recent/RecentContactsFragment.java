@@ -241,22 +241,22 @@ public class RecentContactsFragment extends TFragment {
         CustomAlertDialog alertDialog = new CustomAlertDialog(getActivity());
         alertDialog.setTitle(UserInfoHelper.getUserTitleName(recent.getContactId(), recent.getSessionType()));
         String title = getString(R.string.main_msg_list_delete_chatting);
-//        alertDialog.addItem(title, new onSeparateItemClickListener() {
-//            @Override
-//            public void onClick() {
-//                // 删除会话，删除后，消息历史被一起删除
-//                NIMClient.getService(MsgService.class).deleteRecentContact(recent);
-//                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
-//                adapter.remove(position);
-//
-//                postRunnable(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        refreshMessages(true);
-//                    }
-//                });
-//            }
-//        });
+        alertDialog.addItem(title, new onSeparateItemClickListener() {
+            @Override
+            public void onClick() {
+                // 删除会话，删除后，消息历史被一起删除
+                NIMClient.getService(MsgService.class).deleteRecentContact(recent);
+                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
+                adapter.remove(position);
+
+                postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshMessages(true);
+                    }
+                });
+            }
+        });
 
         title = (CommonUtil.isTagSet(recent, RECENT_TAG_STICKY) ? getString(R.string.main_msg_list_clear_sticky_on_top) : getString(R.string.main_msg_list_sticky_on_top));
         alertDialog.addItem(title, new onSeparateItemClickListener() {

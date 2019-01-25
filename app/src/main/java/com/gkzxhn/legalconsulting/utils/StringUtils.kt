@@ -100,7 +100,7 @@ object StringUtils {
         val result: Date
         result = df.parse(dateStr)
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        sdf.timeZone = TimeZone.getTimeZone("GMT")
+//        sdf.timeZone = TimeZone.getTimeZone("GMT")
         return sdf.format(result)
     }
 

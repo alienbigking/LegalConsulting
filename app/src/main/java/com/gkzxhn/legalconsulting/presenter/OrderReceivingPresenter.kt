@@ -54,6 +54,7 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                             if (t.status == Constants.ORDER_STATE_ACCEPTED) {
                                 mContext?.showToast("接单成功")
                                 RxBus.instance.post(RxBusBean.HomePoint(true))
+
                                 getOrderReceiving("0")
                                 val intent = Intent(it, OrderActivity::class.java)
                                 intent.putExtra("orderId",id)

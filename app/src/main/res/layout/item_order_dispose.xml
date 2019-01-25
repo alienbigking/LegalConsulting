@@ -45,7 +45,6 @@
         app:layout_constraintTop_toTopOf="@id/tv_order_dispose_name"
     />
 
-
     <TextView
         android:id="@+id/tv_order_dispose_time"
         android:layout_width="wrap_content"
@@ -77,11 +76,10 @@
         android:id="@+id/iv_order_dispose_state"
         android:layout_width="59dp"
         android:layout_height="47dp"
-        android:src="@mipmap/ic_assign"
+        android:src="@mipmap/ic_order_yjd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
     />
-
 
     <TextView
         android:id="@+id/tv_order_dispose_open"
@@ -95,7 +93,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/v_item_order_receiving_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/v_item_order_receiving_type"/>
-
 
     <TextView
         android:id="@+id/tv_tv_order_next"

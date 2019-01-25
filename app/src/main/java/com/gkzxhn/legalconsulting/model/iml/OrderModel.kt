@@ -51,6 +51,13 @@ class OrderModel : BaseModel(), IOrderModel {
 
     }
 
+    override fun getOrderComment(context: Context, id: String): Observable<OrderComment> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.getOrderComment(id)
+                ?.subscribeOn(Schedulers.io()) as Observable<OrderComment>
+
+    }
+
     override fun rejectMyOrder(context: Context, id: String): Observable<OrderMyInfo> {
         return RetrofitClient.Companion.getInstance(context).mApi
                 ?.rejectMyOrder(id)

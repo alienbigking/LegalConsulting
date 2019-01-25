@@ -328,7 +328,7 @@ class UserSettingActivity : BaseActivity() {
     private fun uploadFiles(file: File) {
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        RetrofitClientLogin.getInstance(this).mApi?.uploadFiles(body,"PRIVATE")
+        RetrofitClientLogin.getInstance(this).mApi?.uploadFiles(body,"PUBLIC")
                 ?.subscribeOn(Schedulers.io())
                 ?.unsubscribeOn(AndroidSchedulers.mainThread())
                 ?.observeOn(AndroidSchedulers.mainThread())

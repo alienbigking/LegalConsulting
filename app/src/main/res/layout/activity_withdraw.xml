@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="71dp"
                 android:layout_marginTop="10dp"
-                android:text="额外扣除25%平台佣金费"
+                android:text="额外扣除30%平台佣金费"
                 android:textColor="#ff999999"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@id/v_withdraw_1_money"

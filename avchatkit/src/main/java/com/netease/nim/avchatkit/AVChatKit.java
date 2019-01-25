@@ -148,8 +148,8 @@ public class AVChatKit {
      * @param callType      音视频呼叫类型
      * @param source        发起呼叫的来源，参考AVChatActivityEx.FROM_INTERNAL/FROM_BROADCASTRECEIVER
      */
-    public static void outgoingCall(Context context, String account, String displayName, int callType, int source) {
-        AVChatActivity.outgoingCall(context, account, displayName, callType, source);
+    public static void outgoingCall(Context context, String account, String displayName, int callType, int source,String extendMessage) {
+        AVChatActivity.outgoingCall(context, account, displayName, callType, source,extendMessage);
     }
 
     /**

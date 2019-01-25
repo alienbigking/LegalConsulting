@@ -23,7 +23,7 @@
             android:background="@drawable/nim_message_open_video"
             android:contentDescription="@string/empty"
             android:gravity="center"
-            android:text="视频"
+            android:text="视频通话"
             android:textColor="@color/white"
             android:textSize="14sp"/>
     </LinearLayout>

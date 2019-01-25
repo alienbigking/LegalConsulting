@@ -1,10 +1,12 @@
 package com.gkzxhn.legalconsulting.activity
 
-import android.graphics.Bitmap
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.presenter.OrderPresenter
 import com.gkzxhn.legalconsulting.utils.ProjectUtils
+import com.gkzxhn.legalconsulting.utils.dp2px
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderView
 import kotlinx.android.synthetic.main.activity_oder.*
@@ -19,10 +21,6 @@ import kotlinx.android.synthetic.main.default_top.*
 class OrderActivity : BaseActivity(), OrderView {
 
     lateinit var mPresenter: OrderPresenter
-    var bitmap1: Bitmap? = null
-    var bitmap2: Bitmap? = null
-    var bitmap3: Bitmap? = null
-    var bitmap4: Bitmap? = null
 
     override fun provideContentViewId(): Int {
         return R.layout.activity_oder
@@ -57,45 +55,10 @@ class OrderActivity : BaseActivity(), OrderView {
             }
         }
 
-        /****** 拒绝订单 ******/
-        tv_order_reject.setOnClickListener {
-            mPresenter.rejectMyOrder(orderID)
-        }
-        /****** 接受订单 ******/
-        tv_order_accept.setOnClickListener {
-            mPresenter.acceptMyOrder(orderID)
-        }
-
-        iv_oder_image1.setOnClickListener {
-            iv_order_big.visibility = View.VISIBLE
-            iv_order_big.setImageBitmap(bitmap1)
-        }
-
-        iv_oder_image2.setOnClickListener {
-            iv_order_big.visibility = View.VISIBLE
-            iv_order_big.setImageBitmap(bitmap2)
-        }
-        iv_oder_image3.setOnClickListener {
-            iv_order_big.visibility = View.VISIBLE
-            iv_order_big.setImageBitmap(bitmap3)
-        }
-        iv_oder_image4.setOnClickListener {
-            iv_order_big.visibility = View.VISIBLE
-            iv_order_big.setImageBitmap(bitmap4)
-        }
-
-        /****** 大图 ******/
-        iv_order_big.setOnClickListener {
-            iv_order_big.visibility = View.GONE
-        }
     }
 
     override fun onFinish() {
         finish()
-    }
-
-    override fun setDescription(description: String) {
-        tv_order_context.text = description
     }
 
     override fun setName(name: String) {
@@ -111,10 +74,6 @@ class OrderActivity : BaseActivity(), OrderView {
 
     override fun setTime(time: String) {
         tv_order_time.text = time
-    }
-
-    override fun getOrderMoeny(): String {
-        return et_order_money.text.trim().toString()
     }
 
     override fun setOrderNumber(time: String) {
@@ -138,27 +97,6 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_state.text = str
     }
 
-    override fun setImage1(bitmap: Bitmap) {
-        iv_oder_image1.visibility = View.VISIBLE
-        bitmap1 = bitmap
-        iv_oder_image1.setImageBitmap(bitmap)
-    }
-
-    override fun setImage2(bitmap: Bitmap) {
-        iv_oder_image2.visibility = View.VISIBLE
-        bitmap2 = bitmap
-        iv_oder_image2.setImageBitmap(bitmap)
-    }
-    override fun setImage3(bitmap: Bitmap) {
-        iv_oder_image3.visibility = View.VISIBLE
-        bitmap3 = bitmap
-        iv_oder_image3.setImageBitmap(bitmap)
-    }
-    override fun setImage4(bitmap: Bitmap) {
-        iv_oder_image4.visibility = View.VISIBLE
-        bitmap4 = bitmap
-        iv_oder_image4.setImageBitmap(bitmap)
-    }
 
     override fun setAllbgColor(color: Int) {
         ll_order_all.setBackgroundColor(color)
@@ -168,31 +106,58 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_state.setTextColor(color)
     }
 
-    override fun setBottomSelectVisibility(visibility: Int) {
-        cl_order_bottom_select.visibility = visibility
-        v_order_money_white_bg.visibility = visibility
-        et_order_money.visibility = visibility
-        tv_order_money_title3.visibility = visibility
-        tv_order_money_title2.visibility = visibility
-        v_order_money_title.visibility = visibility
-        tv_order_money_title.visibility = visibility
+    override fun setOrderStateNameColor(color: Int) {
+        tv_order_state_name.setTextColor(color)
     }
 
-    override fun setShowOrderInfo(visibility: Int, time: String, name: String) {
-        tv_order_get_time.visibility = visibility
-        tv_order_get_time.text = time
+
+    /****** 订单状态栏的显示 ******/
+    override fun setShowOrderState(visibility: Int, stateName: String, getTime: String, completeTime: String) {
+        v_order_explain.visibility = visibility
         tv_order_state_name.visibility = visibility
-        tv_order_state_name.text = name
-        v_order_state_name.visibility = visibility
-        v_order_white_bg.visibility = visibility
-    }
-
-    override fun onBackPressed() {
-        if (iv_order_big.visibility == View.GONE) {
-            super.onBackPressed()
-        }else{
-            iv_order_big.visibility = View.GONE
+        tv_order_get_time.visibility = visibility
+        tv_order_complete_time.visibility = visibility
+        tv_order_state_name.text = stateName
+        tv_order_get_time.text = getTime
+        tv_order_complete_time.text = completeTime
+        if (completeTime.isEmpty()) {
+            tv_order_complete_time.visibility = View.GONE
         }
     }
 
+    /****** 到账栏的显示 ******/
+    override fun setShowGetMoney(visibility: Int, getMoney: String, getMoneyTime: String) {
+        v_order_complete_time.visibility = visibility
+        tv_order_get_money.visibility = visibility
+        tv_order_get_money_time.visibility = visibility
+        tv_order_get_money.text = getMoney
+        tv_order_get_money_time.text = getMoneyTime
+    }
+
+    /****** 评价栏的显示 ******/
+    override fun setShowEvaluation(visibility: Int, ServiceSesults: String, ServiceInfo: String, star: Int) {
+        v_order_get_money_time.visibility = visibility
+        tv_order_server.visibility = visibility
+        tv_order_server_end.visibility = visibility
+        tv_order_evaluation.visibility = visibility
+        ll_order_server_star.visibility = visibility
+        tv_order_server_end.text = ServiceSesults
+        tv_order_evaluation.text = ServiceInfo
+
+        ll_order_server_star.removeAllViews()
+        for (a in 1..star) {
+            var image = ImageView(this)
+            image.setImageResource(R.mipmap.ic_star)
+            val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams.setMargins(0,0,dp2px(5f),0)
+            image.layoutParams=layoutParams
+            ll_order_server_star.addView(image)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        init()
+
+    }
 }

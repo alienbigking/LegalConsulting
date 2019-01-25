@@ -154,7 +154,8 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         mAdapter?.setOnItemOrderListener(object : OrderDisposeAdapter.ItemOrderListener {
             override fun onRefusedListener() {
                 val data = mAdapter!!.getCurrentItem()
-                mPresenter?.rejectMyOrder(data.id!!)
+                mPresenter?.getImAccount(data.customer?.username!!,data.videoDuration)
+
             }
 
         })

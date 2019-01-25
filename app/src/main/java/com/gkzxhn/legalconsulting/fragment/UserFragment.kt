@@ -43,6 +43,16 @@ class UserFragment : BaseFragment(), View.OnClickListener {
 
     override fun init() {
         getLawyersInfo()
+
+        /****** 接受控件小红点的消息 ******/
+        RxBus.instance.toObserverable(RxBusBean.HomeTopRedPoint::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    getLawyersInfo()
+                }, {
+                    it.message.toString().logE(this)
+                })
     }
 
     override fun initListener() {

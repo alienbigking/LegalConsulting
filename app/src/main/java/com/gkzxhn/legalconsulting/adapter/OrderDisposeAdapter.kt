@@ -82,18 +82,45 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
             tv_main_top_end.text = "￥" + entity.reward
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
 
-            if (entity.type != Constants.RUSH) {
-                /****** 指定单 ******/
-                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign)
-                tv_main_top_end.text=""
-            } else {
-                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)
+            when (entity.status) {
+                Constants.ORDER_STATE_ACCEPTED ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_yjd)
+                    tv_order_dispose_open.visibility=View.GONE
+                    tv_tv_order_next.visibility=View.VISIBLE
+                }
+                Constants.ORDER_STATE_PROCESSING ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
+                    tv_order_dispose_open.visibility=View.VISIBLE
+                    tv_tv_order_next.visibility=View.GONE
+                }
+                Constants.ORDER_STATE_COMPLETE ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_ywc)
+                    tv_order_dispose_open.visibility=View.VISIBLE
+                    tv_tv_order_next.visibility=View.GONE
+                }
+                Constants.ORDER_STATE_CANCELLED ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_yqx)
+                    tv_order_dispose_open.visibility=View.VISIBLE
+                    tv_tv_order_next.visibility=View.GONE
+                }
+                else ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
+                    tv_order_dispose_open.visibility=View.VISIBLE
+                    tv_tv_order_next.visibility=View.GONE
+
+                }
             }
 
             holder.itemView.setOnClickListener({
                 mCurrentIndex = position
                 onItemClickListener?.onItemClick(this, holder, position)
             })
+
+            tv_tv_order_next.setOnClickListener({
+                mCurrentIndex=position
+                onItemOrderListener?.onRefusedListener()
+            })
+
 
         }
     }

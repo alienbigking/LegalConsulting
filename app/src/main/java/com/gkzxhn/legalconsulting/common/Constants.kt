@@ -71,22 +71,22 @@ object Constants {
     val ORDER_STATE_PENDING_APPROVAL = "PENDING_APPROVAL"
     // ("待接单")
     val ORDER_STATE_PENDING_RECEIVING = "PENDING_ACCEPT"
-    // ("处理中")
+    // ("已接单")
     val ORDER_STATE_ACCEPTED = "ACCEPTED"
+    // ("处理中")
+    val ORDER_STATE_PROCESSING = "PROCESSING"
     // ("已完成")
     val ORDER_STATE_COMPLETE = "COMPLETE"
-    // ("已拒绝")
-    val ORDER_STATE_REFUSED = "REFUSED"
+    // ("已关闭")
+    val ORDER_STATE_REFUSED = "CLOSED"
     // ("已取消")
     val ORDER_STATE_CANCELLED = "CANCELLED"
+
 
     /****** 与后台约定的前缀 ******/
     val BASE_64_START = "data:image/png;base64,"
     //    val APK_ADRESS="LegalConsulting.apk"
     val APK_ADRESS = "legal.apk"
-    /****** 指定单的标识 ******/
-    val ASSIGN = "ASSIGN"
-    val RUSH = "RUSH"
 
     val RESULT_EDIT_ADDRESS_PROVINCECODE = "RESULT_EDIT_ADDRESS_PROVINCECODE"
     val RESULT_EDIT_ADDRESS_PROVINCENAME = "RESULT_EDIT_ADDRESS_PROVINCENAME"

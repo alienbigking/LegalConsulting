@@ -1,16 +1,15 @@
 package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
-import com.gkzxhn.legalconsulting.common.Constants
-import com.gkzxhn.legalconsulting.common.RxBus
+import com.gkzxhn.legalconsulting.common.App
+import com.gkzxhn.legalconsulting.entity.ImInfo
 import com.gkzxhn.legalconsulting.entity.OrderDispose
-import com.gkzxhn.legalconsulting.entity.OrderMyInfo
-import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.model.IOrderModel
 import com.gkzxhn.legalconsulting.model.iml.OrderModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
-import com.gkzxhn.legalconsulting.utils.showToast
+import com.gkzxhn.legalconsulting.utils.TsDialog
 import com.gkzxhn.legalconsulting.view.OrderDisposeView
+import com.netease.nim.uikit.api.NimUIKit
 import rx.android.schedulers.AndroidSchedulers
 
 /**
@@ -31,7 +30,13 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                             mView?.offLoadMore()
                             mView?.setLastPage(t.last, t.number)
                             mView?.updateData(t.first, t.content)
+
                             mView?.showNullView(t.content!!.isEmpty(), "您还没有咨询订单")
+
+                            if (t.content!!.isNotEmpty()) {
+                                App.EDIT.putString("OrderId", t.content!![0].id).commit()
+                            }
+
                         }
 
                         override fun onError(t: Throwable?) {
@@ -42,19 +47,25 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
         }
     }
 
-    /****** 拒绝订单 ******/
-    fun rejectMyOrder(id: String) {
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
+     * @description：获取网易信息
+     */
+    fun getImAccount(userName: String,videoDuration : Double) {
+        if (videoDuration <= 0) {
+            mContext?.TsDialog("通话时间已用完。暂不能进行通话", false)
+            return
+        }
         mContext?.let {
-            mModel.rejectMyOrder(it, id)
+            mModel.getImAccount(it, userName)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
-                        override fun success(t: OrderMyInfo) {
-                            if (t.status == Constants.ORDER_STATE_REFUSED) {
-                                mContext?.showToast("订单拒绝成功")
-                                RxBus.instance.post(RxBusBean.AcceptOrder(false))
-                                getOrderDispose("0")
-                            }
+                    ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
+                        override fun success(t: ImInfo) {
+                            NimUIKit.startP2PSession(mContext, t.account)
+                            NimUIKit.setMsgForwardFilter { false }
+                            NimUIKit.setMsgRevokeFilter { false }
                         }
                     })
         }

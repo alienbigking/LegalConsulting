@@ -422,7 +422,9 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 
     // 打开视频
     private void openVideo() {
-        AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL);
+        String extendMessage = container.activity.getSharedPreferences("config", Context.MODE_PRIVATE).getString("OrderId","");
+        Log.e("xiaowu", "extendMessage_id:" + extendMessage);
+        AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL, extendMessage);
     }
 
     // 隐藏更多布局
@@ -847,8 +849,6 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 //            sendMessageButtonInInputBar.setVisibility(View.GONE);
 //            moreFuntionButtonInInputBar.setVisibility(View.VISIBLE);
 //        }
-
-
         textAudioSwitchLayout.setVisibility(View.GONE);
         emojiButtonInInputBar.setVisibility(View.GONE);
         sendMessageButtonInInputBar.setVisibility(View.GONE);

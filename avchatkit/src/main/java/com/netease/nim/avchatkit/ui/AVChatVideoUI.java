@@ -366,7 +366,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setFaceUnityRoot(false);
     }
 
-    public void doOutgoingCall(String account) {
+    public void doOutgoingCall(String account,String extendMessage) {
         this.account = account;
 
         findSurfaceView();
@@ -382,7 +382,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setBottomRoot(true);
         setFaceUnityRoot(true);
 
-        avChatController.doCalling(account, AVChatType.VIDEO, new AVChatControllerCallback<AVChatData>() {
+        avChatController.doCalling(account, AVChatType.VIDEO,extendMessage, new AVChatControllerCallback<AVChatData>() {
             @Override
             public void onSuccess(AVChatData data) {
                 avChatData = data;

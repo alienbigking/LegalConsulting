@@ -6,6 +6,7 @@ package com.gkzxhn.legalconsulting.entity
  * @date：2018/11/8 2:23 PM
  * @description：
  */
+
 class OrderMyInfo {
 
     /**
@@ -28,11 +29,13 @@ class OrderMyInfo {
 //    所属类型（指定单/抢单）
     var type: String? = null
     var customer: CustomerBean? = null
-    var lawyer: LawyerBean? = null
     var description: String? = null
     var reward: Double = 0.0
+    var videoDuration: Double = 0.0
     var createdTime: String? = null
     var acceptedTime: String? = null
+    var processedTime: String? = null
+    var endTime: String? = null
     var category: String? = null
     var attachments: List<AttachmentsBean>? = null
 
@@ -54,17 +57,6 @@ class OrderMyInfo {
         var avatarFileId: String? = null
     }
 
-    class LawyerBean {
-        /**
-         * id : 71108fd2-e809-4115-84d3-c374c9850e28
-         * name : 18508474396
-         * phoneNumber : 18508474396
-         */
-
-        var id: String? = null
-        var name: String? = null
-        var phoneNumber: String? = null
-    }
 
     class AttachmentsBean {
         /**

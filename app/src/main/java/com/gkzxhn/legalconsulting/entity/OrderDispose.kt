@@ -49,6 +49,7 @@ package com.gkzxhn.legalconsulting.entity
         var customer: CustomerBean? = null
         var description: String? = null
         var reward: Double = 0.0
+        var videoDuration: Double = 0.0
         var createdTime: String? = null
         var type: String? = null
         var receivingTime: Any? = null

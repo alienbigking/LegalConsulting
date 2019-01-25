@@ -33,6 +33,6 @@ public class AVChatAction extends BaseAction {
     /************************ 音视频通话 ***********************/
 
     public void startAudioVideoCall(AVChatType avChatType) {
-        AVChatKit.outgoingCall(getActivity(), getAccount(), UserInfoHelper.getUserDisplayName(getAccount()), avChatType.getValue(), AVChatActivity.FROM_INTERNAL);
+        AVChatKit.outgoingCall(getActivity(), getAccount(), UserInfoHelper.getUserDisplayName(getAccount()), avChatType.getValue(), AVChatActivity.FROM_INTERNAL,"");
     }
 }

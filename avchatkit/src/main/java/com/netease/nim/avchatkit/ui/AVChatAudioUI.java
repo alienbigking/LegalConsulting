@@ -174,7 +174,7 @@ public class AVChatAudioUI implements View.OnClickListener, ToggleListener{
         enableToggle();
     }
 
-    public void doOutGoingCall(String account) {
+    public void doOutGoingCall(String account,String extendMessage) {
         // 拨打方的数据是account
         this.account = account;
         findViews();
@@ -187,7 +187,7 @@ public class AVChatAudioUI implements View.OnClickListener, ToggleListener{
         setRefuseReceive(false);
 
         // 拨打音视频接口调用
-        avChatController.doCalling(account, AVChatType.AUDIO, new AVChatControllerCallback<AVChatData>() {
+        avChatController.doCalling(account, AVChatType.AUDIO,extendMessage, new AVChatControllerCallback<AVChatData>() {
             @Override
             public void onSuccess(AVChatData avChatData) {
                 AVChatAudioUI.this.avChatData = avChatData;

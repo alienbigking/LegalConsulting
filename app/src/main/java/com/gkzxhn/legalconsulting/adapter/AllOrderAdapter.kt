@@ -68,45 +68,21 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
             tv_order_dispose_name.text = entity.customer!!.name
             ProjectUtils.loadRoundImageByFileID(context, entity.customer!!.avatarFileId, iv_order_dispose_item)
             /****** 价格 ******/
-            tv_order_price.text = "￥" + entity.reward
+            tv_main_top_end.text = "￥" + entity.reward
             tv_order_dispose_time.text = StringUtils.parseDate(entity.createdTime)
-
-            if (entity.type == Constants.ASSIGN) {
-                /****** 指定单 ******/
-                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign)
-            } else {
-                iv_order_dispose_state.setImageResource(R.mipmap.ic_assign_no)
-            }
+            v_item_order_receiving_type.text = ProjectUtils.categoriesConversion(entity.category!!)
 
             when (entity.status) {
-            /******  ******/
-                Constants.ORDER_STATE_PENDING_RECEIVING -> {
-                    tv_order_dispose_state.text = "待接单"
-                }
-            /****** 已接单 ******/
-                Constants.ORDER_STATE_ACCEPTED -> {
-                    tv_order_dispose_state.text = "已接单"
-                }
-            /****** 已完成 ******/
-                Constants.ORDER_STATE_COMPLETE -> {
-                    tv_order_dispose_state.text = "已完成"
-                }
-            /******  已拒绝 ******/
-                Constants.ORDER_STATE_REFUSED -> {
-                    tv_order_dispose_state.text = "已拒绝"
-                }
-            /******  已取消 ******/
-                Constants.ORDER_STATE_CANCELLED -> {
-                    tv_order_dispose_state.text = "已取消"
-                }
-            /******  待审核 ******/
-                Constants.ORDER_STATE_PENDING_APPROVAL -> {
-                    tv_order_dispose_state.text = "待审核"
-                }
-            /******  待付款 ******/
-                Constants.ORDER_STATE_PENDING_PAYMENT -> {
-                    tv_order_dispose_state.text = "待付款"
-                }
+                Constants.ORDER_STATE_ACCEPTED ->
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_yjd)
+                Constants.ORDER_STATE_PROCESSING ->
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
+                Constants.ORDER_STATE_COMPLETE ->
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_ywc)
+                Constants.ORDER_STATE_CANCELLED ->
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_yqx)
+                else ->
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
             }
             holder.itemView.setOnClickListener(android.view.View.OnClickListener {
                 mCurrentIndex = position

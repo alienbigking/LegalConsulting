@@ -99,13 +99,13 @@ interface ApiService {
     /*****  上传文件  */
     @POST("/files")
     @Multipart
-    fun uploadFiles(@Part file: MultipartBody.Part,@Query("type") page: String): Observable<UploadFile>
+    fun uploadFiles(@Part file: MultipartBody.Part, @Query("type") page: String): Observable<UploadFile>
 
     // 下载文件
     @GET("/files/{id}")
     fun downloadFile(@Header("Range") range: String, @Path("id") id: String): Observable<ResponseBody>
 
-      // 下载文件
+    // 下载文件
     @GET("/files/{id}")
     fun downloadImage(@Path("id") id: String): Observable<ResponseBody>
 
@@ -120,6 +120,10 @@ interface ApiService {
     //    获取抢单的明细
     @GET("/lawyer/rush/legal-advice/{id}")
     fun getOrderRushInfo(@Path("id") id: String): Observable<OrderRushInfo>
+
+    //    获取指定法律咨询评论明细
+    @GET("/lawyer/my/legal-advice/{id}/comment")
+    fun getOrderComment(@Path("id") id: String): Observable<OrderComment>
 
     //    接单
     @POST("lawyer/rush/legal-advice/{id}/accepted")
