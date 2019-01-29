@@ -16,18 +16,28 @@ public class MySafeAttachment extends CustomAttachment {
     private String category;
     private String categoryType;
     private String cid;
+    private String OrderTime;
 
     private final String KEY_TITLE = "title";
     private final String KEY_SUBTITLE = "subTitle";
     private final String KEY_CATEGORY = "category";
     private final String KEY_CATEGORYTYPE = "categoryType";
     private final String KEY_CID = "cid";
+    private final String KEY_ORDER_TIME = "OrderTime";
     public MySafeAttachment() {
         super(CustomAttachmentType.mysafe);
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getOrderTime() {
+        return OrderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        OrderTime = orderTime;
     }
 
     public void setTitle(String title) {
@@ -73,6 +83,7 @@ public class MySafeAttachment extends CustomAttachment {
         category = data.getString(KEY_CATEGORY);
         categoryType = data.getString(KEY_CATEGORYTYPE);
         cid = data.getString(KEY_CID);
+        OrderTime = data.getString(KEY_ORDER_TIME);
     }
 
     @Override
@@ -84,6 +95,7 @@ public class MySafeAttachment extends CustomAttachment {
         data.put(KEY_CATEGORY, getCategory());
         data.put(KEY_CATEGORYTYPE, getCategoryType());
         data.put(KEY_CID, getCid());
+        data.put(KEY_ORDER_TIME, getOrderTime());
 
         return data;
 

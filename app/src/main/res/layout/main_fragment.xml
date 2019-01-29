@@ -14,6 +14,18 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
+        android:id="@+id/iv_main_menu"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="15dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:src="@mipmap/ic_menu"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main_message_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_main_message_top"
+    />
+    <ImageView
         android:id="@+id/iv_main_message_top"
         android:layout_width="26dp"
         android:layout_height="26dp"
@@ -76,9 +88,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="14dp"
         android:text="执业律所：---"
-        android:visibility="invisible"
         android:textColor="@color/white"
         android:textSize="12sp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_main_name"/>
 
@@ -131,8 +143,8 @@
         android:id="@+id/iv_main_rz_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_rezen"
         android:layout_marginStart="20dp"
+        android:src="@mipmap/ic_rezen"
         app:layout_constraintBottom_toBottomOf="@id/tv_main_name"
         app:layout_constraintStart_toEndOf="@id/tv_main_name"
         app:layout_constraintTop_toTopOf="@id/tv_main_name"
@@ -157,9 +169,9 @@
         android:id="@+id/iv_main_rz_top_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_rezen_no"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/ic_rezen_no"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_main_name"
     />

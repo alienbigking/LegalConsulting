@@ -103,6 +103,11 @@ class OrderDisposeAdapter(private val mContext: Context, private val data: List<
                     tv_order_dispose_open.visibility=View.VISIBLE
                     tv_tv_order_next.visibility=View.GONE
                 }
+                Constants.ORDER_STATE_REFUSED ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_ygb)
+                    tv_order_dispose_open.visibility=View.VISIBLE
+                    tv_tv_order_next.visibility=View.GONE
+                }
                 else ->{
                     iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
                     tv_order_dispose_open.visibility=View.VISIBLE

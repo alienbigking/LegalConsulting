@@ -128,7 +128,6 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                 mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
                 mView?.setShowGetMoney(View.GONE, "赏金到账", "")
                 getOrderComment(t.id!!)
-
             }
         /******  已取消 ******/
             Constants.ORDER_STATE_CANCELLED -> {
@@ -191,7 +190,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             var evaluation = if (t.content == null || t.content!!.isEmpty()) {
                                 "服务评价：此用户没有填写评价"
                             } else {
-                                t.content
+                                "服务评价："+t.content
                             }
                             mView?.setShowEvaluation(View.VISIBLE, isResolved, evaluation!!, t.rate!!)
                         }

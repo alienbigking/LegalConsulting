@@ -14,6 +14,7 @@ import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderReceivingView
 import rx.android.schedulers.AndroidSchedulers
+import rx.subscriptions.CompositeSubscription
 
 /**
  * @classname：抢单
@@ -23,9 +24,9 @@ import rx.android.schedulers.AndroidSchedulers
  */
 class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : BasePresenter<IOrderModel, OrderReceivingView>(context, OrderModel(), view) {
 
-    fun getOrderReceiving(page: String) {
+    fun getOrderReceiving(page: String, mCompositeSubscription: CompositeSubscription?) {
         mContext?.let {
-            mModel.getOrderReceiving(it, page, "10")
+            mCompositeSubscription?.add(mModel.getOrderReceiving(it, page, "10")
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderReceiving>(it) {
@@ -40,13 +41,14 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                             super.onError(t)
                             mView?.offLoadMore()
                         }
-                    })
+                    }))
+
         }
     }
 
-    fun acceptRushOrder(id: String) {
+    fun acceptRushOrder(id: String, mCompositeSubscription: CompositeSubscription?) {
         mContext?.let {
-            mModel.acceptRushOrder(it, id)
+            mCompositeSubscription?.add(mModel.acceptRushOrder(it, id)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<OrderMyInfo>(it) {
@@ -55,14 +57,15 @@ class OrderReceivingPresenter(context: Context, view: OrderReceivingView) : Base
                                 mContext?.showToast("接单成功")
                                 RxBus.instance.post(RxBusBean.HomePoint(true))
 
-                                getOrderReceiving("0")
+                                getOrderReceiving("0",mCompositeSubscription)
                                 val intent = Intent(it, OrderActivity::class.java)
-                                intent.putExtra("orderId",id)
+                                intent.putExtra("orderId", id)
                                 intent.putExtra("orderState", 2)
                                 it.startActivity(intent)
                             }
                         }
-                    })
+                    }))
+
         }
     }
 

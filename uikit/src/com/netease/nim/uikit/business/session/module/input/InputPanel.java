@@ -39,6 +39,7 @@ import com.netease.nim.uikit.business.session.emoji.MoonUtil;
 import com.netease.nim.uikit.business.session.module.Container;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.http.NimHttpClient;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.string.StringUtil;
@@ -54,8 +55,12 @@ import com.netease.nimlib.sdk.msg.model.CustomNotification;
 import com.netease.nimlib.sdk.msg.model.CustomNotificationConfig;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 底部文本编辑，语音等模块
@@ -422,9 +427,37 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 
     // 打开视频
     private void openVideo() {
-        String extendMessage = container.activity.getSharedPreferences("config", Context.MODE_PRIVATE).getString("OrderId","");
-        Log.e("xiaowu", "extendMessage_id:" + extendMessage);
-        AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL, extendMessage);
+        String OrderID = container.activity.getSharedPreferences("config", Context.MODE_PRIVATE).getString("OrderId","");
+        String token = container.activity.getSharedPreferences("config", Context.MODE_PRIVATE).getString("SP_Token","");
+        Log.e("xiaowu", "extendMessage_id:" + OrderID);
+        loadData(token,OrderID);
+
+    }
+
+    private void loadData(String token, final String id) {
+        NimHttpClient.getInstance().init(container.activity);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer "+token);
+        NimHttpClient.getInstance().execute("http://qa.api.legal.prisonpublic.com:8086/lawyer/my/legal-advice/"+id+"/video-duration",headers,"", new NimHttpClient.NimHttpCallback() {
+            @Override
+            public void onResponse(String response, int code, Throwable e) {
+                Log.e("xiaowu", "inputPanel:" + response);
+                if (code == 200) {
+                    try {
+                        org.json.JSONObject d = new org.json.JSONObject(response);
+                        String videoDuration = d.getString("videoDuration");
+                        Log.e("xiaowu", "inputPanel+videoDuration:" + videoDuration);
+                        if (Double.parseDouble(videoDuration)>0) {
+                            AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL, id);
+                        }
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+            }
+
+        });
     }
 
     // 隐藏更多布局

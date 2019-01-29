@@ -17,6 +17,7 @@ import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseMultiItemFetchLo
 public class MsgViewHolderMySafe extends MsgViewHolderBase {
 
     protected TextView title;
+    protected TextView OrderTime;
     protected ImageView image;
     protected RelativeLayout all;
 
@@ -34,12 +35,14 @@ public class MsgViewHolderMySafe extends MsgViewHolderBase {
         title = findViewById(R.id.message_item_title_myself);
         image = findViewById(R.id.message_item_image_safe);
         all = findViewById(R.id.message_item_myself_container);
+        OrderTime = findViewById(R.id.message_item_order_time);
     }
 
     @Override
     protected void bindContentView() {
         final MySafeAttachment attachment = (MySafeAttachment) message.getAttachment();
-        title.setText(attachment.getTitle());
+        title.setText(attachment.getCategory());
+        OrderTime.setText(attachment.getOrderTime());
         if (attachment.getCategory() != null) {
             switch (attachment.getCategory()) {
                 case "财产纠纷":
@@ -86,6 +89,7 @@ public class MsgViewHolderMySafe extends MsgViewHolderBase {
 
             }
         });
+
     }
 }
 

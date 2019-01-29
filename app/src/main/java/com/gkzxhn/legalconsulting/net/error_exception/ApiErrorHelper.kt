@@ -51,7 +51,6 @@ object ApiErrorHelper {
                     else -> {
                         context.TsDialog("服务器异常，请重试", false)
                     }
-
                 }
             }
             is IOException -> context.TsDialog("数据加载失败，请检查您的网络", false)

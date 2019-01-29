@@ -41,6 +41,7 @@
                 <TextView
                     android:id="@+id/tv_order_name"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="11dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:text="一 一 一"
@@ -55,12 +56,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
                     android:text="¥0.0"
                     android:textColor="#ffff6600"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_order_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_order_name"
                 />
 
                 <TextView
@@ -78,16 +79,16 @@
                 <TextView
                     android:id="@+id/tv_order_type1"
                     android:layout_width="69dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="9dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="21dp"
                     android:background="@drawable/shape_order_type_bg"
                     android:gravity="center"
                     android:text="一 一"
                     android:textColor="#ffff6600"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toEndOf="@id/iv_oder_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_order_time"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_order_name"
+                    app:layout_constraintStart_toEndOf="@id/tv_order_name"
+                    app:layout_constraintTop_toTopOf="@+id/tv_order_name"
                     app:layout_constraintVertical_chainStyle="spread_inside"
                 />
 
@@ -97,14 +98,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="编号："
                     android:textColor="#ff999999"
-                    android:textSize="10sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_order_type1"
+                    android:textSize="12sp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="@id/tv_order_time"
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_time"
                 />
 
                 <View
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="30dp"
                     android:text="一 一 一"
                     android:textColor="#ff01882a"
                     android:textSize="14sp"
@@ -139,21 +139,19 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_order_state"
                 />
 
-
                 <View
                     android:id="@+id/v_order_explain"
                     style="@style/view_order_line"
-                    android:visibility="gone"
                     android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_explain"/>
-
 
                 <TextView
                     android:id="@+id/tv_order_state_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="30dp"
                     android:text="一一一（一 一 律师）"
                     android:textColor="#ff525aa6"
                     android:textSize="14sp"
@@ -193,9 +191,9 @@
 
                 <View
                     android:id="@+id/v_order_complete_time"
-                    android:visibility="gone"
                     style="@style/view_order_line"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_complete_time"/>
 
                 <TextView
@@ -206,8 +204,8 @@
                     android:layout_marginTop="30dp"
                     android:text="赏金到账"
                     android:textColor="#ffff7011"
-                    android:visibility="gone"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/v_order_complete_time"
                 />
@@ -229,8 +227,8 @@
                 <View
                     android:id="@+id/v_order_get_money_time"
                     style="@style/view_order_line"
+                    android:layout_marginTop="20dp"
                     android:visibility="gone"
-                    android:layout_marginTop="30dp"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_get_money_time"/>
 
                 <TextView
@@ -240,9 +238,9 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="30dp"
                     android:text="律师服务："
-                    android:visibility="gone"
                     android:textColor="#ff333333"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/v_order_get_money_time"
                 />
@@ -265,9 +263,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
                     android:text="已解决问题"
-                    android:visibility="gone"
                     android:textColor="#ff333333"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_order_server"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_order_server"
@@ -281,9 +279,9 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:text="--------"
-                    android:visibility="gone"
                     android:textColor="#ff666666"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_server"

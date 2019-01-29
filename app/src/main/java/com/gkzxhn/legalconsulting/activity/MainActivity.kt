@@ -63,7 +63,6 @@ class MainActivity : BaseActivity() {
 
         updateApp()
         onParseIntent()
-
     }
 
     /**

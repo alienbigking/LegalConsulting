@@ -55,7 +55,6 @@ class OrderModel : BaseModel(), IOrderModel {
         return RetrofitClient.Companion.getInstance(context).mApi
                 ?.getOrderComment(id)
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderComment>
-
     }
 
     override fun rejectMyOrder(context: Context, id: String): Observable<OrderMyInfo> {
@@ -70,11 +69,20 @@ class OrderModel : BaseModel(), IOrderModel {
                 ?.subscribeOn(Schedulers.io()) as Observable<OrderMyInfo>
 
     }
+
     override fun getImAccount(context: Context,account:String): Observable<ImInfo> {
         return RetrofitClientLogin.Companion.getInstance(context).mApi
                 ?.getImAccount(account)
                 ?.subscribeOn(Schedulers.io())
                 as Observable<ImInfo>
+    }
+
+    /****** 获取指定法律咨询所剩视频时长******/
+    override fun getVideoDuration(context: Context,id:String): Observable<VideoDuration> {
+        return RetrofitClient.Companion.getInstance(context).mApi
+                ?.getVideoDuration(id)
+                ?.subscribeOn(Schedulers.io())
+                as Observable<VideoDuration>
     }
 
 }

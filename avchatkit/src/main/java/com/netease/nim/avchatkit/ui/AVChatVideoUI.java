@@ -188,7 +188,6 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
             if (event.getAction() == MotionEvent.ACTION_UP && touchZoneCallback != null) {
                 touchZoneCallback.onTouch();
             }
-
             return true;
         }
     };
@@ -645,6 +644,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
             }
         } else if (i == R.id.avchat_video_logout) {
             doHangUp();
+//            d
         } else if (i == R.id.avchat_video_mute) {
             avChatController.toggleMute();
         } else if (i == R.id.avchat_switch_camera) {

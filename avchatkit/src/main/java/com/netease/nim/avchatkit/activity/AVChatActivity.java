@@ -90,6 +90,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private int state; // calltype 音频或视频
     private String receiverId; // 对方的account
     private String extendMessage; // 额外的信息
+    private Double videoTime=1.0; // 视频通话剩余时长
     private String displayName; // 对方的显示昵称
 
     private AVChatController avChatController;
@@ -378,6 +379,8 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         @Override
         public void onCallEstablished() {
             LogUtil.d(TAG, "onCallEstablished");
+            LogUtil.e("xiaowu", "onCallEstablished");
+            LogUtil.e("xiaowu", "time:"+avChatController.getTimeBase());
             //移除超时监听
             AVChatTimeoutObserver.getInstance().observeTimeoutNotification(timeoutObserver, false, mIsInComingCall);
             if (avChatController.getTimeBase() == 0)

@@ -34,6 +34,10 @@ interface ApiService {
     @GET("im/users/{username}/account")
     fun getImAccount(@Path("username") username: String): Observable<ImInfo>
 
+    //    获取指定法律咨询所剩视频时长
+    @GET("/lawyer/my/legal-advice/{id}/video-duration")
+    fun getVideoDuration(@Path("id") id: String): Observable<VideoDuration>
+
     /**
      * 修改我的手机号码
      */

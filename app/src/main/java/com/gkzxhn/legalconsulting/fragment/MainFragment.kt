@@ -178,6 +178,10 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
             startActivity(Intent(context, NotificationActivity::class.java))
         }
 
+        iv_main_menu.setOnClickListener {
+
+        }
+
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
@@ -229,7 +233,7 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
     private fun setOrderState(OrderState: String) {
         val Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), Gson().toJson(OrderState))
         context?.let {
-            RetrofitClient.getInstance(it).mApi?.setOrderState(Body)
+            mCompositeSubscription?.add(RetrofitClient.getInstance(it).mApi?.setOrderState(Body)
                     ?.subscribeOn(Schedulers.io())
                     ?.unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
@@ -248,7 +252,7 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
                                 }
                             }
                         }
-                    })
+                    }))
         }
     }
 

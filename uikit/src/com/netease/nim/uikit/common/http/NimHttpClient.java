@@ -101,7 +101,7 @@ public class NimHttpClient {
     }
 
     public void execute(String url, Map<String, String> headers, String body, NimHttpCallback callback) {
-        execute(url, headers, body, true, callback);
+        execute(url, headers, body, false, callback);
     }
 
     public void execute(String url, Map<String, String> headers, String body, boolean post, NimHttpCallback callback) {

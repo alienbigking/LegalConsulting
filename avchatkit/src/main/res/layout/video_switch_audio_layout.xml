@@ -12,6 +12,7 @@
                 android:clickable="true"
                 android:id="@+id/avchat_video_switch_audio"
                 android:descendantFocusability="blocksDescendants"
+                android:visibility="gone"
                 android:background="@drawable/video_audio_mode_switch_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

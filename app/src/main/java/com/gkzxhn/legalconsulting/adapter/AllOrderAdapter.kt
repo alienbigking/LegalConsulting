@@ -81,6 +81,9 @@ class AllOrderAdapter(private val mContext: Context) : RecyclerView.Adapter<AllO
                     iv_order_dispose_state.setImageResource(R.mipmap.ic_order_ywc)
                 Constants.ORDER_STATE_CANCELLED ->
                     iv_order_dispose_state.setImageResource(R.mipmap.ic_order_yqx)
+                Constants.ORDER_STATE_REFUSED ->{
+                    iv_order_dispose_state.setImageResource(R.mipmap.ic_order_ygb)
+                }
                 else ->
                     iv_order_dispose_state.setImageResource(R.mipmap.ic_order_clz)
             }
