@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!--个人信息栏-->
+    <View
+        android:id="@+id/v_user_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:background="@mipmap/ic_menu_top_bg"
+    />
+
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="83dp"
+        android:text="—— ——"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_user_top_bg"
+    />
+
+    <TextView
+        android:id="@+id/tv_user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:text="-------"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"/>
+
+    <!--白色背景-->
+    <View
+        android:id="@+id/v_user_list_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_set_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_set_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_user_top_bg"/>
+
+    <!--我的赏金-->
+    <View
+        android:id="@+id/v_user_my_money_bg"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_list_bg"
+    />
+
+
+
+    <ImageView
+        android:id="@+id/iv_user_get_money_start"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_my_sj"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_my_money_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_my_money_bg"
+        app:layout_constraintTop_toTopOf="@id/v_user_my_money_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="我的赏金"
+        android:textColor="#ff333333"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_my_money_bg"
+        app:layout_constraintStart_toEndOf="@id/iv_user_get_money_start"
+        app:layout_constraintTop_toTopOf="@id/v_user_my_money_bg"
+    />
+
+    <TextView
+        android:id="@+id/tv_user_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text=""
+        android:textColor="#ff666666"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_my_money_bg"
+        app:layout_constraintEnd_toStartOf="@id/iv_user_get_money_end"
+        app:layout_constraintTop_toTopOf="@id/v_user_my_money_bg"
+    />
+
+    <ImageView
+        android:id="@+id/iv_user_get_money_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_arrow_left"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_my_money_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_user_my_money_bg"
+        app:layout_constraintTop_toTopOf="@id/v_user_my_money_bg"/>
+
+
+    <View
+        android:id="@+id/v_user_my_money"
+        style="@style/view_user_line"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/v_user_my_money_bg"/>
+
+
+    <View
+        android:id="@+id/v_user_rz_bg"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
+        app:layout_constraintTop_toBottomOf="@+id/v_user_my_money"/>
+
+
+    <ImageView
+        android:id="@+id/iv_user_rz"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_zgrz"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_rz_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_rz_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_rz_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="资格认证"
+        android:textColor="#ff333333"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_rz_bg"
+        app:layout_constraintStart_toEndOf="@id/iv_user_rz"
+        app:layout_constraintTop_toTopOf="@+id/v_user_rz_bg"
+    />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_arrow_left"
+
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/v_user_rz_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_user_rz_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_rz_bg"/>
+
+
+    <View android:id="@+id/v_user_rz"
+          style="@style/view_user_line"
+          android:visibility="invisible"
+          app:layout_constraintTop_toBottomOf="@+id/v_user_rz_bg"/>
+
+    <View
+        android:id="@+id/v_user_all_order_bg"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
+        app:layout_constraintTop_toBottomOf="@+id/v_user_rz"/>
+
+
+    <ImageView
+        android:id="@+id/iv_user_all_order"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_didang"
+        app:layout_constraintBottom_toBottomOf="@id/v_user_all_order_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_all_order_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_all_order_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="所有订单"
+        android:textColor="#ff333333"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/v_user_all_order_bg"
+        app:layout_constraintStart_toEndOf="@id/iv_user_all_order"
+        app:layout_constraintTop_toTopOf="@+id/v_user_all_order_bg"
+    />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_arrow_left"
+        android:visibility="invisible"
+
+        app:layout_constraintBottom_toBottomOf="@id/v_user_all_order_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_user_all_order_bg"
+        app:layout_constraintTop_toTopOf="@+id/v_user_all_order_bg"/>
+
+
+    <View
+        android:id="@+id/v_user_all_order"
+        style="@style/view_user_line"
+        android:visibility="invisible"
+
+        app:layout_constraintTop_toBottomOf="@+id/v_user_all_order_bg"
+    />
+
+
+    <View
+        android:id="@+id/v_user_set_bg"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_item_white_to_gary"
+        app:layout_constraintEnd_toEndOf="@id/v_user_list_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_list_bg"
+        app:layout_constraintTop_toBottomOf="@+id/v_user_all_order"
+    />
+
+    <ImageView
+        android:id="@+id/iv_user_set"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@mipmap/ic_setting"
+        app:layout_constraintBottom_toBottomOf="@id/v_user_set_bg"
+        app:layout_constraintStart_toStartOf="@id/v_user_set_bg"
+        app:layout_constraintTop_toTopOf="@id/v_user_set_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="设置"
+        android:textColor="#ff333333"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_set"
+        app:layout_constraintStart_toEndOf="@id/iv_user_set"
+        app:layout_constraintTop_toTopOf="@id/iv_user_set"
+    />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_arrow_left"
+
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/v_user_set_bg"
+        app:layout_constraintEnd_toEndOf="@id/v_user_set_bg"
+        app:layout_constraintTop_toTopOf="@id/v_user_set_bg"/>
+
+</android.support.constraint.ConstraintLayout>

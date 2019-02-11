@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.CompoundButton
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.activity.NotificationActivity
+import com.gkzxhn.legalconsulting.activity.UserSettingActivity
 import com.gkzxhn.legalconsulting.adapter.MainAdapter
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -179,9 +180,15 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
         }
 
         iv_main_menu.setOnClickListener {
-
+            RxBus.instance.post(RxBusBean.ShowMenu(true))
         }
 
+        iv_main_icon.setOnClickListener {
+            val intent = Intent(context, UserSettingActivity::class.java)
+            intent.putExtra("name",  App.SP.getString(Constants.SP_NAME,""))
+            intent.putExtra("phoneNumber", App.SP.getString(Constants.SP_PHONE,""))
+            startActivity(intent)
+        }
 
         VpHome.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
@@ -203,11 +210,11 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
     /****** 接单状态切换监听 ******/
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if (ProjectUtils.certificationStatus()) {
-            if (isChecked) {
-                setOrderState("RECEIVING")
-            } else {
-                setOrderState("BUSY")
-            }
+//            if (isChecked) {
+//                setOrderState("RECEIVING")
+//            } else {
+//                setOrderState("BUSY")
+//            }
         }
     }
 

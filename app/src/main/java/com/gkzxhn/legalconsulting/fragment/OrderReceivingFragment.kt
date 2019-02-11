@@ -54,7 +54,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         rcl_order_receiving.adapter = mAdapter
         val decoration = DisplayUtils.dp2px(App.mContext, 15f)
         rcl_order_receiving.addItemDecoration(ItemDecorationHelper(0, decoration, 0, 0, decoration))
-        mPresenter?.getOrderReceiving("0",mCompositeSubscription)
+        mPresenter?.getOrderReceiving("0", mCompositeSubscription)
 
 
         /****** 收到抢单成功的消息 ******/
@@ -63,11 +63,32 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (ProjectUtils.certificationStatus()) {
-                        mPresenter?.getOrderReceiving("0",mCompositeSubscription)
+                        mPresenter?.getOrderReceiving("0", mCompositeSubscription)
                     }
                 }, {
                     it.message.toString().logE(this)
                 })
+
+        /******  刷新订单数据 ******/
+        RxBus.instance.toObserverable(RxBusBean.RefreshOrder::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter?.getOrderReceiving("0", mCompositeSubscription)
+                }, {
+                    it.message.toString().logE(this)
+                })
+
+        /******  刷新抢单数据 ******/
+        RxBus.instance.toObserverable(RxBusBean.RefreshGrabOrder::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter?.getOrderReceiving("0", mCompositeSubscription)
+                }, {
+                    it.message.toString().logE(this)
+                })
+
     }
 
     override fun initListener() {
@@ -75,7 +96,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 if (loadMore) {
-                    mPresenter?.getOrderReceiving((page + 1).toString(),mCompositeSubscription)
+                    mPresenter?.getOrderReceiving((page + 1).toString(), mCompositeSubscription)
                 } else {
                     offLoadMore()
                 }
@@ -85,7 +106,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                mPresenter?.getOrderReceiving("0",mCompositeSubscription)
+                mPresenter?.getOrderReceiving("0", mCompositeSubscription)
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -113,7 +134,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         mAdapter?.setOnItemRushListener(object : OrderReceivingAdapter.ItemRushListener {
             override fun onRushListener() {
                 if (ProjectUtils.certificationStatus()) {
-                    mPresenter?.acceptRushOrder(mAdapter!!.getCurrentItem().id!!,mCompositeSubscription)
+                    mPresenter?.acceptRushOrder(mAdapter!!.getCurrentItem().id!!, mCompositeSubscription)
                 } else {
                     showTsDialog()
                 }
@@ -175,7 +196,7 @@ class OrderReceivingFragment : BaseFragment(), OrderReceivingView {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
 
-            mPresenter?.getOrderReceiving("0",mCompositeSubscription)
+            mPresenter?.getOrderReceiving("0", mCompositeSubscription)
         }
 
     }

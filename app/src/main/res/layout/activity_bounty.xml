@@ -47,14 +47,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="00.00"
+        android:text="0.00"
         android:textColor="#ffffffff"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="@id/iv_bounty_top"
         app:layout_constraintStart_toStartOf="@id/iv_bounty_top"
         app:layout_constraintTop_toTopOf="@id/tv_bounty_text1"
     />
-
 
     <!--支付宝授权-->
     <View
@@ -64,7 +63,6 @@
         android:background="@drawable/selector_item_white_to_gary"
         android:onClick="onClickBounty"
         app:layout_constraintTop_toBottomOf="@+id/iv_bounty_top"/>
-
 
     <ImageView
         android:id="@+id/iv_bounty_get_alipay"

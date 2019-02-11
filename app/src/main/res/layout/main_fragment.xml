@@ -8,9 +8,8 @@
     <View
         android:id="@+id/v_home_title_bg"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="195dp"
         android:background="@mipmap/ic_main_top_bg"
-        app:layout_constraintBottom_toBottomOf="@+id/sp_top_bottom"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
@@ -231,7 +230,6 @@
         android:id="@+id/v_home_line1"
         android:layout_width="match_parent"
         android:layout_height="0.7dp"
-        android:layout_marginTop="15dp"
         android:background="@color/view_line_user"
         app:layout_constraintTop_toBottomOf="@+id/v_home_title_bg"/>
 

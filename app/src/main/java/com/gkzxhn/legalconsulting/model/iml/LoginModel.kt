@@ -37,7 +37,7 @@ class LoginModel : BaseModel(), ILoginModel {
         return RetrofitClient.getInstance(context).mApi?.getLawyersInfo()?.subscribeOn(Schedulers.io()) as Observable<LawyersInfo>
     }
 
-    override fun getToken(context: Context, phoneNumber: String, code: String): Observable<ResponseBody>? {
+    override fun getToken(context: Context, phoneNumber: String, code: String): Observable<Response<ResponseBody>>? {
         return RetrofitClientLogin.Companion.getInstance(context)
                 .mApi?.getToken("password", phoneNumber, code)
                 ?.subscribeOn(Schedulers.io())

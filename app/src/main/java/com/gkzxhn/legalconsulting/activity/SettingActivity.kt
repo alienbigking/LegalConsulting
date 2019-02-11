@@ -14,6 +14,8 @@ import com.gkzxhn.legalconsulting.net.HttpObserver
 import com.gkzxhn.legalconsulting.net.RetrofitClient
 import com.gkzxhn.legalconsulting.net.error_exception.ApiException
 import com.gkzxhn.legalconsulting.utils.*
+import com.netease.nimlib.sdk.NIMClient
+import com.netease.nimlib.sdk.auth.AuthService
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.default_top.*
 import kotlinx.android.synthetic.main.dialog_ts.*
@@ -95,8 +97,12 @@ class SettingActivity : BaseActivity() {
     private fun exit() {
         val selectDialog = selectDialog("确认退出账号吗？", false)
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
+            NIMClient.getService(AuthService::class.java).logout()
             App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
             App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
+            App.EDIT.putString(Constants.SP_NAME, "")?.commit()
+            App.EDIT.putString(Constants.SP_LAWOFFICE, "")?.commit()
+            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, "")?.commit()
 
             /****** 清空数消息数据库 ******/
             GreenDaoManager.getInstance().newSession.notificationInfoDao.deleteAll()

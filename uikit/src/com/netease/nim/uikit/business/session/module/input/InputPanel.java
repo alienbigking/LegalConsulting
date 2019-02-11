@@ -446,9 +446,11 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
                     try {
                         org.json.JSONObject d = new org.json.JSONObject(response);
                         String videoDuration = d.getString("videoDuration");
-                        Log.e("xiaowu", "inputPanel+videoDuration:" + videoDuration);
                         if (Double.parseDouble(videoDuration)>0) {
-                            AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL, id);
+                            String extendMessage = "{\"legalAdviceId\":\""+id+"\",\"videoDuration\":"+videoDuration+"}";
+                            AVChatKit.outgoingCall(container.activity, container.account, UserInfoHelper.getUserDisplayName(container.account), AVChatType.VIDEO.getValue(), AVChatActivity.FROM_INTERNAL, extendMessage);
+                        }else {
+                            EasyAlertDialogHelper.showOneButtonDiolag(container.activity, "", "视频通话时长已用完", "确认", true, null);
                         }
                     } catch (JSONException e1) {
                         e1.printStackTrace();

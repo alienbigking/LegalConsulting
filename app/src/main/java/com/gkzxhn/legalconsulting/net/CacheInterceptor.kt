@@ -17,7 +17,9 @@ import okhttp3.Response
  */
 
 class CacheInterceptor(context: Context) : Interceptor {
+
     val context = context
+
     override fun intercept(chain: Interceptor.Chain?): Response? {
 
         var request = chain?.request()

@@ -66,7 +66,7 @@ class OrderActivity : BaseActivity(), OrderView {
     }
 
     override fun setOrderImage(avatarFileId: String?) {
-        if (avatarFileId != null) {
+        if (avatarFileId != null && avatarFileId.isNotEmpty()) {
             ProjectUtils.loadRoundImageByFileID(this, avatarFileId, iv_oder_icon)
         }
     }
@@ -88,8 +88,8 @@ class OrderActivity : BaseActivity(), OrderView {
         tv_order_price.text = reward
     }
 
-    override fun setNextText(str: String) {
-        tv_order_next.visibility = View.VISIBLE
+    override fun setNextText(visibility :Int,str: String) {
+        tv_order_next.visibility = visibility
         tv_order_next.text = str
     }
 
@@ -149,8 +149,8 @@ class OrderActivity : BaseActivity(), OrderView {
             var image = ImageView(this)
             image.setImageResource(R.mipmap.ic_star)
             val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            layoutParams.setMargins(0,0,dp2px(5f),0)
-            image.layoutParams=layoutParams
+            layoutParams.setMargins(0, 0, dp2px(5f), 0)
+            image.layoutParams = layoutParams
             ll_order_server_star.addView(image)
         }
     }
@@ -158,6 +158,6 @@ class OrderActivity : BaseActivity(), OrderView {
     override fun onResume() {
         super.onResume()
         init()
-
     }
+
 }

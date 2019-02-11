@@ -23,7 +23,7 @@ interface ILoginModel : IBaseModel {
 
     fun login(context: Context, body: RequestBody): Observable<Response<Void>>
 
-    fun getToken(context: Context, phoneNumber: String, code: String): Observable<ResponseBody>?
+    fun getToken(context: Context, phoneNumber: String, code: String): Observable<Response<ResponseBody>>?
 
     fun uploadCrash(context: Context, body: RequestBody): Observable<Response<Void>>
 

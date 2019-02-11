@@ -32,7 +32,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
 
     private var mAdapter: OrderDisposeAdapter? = null
 
-     var mPresenter: OrderDisposePresenter?=null
+    var mPresenter: OrderDisposePresenter? = null
 
     var loadMore = false
     var page = 0
@@ -83,7 +83,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    mPresenter?.getOrderDispose("0",mCompositeSubscription)
+                    mPresenter?.getOrderDispose("0", mCompositeSubscription)
                 }, {
                     it.message.toString().logE(this)
                 })
@@ -93,11 +93,22 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    mPresenter?.getOrderDispose("0",mCompositeSubscription)
+                    mPresenter?.getOrderDispose("0", mCompositeSubscription)
 
                 }, {
                     it.message.toString().logE(this)
                 })
+
+        /******  刷新订单数据 ******/
+        RxBus.instance.toObserverable(RxBusBean.RefreshOrder::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mPresenter?.getOrderDispose("0", mCompositeSubscription)
+                }, {
+                    it.message.toString().logE(this)
+                })
+
     }
 
     private fun initRecyclerView() {
@@ -107,7 +118,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
             rcl_order_disposer.adapter = mAdapter
             val decoration = DisplayUtils.dp2px(App.mContext, 15f)
             rcl_order_disposer.addItemDecoration(ItemDecorationHelper(0, decoration, 0, 0, decoration))
-            mPresenter?.getOrderDispose("0",mCompositeSubscription)
+            mPresenter?.getOrderDispose("0", mCompositeSubscription)
         }
         recyclerViewListener()
 
@@ -118,7 +129,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         loading_more.setOnLoadMoreListener(object : com.gkzxhn.legalconsulting.customview.LoadMoreWrapper.OnLoadMoreListener {
             override fun onLoadMore() {
                 if (loadMore) {
-                    mPresenter?.getOrderDispose((page + 1).toString(),mCompositeSubscription)
+                    mPresenter?.getOrderDispose((page + 1).toString(), mCompositeSubscription)
                 } else {
                     offLoadMore()
                 }
@@ -128,7 +139,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         //下啦刷新
         loading_refresh.setOnRefreshListener(object : PullToRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                mPresenter?.getOrderDispose("0",mCompositeSubscription)
+                mPresenter?.getOrderDispose("0", mCompositeSubscription)
                 loading_refresh?.finishRefreshing()
             }
         }, 1)
@@ -154,8 +165,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
         mAdapter?.setOnItemOrderListener(object : OrderDisposeAdapter.ItemOrderListener {
             override fun onRefusedListener() {
                 val data = mAdapter!!.getCurrentItem()
-                mPresenter?.getVideoDuration(data.customer?.id!!,data.customer?.username!!)
-
+                mPresenter?.getVideoDuration(data.id!!, data.customer?.username!!)
             }
 
         })
@@ -185,7 +195,7 @@ class OrderDisposeFragment : BaseFragment(), OrderDisposeView {
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
-            mPresenter?.getOrderDispose("0",mCompositeSubscription)
+            mPresenter?.getOrderDispose("0", mCompositeSubscription)
         }
     }
 

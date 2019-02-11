@@ -78,7 +78,7 @@ class OrderDisposePresenter(context: Context, view: OrderDisposeView) : BasePres
                     ?.subscribe(object : HttpObserver<VideoDuration>(mContext!!) {
                         override fun success(t: VideoDuration) {
                             if (t.videoDuration!! <= 0) {
-                                mContext?.TsDialog("通话时间已用完。暂不能进行通话", false)
+                                mContext?.TsDialog("视频通话时长已用完", false)
                             }else{
                                 getImAccount(userName)
                             }

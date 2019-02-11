@@ -41,7 +41,7 @@ object ApiErrorHelper {
                         val message = JSONObject(errorBody).getString("message")
                         when (code) {
                             "lawyer.CanNotRushToAcceptIsBusy" -> {
-                                context.TsDialog(message, false)
+                                context.TsDialog("您有订单未处理，请处理", false)
                             }
                             else -> {
                                 context.TsDialog(message, false)
@@ -53,7 +53,10 @@ object ApiErrorHelper {
                     }
                 }
             }
-            is IOException -> context.TsDialog("数据加载失败，请检查您的网络", false)
+            is IOException -> {
+                context.showToast("网络连接超时，请重试")
+//                context.TsDialog("网络连接超时，请重试", false)
+            }
         //后台返回的message
             is ApiException -> {
                 context.TsDialog(e.message!!, false)

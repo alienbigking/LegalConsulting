@@ -21,15 +21,22 @@ import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
 import com.gkzxhn.legalconsulting.common.RxBus
+import com.gkzxhn.legalconsulting.entity.RxBusBean
 import com.gkzxhn.legalconsulting.entity.UpdateInfo
+import com.gkzxhn.legalconsulting.greendao.dao.GreenDaoManager
 import com.gkzxhn.legalconsulting.net.NetWorkCodeInfo
+import com.gkzxhn.legalconsulting.utils.SystemUtil
+import com.gkzxhn.legalconsulting.utils.TsClickDialog
 import com.gkzxhn.legalconsulting.utils.download.HttpDownManager
 import com.gkzxhn.legalconsulting.utils.download.HttpProgressOnNextListener
 import com.gkzxhn.legalconsulting.utils.download.entity.DownInfo
 import com.gkzxhn.legalconsulting.utils.download.entity.DownState
 import com.gkzxhn.legalconsulting.utils.logE
 import com.gkzxhn.legalconsulting.utils.showToast
+import com.netease.nimlib.sdk.NIMClient
+import com.netease.nimlib.sdk.auth.AuthService
 import com.tbruyelle.rxpermissions2.RxPermissions
+import kotlinx.android.synthetic.main.dialog_ts.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.subscriptions.CompositeSubscription
 import java.io.File
@@ -47,6 +54,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         //设置竖屏锁死
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initBefore()
@@ -56,14 +64,49 @@ abstract class BaseActivity : AppCompatActivity() {
         rxPermissions = RxPermissions(this)
         mCompositeSubscription = CompositeSubscription()
 
+
+
         RxBus.instance.toObserverable(DownInfo::class.java)
                 .cache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                   updateProgress(it)
+                    updateProgress(it)
                 }, {
                     it.message.toString().logE(this)
                 })
+
+        /******  在其它地方登录 ******/
+        RxBus.instance.toObserverable(RxBusBean.LoginOut::class.java)
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                    NIMClient.getService(AuthService::class.java).logout()
+                    if (javaClass.simpleName == "LoginActivity" || javaClass.simpleName == "SplashActivity") {
+                        /****** 已经在登录 闪屏 页面就不要弹出来了 ******/
+                    } else {
+                        TsClickDialog("您的账号已经在其它地方登录", false).dialog_save.setOnClickListener {
+                            App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
+                            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
+                            App.EDIT.putString(Constants.SP_NAME, "")?.commit()
+                            App.EDIT.putString(Constants.SP_LAWOFFICE, "")?.commit()
+                            App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, "")?.commit()
+
+                            /****** 清空数消息数据库 ******/
+                            GreenDaoManager.getInstance().newSession.notificationInfoDao.deleteAll()
+                            /****** 清除缓存 ******/
+                            SystemUtil.clearAllCache(this)
+
+                            val intent = Intent(this, LoginActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                        }
+                    }
+
+                }, {
+                    it.message.toString().logE(this)
+                })
+
     }
 
     /**
@@ -269,7 +312,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
 
                 downloadInfo?.baseUrl = NetWorkCodeInfo.BASE_URL
-                downloadInfo?.url =updateInfo?.fileId
+                downloadInfo?.url = updateInfo?.fileId
                 downloadInfo?.savePath = File(externalFilesDir, Constants.APK_ADRESS).absolutePath
 
                 downloadInfo?.listener = object : HttpProgressOnNextListener<DownInfo>() {
@@ -296,7 +339,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
 
                 HttpDownManager.getInstance().startDown(downloadInfo)
-                tvConfirm.setTextColor(ContextCompat.getColor(App.mContext,R.color.text_gray))
+                tvConfirm.setTextColor(ContextCompat.getColor(App.mContext, R.color.text_gray))
             } else {
                 "download updateProgress ---- ${downloadInfo?.readLength}>>>>${downloadInfo?.countLength}".logE(this)
                 when (downloadInfo?.state) {

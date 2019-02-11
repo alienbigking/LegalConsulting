@@ -2,6 +2,7 @@ package com.gkzxhn.legalconsulting.presenter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import com.gkzxhn.legalconsulting.R
@@ -14,6 +15,7 @@ import com.gkzxhn.legalconsulting.entity.LawyersInfo
 import com.gkzxhn.legalconsulting.model.ILoginModel
 import com.gkzxhn.legalconsulting.model.iml.LoginModel
 import com.gkzxhn.legalconsulting.net.HttpObserver
+import com.gkzxhn.legalconsulting.net.HttpObserverNoDialog
 import com.gkzxhn.legalconsulting.net.error_exception.ApiException
 import com.gkzxhn.legalconsulting.utils.*
 import com.gkzxhn.legalconsulting.view.LoginView
@@ -43,6 +45,11 @@ import java.util.*
 
 class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginModel, LoginView>(context, LoginModel(), view) {
 
+
+    val handler = Handler(Handler.Callback {
+        getImInfo()
+        false
+    })
     fun login() {
         if (mView?.getCode()?.isEmpty()!! || mView?.getPhone()?.isEmpty()!!) {
             mContext?.showToast("请填写完成后操作！")
@@ -71,6 +78,7 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             }
 
                             override fun onError(t: Throwable?) {
+                                loadDialog?.dismiss()
                                 mView?.stopCountDown()
                             }
                         })
@@ -157,23 +165,40 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
     private fun getToken(phoneNumber: String, code: String) {
         mContext?.let {
             mModel.getToken(it, phoneNumber, code)?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<ResponseBody>(it) {
-                        override fun success(t: ResponseBody) {
-                            val string = t.string()
-                            if (!TextUtils.isEmpty(string)) {
-                                var token: String? = null
-                                var refreshToken: String? = null
-                                try {
-                                    token = JSONObject(string).getString("access_token")
-                                    refreshToken = JSONObject(string).getString("refresh_token")
-                                } catch (e: Exception) {
+                    ?.subscribe(object : HttpObserver<Response<ResponseBody>>(it) {
+                        override fun success(t: Response<ResponseBody>) {
+                            if (t.code() == 200) {
+                                val string = t.body().string()
+                                if (!TextUtils.isEmpty(string)) {
+                                    var token: String? = null
+                                    var refreshToken: String? = null
+                                    try {
+                                        token = JSONObject(string).getString("access_token")
+                                        refreshToken = JSONObject(string).getString("refresh_token")
+                                    } catch (e: Exception) {
 
+                                    }
+                                    App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
+                                    App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
+                                    getLawyersInfo()
                                 }
-                                App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
-                                App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
-                                getLawyersInfo()
-                                getImInfo()
+                            } else if (t.code() == 400) {
+                                when (JSONObject(t.errorBody().string()).getString("error")) {
+                                    "user.password.NotMatched" -> {
+                                        mContext?.TsDialog(mContext?.getString(R.string.password_error).toString(), false)
+                                    }
+                                    "user.group.NotMatched" -> {
+                                        mContext?.TsDialog(mContext?.getString(R.string.group_error).toString(), false)
+                                    }
+                                    "invalid_grant" -> {
+                                        mContext?.TsDialog(mContext?.getString(R.string.group_error_disable).toString(), false)
+                                    }
+                                    else -> {
+
+                                    }
+                                }
                             }
+
                         }
 
                         override fun onError(e: Throwable?) {
@@ -187,25 +212,6 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                                             val intent = Intent(mContext, LoginActivity::class.java)
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                             mContext?.startActivity(intent)
-                                        }
-                                    } else if (e.code() == 400) {
-                                        try {
-                                            val errorBody = e.response().errorBody().string()
-                                            when (JSONObject(errorBody).getString("code")) {
-                                                "user.password.NotMatched" -> {
-                                                    mContext?.TsDialog(mContext?.getString(R.string.password_error).toString(), false)
-                                                }
-                                                "user.group.NotMatched" -> {
-                                                    mContext?.TsDialog(mContext?.getString(R.string.group_error).toString(), false)
-                                                }
-                                                "invalid_grant" -> {
-                                                    mContext?.TsDialog(mContext?.getString(R.string.group_error_disable).toString(), false)
-                                                }
-                                                else -> {
-
-                                                }
-                                            }
-                                        } catch (e: Exception) {
                                         }
                                     } else {
                                         mContext?.TsDialog("服务器异常，请重试", false)
@@ -243,12 +249,14 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
                             App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                            handler.sendEmptyMessageDelayed(0, 3000)
                             mView?.onFinish()
                         }
 
                         override fun onError(t: Throwable?) {
                             super.onError(t)
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
+                            handler.sendEmptyMessageDelayed(0, 3000)
                             mView?.onFinish()
                         }
                     })
@@ -264,9 +272,12 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
             mModel.getIMInfo(it)
                     .unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
+                    ?.subscribe(object : HttpObserverNoDialog<ImInfo>(mContext!!) {
                         override fun success(t: ImInfo) {
                             loginNim(t.account!!, t.token!!)
+                        }
+
+                        override fun onError(t: Throwable?) {
                         }
                     })
         }

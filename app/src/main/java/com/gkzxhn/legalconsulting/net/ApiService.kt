@@ -90,7 +90,7 @@ interface ApiService {
     fun getToken(@Field("grant_type") grant_type: String,
                  @Field("username") username: String? = null,
                  @Field("password") password: String? = null,
-                 @Field("refresh_token") refreshToken: String? = null): Observable<ResponseBody>
+                 @Field("refresh_token") refreshToken: String? = null): Observable<Response<ResponseBody>>
 
     /*****  崩溃日志上传  */
     @POST("lawyer/app-crash-log")

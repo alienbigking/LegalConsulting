@@ -86,7 +86,6 @@ class NotificationActivity : BaseActivity() {
         } else {
             tv_null.visibility = View.GONE
         }
-
     }
 
     override fun onDestroy() {
@@ -94,7 +93,5 @@ class NotificationActivity : BaseActivity() {
         RxBus.instance.post(RxBusBean.HomeTopRedPoint(false))
 
     }
-
-
 
 }

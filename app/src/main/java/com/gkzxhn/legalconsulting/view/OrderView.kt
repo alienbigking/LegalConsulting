@@ -12,7 +12,7 @@ interface OrderView : BaseView {
     fun setName(name: String)
     fun setTime(time: String)
     fun setReward(reward: String)
-    fun setNextText(str: String)
+    fun setNextText(visibility: Int,str: String)
     fun setAllbgColor(color: Int)
     fun setOrderState(str: String)
     fun setOrderStateColor(color: Int)

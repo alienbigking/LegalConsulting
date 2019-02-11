@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ import com.netease.nimlib.sdk.avchat.model.AVChatControlEvent;
 import com.netease.nimlib.sdk.avchat.model.AVChatData;
 import com.netease.nimlib.sdk.avchat.model.AVChatOnlineAckEvent;
 import com.netease.nimlib.sdk.avchat.model.AVChatVideoFrame;
+
+import org.json.JSONException;
 
 /**
  * 音视频主界面
@@ -90,7 +93,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private int state; // calltype 音频或视频
     private String receiverId; // 对方的account
     private String extendMessage; // 额外的信息
-    private Double videoTime=1.0; // 视频通话剩余时长
+    private Double videoTime=0.0; // 视频通话剩余时长
     private String displayName; // 对方的显示昵称
 
     private AVChatController avChatController;
@@ -239,11 +242,26 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         switch (getIntent().getIntExtra(KEY_SOURCE, FROM_UNKNOWN)) {
             case FROM_BROADCASTRECEIVER: // incoming call
                 avChatData = (AVChatData) getIntent().getSerializableExtra(KEY_CALL_CONFIG);
+                String extra = avChatData.getExtra();
                 state = avChatData.getChatType().getValue();
+                try {
+                    org.json.JSONObject d = new org.json.JSONObject(extra);
+                    videoTime = Double.valueOf(d.getString("videoDuration"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.e("xiaowuextra打进来:", String.valueOf(videoTime));
                 break;
             case FROM_INTERNAL: // outgoing call
                 receiverId = getIntent().getStringExtra(KEY_ACCOUNT);
                 extendMessage = getIntent().getStringExtra(KEY_EXTENDMESSAGE);
+                try {
+                    org.json.JSONObject d = new org.json.JSONObject(extendMessage);
+                    videoTime = Double.valueOf(d.getString("videoDuration"));
+                    Log.e("xiaowuextr打出去:", String.valueOf(videoTime));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 state = getIntent().getIntExtra(KEY_CALL_TYPE, -1);
                 break;
             default:
@@ -254,7 +272,7 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
     private void initData() {
         avChatController = new AVChatController(this, avChatData);
         avChatAudioUI = new AVChatAudioUI(this, root, avChatData, displayName, avChatController, this);
-        avChatVideoUI = new AVChatVideoUI(this, root, avChatData, displayName, avChatController, this, this);
+        avChatVideoUI = new AVChatVideoUI(this, videoTime,root, avChatData, displayName, avChatController, this, this);
     }
 
 
@@ -379,8 +397,6 @@ public class AVChatActivity extends UI implements AVChatVideoUI.TouchZoneCallbac
         @Override
         public void onCallEstablished() {
             LogUtil.d(TAG, "onCallEstablished");
-            LogUtil.e("xiaowu", "onCallEstablished");
-            LogUtil.e("xiaowu", "time:"+avChatController.getTimeBase());
             //移除超时监听
             AVChatTimeoutObserver.getInstance().observeTimeoutNotification(timeoutObserver, false, mIsInComingCall);
             if (avChatController.getTimeBase() == 0)

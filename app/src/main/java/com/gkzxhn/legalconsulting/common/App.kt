@@ -39,19 +39,21 @@ import com.netease.nim.uikit.custom.MySafeAttachment
 import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.SDKOptions
 import com.netease.nimlib.sdk.StatusBarNotificationConfig
+import com.netease.nimlib.sdk.auth.AuthServiceObserver
 import com.netease.nimlib.sdk.auth.LoginInfo
 import com.netease.nimlib.sdk.msg.MsgService
 import com.netease.nimlib.sdk.msg.MsgServiceObserve
 import com.netease.nimlib.sdk.msg.model.CustomNotification
 import com.netease.nimlib.sdk.uinfo.model.UserInfo
 import com.netease.nimlib.sdk.util.NIMUtil
-
+import org.json.JSONObject
 
 /**
  * Explanation:
  * @author LSX
  *    -----2018/9/6
  */
+
 class App : Application() {
 
     @SuppressLint("CommitPrefEdits")
@@ -74,7 +76,8 @@ class App : Application() {
     }
 
     private fun initWY() {
-        NIMClient.init(this, loginInfo(), options(this))
+//        NIMClient.init(this, loginInfo(), options(this))
+        NIMClient.init(this, loginInfo(), null)
         // 以下逻辑只在主进程初始化时执行
         if (NIMUtil.isMainProcess(this)) {
 
@@ -91,12 +94,42 @@ class App : Application() {
             // 如果有自定义通知是作用于全局的，不依赖某个特定的 Activity，那么这段代码应该在 Application 的 onCreate 中就调用
             NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification({ p0 ->
                 initNotification(p0!!)
-                /****** 保存数据到数据库 ******/
-                GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null, p0.sessionId, p0.fromAccount, p0.time, p0.content))
-                RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
+
+                val json = p0.content
+                val type = JSONObject(json).getString("type")
+                val ext = JSONObject(json).getString("ext")
+                val content = JSONObject(json).getString("content")
+                when (type) {
+                /****** 普通通知 ******/
+                    "NOTIFICATION" -> {
+                        /****** 保存数据到数据库 ******/
+                        GreenDaoManager.getInstance().newSession.notificationInfoDao.insert(NotificationInfo(null, p0.sessionId, p0.fromAccount, p0.time, content))
+                        RxBus.instance.post(RxBusBean.HomeTopRedPoint(true))
+                    }
+                /****** 法律咨询通知 ******/
+                    "NOTIFICATION_LEGAL_ADVICE" -> {
+
+                    }
+                /****** 刷新抢单页 ******/
+                    "RUSH_PAGE_REFRESH" -> {
+                        RxBus.instance.post(RxBusBean.RefreshGrabOrder(true))
+                    }
+                }
+
+
             }, true)
+
+            NIMClient.getService(AuthServiceObserver::class.java)
+                    .observeOnlineStatus({ statusCode ->
+                        Log.e("xiaowu", statusCode.toString() + "")
+                        if (statusCode.wontAutoLogin()) {
+                            RxBus.instance.post(RxBusBean.LoginOut(true))
+                        }
+                    }, true)
         }
+
     }
+
 
     /**
      * @methodName： created by liushaoxiang on 2018/12/4 4:01 PM.

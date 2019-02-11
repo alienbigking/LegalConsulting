@@ -20,6 +20,7 @@ import com.gkzxhn.legalconsulting.utils.*
 import kotlinx.android.synthetic.main.user_fragment.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
+import retrofit2.Response
 import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -56,7 +57,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun initListener() {
-        v_user_my_money_bg.setOnClickListener(this)
+               v_user_my_money_bg.setOnClickListener(this)
         v_user_rz_bg.setOnClickListener(this)
         v_user_all_order_bg.setOnClickListener(this)
         v_user_set_bg.setOnClickListener(this)
@@ -115,21 +116,23 @@ class UserFragment : BaseFragment(), View.OnClickListener {
                     ?.subscribeOn(Schedulers.io())
                     ?.unsubscribeOn(AndroidSchedulers.mainThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(object : HttpObserver<ResponseBody>(it) {
-                        override fun success(t: ResponseBody) {
-                            val string = t.string()
-                            if (!TextUtils.isEmpty(string)) {
-                                var token: String? = null
-                                var refreshToken: String? = null
-                                try {
-                                    token = JSONObject(string).getString("access_token")
-                                    refreshToken = JSONObject(string).getString("refresh_token")
-                                } catch (e: Exception) {
+                    ?.subscribe(object : HttpObserver<Response<ResponseBody>>(it) {
+                        override fun success(t: Response<ResponseBody>) {
+                            if (t.code() == 200) {
+                                val string = t.body().string()
+                                if (!TextUtils.isEmpty(string)) {
+                                    var token: String? = null
+                                    var refreshToken: String? = null
+                                    try {
+                                        token = JSONObject(string).getString("access_token")
+                                        refreshToken = JSONObject(string).getString("refresh_token")
+                                    } catch (e: Exception) {
 
+                                    }
+                                    App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
+                                    App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
+                                    getLawyersInfo()
                                 }
-                                App.EDIT.putString(Constants.SP_TOKEN, token)?.commit()
-                                App.EDIT.putString(Constants.SP_REFRESH_TOKEN, refreshToken)?.commit()
-                                getLawyersInfo()
                             }
                         }
 
@@ -137,7 +140,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    /**
+       /**
      * @methodName： created by liushaoxiang on 2018/10/22 3:31 PM.
      * @description：获取律师信息
      */

@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="＊三天内无人接单，系统自动取消;\n   无人接单／律师拒单后，付款金额将于7个工作日内原路返回。"
+                    android:text="＊三天内无人接单，系统自动取消;\n   无人接单／律师拒单后，付款金额将于7个工作日内原路返回。\n   每笔订单视频通话时长为20分钟，通话时长未用完结束订单一律不退还费用"
                     android:textColor="#ff999999"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"

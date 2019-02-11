@@ -29,7 +29,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
 
     /****** 客户的网易ID ******/
     var userName = ""
-    var videoDuration = 0.0
+    var videoDuration = 3.0
 
     /****** 1，获取 抢单的明细 ******/
     fun getOrderRushInfo(id: String) {
@@ -43,7 +43,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setReward("￥" + t.reward)
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
-                            mView?.setNextText("抢单")
+                            mView?.setNextText(View.VISIBLE,"抢单")
                             mView?.setOrderImage(t.customer?.avatarFileId)
                             mView?.setOrderState("已支付")
 
@@ -96,7 +96,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                 mView?.setShowOrderState(View.VISIBLE, "已接单",
                         "接单时间：" + StringUtils.parseDate(t.acceptedTime),
                         "")
-                mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
+                mView?.setNextText(View.VISIBLE,App.mContext.resources.getString(R.string.send_message))
                 mView?.setShowGetMoney(View.GONE, "", "")
             }
         /****** 处理中 ******/
@@ -107,7 +107,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                 mView?.setShowGetMoney(View.VISIBLE, "处理中", "＊三小时内无再次咨询，系统将自动结束订单；")
                 mView?.setShowEvaluation(View.GONE, "", "", 0)
 
-                mView?.setNextText(App.mContext.resources.getString(R.string.send_message))
+                mView?.setNextText(View.VISIBLE,App.mContext.resources.getString(R.string.send_message))
                 mView?.setOrderStateNameColor(App.mContext.resources.getColor(R.color.order_red))
 
             }
@@ -117,6 +117,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                         "接单时间：" + StringUtils.parseDate(t.acceptedTime),
                         "完成时间：" + StringUtils.parseDate(t.endTime))
                 mView?.setShowGetMoney(View.GONE, "赏金到账", "")
+                mView?.setNextText(View.GONE, "")
+
                 getOrderComment(t.id!!)
 
             }
@@ -127,6 +129,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                         "完成时间：" + StringUtils.parseDate(t.endTime))
                 mView?.setOrderStateColor(App.mContext.resources.getColor(R.color.order_red))
                 mView?.setShowGetMoney(View.GONE, "赏金到账", "")
+                mView?.setNextText(View.GONE, "")
+
                 getOrderComment(t.id!!)
             }
         /******  已取消 ******/
@@ -192,7 +196,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             } else {
                                 "服务评价："+t.content
                             }
-                            mView?.setShowEvaluation(View.VISIBLE, isResolved, evaluation!!, t.rate!!)
+                            mView?.setShowEvaluation(View.VISIBLE, isResolved, evaluation, t.rate!!)
                         }
                     })
         }
@@ -202,7 +206,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         if (videoDuration > 0) {
             getImAccount(userName)
         } else {
-            mContext?.TsDialog("通话时间已用完。暂不能进行通话", false)
+            mContext?.TsDialog("视频通话时长已用完", false)
         }
     }
 

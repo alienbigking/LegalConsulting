@@ -47,7 +47,8 @@ class RetrofitClient private constructor(context: Context, baseUrl: String) {
     fun provideHotApi(): ApiService? {
         //okhttp创建了
         okHttpClient = OkHttpClient.Builder()
-//                .cache(cache)
+                .cache(cache)
+                .retryOnConnectionFailure(true)
                 .addInterceptor(CacheInterceptor(mContext))
                 .addNetworkInterceptor(CacheInterceptor(mContext))
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

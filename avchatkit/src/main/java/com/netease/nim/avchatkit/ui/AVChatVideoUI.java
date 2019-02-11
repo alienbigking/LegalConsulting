@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -118,6 +119,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private TouchZoneCallback touchZoneCallback;
     private AVChatData avChatData;
     private String account;
+    private Double videoTime;
     private String displayName;
 
     private int topRootHeight = 0;
@@ -137,17 +139,19 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
     private AVSwitchListener avSwitchListener;
     private boolean isReleasedVideo = false;
 
+
     // touch zone
     public interface TouchZoneCallback {
         void onTouch();
     }
 
-    public AVChatVideoUI(Context context, View root, AVChatData avChatData, String displayName,
+    public AVChatVideoUI(Context context, Double videoTime, View root, AVChatData avChatData, String displayName,
                          AVChatController avChatController, TouchZoneCallback touchZoneCallback,
                          AVSwitchListener avSwitchListener) {
         this.context = context;
         this.root = root;
         this.avChatData = avChatData;
+        this.videoTime = videoTime;
         this.displayName = displayName;
         this.avChatController = avChatController;
         this.touchZoneCallback = touchZoneCallback;
@@ -313,6 +317,20 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         receiveTV = (TextView) refuse_receive.findViewById(R.id.receive);
         refuseTV.setOnClickListener(this);
         receiveTV.setOnClickListener(this);
+        time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                long time = SystemClock.elapsedRealtime() - chronometer.getBase();
+                long mm = time / 1000;
+                double v = videoTime * 60 - 60;
+                if (mm > v && mm < v + 5) {
+                    Toast.makeText(context, "视频通话时长只有一分钟了", Toast.LENGTH_SHORT).show();
+                }
+                if (mm > v + 55 && mm < videoTime * 60) {
+                    Toast.makeText(context, "视频通话时长已用完", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         recordView = videoRoot.findViewById(R.id.avchat_record_layout);
         recordTip = recordView.findViewById(R.id.avchat_record_tip);
@@ -365,7 +383,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setFaceUnityRoot(false);
     }
 
-    public void doOutgoingCall(String account,String extendMessage) {
+    public void doOutgoingCall(String account, String extendMessage) {
         this.account = account;
 
         findSurfaceView();
@@ -381,7 +399,7 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         setBottomRoot(true);
         setFaceUnityRoot(true);
 
-        avChatController.doCalling(account, AVChatType.VIDEO,extendMessage, new AVChatControllerCallback<AVChatData>() {
+        avChatController.doCalling(account, AVChatType.VIDEO, extendMessage, new AVChatControllerCallback<AVChatData>() {
             @Override
             public void onSuccess(AVChatData data) {
                 avChatData = data;
@@ -637,9 +655,9 @@ public class AVChatVideoUI implements View.OnClickListener, ToggleListener {
         if (i == R.id.refuse) {
             doRefuseCall();
         } else if (i == R.id.receive) {
-            if(isInReceiveing || avChatController.isCallEstablish.get()){
+            if (isInReceiveing || avChatController.isCallEstablish.get()) {
                 Toast.makeText(context, R.string.avchat_in_switch, Toast.LENGTH_SHORT).show();
-            }else {
+            } else {
                 doReceiveCall();
             }
         } else if (i == R.id.avchat_video_logout) {
