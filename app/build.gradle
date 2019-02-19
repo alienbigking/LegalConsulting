@@ -12,8 +12,8 @@ android {
         applicationId "com.gkzxhn.legalconsulting"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 8
-        versionName "0.1.8"
+        versionCode 9
+        versionName "0.1.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.zhy:base-rvadapter:3.0.3'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
 
     //    省市县三级联动
     implementation 'liji.library.dev:citypickerview:3.1.13'

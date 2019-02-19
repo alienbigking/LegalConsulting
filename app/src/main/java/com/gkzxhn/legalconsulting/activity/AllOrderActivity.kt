@@ -25,6 +25,7 @@ import rx.schedulers.Schedulers
  * @date：2018/10/12 11:55 AM
  * @description：所有订单
  */
+
 class AllOrderActivity : BaseActivity() {
 
     private var mAdapter: AllOrderAdapter? = null
@@ -116,7 +117,6 @@ class AllOrderActivity : BaseActivity() {
         } else {
             tv_item_order_receiving_bull.visibility = View.GONE
         }
-
     }
 
     fun getOrderDispose(page: String) {

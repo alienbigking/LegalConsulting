@@ -100,6 +100,11 @@ interface ApiService {
     @POST("lawyer/profiles/avatar")
     fun uploadAvatar(@Body map: RequestBody): Observable<Response<Void>>
 
+    /*****  修改头像  */
+    @PUT("users/me/avatar")
+    @Multipart
+    fun modifyAvatar(@Part file: MultipartBody.Part): Observable<Response<Void>>
+
     /*****  上传文件  */
     @POST("/files")
     @Multipart

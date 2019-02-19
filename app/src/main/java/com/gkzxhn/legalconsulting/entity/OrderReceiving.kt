@@ -22,6 +22,7 @@ data class OrderReceiving(
 class OrderReceivingCustomer {
     var id: String? = null
     var name: String? = null
+    var username: String? = null
     var phoneNumber: String? = null
     var avatarURL: String? = null
     var avatarThumb: String? = null
@@ -32,7 +33,7 @@ class OrderReceivingContent {
     var id: String? = null
     var number: String? = null
     var customer: OrderReceivingCustomer? = null
-    var category: String ?= null
+    var category: String? = null
     var description: String? = null
     var reward: Double = 0.0
     var createdTime: String? = null

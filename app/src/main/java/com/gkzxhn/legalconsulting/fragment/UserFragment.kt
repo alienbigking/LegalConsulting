@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.fragment
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -24,7 +23,6 @@ import retrofit2.Response
 import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.io.File
 import java.io.IOException
 import java.net.ConnectException
 
@@ -197,27 +195,7 @@ class UserFragment : BaseFragment(), View.OnClickListener {
         App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
         App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
 
-        /****** 如果图片和上次一致就不转化了 ******/
-        val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
-        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(date.avatarThumb)!! && decodeFile != null) {
-            iv_user_icon.setImageBitmap(decodeFile)
-        } else {
-            val file = File(context?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
-            if (date.avatarThumb != null) {
-                val base64ToFile = ImageUtils.base64ToFile(date.avatarThumb!!, file.absolutePath)
-                if (base64ToFile) {
-                    App.EDIT.putString(Constants.SP_AVATARFILE, file.absolutePath)?.commit()
-                    App.EDIT.putString(Constants.SP_AVATAR_THUMB, date.avatarThumb)?.commit()
-
-                    val decodeFile = BitmapFactory.decodeFile(file.absolutePath)
-                    iv_user_icon.setImageBitmap(decodeFile)
-                }
-            } else {
-                App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
-                App.EDIT.putString(Constants.SP_AVATAR_THUMB, "")?.commit()
-
-            }
-        }
+        ProjectUtils.loadMyIcon(context,iv_user_icon)
 
         RxBus.instance.post(RxBusBean.HomeUserInfo(date))
 

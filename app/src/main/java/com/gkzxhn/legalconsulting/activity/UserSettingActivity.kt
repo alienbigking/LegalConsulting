@@ -3,7 +3,6 @@ package com.gkzxhn.legalconsulting.activity
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -62,13 +61,9 @@ class UserSettingActivity : BaseActivity() {
         name = intent.getStringExtra("name")
         phoneNumber = intent.getStringExtra("phoneNumber")
         tv_user_setting_change_name.text = name
-        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
-        if (avatarStr?.isNotEmpty()!!) {
-            val decodeFile = BitmapFactory.decodeFile(avatarStr)
-            iv_user_setting_image.setImageBitmap(decodeFile)
-        }
-        tv_user_setting_phone.text = StringUtils.phoneChange(phoneNumber)
 
+        ProjectUtils.loadMyIcon(this,iv_user_setting_image)
+        tv_user_setting_phone.text = StringUtils.phoneChange(phoneNumber)
 
         photoDir = File(externalCacheDir, "photo")
         if (!photoDir.exists()) {
@@ -238,7 +233,7 @@ class UserSettingActivity : BaseActivity() {
                 TAKE_PHOTO_IMAGE -> {
                     val file = uri2File(File(externalCacheDir, "photo"), mTakePhotoUri!!)
                     val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                    ImageUtils.compressImage(bitmap,file, 2000)!!
+                    ImageUtils.compressImage(bitmap, file, 2000)!!
                     /****** 部分机型会自动旋转 这里旋转恢复 ******/
                     val readPictureDegree = SystemUtil.readPictureDegree(file.absolutePath)
                     SystemUtil.rotateBitmap(bitmap, readPictureDegree)
@@ -249,7 +244,7 @@ class UserSettingActivity : BaseActivity() {
                     val file = FileUtils.getFileByUri(data!!.data, this)
                     if (file?.exists()!!) {
                         val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 720, 720)
-                        ImageUtils.compressImage(bitmap,file, 2000)!!
+                        ImageUtils.compressImage(bitmap, file, 2000)!!
                     }
                     gotoClipActivity(data.data)
 
@@ -262,10 +257,9 @@ class UserSettingActivity : BaseActivity() {
                         }
                         var uri = data.data
                         val cropImagePath = getRealFilePathFromUri(applicationContext, uri)
-                        val bitMap = BitmapFactory.decodeFile(cropImagePath)
-                        iv_user_setting_image.setImageBitmap(bitMap)
                         //此处后面可以将bitMap转为二进制上传后台网络
-                        uploadFiles(File(cropImagePath))
+//                        uploadFiles(File(cropImagePath))
+                        modifyAvatar(File(cropImagePath))
                     }
                 }
                 else -> {
@@ -328,7 +322,7 @@ class UserSettingActivity : BaseActivity() {
     private fun uploadFiles(file: File) {
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        RetrofitClientLogin.getInstance(this).mApi?.uploadFiles(body,"PUBLIC")
+        RetrofitClientLogin.getInstance(this).mApi?.uploadFiles(body, "PUBLIC")
                 ?.subscribeOn(Schedulers.io())
                 ?.unsubscribeOn(AndroidSchedulers.mainThread())
                 ?.observeOn(AndroidSchedulers.mainThread())
@@ -336,11 +330,35 @@ class UserSettingActivity : BaseActivity() {
                     override fun success(date: UploadFile) {
                         date.id?.let {
                             val bitmap = ImageUtils.decodeSampledBitmapFromFilePath(file.absolutePath, 360, 360)
-                            ImageUtils.compressImage(bitmap,file, 2000)!!
+                            ImageUtils.compressImage(bitmap, file, 2000)!!
                             val fileBase64Str = ImageUtils.imageToBase64(file.path)
                             if (fileBase64Str != null) {
                                 uploadAvatar(date.id, fileBase64Str)
                             }
+                        }
+                    }
+                })
+    }
+
+    /**
+     * @methodName： created by liushaoxiang on 2018/10/26 2:07 PM.
+     * @description：修改头像
+     */
+    private fun modifyAvatar(file: File) {
+        val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        RetrofitClientLogin.getInstance(this).mApi?.modifyAvatar(body)
+                ?.subscribeOn(Schedulers.io())
+                ?.unsubscribeOn(AndroidSchedulers.mainThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : HttpObserver<Response<Void>>(this) {
+                    override fun success(date: Response<Void>) {
+                        if (date.code() == 204) {
+                            showToast("上传成功")
+                            App.EDIT.putString(Constants.SP_MY_ICON, System.currentTimeMillis().toString()).commit()
+                            ProjectUtils.loadMyIcon(this@UserSettingActivity,iv_user_setting_image)
+                        } else {
+                            showToast("上传失败")
                         }
                     }
                 })

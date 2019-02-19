@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.fragment
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.widget.CompoundButton
@@ -117,11 +116,13 @@ class MainFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
         st_home_get_order_state.setOnCheckedChangeListener(this)
 
 
-        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
-        if (avatarStr?.isNotEmpty()!!) {
-            val decodeFile = BitmapFactory.decodeFile(avatarStr)
-            iv_main_icon.setImageBitmap(decodeFile)
-        }
+//        val avatarStr = App.SP.getString(Constants.SP_AVATARFILE, "")
+//        if (avatarStr?.isNotEmpty()!!) {
+//            val decodeFile = BitmapFactory.decodeFile(avatarStr)
+//            iv_main_icon.setImageBitmap(decodeFile)
+//        }
+        ProjectUtils.loadMyIcon(context,iv_main_icon)
+
         when (App.SP.getString(Constants.SP_CERTIFICATIONSTATUS, "")) {
             Constants.PENDING_CERTIFIED -> {
                 certificationChange("未认证")

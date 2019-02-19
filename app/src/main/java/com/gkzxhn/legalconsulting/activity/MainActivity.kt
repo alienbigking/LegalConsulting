@@ -1,7 +1,6 @@
 package com.gkzxhn.legalconsulting.activity
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.View
 import com.gkzxhn.legalconsulting.R
@@ -24,7 +23,6 @@ import kotlinx.android.synthetic.main.layout_user_info.*
 import retrofit2.adapter.rxjava.HttpException
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.io.File
 import java.io.IOException
 import java.net.ConnectException
 import java.util.*
@@ -59,7 +57,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         updateApp()
         getLawyersInfo()
-
 
         RxBus.instance.toObserverable(RxBusBean.ShowMenu::class.java)
                 .cache()
@@ -208,7 +205,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                                     else -> TsDialog("服务器异常，请重试", false)
                                 }
                             }
-                            is IOException -> TsDialog("数据加载失败，请检查您的网络", false)
+                            is IOException -> showToast("网络连接超时，请重试")
+
                         //后台返回的message
                             is ApiException -> {
                                 TsDialog(e.message!!, false)
@@ -245,24 +243,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                         App.EDIT.putString(Constants.SP_NAME, data.name)?.commit()
                         App.EDIT.putString(Constants.SP_LAWOFFICE, data.lawOffice)?.commit()
 
-                        /****** 如果图片和上次一致就不转化了 ******/
-                        val decodeFile = BitmapFactory.decodeFile(App.SP.getString(Constants.SP_AVATARFILE, ""))
-                        if (App.SP.getString(Constants.SP_AVATAR_THUMB, "")?.equals(data.avatarThumb)!! && decodeFile != null) {
-                        } else {
-                            val file = File(contexts?.cacheDir, "user_icon_" + System.currentTimeMillis() + ".jpg")
-                            if (data.avatarThumb != null) {
-                                val base64ToFile = ImageUtils.base64ToFile(data.avatarThumb!!, file.absolutePath)
-                                if (base64ToFile) {
-                                    App.EDIT.putString(Constants.SP_AVATARFILE, file.absolutePath)?.commit()
-                                    App.EDIT.putString(Constants.SP_AVATAR_THUMB, data.avatarThumb)?.commit()
-
-                                }
-                            } else {
-                                App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
-                                App.EDIT.putString(Constants.SP_AVATAR_THUMB, "")?.commit()
-
-                            }
-                        }
 
                         RxBus.instance.post(RxBusBean.HomeUserInfo(data))
 

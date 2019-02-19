@@ -106,7 +106,7 @@
     />
 
 
-    <com.gkzxhn.legalconsulting.customview.CircleImageView
+    <ImageView
         android:id="@+id/iv_user_setting_image"
         android:layout_width="24dp"
         android:layout_height="24dp"

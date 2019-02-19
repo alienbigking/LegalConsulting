@@ -16,6 +16,9 @@ import com.gkzxhn.legalconsulting.utils.TsDialog
 import com.gkzxhn.legalconsulting.utils.showToast
 import com.gkzxhn.legalconsulting.view.OrderView
 import com.netease.nim.uikit.api.NimUIKit
+import com.netease.nimlib.sdk.NIMClient
+import com.netease.nimlib.sdk.msg.MsgService
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import rx.android.schedulers.AndroidSchedulers
 
 
@@ -43,8 +46,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             mView?.setReward("￥" + t.reward)
                             mView?.setTime(StringUtils.parseDate(t.createdTime))
                             mView?.setOrderNumber(t.number.toString())
-                            mView?.setNextText(View.VISIBLE,"抢单")
-                            mView?.setOrderImage(t.customer?.avatarFileId)
+                            mView?.setNextText(View.VISIBLE, "抢单")
+                            mView?.setOrderImage(t.customer?.username)
                             mView?.setOrderState("已支付")
 
                             mView?.setShowOrderState(View.GONE, "", "", "")
@@ -78,7 +81,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
         mView?.setOrderState("已支付")
         mView?.setTime(StringUtils.parseDate(t.createdTime))
         mView?.setOrderNumber(t.number.toString())
-        mView?.setOrderImage(t.customer?.avatarFileId)
+        mView?.setOrderImage(t.customer?.username)
 
         userName = t.customer?.username!!
         videoDuration = t.videoDuration
@@ -96,7 +99,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                 mView?.setShowOrderState(View.VISIBLE, "已接单",
                         "接单时间：" + StringUtils.parseDate(t.acceptedTime),
                         "")
-                mView?.setNextText(View.VISIBLE,App.mContext.resources.getString(R.string.send_message))
+                mView?.setNextText(View.VISIBLE, App.mContext.resources.getString(R.string.send_message))
                 mView?.setShowGetMoney(View.GONE, "", "")
             }
         /****** 处理中 ******/
@@ -107,9 +110,8 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                 mView?.setShowGetMoney(View.VISIBLE, "处理中", "＊三小时内无再次咨询，系统将自动结束订单；")
                 mView?.setShowEvaluation(View.GONE, "", "", 0)
 
-                mView?.setNextText(View.VISIBLE,App.mContext.resources.getString(R.string.send_message))
+                mView?.setNextText(View.VISIBLE, App.mContext.resources.getString(R.string.send_message))
                 mView?.setOrderStateNameColor(App.mContext.resources.getColor(R.color.order_red))
-
             }
         /****** 已完成 ******/
             Constants.ORDER_STATE_COMPLETE -> {
@@ -118,9 +120,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                         "完成时间：" + StringUtils.parseDate(t.endTime))
                 mView?.setShowGetMoney(View.GONE, "赏金到账", "")
                 mView?.setNextText(View.GONE, "")
-
                 getOrderComment(t.id!!)
-
             }
         /******  已关闭 ******/
             Constants.ORDER_STATE_REFUSED -> {
@@ -194,7 +194,7 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                             var evaluation = if (t.content == null || t.content!!.isEmpty()) {
                                 "服务评价：此用户没有填写评价"
                             } else {
-                                "服务评价："+t.content
+                                "服务评价：" + t.content
                             }
                             mView?.setShowEvaluation(View.VISIBLE, isResolved, evaluation, t.rate!!)
                         }
@@ -221,9 +221,9 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<IOrderMo
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : HttpObserver<ImInfo>(mContext!!) {
                         override fun success(t: ImInfo) {
+                            // 删除与某个聊天对象的全部消息记录
+                            NIMClient.getService(MsgService::class.java).clearChattingHistory(t.account, SessionTypeEnum.P2P)
                             NimUIKit.startP2PSession(mContext, t.account)
-                            NimUIKit.setMsgForwardFilter { false }
-                            NimUIKit.setMsgRevokeFilter { false }
                         }
                     })
         }

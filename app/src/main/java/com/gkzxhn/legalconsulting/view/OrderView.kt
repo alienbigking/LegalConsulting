@@ -18,7 +18,7 @@ interface OrderView : BaseView {
     fun setOrderStateColor(color: Int)
     fun setOrderType(str1: String)
     fun setOrderNumber(time: String)
-    fun setOrderImage(avatarFileId: String?)
+    fun setOrderImage(userName: String?)
     fun setShowOrderState(visibility: Int, stateName: String, getTime: String, completeTime: String)
     fun setShowGetMoney(visibility: Int, getMoney: String, getMoneyTime: String)
     fun setOrderStateNameColor(color: Int)

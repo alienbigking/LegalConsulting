@@ -83,8 +83,6 @@ class SettingActivity : BaseActivity() {
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             SystemUtil.clearAllCache(this)
             tv_setting_clear_size.text = SystemUtil.getTotalCacheSize(this)
-            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
-
             showToast("清除完成")
             selectDialog.dismiss()
         }
@@ -99,7 +97,6 @@ class SettingActivity : BaseActivity() {
         selectDialog.findViewById<TextView>(R.id.dialog_save).setOnClickListener {
             NIMClient.getService(AuthService::class.java).logout()
             App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
-            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
             App.EDIT.putString(Constants.SP_NAME, "")?.commit()
             App.EDIT.putString(Constants.SP_LAWOFFICE, "")?.commit()
             App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, "")?.commit()
@@ -149,7 +146,8 @@ class SettingActivity : BaseActivity() {
                                     else -> TsDialog("服务器异常，请重试", false)
                                 }
                             }
-                            is IOException -> TsDialog("数据加载失败，请检查您的网络", false)
+                            is IOException -> showToast("网络连接超时，请重试")
+
                         //后台返回的message
                             is ApiException -> {
                                 TsDialog(e.message!!, false)

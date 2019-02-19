@@ -249,14 +249,14 @@ class LoginPresenter(context: Context, view: LoginView) : BasePresenter<ILoginMo
                             App.EDIT.putString(Constants.SP_NAME, date.name)?.commit()
                             App.EDIT.putString(Constants.SP_LAWOFFICE, date.lawOffice)?.commit()
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
-                            handler.sendEmptyMessageDelayed(0, 3000)
+                            handler.sendEmptyMessageDelayed(0, 0)
                             mView?.onFinish()
                         }
 
                         override fun onError(t: Throwable?) {
                             super.onError(t)
                             mContext?.startActivity(Intent(mContext, MainActivity::class.java))
-                            handler.sendEmptyMessageDelayed(0, 3000)
+                            handler.sendEmptyMessageDelayed(0, 0)
                             mView?.onFinish()
                         }
                     })

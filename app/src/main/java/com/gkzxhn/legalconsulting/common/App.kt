@@ -93,12 +93,13 @@ class App : Application() {
 
             // 如果有自定义通知是作用于全局的，不依赖某个特定的 Activity，那么这段代码应该在 Application 的 onCreate 中就调用
             NIMClient.getService(MsgServiceObserve::class.java).observeCustomNotification({ p0 ->
-                initNotification(p0!!)
 
                 val json = p0.content
                 val type = JSONObject(json).getString("type")
                 val ext = JSONObject(json).getString("ext")
                 val content = JSONObject(json).getString("content")
+                initNotification(p0!!,content)
+
                 when (type) {
                 /****** 普通通知 ******/
                     "NOTIFICATION" -> {
@@ -115,8 +116,6 @@ class App : Application() {
                         RxBus.instance.post(RxBusBean.RefreshGrabOrder(true))
                     }
                 }
-
-
             }, true)
 
             NIMClient.getService(AuthServiceObserver::class.java)
@@ -135,14 +134,13 @@ class App : Application() {
      * @methodName： created by liushaoxiang on 2018/12/4 4:01 PM.
      * @description：显示系统通知
      */
-    private fun initNotification(data: CustomNotification) {
-
+    private fun initNotification(data: CustomNotification,content: String) {
         val mNotificationManager = getSystemService(Application.NOTIFICATION_SERVICE) as NotificationManager
 
         val intent = PendingIntent.getActivity(this, 0, Intent(this, NotificationActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(App.mContext)
                 .setContentTitle("通知")
-                .setContentText(data.content)
+                .setContentText(content)
                 .setContentIntent(intent) //设置通知栏点击意图
                 .setTicker(data.fromAccount) //通知首次出现在通知栏，带上升动画效果的
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
@@ -216,28 +214,6 @@ class App : Application() {
         // 该值一般应根据屏幕尺寸来确定， 默认值为 Screen.width / 2
         options.thumbnailSize = ScreenUtil.screenWidth / 2
 
-//        // 用户资料提供者, 目前主要用于提供用户资料，用于新消息通知栏中显示消息来源的头像和昵称
-//        options.userInfoProvider = object : UserInfoProvider {
-//            override fun getAvatarForMessageNotifier(p0: SessionTypeEnum?, p1: String?): Bitmap? {
-//                return null
-//            }
-//
-//            override fun getUserInfo(account: String): UserInfo? {
-//                return null
-//            }
-//
-//            fun getTeamIcon(tid: String): Bitmap? {
-//                return null
-//            }
-//
-//            fun getAvatarForMessageNotifier(account: String): Bitmap? {
-//                return null
-//            }
-//
-//            override fun getDisplayNameForMessageNotifier(account: String, sessionId: String, sessionType: SessionTypeEnum): String? {
-//                return null
-//            }
-//        }
         return options
     }
 
@@ -276,6 +252,5 @@ class App : Application() {
             }
         })
     }
-
 
 }

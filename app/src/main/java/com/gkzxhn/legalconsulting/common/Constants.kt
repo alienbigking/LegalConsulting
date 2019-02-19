@@ -30,12 +30,11 @@ object Constants {
     val SP_NAME = "sp_user_name"
     val SP_REMEMBER_PHONE = "SP_remember_phone"
     val SP_LAWOFFICE = "sp_user_lawOffice"
-    //    头像的绝对路径
-    val SP_AVATARFILE = "sp_avatarFile"
-    //    头像的base64码
-    val SP_AVATAR_THUMB = "sp_avatar_thumb"
     val SP_IM_ACCOUNT = "SP_IM_ACCOUNT"
     val SP_IM_TOKEN = "SP_IM_TOKEN"
+    
+    /******  自己头像的变更时间  ******/
+    val SP_MY_ICON = "SP_MY_ICON"
 
     /**
      *PENDING_CERTIFIED("待认证"),

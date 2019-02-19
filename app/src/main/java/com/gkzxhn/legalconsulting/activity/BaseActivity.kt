@@ -59,12 +59,10 @@ abstract class BaseActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initBefore()
         setContentView(provideContentViewId())
+        mCompositeSubscription = CompositeSubscription()
         init()
         //初始化权限管理
         rxPermissions = RxPermissions(this)
-        mCompositeSubscription = CompositeSubscription()
-
-
 
         RxBus.instance.toObserverable(DownInfo::class.java)
                 .cache()
@@ -87,7 +85,6 @@ abstract class BaseActivity : AppCompatActivity() {
                     } else {
                         TsClickDialog("您的账号已经在其它地方登录", false).dialog_save.setOnClickListener {
                             App.EDIT.putString(Constants.SP_TOKEN, "")?.commit()
-                            App.EDIT.putString(Constants.SP_AVATARFILE, "")?.commit()
                             App.EDIT.putString(Constants.SP_NAME, "")?.commit()
                             App.EDIT.putString(Constants.SP_LAWOFFICE, "")?.commit()
                             App.EDIT.putString(Constants.SP_CERTIFICATIONSTATUS, "")?.commit()

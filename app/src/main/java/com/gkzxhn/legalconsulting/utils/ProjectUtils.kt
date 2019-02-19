@@ -3,6 +3,7 @@ package com.gkzxhn.legalconsulting.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -11,6 +12,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.gkzxhn.legalconsulting.R
 import com.gkzxhn.legalconsulting.common.App
 import com.gkzxhn.legalconsulting.common.Constants
@@ -45,7 +47,6 @@ object ProjectUtils {
             false
         }
     }
-
 
     /**
      * @methodName ： created by liushaoxiang on 2018/11/1 9:35 AM.
@@ -109,7 +110,6 @@ object ProjectUtils {
         }
     }
 
-
     fun loadImage(context: Context?, avatarURL: String?, imageview: ImageView?) {
         if (avatarURL != null && avatarURL.isNotEmpty()) {
             if (avatarURL.length < 200) {
@@ -147,24 +147,49 @@ object ProjectUtils {
         }
     }
 
-    /****** 通过fileID加载圆形图片 ******/
-    fun loadRoundImageByFileID(context: Context?, fileId: String?, imageview: ImageView?) {
-        if (fileId == null || fileId.isEmpty()) {
+    /****** 通过username加载圆形图片 ******/
+    fun loadRoundImageByUserName(context: Context?, userName: String?, imageview: ImageView?) {
+        if (userName == null || userName.isEmpty()) {
             imageview?.setImageResource(R.mipmap.ic_user_icon)
             return
         }
+        Log.v("OkHttp", "-----------图片userName:$userName")
         val token = App.SP.getString(Constants.SP_TOKEN, "")
         if (token != null) {
             if (token.isNotEmpty()) {
                 val mtoken = "Bearer $token"
                 val addHeader = LazyHeaders.Builder().addHeader("Authorization", mtoken)
-                val glideUrl = GlideUrl(NetWorkCodeInfo.BASE_URL + "/files/" + fileId, addHeader.build())
+                val glideUrl = GlideUrl(NetWorkCodeInfo.BASE_URL + "/users/" + userName + "/avatar", addHeader.build())
+                val options = RequestOptions()
+                options.placeholder(R.mipmap.ic_user_icon)
+                options.error(R.mipmap.ic_user_icon)
+                options.transform(RoundedCorners(120))
                 Glide.with(context).load(glideUrl)
-                        .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
+                        .apply(options)
                         .into(imageview)
             }
         }
     }
 
+    /****** 加载自已的圆形头像 ******/
+    fun loadMyIcon(context: Context?, imageview: ImageView?) {
+        val token = App.SP.getString(Constants.SP_TOKEN, "")
+        if (token != null) {
+            if (token.isNotEmpty()) {
+                val mtoken = "Bearer $token"
+                val addHeader = LazyHeaders.Builder().addHeader("Authorization", mtoken)
+                val glideUrl = GlideUrl(NetWorkCodeInfo.BASE_URL + "/users/me/avatar", addHeader.build())
+                val options = RequestOptions()
+                options.placeholder(R.mipmap.ic_user_icon)
+                options.error(R.mipmap.ic_user_icon)
+                options.transform(RoundedCorners(120))
+                /****** 加上一个时间让其每次都更新 ******/
+                options.signature(ObjectKey(App.SP.getString(Constants.SP_MY_ICON,"defValue")))
+                Glide.with(context).load(glideUrl)
+                        .apply(options)
+                        .into(imageview)
+            }
+        }
+    }
 
 }
